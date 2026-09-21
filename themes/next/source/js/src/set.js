@@ -539,7 +539,7 @@ window.onload = function () {
       $(_this).prepend(
         '<img class="' +
           name +
-          '" src="https://cdn.ihoey.com/ua_icon/' +
+          '" src="/images/ua_icon/' +
           name +
           '.svg">'
       );
