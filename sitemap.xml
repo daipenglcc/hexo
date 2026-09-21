@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.vueweb.cn/posts/Linux/2017-06-22-blog-comment-gentie-remind.html</loc>
+    
+    <lastmod>2026-09-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.vueweb.cn/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html</loc>
     
     <lastmod>2026-09-21</lastmod>
@@ -38,33 +47,6 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Linux/2018-01-30-Hexo-NexT-Wildfire.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/Cron/2017-04-22-Cron.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/Node/2016-12-10-Node-part1.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/posts/Node/2017-12-25-Merry-Christmas.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -83,15 +65,6 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Android/2016-12-18-adb-Android-Debug-Bridge.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/posts/javascript/2017-07-03-A_re-introduction_to_JavaScript.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -101,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Linux/2017-06-22-blog-comment-gentie-remind.html</loc>
+    <loc>https://www.vueweb.cn/posts/Cron/2017-04-22-Cron.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -110,16 +83,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Interview/2018-02-28-alibaba-interview.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/Canvas/2016-11-13-canvas-part1.html</loc>
+    <loc>https://www.vueweb.cn/posts/Linux/2018-01-30-Hexo-NexT-Wildfire.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -137,6 +101,33 @@
   </url>
   
   <url>
+    <loc>https://www.vueweb.cn/posts/Node/2016-12-10-Node-part1.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/Canvas/2016-11-13-canvas-part1.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/Android/2016-12-18-adb-Android-Debug-Bridge.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.vueweb.cn/posts/Canvas/2016-11-14-canvas-part2.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -146,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Canvas/2016-11-15-canvas-summary.html</loc>
+    <loc>https://www.vueweb.cn/posts/Interview/2018-02-28-alibaba-interview.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -164,25 +155,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Linux/2018-02-13-crontab-part1.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/Hexo/2015-08-28-hello-world.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/javascript/2016-07-22-javascript-Function.html</loc>
+    <loc>https://www.vueweb.cn/posts/Canvas/2016-11-15-canvas-summary.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -200,7 +173,25 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Hexo/2018-05-27-hexo-code-block.html</loc>
+    <loc>https://www.vueweb.cn/posts/Hexo/2015-08-28-hello-world.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/Linux/2018-02-13-crontab-part1.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/javascript/2016-07-22-javascript-Function.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -210,6 +201,24 @@
   
   <url>
     <loc>https://www.vueweb.cn/posts/Git/2017-04-23-git.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/Hexo/2018-05-27-hexo-code-block.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/javascript/2017-11-29-javascript-getGverify.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -236,15 +245,6 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/javascript/2017-11-29-javascript-getGverify.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/posts/javascript/2016-11-20-javascript-jquery-part3.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -255,6 +255,15 @@
   
   <url>
     <loc>https://www.vueweb.cn/posts/javascript/2016-11-19-javascript-jquery-part2.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/javascript/2016-11-23-javascript-jquery-part5.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -281,7 +290,16 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/javascript/2016-11-23-javascript-jquery-part5.html</loc>
+    <loc>https://www.vueweb.cn/posts/javascript/2016-05-08-javascript-part1.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/javascript/2016-05-18-javascript-part2.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -299,16 +317,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/javascript/2016-05-08-javascript-part1.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/javascript/2016-05-18-javascript-part2.html</loc>
+    <loc>https://www.vueweb.cn/posts/javascript/2016-11-09-javascript-part4.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -344,15 +353,6 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/javascript/2016-11-09-javascript-part4.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/posts/javascript/2016-11-11-javascript-part6.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -371,25 +371,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/MongoDB/2017-03-27-mongodb-ues.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/posts/javascript/2016-06-04-javascript-prototype.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/Node/2019-01-18-node-wechat-bill.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -407,6 +389,15 @@
   </url>
   
   <url>
+    <loc>https://www.vueweb.cn/posts/MongoDB/2017-03-27-mongodb-ues.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.vueweb.cn/posts/MongoDB/2017-03-23-mongodb.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -416,7 +407,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/MySQL/2018-04-13-mysql-import-table.html</loc>
+    <loc>https://www.vueweb.cn/posts/Node/2019-01-18-node-wechat-bill.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -434,16 +425,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Node/2018-04-28-npm-vs-yarn-cheat-sheet.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html</loc>
+    <loc>https://www.vueweb.cn/posts/MySQL/2018-04-13-mysql-import-table.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -453,6 +435,33 @@
   
   <url>
     <loc>https://www.vueweb.cn/posts/Node/2018-05-13-pm2-study.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/Node/2018-04-28-npm-vs-yarn-cheat-sheet.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/Node/2017-05-10-npm.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -479,7 +488,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/posts/Node/2017-05-10-npm.html</loc>
+    <loc>https://www.vueweb.cn/posts/javascript/2018-01-29-use-javascript-to-achieve-simple-drag-and-drop.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -489,15 +498,6 @@
   
   <url>
     <loc>https://www.vueweb.cn/posts/Linux/2018-03-15-ubuntu-zh-CN-UTF-8.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/posts/javascript/2018-01-29-use-javascript-to-achieve-simple-drag-and-drop.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -516,15 +516,6 @@
   
   <url>
     <loc>https://www.vueweb.cn/manifest.json</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/categories/index.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -560,6 +551,15 @@
   </url>
   
   <url>
+    <loc>https://www.vueweb.cn/categories/index.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.vueweb.cn/tags/index.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -578,7 +578,35 @@
 
   
   <url>
-    <loc>https://www.vueweb.cn/tags/comment/</loc>
+    <loc>https://www.vueweb.cn/tags/%E6%97%A5%E5%B8%B8%E6%B0%B4%E6%96%87/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/Node/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/NodeJs/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/javascript/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/Function/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -627,21 +655,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/tags/Node/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/tags/NodeJs/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/tags/%E6%97%A5%E5%B8%B8%E6%B0%B4%E6%96%87/</loc>
+    <loc>https://www.vueweb.cn/tags/comment/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -669,27 +683,6 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/tags/javascript/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/tags/Function/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/tags/%E9%9D%A2%E8%AF%95/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/tags/Canvas/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -705,6 +698,20 @@
   
   <url>
     <loc>https://www.vueweb.cn/tags/%E7%94%BB%E5%B8%83/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/%E9%9D%A2%E8%AF%95/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/WebRTC/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -739,14 +746,21 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/tags/WebRTC/</loc>
+    <loc>https://www.vueweb.cn/tags/Git/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/tags/Git/</loc>
+    <loc>https://www.vueweb.cn/tags/%E5%8E%9F%E7%94%9FJs/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/tools/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -781,20 +795,6 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/tags/%E5%8E%9F%E7%94%9FJs/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/tags/tools/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/tags/Js%E6%A1%86%E6%9E%B6/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -816,20 +816,6 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/tags/MongoDB/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/tags/NoSQL/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.vueweb.cn/tags/%E5%8E%9F%E5%9E%8B/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -844,7 +830,14 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/tags/MySQL/</loc>
+    <loc>https://www.vueweb.cn/tags/MongoDB/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/NoSQL/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -852,6 +845,20 @@
   
   <url>
     <loc>https://www.vueweb.cn/tags/npm/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/MySQL/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/tags/pm2/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -880,13 +887,6 @@
   
   <url>
     <loc>https://www.vueweb.cn/tags/%E4%BC%AA%E5%85%83%E7%B4%A0/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/tags/pm2/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -923,7 +923,14 @@
 
   
   <url>
-    <loc>https://www.vueweb.cn/categories/Linux/</loc>
+    <loc>https://www.vueweb.cn/categories/Node/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.vueweb.cn/categories/javascript/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -944,7 +951,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/categories/Node/</loc>
+    <loc>https://www.vueweb.cn/categories/Linux/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -958,7 +965,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/categories/javascript/</loc>
+    <loc>https://www.vueweb.cn/categories/Canvas/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -972,7 +979,7 @@
   </url>
   
   <url>
-    <loc>https://www.vueweb.cn/categories/Canvas/</loc>
+    <loc>https://www.vueweb.cn/categories/WebRTC/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -980,13 +987,6 @@
   
   <url>
     <loc>https://www.vueweb.cn/categories/Hexo/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.vueweb.cn/categories/WebRTC/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
