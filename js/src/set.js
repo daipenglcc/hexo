@@ -113,7 +113,7 @@ if ("serviceWorker" in navigator) {
 }
 
 console.log(
-  "\n %c 梦魇|专注于分享 QQ:1058221214 %c https://blog.ihoey.com/ \n\n",
+  "\n %c 梦魇|专注于分享 QQ:1058221214 %c https://www.vueweb.cn/ \n\n",
   "color: #FF0000; background: #4bffba; padding:5px 0; border-radius: 5px 5px 5px 5px;",
   "background: #fadfa3; padding:5px 0; border-radius: 5px 5px 5px 5px;"
 );
