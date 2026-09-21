@@ -2,16 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Cron/2017-04-22-Cron.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/posts/Mac/2017-11-21-Mac-OS-X-command-line-tool.html</loc>
+    <loc>https://blog.ihoey.com/posts/Linux/2018-01-30-Hexo-NexT-Wildfire.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -29,16 +20,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Linux/2018-01-30-Hexo-NexT-Wildfire.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/posts/Node/2017-12-25-Merry-Christmas.html</loc>
+    <loc>https://blog.ihoey.com/posts/Cron/2017-04-22-Cron.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -56,7 +38,34 @@
   </url>
   
   <url>
+    <loc>https://blog.ihoey.com/posts/Node/2017-12-25-Merry-Christmas.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.ihoey.com/posts/Node/2016-12-12-Node-part2.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/Mac/2017-11-21-Mac-OS-X-command-line-tool.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/Android/2016-12-18-adb-Android-Debug-Bridge.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -74,15 +83,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Canvas/2016-11-13-canvas-part1.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/posts/Linux/2017-06-22-blog-comment-gentie-remind.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Android/2016-12-18-adb-Android-Debug-Bridge.html</loc>
+    <loc>https://blog.ihoey.com/posts/Canvas/2016-11-13-canvas-part1.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Linux/2017-07-06-comment_ru_he_xuan_ze.html</loc>
+    <loc>https://blog.ihoey.com/posts/Linux/2018-02-13-crontab-part1.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -137,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Linux/2018-02-13-crontab-part1.html</loc>
+    <loc>https://blog.ihoey.com/posts/Linux/2017-07-06-comment_ru_he_xuan_ze.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -164,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Git/2017-04-23-git.html</loc>
+    <loc>https://blog.ihoey.com/posts/javascript/2016-07-22-javascript-Function.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -173,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/javascript/2016-07-22-javascript-Function.html</loc>
+    <loc>https://blog.ihoey.com/posts/Git/2017-04-23-git.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -200,6 +200,15 @@
   </url>
   
   <url>
+    <loc>https://blog.ihoey.com/posts/javascript/2016-06-15-javascript-inherit.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.ihoey.com/posts/javascript/2017-11-29-javascript-getGverify.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -209,7 +218,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/javascript/2016-06-15-javascript-inherit.html</loc>
+    <loc>https://blog.ihoey.com/posts/javascript/2016-11-20-javascript-jquery-part3.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -245,15 +254,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/javascript/2016-11-24-javascript-jquery-part6.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/posts/javascript/2016-11-23-javascript-jquery-part5.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -281,25 +281,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/javascript/2016-11-20-javascript-jquery-part3.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/posts/javascript/2016-05-18-javascript-part2.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/posts/javascript/2016-11-09-javascript-part4.html</loc>
+    <loc>https://blog.ihoey.com/posts/javascript/2016-11-24-javascript-jquery-part6.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -317,7 +299,34 @@
   </url>
   
   <url>
+    <loc>https://blog.ihoey.com/posts/javascript/2016-05-18-javascript-part2.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.ihoey.com/posts/javascript/2016-11-10-javascript-part5.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/javascript/2016-11-09-javascript-part4.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/javascript/2016-06-04-javascript-prototype.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -344,25 +353,16 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/javascript/2016-06-04-javascript-prototype.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/posts/Linux/2017-05-26-liunx-shell.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/posts/javascript/2016-11-12-javascript-summary.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/MongoDB/2017-03-27-mongodb-ues.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -389,15 +389,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/MongoDB/2017-03-27-mongodb-ues.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/posts/MySQL/2018-04-13-mysql-import-table.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -407,16 +398,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Node/2018-04-28-npm-vs-yarn-cheat-sheet.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/posts/Node/2017-11-24-npm-version.html</loc>
+    <loc>https://blog.ihoey.com/posts/Linux/2017-05-26-liunx-shell.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -434,7 +416,25 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/rust/2022-09-17-rust-wechat-game-ylgy.html</loc>
+    <loc>https://blog.ihoey.com/posts/Node/2017-11-24-npm-version.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/Node/2018-04-28-npm-vs-yarn-cheat-sheet.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/Node/2017-05-10-npm.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -452,15 +452,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/shadowsocks/2017-03-16-shadowsocks-install.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html</loc>
     
     <lastmod>2026-09-18</lastmod>
@@ -470,7 +461,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Linux/2018-03-15-ubuntu-zh-CN-UTF-8.html</loc>
+    <loc>https://blog.ihoey.com/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -479,7 +470,25 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html</loc>
+    <loc>https://blog.ihoey.com/posts/rust/2022-09-17-rust-wechat-game-ylgy.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/shadowsocks/2017-03-16-shadowsocks-install.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/posts/Linux/2018-03-15-ubuntu-zh-CN-UTF-8.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -506,25 +515,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/posts/Node/2017-05-10-npm.html</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/manifest.json</loc>
-    
-    <lastmod>2026-09-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/categories/index.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -542,7 +533,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/guestbook/index.html</loc>
+    <loc>https://blog.ihoey.com/categories/index.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -551,7 +542,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/links/index.html</loc>
+    <loc>https://blog.ihoey.com/guestbook/index.html</loc>
     
     <lastmod>2026-09-18</lastmod>
     
@@ -568,6 +559,15 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://blog.ihoey.com/links/index.html</loc>
+    
+    <lastmod>2026-09-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   <url>
     <loc>https://blog.ihoey.com/</loc>
@@ -576,6 +576,27 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>https://blog.ihoey.com/tags/comment/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/tags/javascript/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/tags/Function/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
   <url>
     <loc>https://blog.ihoey.com/tags/Ubuntu/</loc>
@@ -606,35 +627,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/tags/Mac/</loc>
+    <loc>https://blog.ihoey.com/tags/Node/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/tags/Mac-OS/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/tags/javascript/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/tags/Function/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/tags/comment/</loc>
+    <loc>https://blog.ihoey.com/tags/NodeJs/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -648,14 +648,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/tags/Node/</loc>
+    <loc>https://blog.ihoey.com/tags/Mac/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/tags/NodeJs/</loc>
+    <loc>https://blog.ihoey.com/tags/Mac-OS/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -760,20 +760,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/tags/%E5%8E%9F%E7%94%9FJs/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/tags/tools/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/tags/js%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -795,6 +781,20 @@
   </url>
   
   <url>
+    <loc>https://blog.ihoey.com/tags/%E5%8E%9F%E7%94%9FJs/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/tags/tools/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.ihoey.com/tags/Js%E6%A1%86%E6%9E%B6/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -809,13 +809,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/tags/%E5%8E%9F%E5%9E%8B/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -824,6 +817,13 @@
   
   <url>
     <loc>https://blog.ihoey.com/tags/%E5%8E%9F%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -865,28 +865,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/tags/rust/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/tags/pm2/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/tags/shadowsocks/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -914,6 +893,27 @@
   </url>
   
   <url>
+    <loc>https://blog.ihoey.com/tags/rust/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/tags/shadowsocks/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.ihoey.com/tags/Markdown%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -923,14 +923,7 @@
 
   
   <url>
-    <loc>https://blog.ihoey.com/categories/Cron/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/categories/Mac/</loc>
+    <loc>https://blog.ihoey.com/categories/Linux/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -944,7 +937,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/categories/Linux/</loc>
+    <loc>https://blog.ihoey.com/categories/Cron/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -952,6 +945,13 @@
   
   <url>
     <loc>https://blog.ihoey.com/categories/Node/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/categories/Mac/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1014,20 +1014,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ihoey.com/categories/rust/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ihoey.com/categories/shadowsocks/</loc>
-    <lastmod>2026-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ihoey.com/categories/javascript/PWA/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -1036,6 +1022,20 @@
   
   <url>
     <loc>https://blog.ihoey.com/categories/CSS3/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/categories/rust/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ihoey.com/categories/shadowsocks/</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
