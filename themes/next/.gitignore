@@ -13,7 +13,7 @@ source/lib/*
 # Track internal libraries & Ignore unused verdors files
 source/lib/font-awesome/less/
 source/lib/font-awesome/scss/
-!source/lib/font-awesome/*
+!source/lib/font-awesome/
 
 !source/lib/jquery/
 
@@ -21,3 +21,7 @@ source/lib/ua-parser-js/*
 !source/lib/ua-parser-js/dist/
 
 !source/lib/velocity/
+!source/lib/fancybox/
+!source/lib/fastclick/
+!source/lib/jquery_lazyload/
+!source/lib/algolia-instant-search/
