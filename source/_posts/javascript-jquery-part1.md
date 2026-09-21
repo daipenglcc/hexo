@@ -10,8 +10,6 @@ categories: javascript
 
 JQuery 模块分析及其实现第一部分!
 
-<img src="https://cdn.ihoey.com/20161119.png?imageView2/0/format/png/q/75|imageslim" width="100%">
-
 <!-- more -->
 
 ## 案例：获取指定 DOM 下所有子元素

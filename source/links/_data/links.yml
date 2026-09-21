@@ -39,11 +39,6 @@
 #   link: http://www.zhisou.cc/
 #   description: "来语直搜"
 
-- name: 阿斗
-  link: https://www.lijinghua.club/
-  description: "追逐一生"
-  avatar: https://cdn.ihoey.com/blog/links/lijinhua_link.jpeg?imageView2/0/format/jpg/q/75|imageslim
-
 - name: er567
   link: https://oohyo.github.io/
   description: "吾念所归,无惧无退"
@@ -56,20 +51,6 @@
 - name: Axton Yao
   link: https://flyhigher.top/links
   description: "Always Dream. Always Explore."
-
-# - name: 钟储兵博客
-#   link: http://www.zcbboke.com/
-#   description: '钟储兵博客'
-
-# - name: 李伟(Waylee)
-#   link: https://waylee.net/
-#   description: '不忘初心方得始终'
-#   avatar: https://waylee.net/wp-content/themes/No.7_qzhai/img/default.jpg
-
-# - name: 三秋
-#   link: http://sanqiu.org/
-#   description: "雨零耶，君将留？"
-#   avatar: https://sanqiu.org/s/tupian/sanqiu.gif
 
 - name: 洛哩哩~
   link: https://lolili.cc/
@@ -105,11 +86,6 @@
 - name: 姬长信
   link: https://blog.isoyu.com/
   description: "姬长信,主要iPhone开发,iOS开发,iPad开发,Mac开发.现致力为所有移动开发者提供资讯服务、问答服务、代码下载、工具库及服务。"
-
-# - name: 奈何
-#   link: http://www.naihes.cn/
-#   description: "生亦何欢，死亦何苦！"
-#   avatar: https://cdn.ihoey.com/www.naihes.cn.gif?imageView2/0/format/gif/q/75|imageslim
 
 - name: WQian五千
   link: https://wqian.net
