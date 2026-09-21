@@ -11,3 +11,30 @@
 .Hitalk .vimg {
   margin: 0;
 }
+
+.Hitalk .vua {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+}
+
+.Hitalk .vua-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.Hitalk .vua-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  vertical-align: text-bottom;
+  object-fit: contain;
+}
+
+.Hitalk .vua-sep {
+  opacity: 0.5;
+  margin: 0 1px;
+}

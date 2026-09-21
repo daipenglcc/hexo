@@ -166,7 +166,35 @@ var Hitalk = (function (e) {
 * @license
 * Copyright 2017 Google LLC
 * SPDX-License-Identifier: BSD-3-Clause
-*/var Q = class extends N { constructor(e) { if (super(e), this.it = b, e.type !== j.CHILD) throw Error(this.constructor.directiveName + `() can only be used in child bindings`) } render(e) { if (e === b || e == null) return this._t = void 0, this.it = e; if (e === y) return e; if (typeof e != `string`) throw Error(this.constructor.directiveName + `() called with a non-string value`); if (e === this.it) return this._t; this.it = e; let t = [e]; return t.raw = t, this._t = { _$litType$: this.constructor.resultType, strings: t, values: [] } } }; Q.directiveName = `unsafeHTML`, Q.resultType = 1; let et = M(Q); function tt(e) { try { let t = new URL(e || ``); if ([`http:`, `https:`].includes(t.protocol) && !t.username && !t.password) return t.href } catch { } return `#` } function nt(e) { let t =/* @__PURE__ */ new Date, n = new Date(e), r = t.getTime() - n.getTime(), i = Math.floor(r / 1e3), a = Math.floor(i / 60), o = Math.floor(a / 60), s = Math.floor(o / 24); return s > 7 ? rt(n) : s > 0 ? `${s} 天前` : o > 0 ? `${o} 小时前` : a > 0 ? `${a} 分钟前` : `刚刚` } function rt(e) { return `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, `0`)}-${String(e.getDate()).padStart(2, `0`)}` } function it(e, t = `mm`) { return `https://gravatar.loli.net/avatar/${/^[a-f0-9]{32}$/.test(e) ? e : ``}?s=40&d=${encodeURIComponent(t)}` } function at(e, t, n, r = !1) {
+*/var Q = class extends N { constructor(e) { if (super(e), this.it = b, e.type !== j.CHILD) throw Error(this.constructor.directiveName + `() can only be used in child bindings`) } render(e) { if (e === b || e == null) return this._t = void 0, this.it = e; if (e === y) return e; if (typeof e != `string`) throw Error(this.constructor.directiveName + `() called with a non-string value`); if (e === this.it) return this._t; this.it = e; let t = [e]; return t.raw = t, this._t = { _$litType$: this.constructor.resultType, strings: t, values: [] } } }; Q.directiveName = `unsafeHTML`, Q.resultType = 1; let et = M(Q); function tt(e) { try { let t = new URL(e || ``); if ([`http:`, `https:`].includes(t.protocol) && !t.username && !t.password) return t.href } catch { } return `#` } function nt(e) { let t =/* @__PURE__ */ new Date, n = new Date(e), r = t.getTime() - n.getTime(), i = Math.floor(r / 1e3), a = Math.floor(i / 60), o = Math.floor(a / 60), s = Math.floor(o / 24); return s > 7 ? rt(n) : s > 0 ? `${s} 天前` : o > 0 ? `${o} 小时前` : a > 0 ? `${a} 分钟前` : `刚刚` } function rt(e) { return `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, `0`)}-${String(e.getDate()).padStart(2, `0`)}` } function it(e, t = `mm`) { return `https://gravatar.loli.net/avatar/${/^[a-f0-9]{32}$/.test(e) ? e : ``}?s=40&d=${encodeURIComponent(t)}` }
+function getBrowserIcon(e) {
+  if (!e) return null;
+  let t = String(e).toLowerCase();
+  if (t.includes(`edge`) || t.includes(`edg`) || t.includes(`msie`) || t.includes(`ie`)) return `/images/ua_icon/IE.svg`;
+  if (t.includes(`sogou`)) return `/images/ua_icon/Sogou.svg`;
+  if (t.includes(`xiaomi`) || t.includes(`miui`)) return `/images/ua_icon/Xiaomi.svg`;
+  if (t.includes(`firefox`)) return `/images/ua_icon/Firefox.svg`;
+  if (t.includes(`chrome`) || t.includes(`chromium`)) return `/images/ua_icon/Chrome.svg`;
+  if (t.includes(`safari`)) return `/images/ua_icon/Safari.svg`;
+  return null;
+}
+function getOsIcon(e) {
+  if (!e) return null;
+  let t = String(e).toLowerCase();
+  if (t.includes(`windows 10`) || t.includes(`windows 11`) || t.includes(`win 10`) || t.includes(`win 11`)) return `/images/ua_icon/Windows10.svg`;
+  if (t.includes(`windows`) || t.includes(`win`)) return `/images/ua_icon/Windows7.svg`;
+  if (t.includes(`android`)) return `/images/ua_icon/Android.svg`;
+  if (t.includes(`ubuntu`)) return `/images/ua_icon/Ubuntu.svg`;
+  if (t.includes(`linux`)) return `/images/ua_icon/Linux.svg`;
+  if (t.includes(`mac`) || t.includes(`ios`) || t.includes(`iphone`) || t.includes(`ipad`) || t.includes(`darwin`)) return `/images/ua_icon/Apple.svg`;
+  return null;
+}
+function renderClientUa(e) {
+  if (!e) return b;
+  let t = getBrowserIcon(e.browser), n = getOsIcon(e.os);
+  return v`<span class="vua">${e.browser ? v`<span class="vua-item">${t ? v`<img class="vua-icon" src=${t} alt="" />` : b}<span>${e.browser}</span></span>` : b}${e.browser && e.os ? v`<span class="vua-sep">·</span>` : b}${e.os ? v`<span class="vua-item">${n ? v`<img class="vua-icon" src=${n} alt="" />` : b}<span>${e.os}</span></span>` : b}</span>`;
+}
+function at(e, t, n, r = !1) {
     return v`<li class="vcard" id=${e.id} tabindex="-1">
     ${t === `hide` || e.deleted ? b : v`<img class="vimg" src=${it(e.avatar_hash, t)} alt=${e.nick} />`}
     <section>
@@ -179,7 +207,7 @@ var Hitalk = (function (e) {
         >${e.is_pinned ? v`<span class="vpin">置顶</span>` : b}${e.is_admin ? v`<span class="vbadge">博主</span>` : b}<span
           class="vtime"
           >${nt(e.created_at)}</span
-        >${e.client ? v`<span class="vua">${[e.client.browser, e.client.os].filter(Boolean).join(` · `)}</span>` : b}
+        >${e.client ? renderClientUa(e.client) : b}
       </div>
       ${e.reply_to ? v`<button class="vreply-to" type="button" ?disabled=${!e.reply_to.available} @click=${() => n.onLocate(e.reply_to.id)}>回复 @${e.reply_to.nick}</button>` : b}
       <div
