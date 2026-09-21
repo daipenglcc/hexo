@@ -1,5 +1,5 @@
-https://www.vues.cn/posts/rust/2022-09-17-rust-wechat-game-ylgy.html
-https://www.vues.cn/posts/WebRTC/2020-07-24-getting-started-overview-webrtc.html
-https://www.vues.cn/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html
-https://www.vues.cn/posts/Node/2019-01-18-node-wechat-bill.html
-https://www.vues.cn/posts/Hexo/2018-05-27-hexo-code-block.html
+https://www.vueweb.cn/posts/rust/2022-09-17-rust-wechat-game-ylgy.html
+https://www.vueweb.cn/posts/WebRTC/2020-07-24-getting-started-overview-webrtc.html
+https://www.vueweb.cn/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html
+https://www.vueweb.cn/posts/Node/2019-01-18-node-wechat-bill.html
+https://www.vueweb.cn/posts/Hexo/2018-05-27-hexo-code-block.html
