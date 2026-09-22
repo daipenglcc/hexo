@@ -41,6 +41,7 @@
   {% set nofollow = ' rel="external nofollow noopener noreferrer"' %}
 {% endif %}
 
+{#
 {% if theme.footer.theme %}
   <div class="theme-info">京ICP备15058055号-1</div>
 {% endif %}
@@ -54,6 +55,7 @@
   #}{{ __('footer.powered', '<a class="theme-link" target="_blank"' + nofollow + ' href="https://github.com/ihoey">Ihoey</a>') }}{#
 #}</div>
 {% endif %}
+#}
 
 {% if theme.footer.custom_text %}
   <div class="footer-custom">{#
@@ -61,6 +63,7 @@
 #}</div>
 {% endif %}
 
+{#
 <div class="eevee">
   <div class="message">嗨，你好啊~~</div>
   <div class="body">
@@ -124,3 +127,4 @@
     </div>
   </div>
 </div>
+#}
