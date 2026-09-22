@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="本篇文章介绍学习MongoDB的一些常用命令,希望能帮助大家.">
+  <meta name="description" content="整理了 MongoDB &#x2F; mongosh 开发中最常用的基础命令、CRUD 查询、聚合分页以及索引优化操作速查。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongoDB学习笔记">
 <meta property="og:url" content="https://www.vueweb.cn/posts/MongoDB/2017-03-27-mongodb-ues.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="本篇文章介绍学习MongoDB的一些常用命令,希望能帮助大家.">
+<meta property="og:description" content="整理了 MongoDB &#x2F; mongosh 开发中最常用的基础命令、CRUD 查询、聚合分页以及索引优化操作速查。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-27T07:07:03.000Z">
-<meta property="article:modified_time" content="2026-09-18T09:50:58.000Z">
+<meta property="article:modified_time" content="2026-09-22T07:38:50.241Z">
 <meta property="article:tag" content="MongoDB">
 <meta property="article:tag" content="NoSQL">
 <meta name="twitter:card" content="summary">
@@ -340,7 +340,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">56</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">10</span></a>
   </li>
         
         
@@ -348,7 +348,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">49</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">18</span></a>
   </li>
         
         
@@ -469,7 +469,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-18 17:50:58" itemprop="dateModified" datetime="2026-09-18T17:50:58+08:00">2026-09-18</time>
+                <time title="修改时间：2026-09-22 15:38:50" itemprop="dateModified" datetime="2026-09-22T15:38:50+08:00">2026-09-22</time>
               
             
           </span>
@@ -538,206 +538,23 @@
       
 
       
-        <p>本篇文章介绍学习MongoDB的一些常用命令,希望能帮助大家.</p>
+        <p>整理了 MongoDB / <code>mongosh</code> 开发中最常用的基础命令、CRUD 查询、聚合分页以及索引优化操作速查。</p>
 <a id="more"></a>
 
-<h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><ul>
-<li><code>Help</code>查看命令提示<ul>
-<li><code>db.help()</code>;</li>
-<li><code>db.yourColl.help()</code>;</li>
-<li><code>db.youColl.find().help()</code>;</li>
-</ul>
-</li>
-<li>切换/创建数据库<ul>
-<li><code>use yourDB</code>;  当创建一个集合(<code>table</code>)的时候会自动创建当前数据库</li>
-</ul>
-</li>
-<li>查询所有数据库<ul>
-<li><code>show dbs</code>;</li>
-</ul>
-</li>
-<li>删除当前使用数据库<ul>
-<li><code>db.dropDatabase()</code>;</li>
-</ul>
-</li>
-<li>从指定主机上克隆数据库<ul>
-<li>从指定主机上克隆数据库</li>
-</ul>
-</li>
-<li>从指定的机器上复制指定数据库数据到某个数据库<ul>
-<li><code>db.copyDatabase(&quot;mydb&quot;, &quot;temp&quot;, &quot;127.0.0.1&quot;)</code>;将本机的<code>mydb</code>的数据复制到<code>temp</code>数据库中</li>
-</ul>
-</li>
-<li>修复当前数据库<ul>
-<li><code>db.repairDatabase()</code>;</li>
-</ul>
-</li>
-<li>查看当前使用的数据库<ul>
-<li><code>db.getName()</code>;</li>
-</ul>
-</li>
-<li>显示当前db状态<ul>
-<li><code>db.stats()</code>;</li>
-</ul>
-</li>
-<li>当前db版本<ul>
-<li><code>db.version()</code>;</li>
-</ul>
-</li>
-<li>查看当前db的链接机器地址<ul>
-<li><code>db.getMongo()</code>;</li>
-</ul>
-</li>
-</ul>
-<h2 id="Collection聚集集合操作"><a href="#Collection聚集集合操作" class="headerlink" title="Collection聚集集合操作"></a>Collection聚集集合操作</h2><ul>
-<li>创建一个聚集集合（<code>table</code>）<ul>
-<li><code>db.createCollection(“collName”, {size: 20, capped: 5, max: 100})</code>;</li>
-</ul>
-</li>
-<li>得到指定名称的聚集集合（<code>table</code>）<ul>
-<li><code>db.getCollection(&quot;account&quot;)</code>;</li>
-</ul>
-</li>
-<li>得到当前db的所有聚集集合<ul>
-<li><code>db.getCollectionNames()</code>;</li>
-</ul>
-</li>
-<li>显示当前db所有聚集索引的状态<ul>
-<li><code>db.printCollectionStats()</code>;</li>
-</ul>
-</li>
-</ul>
-<h2 id="用户相关操作"><a href="#用户相关操作" class="headerlink" title="用户相关操作"></a>用户相关操作</h2><ul>
-<li>添加一个用户<ul>
-<li><code>db.addUser(&quot;name&quot;)</code>;</li>
-<li><code>db.addUser(&quot;userName&quot;, &quot;pwd123&quot;, true)</code>; 添加用户、设置密码、是否只读</li>
-</ul>
-</li>
-<li>数据库认证、安全模式<ul>
-<li><code>db.auth(&quot;userName&quot;, &quot;123123&quot;)</code>;</li>
-</ul>
-</li>
-<li>显示当前所有用户<ul>
-<li><code>show users</code>;</li>
-</ul>
-</li>
-<li>删除用户<ul>
-<li><code>db.removeUser(&quot;userName&quot;)</code>;</li>
-</ul>
-</li>
-</ul>
-<h2 id="聚集集合查询"><a href="#聚集集合查询" class="headerlink" title="聚集集合查询"></a>聚集集合查询</h2><ul>
-<li>查询所有记录<ul>
-<li><code>db.userInfo.find()</code>; 相当于：<code>select* from userInfo</code>;默认每页显示20条记录，当显示不下的情况下,可以用it迭代命令查询下一页数据。注意：键入it命令不能带“;”但是你可以设置每页显示数据的大小,用DBQuery.shellBatchSize= 50;这样每页就显示50条记录了。</li>
-</ul>
-</li>
-<li>查询去掉后的当前聚集集合中的某列的重复数据<ul>
-<li><code>db.userInfo.distinct(&quot;name&quot;)</code>;会过滤掉name中的相同数据,相当于：<code>select distict name from userInfo</code>;</li>
-</ul>
-</li>
-<li>查询<code>age = 22</code>的记录<ul>
-<li><code>db.userInfo.find({&quot;age&quot;: 22})</code>; 相当于：<code>select * from userInfo where age = 22</code>;</li>
-</ul>
-</li>
-<li>查询<code>age &gt; 22</code>的记录<ul>
-<li><code>db.userInfo.find({age: {$gt: 22}})</code>;</li>
-</ul>
-</li>
-<li>查询<code>age &lt; 22</code>的记录<ul>
-<li><code>db.userInfo.find({age: {$lt: 22}})</code>;</li>
-</ul>
-</li>
-<li>查询<code>age &gt;= 25</code>的记录<ul>
-<li><code>db.userInfo.find({age: {$gte: 25}})</code>;</li>
-</ul>
-</li>
-<li>查询<code>age &gt;= 23</code> 并且 <code>age &lt;= 26</code><ul>
-<li><code>db.userInfo.find({age: {$gte: 23, $lte: 26}})</code>;</li>
-</ul>
-</li>
-<li>查询<code>name</code>中包含 <code>mongo</code>的数据<ul>
-<li><code>db.userInfo.find({name: /mongo/})</code>;</li>
-</ul>
-</li>
-<li>查询<code>name</code>中以<code>mongo</code>开头的<ul>
-<li><code>db.userInfo.find({name: /^mongo/})</code>;</li>
-</ul>
-</li>
-<li>查询指定列<code>name</code>、<code>age</code>数据<ul>
-<li><code>db.userInfo.find({}, {name: 1, age: 1})</code>;当然<code>name</code>也可以用<code>true</code>或<code>false</code>,当用<code>ture</code>的情况下河<code>name:1</code>效果一样，如果用<code>false</code>就是排除<code>name</code>，显示<code>name</code>以外的列信息。</li>
-</ul>
-</li>
-<li>查询指定列<code>name</code>、<code>age</code>数据, <code>age &gt; 25</code>.<ul>
-<li><code>db.userInfo.find({age: {$gt: 25}}, {name: 1, age: 1})</code>;</li>
-</ul>
-</li>
-<li>按照年龄排序<ul>
-<li>升序：<code>db.userInfo.find().sort({age: 1})</code>;</li>
-<li>降序：<code>db.userInfo.find().sort({age: -1})</code>;</li>
-</ul>
-</li>
-<li>查询<code>name = zhangsan, age = 22</code>的数据<ul>
-<li><code>db.userInfo.find({name: &#39;zhangsan&#39;, age: 22})</code>;</li>
-</ul>
-</li>
-<li>查询前5条数据<ul>
-<li><code>db.userInfo.find().limit(5)</code>;</li>
-</ul>
-</li>
-<li>查询10条以后的数据<ul>
-<li><code>db.userInfo.find().skip(10)</code>;</li>
-</ul>
-</li>
-<li>查询在5-10之间的数据<ul>
-<li><code>db.userInfo.find().limit(10).skip(5)</code>;可用于分页，limit是pageSize，skip是第几页*pageSize</li>
-</ul>
-</li>
-<li>or与 查询<ul>
-<li><code>db.userInfo.find({$or: [{age: 22}, {age: 25}]})</code>;</li>
-</ul>
-</li>
-<li>查询第一条数据<ul>
-<li><code>db.userInfo.findOne()</code>;</li>
-<li><code>db.userInfo.find().limit(1)</code>;</li>
-</ul>
-</li>
-<li>查询某个结果集的记录条数<ul>
-<li><code>db.userInfo.find({age: {$gte: 25}}).count()</code>;如果要返回限制之后的记录数量，要使用count(true)或者count(非0)</li>
-<li><code>db.users.find().skip(10).limit(5).count(true)</code>;</li>
-</ul>
-</li>
-<li>按照某列进行排序<ul>
-<li><code>db.userInfo.find({sex: {$exists: true}}).count()</code>;</li>
-</ul>
-</li>
-</ul>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><ul>
-<li>创建索引<ul>
-<li><code>db.userInfo.ensureIndex({name: 1})</code>;</li>
-<li><code>db.userInfo.ensureIndex({name: 1, ts: -1})</code>;</li>
-</ul>
-</li>
-<li>查询当前聚集集合所有索引<ul>
-<li><code>db.userInfo.getIndexes()</code>;</li>
-</ul>
-</li>
-<li>查看总索引记录大小<ul>
-<li><code>db.userInfo.totalIndexSize()</code>;</li>
-</ul>
-</li>
-<li>读取当前集合的所有index信息<ul>
-<li><code>db.users.reIndex()</code>;</li>
-</ul>
-</li>
-<li>删除指定索引<ul>
-<li><code>db.users.dropIndex(&quot;name_1&quot;)</code>;</li>
-</ul>
-</li>
-<li>删除所有索引<ul>
-<li><code>db.users.dropIndexes()</code>;</li>
-</ul>
-</li>
-</ul>
+<h2 id="1-基础服务与数据库操作"><a href="#1-基础服务与数据库操作" class="headerlink" title="1. 基础服务与数据库操作"></a>1. 基础服务与数据库操作</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 帮助命令</span></span><br><span class="line">help                         <span class="comment">// 查看系统级帮助</span></span><br><span class="line">db.help()                    <span class="comment">// 查看当前数据库方法帮助</span></span><br><span class="line">db.colName.help()            <span class="comment">// 查看集合方法帮助</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据库切换与查看</span></span><br><span class="line">show dbs                     <span class="comment">// 列出所有数据库</span></span><br><span class="line">use my_database              <span class="comment">// 切换到指定数据库（不存在时，插入第一条数据时自动创建）</span></span><br><span class="line">db.getName()                 <span class="comment">// 查看当前所在数据库名称</span></span><br><span class="line">db.stats()                   <span class="comment">// 查看当前数据库的存储状态与统计信息</span></span><br><span class="line">db.dropDatabase()            <span class="comment">// 删除当前数据库</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-集合（Collection）管理"><a href="#2-集合（Collection）管理" class="headerlink" title="2. 集合（Collection）管理"></a>2. 集合（Collection）管理</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show collections             <span class="comment">// 查看当前库下的所有集合（或 show tables）</span></span><br><span class="line">db.createCollection(<span class="string">"users"</span>) <span class="comment">// 显式创建名为 users 的集合</span></span><br><span class="line">db.users.drop()              <span class="comment">// 删除 users 集合</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-文档插入（Create）"><a href="#3-文档插入（Create）" class="headerlink" title="3. 文档插入（Create）"></a>3. 文档插入（Create）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入单条文档</span></span><br><span class="line">db.users.insertOne(&#123;</span><br><span class="line">  name: <span class="string">"张三"</span>,</span><br><span class="line">  age: <span class="number">24</span>,</span><br><span class="line">  tags: [<span class="string">"javascript"</span>, <span class="string">"mongodb"</span>],</span><br><span class="line">  createAt: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 批量插入多条文档</span></span><br><span class="line">db.users.insertMany([</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"李四"</span>, <span class="attr">age</span>: <span class="number">28</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"王五"</span>, <span class="attr">age</span>: <span class="number">32</span> &#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-文档查询（Read-Retrieve）"><a href="#4-文档查询（Read-Retrieve）" class="headerlink" title="4. 文档查询（Read / Retrieve）"></a>4. 文档查询（Read / Retrieve）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 查询全部</span></span><br><span class="line">db.users.find()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 精确匹配查询</span></span><br><span class="line">db.users.find(&#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 比较操作符 ($gt, $gte, $lt, $lte, $ne)</span></span><br><span class="line">db.users.find(&#123; <span class="attr">age</span>: &#123; <span class="attr">$gt</span>: <span class="number">20</span> &#125; &#125;)           <span class="comment">// age &gt; 20</span></span><br><span class="line">db.users.find(&#123; <span class="attr">age</span>: &#123; <span class="attr">$gte</span>: <span class="number">20</span>, <span class="attr">$lte</span>: <span class="number">30</span> &#125; &#125;) <span class="comment">// 20 &lt;= age &lt;= 30</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 逻辑操作符 ($or, $and, $in)</span></span><br><span class="line">db.users.find(&#123; <span class="attr">$or</span>: [&#123; <span class="attr">age</span>: <span class="number">24</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">"李四"</span> &#125;] &#125;)</span><br><span class="line">db.users.find(&#123; <span class="attr">age</span>: &#123; <span class="attr">$in</span>: [<span class="number">24</span>, <span class="number">28</span>, <span class="number">32</span>] &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 正则模糊匹配</span></span><br><span class="line">db.users.find(&#123; <span class="attr">name</span>: <span class="regexp">/张/</span> &#125;)     <span class="comment">// 匹配包含 "张" 的记录</span></span><br><span class="line">db.users.find(&#123; <span class="attr">name</span>: <span class="regexp">/^张/</span> &#125;)    <span class="comment">// 匹配以 "张" 开头的记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 字段投影（指定返回/排除的字段，_id 默认包含）</span></span><br><span class="line">db.users.find(&#123;&#125;, &#123; <span class="attr">name</span>: <span class="number">1</span>, <span class="attr">age</span>: <span class="number">1</span>, <span class="attr">_id</span>: <span class="number">0</span> &#125;) <span class="comment">// 仅返回 name 和 age 字段</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 7. 排序（1 为升序，-1 为降序）</span></span><br><span class="line">db.users.find().sort(&#123; <span class="attr">age</span>: <span class="number">1</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 8. 分页（limit 限制条数，skip 跳过条数）</span></span><br><span class="line">db.users.find().skip(<span class="number">10</span>).limit(<span class="number">5</span>) <span class="comment">// 获取第 3 页数据（每页 5 条）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 9. 查询首条与计数</span></span><br><span class="line">db.users.findOne(&#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;)</span><br><span class="line">db.users.countDocuments(&#123; <span class="attr">age</span>: &#123; <span class="attr">$gt</span>: <span class="number">20</span> &#125; &#125;) <span class="comment">// 统计满足条件的文档数量</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-文档更新（Update）"><a href="#5-文档更新（Update）" class="headerlink" title="5. 文档更新（Update）"></a>5. 文档更新（Update）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 更新单条满足条件的文档 ($set 保留其他字段)</span></span><br><span class="line">db.users.updateOne(</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">$set</span>: &#123; <span class="attr">age</span>: <span class="number">25</span> &#125; &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 批量更新多条</span></span><br><span class="line">db.users.updateMany(</span><br><span class="line">  &#123; <span class="attr">age</span>: &#123; <span class="attr">$lt</span>: <span class="number">20</span> &#125; &#125;,</span><br><span class="line">  &#123; <span class="attr">$set</span>: &#123; <span class="attr">status</span>: <span class="string">"minor"</span> &#125; &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自增/自减操作符 ($inc)</span></span><br><span class="line">db.users.updateOne(</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">$inc</span>: &#123; <span class="attr">age</span>: <span class="number">1</span> &#125; &#125; <span class="comment">// age 自动 +1</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-文档删除（Delete）"><a href="#6-文档删除（Delete）" class="headerlink" title="6. 文档删除（Delete）"></a>6. 文档删除（Delete）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除满足条件的第一条数据</span></span><br><span class="line">db.users.deleteOne(&#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 批量删除所有满足条件的数据</span></span><br><span class="line">db.users.deleteMany(&#123; <span class="attr">age</span>: &#123; <span class="attr">$lt</span>: <span class="number">18</span> &#125; &#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="7-索引管理（Index）"><a href="#7-索引管理（Index）" class="headerlink" title="7. 索引管理（Index）"></a>7. 索引管理（Index）</h2><p>合理的索引可以极大地提升海量数据下的查询性能：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建单字段索引（1 升序，-1 降序）</span></span><br><span class="line">db.users.createIndex(&#123; <span class="attr">name</span>: <span class="number">1</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 创建复合索引</span></span><br><span class="line">db.users.createIndex(&#123; <span class="attr">age</span>: <span class="number">1</span>, <span class="attr">createAt</span>: <span class="number">-1</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 创建唯一索引（防止字段重复插入）</span></span><br><span class="line">db.users.createIndex(&#123; <span class="attr">email</span>: <span class="number">1</span> &#125;, &#123; <span class="attr">unique</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 查看当前集合的所有索引</span></span><br><span class="line">db.users.getIndexes()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 查看索引总占用空间</span></span><br><span class="line">db.users.totalIndexSize()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 删除指定索引</span></span><br><span class="line">db.users.dropIndex(<span class="string">"name_1"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 7. 删除集合所有自定义索引</span></span><br><span class="line">db.users.dropIndexes()</span><br></pre></td></tr></table></figure></div>
 
       
     </div>
@@ -810,8 +627,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/Cron/2017-04-22-Cron.html" rel="prev" title="Ubuntu 使用 Cron 实现计划任务">
-                Ubuntu 使用 Cron 实现计划任务 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/Git/2017-04-23-git.html" rel="prev" title="Git 常用命令学习及整理">
+                Git 常用命令学习及整理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -897,7 +714,7 @@
                 
                   <a href="/archives/index.html%20%7C%7C%20archive">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -926,27 +743,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -995,69 +792,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1169,7 +904,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作"><span class="nav-number">1.</span> <span class="nav-text">常用操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Collection聚集集合操作"><span class="nav-number">2.</span> <span class="nav-text">Collection聚集集合操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户相关操作"><span class="nav-number">3.</span> <span class="nav-text">用户相关操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚集集合查询"><span class="nav-number">4.</span> <span class="nav-text">聚集集合查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">5.</span> <span class="nav-text">索引</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基础服务与数据库操作"><span class="nav-number">1.</span> <span class="nav-text">1. 基础服务与数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-集合（Collection）管理"><span class="nav-number">2.</span> <span class="nav-text">2. 集合（Collection）管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-文档插入（Create）"><span class="nav-number">3.</span> <span class="nav-text">3. 文档插入（Create）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-文档查询（Read-Retrieve）"><span class="nav-number">4.</span> <span class="nav-text">4. 文档查询（Read &#x2F; Retrieve）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-文档更新（Update）"><span class="nav-number">5.</span> <span class="nav-text">5. 文档更新（Update）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-文档删除（Delete）"><span class="nav-number">6.</span> <span class="nav-text">6. 文档删除（Delete）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-索引管理（Index）"><span class="nav-number">7.</span> <span class="nav-text">7. 索引管理（Index）</span></a></li></ol></div>
             
 
           </div>

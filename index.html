@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">56</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">10</span></a>
   </li>
         
         
@@ -349,7 +349,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">49</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">18</span></a>
   </li>
         
         
@@ -411,7 +411,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/rust/2022-09-17-rust-wechat-game-ylgy.html">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Node/2018-05-13-pm2-study.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -430,8 +430,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/rust/2022-09-17-rust-wechat-game-ylgy.html" itemprop="url">
-                  《羊了个羊》程序员过关攻略
+                <a class="post-title-link" href="/posts/Node/2018-05-13-pm2-study.html" itemprop="url">
+                  记一下 pm2 常用配置及命令
                 </a>
               
             
@@ -457,7 +457,7 @@
                 
               
 
-              <time title="创建时间：2022-09-17 10:38:46" itemprop="dateCreated datePublished" datetime="2022-09-17T10:38:46+08:00">2022-09-17</time>
+              <time title="创建时间：2018-05-13 16:45:46" itemprop="dateCreated datePublished" datetime="2018-05-13T16:45:46+08:00">2018-05-13</time>
             
 
             
@@ -474,581 +474,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-18 17:50:58" itemprop="dateModified" datetime="2026-09-18T17:50:58+08:00">2026-09-18</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/rust/" itemprop="url" rel="index"><span itemprop="name">rust</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/rust/2022-09-17-rust-wechat-game-ylgy.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/rust/2022-09-17-rust-wechat-game-ylgy.html" itemprop="commentCount">—</span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>热搜第一羊了个羊</strong>微信小游戏程序员过关攻略。</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="RUST"><figure class="iseeu highlight /rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::&#123;sync::Arc, time::Duration&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> anyhow::&#123;anyhow, <span class="built_in">Result</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> reqwest::Client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> USER_AGENT:&amp;<span class="built_in">str</span> = <span class="string">"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E158 MicroMessenger/8.0.26(0x18002b36) NetType/5G Language/zh_CN"</span>;</span><br><span class="line"><span class="keyword">const</span> TOKEN:&amp;<span class="built_in">str</span> = <span class="string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ0MDkwNzMsIm5iZiI6MTY2MzMwNjg3MywiaWF0IjoxNjYzMzA1MDczLCJqdGkiOiJDTTpjYXRfbWF0Y2g6bHQxMjM0NTYiLCJvcGVuX2lkIjoiIiwidWlkIjo3NTY0NzI5NywiZGVidWciOiIiLCJsYW5nIjoiIn0.mPe9Y3ghiyXY1gNczgAyS4J9HC_jSu_5RitG4MVPSM4"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 完成关卡</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">finish_game</span></span>(rank_time: Arc&lt;<span class="built_in">u32</span>&gt;) -&gt; <span class="built_in">Result</span>&lt;()&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> url = <span class="built_in">format!</span>(<span class="string">"https://cat-match.easygame2021.com/sheep/v1/game/game_over?rank_score=1&amp;rank_state=1&amp;rank_time=&#123;&#125;&amp;rank_role=1&amp;skin=1"</span>, rank_time);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> data = Client::builder()</span><br><span class="line">        .user_agent(USER_AGENT)</span><br><span class="line">        .timeout(Duration::from_secs(<span class="number">1</span>))</span><br><span class="line">        .build()?</span><br><span class="line">        .get(url)</span><br><span class="line">        .header(<span class="string">"t"</span>, TOKEN.to_string())</span><br><span class="line">        .header(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>)</span><br><span class="line">        .header(<span class="string">"host"</span>, <span class="string">"cat-match.easygame2021.com"</span>)</span><br><span class="line">        .send()</span><br><span class="line">        .<span class="keyword">await</span>?</span><br><span class="line">        .json::&lt;serde_json::Value&gt;()</span><br><span class="line">        .<span class="keyword">await</span>?;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> data.get(<span class="string">"err_code"</span>).is_some() &amp;&amp; data.get(<span class="string">"err_code"</span>).unwrap().as_u64().unwrap() == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="literal">Ok</span>(())</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="literal">Err</span>(anyhow!(<span class="string">"请检查配置项t."</span>))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[tokio::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() -&gt; <span class="built_in">Result</span>&lt;()&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> secs = Arc::new(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">let</span> times = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="number">0</span>..times &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Err</span>(e) = finish_game(secs.clone()).<span class="keyword">await</span> &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"闯关失败, &#123;:?&#125;"</span>, e);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"成功完成一次闯关!"</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="literal">Ok</span>(())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>本代码仅供学习交流，严禁用作商业行为！</li>
-<li>因他人私自不正当使用造成的违法违规行为与本人无关！</li>
-<li>如有任何问题可联系本人删除！</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"><hr></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/WebRTC/2020-07-24-getting-started-overview-webrtc.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="光阴小栈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/WebRTC/2020-07-24-getting-started-overview-webrtc.html" itemprop="url">
-                  WebRTC 入门指南
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-07-24 14:32:14" itemprop="dateCreated datePublished" datetime="2020-07-24T14:32:14+08:00">2020-07-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2026-09-18 17:50:58" itemprop="dateModified" datetime="2026-09-18T17:50:58+08:00">2026-09-18</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/WebRTC/2020-07-24-getting-started-overview-webrtc.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/WebRTC/2020-07-24-getting-started-overview-webrtc.html" itemprop="commentCount">—</span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>WebRTC (Web Real-Time Communications)</strong> 是由谷歌开源并推进纳入 <code>W3C</code> 标准的一项实时通讯技术，它允许网络应用或者站点，在不借助中间媒介的情况下，建立浏览器之间点对点<code>（Peer-to-Peer）</code>的连接，实现视频流和（或）音频流或者其他任意数据的传输。<code>WebRTC</code> 包含的这些标准使用户在无需安装任何插件或者第三方的软件的情况下，创建点对点<code>（Peer-to-Peer）</code>的数据分享和电话会议成为可能。</p>
-<blockquote>
-<p>与 <code>Web</code> 世界经典的 <code>B/S</code> 架构最大的不同是，<code>WebRTC</code> 的通信不经过服务器，而直接与客户端连接，在节省服务器资源的同时，提高通信效率。为了做到这点，一个典型的 <code>WebRTC</code> 通信过程，包含四个步骤：<code>找到对方</code>-&gt;<code>进行协商</code>-&gt;<code>建立连接</code>-&gt;<code>开始通讯</code>。下面将分别阐述这四个步骤。</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/WebRTC/2020-07-24-getting-started-overview-webrtc.html" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"><hr></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="光阴小栈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html" itemprop="url">
-                  将你的博客升级为 PWA 渐进式Web离线应用
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-18 19:30:21" itemprop="dateCreated datePublished" datetime="2019-02-18T19:30:21+08:00">2019-02-18</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2026-09-22 15:07:07" itemprop="dateModified" datetime="2026-09-22T15:07:07+08:00">2026-09-22</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/javascript/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html" itemprop="commentCount">—</span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="什么是-PWA"><a href="#什么是-PWA" class="headerlink" title="什么是 PWA"></a>什么是 PWA</h2><p><code>PWA</code> 全称 <code>Progressive Web Apps</code>(渐进式 <code>Web</code> 应用程序)，旨在使用现有的 <code>Web</code> 技术提供用户更优的使用体验。<br>基本要求</p>
-<ul>
-<li><code>可靠（Reliable）</code> 一方面是指 <code>PWA</code> 的安全性，<code>PWA</code> 只能运行在 <code>HTTPS</code> 上；另一方面是指在网络不稳定或者没网情况下，<code>PWA</code> 依然可以访问。</li>
-<li><code>快速响应（Fast）</code> 快速响应用户的交互行为，并且具有平滑流畅的动画、加载速度、渲染速度和渲染性能等。</li>
-<li><code>粘性(Engaging)</code> 通过添加到桌面以及离线消息推送，能带来用户的第二次访问，并且依靠良好的用户体验吸引用户再次访问。</li>
-</ul>
-<p>官网链接：<a href="https://developers.google.com/web/progressive-web-apps/" target="_blank" rel="noopener">Progressive Web Apps</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/javascript/PWA/2019-02-18-progressive-web-apps-blog.html" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"><hr></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Node/2019-01-18-node-wechat-bill.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="光阴小栈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/Node/2019-01-18-node-wechat-bill.html" itemprop="url">
-                  什么? 微信没有年度账单? 前端 nodejs 撸起来~ [接口实现]
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-18 14:24:29" itemprop="dateCreated datePublished" datetime="2019-01-18T14:24:29+08:00">2019-01-18</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2026-09-22 15:11:52" itemprop="dateModified" datetime="2026-09-22T15:11:52+08:00">2026-09-22</time>
+                <time title="修改时间：2026-09-22 15:37:38" itemprop="dateModified" datetime="2026-09-22T15:37:38+08:00">2026-09-22</time>
               
             
           </span>
@@ -1080,8 +506,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/Node/2019-01-18-node-wechat-bill.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Node/2019-01-18-node-wechat-bill.html" itemprop="commentCount">—</span>
+                <a href="/posts/Node/2018-05-13-pm2-study.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Node/2018-05-13-pm2-study.html" itemprop="commentCount">—</span>
                 </a>
               </span>
             
@@ -1110,10 +536,10 @@
 
       
         
-          <p>最近逛掘金看见一片文章 <a href="https://juejin.im/post/5c383aa66fb9a049e412e9f3" target="_blank" rel="noopener">非官方统计 2018 微信年度账单实现</a>,作者利用调试微信获取到了 <code>2018</code> 年的所有消费明细，并根据类型进行分类统计，作文一个前端，便萌生了用 <code>nodejs</code> 实现一遍的想法，于是乎呢，就有了这篇文章了。</p>
+          <p><code>PM2</code> 是 Node.js 应用程序的生产级进程管理器，内置了负载均衡、自动重启、性能监控、日志管理等强大功能，操作轻量且极其高效。本文整理了 PM2 的常用操作、核心启动参数以及生产环境生态配置文件（<code>ecosystem.config.js</code>）的最佳实践。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/posts/Node/2019-01-18-node-wechat-bill.html" rel="contents">
+            <a class="btn" href="/posts/Node/2018-05-13-pm2-study.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1170,7 +596,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Hexo/2018-05-27-hexo-code-block.html">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Linux/2017-05-26-liunx-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1189,8 +615,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/Hexo/2018-05-27-hexo-code-block.html" itemprop="url">
-                  Hexo 博客美化代码块
+                <a class="post-title-link" href="/posts/Linux/2017-05-26-liunx-shell.html" itemprop="url">
+                  Linux常用命令笔记
                 </a>
               
             
@@ -1216,7 +642,7 @@
                 
               
 
-              <time title="创建时间：2018-05-27 14:24:29" itemprop="dateCreated datePublished" datetime="2018-05-27T14:24:29+08:00">2018-05-27</time>
+              <time title="创建时间：2017-05-26 21:49:04" itemprop="dateCreated datePublished" datetime="2017-05-26T21:49:04+08:00">2017-05-26</time>
             
 
             
@@ -1233,7 +659,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-18 17:50:58" itemprop="dateModified" datetime="2026-09-18T17:50:58+08:00">2026-09-18</time>
+                <time title="修改时间：2026-09-22 15:37:52" itemprop="dateModified" datetime="2026-09-22T15:37:52+08:00">2026-09-22</time>
               
             
           </span>
@@ -1250,7 +676,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
 
                 
                 
@@ -1265,8 +691,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/Hexo/2018-05-27-hexo-code-block.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Hexo/2018-05-27-hexo-code-block.html" itemprop="commentCount">—</span>
+                <a href="/posts/Linux/2017-05-26-liunx-shell.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Linux/2017-05-26-liunx-shell.html" itemprop="commentCount">—</span>
                 </a>
               </span>
             
@@ -1295,11 +721,565 @@
 
       
         
-          <p>最近有人问我博客的代码块是怎么做的，如下面的代码块，然后好久没有写文章了，趁着周末有时间就水一篇吧~</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = <span class="string">'abcdaabc'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> info = arr</span><br><span class="line">    .split(<span class="string">''</span>)</span><br><span class="line">    .reduce(<span class="function">(<span class="params">p, k</span>) =&gt;</span> (p[k]++ || (p[k] = <span class="number">1</span>), p), &#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(info); <span class="comment">//&#123; a: 3, b: 2, c: 2, d: 1 &#125;</span></span><br></pre></td></tr></table></figure>
+          <p>记录日常开发与服务器运维中高频实用的 <code>Linux</code> 命令与核心配置。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/posts/Hexo/2018-05-27-hexo-code-block.html" rel="contents">
+            <a class="btn" href="/posts/Linux/2017-05-26-liunx-shell.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"><hr></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Node/2017-05-10-npm.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/Node/2017-05-10-npm.html" itemprop="url">
+                  NPM 学习笔记整理
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-10 03:25:24" itemprop="dateCreated datePublished" datetime="2017-05-10T03:25:24+08:00">2017-05-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-22 15:38:15" itemprop="dateModified" datetime="2026-09-22T15:38:15+08:00">2026-09-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node/" itemprop="url" rel="index"><span itemprop="name">Node</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/Node/2017-05-10-npm.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Node/2017-05-10-npm.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><code>npm</code>（Node Package Manager）之于 <code>Node.js</code> ，就像 <code>pip</code> 之于 <code>Python</code> ， <code>composer</code> 之于 <code>PHP</code> 。<br>它是 Node.js 官方提供的包管理工具，集成了包的发布、下载、依赖版本控制与自动化脚本管理。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/Node/2017-05-10-npm.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"><hr></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html" itemprop="url">
+                  重新认识伪类和伪元素
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-04-28 16:35:10" itemprop="dateCreated datePublished" datetime="2017-04-28T16:35:10+08:00">2017-04-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-22 15:38:27" itemprop="dateModified" datetime="2026-09-22T15:38:27+08:00">2026-09-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CSS3/" itemprop="url" rel="index"><span itemprop="name">CSS3</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在 CSS 开发中，“伪类（Pseudo-classes）”与“伪元素（Pseudo-elements）”是经常被混淆的两个核心概念。本文从规范定义、核心区别、常见用法及现代 CSS 选择器进行系统梳理。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"><hr></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Git/2017-04-23-git.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/Git/2017-04-23-git.html" itemprop="url">
+                  Git 常用命令学习及整理
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-04-23 10:23:21" itemprop="dateCreated datePublished" datetime="2017-04-23T10:23:21+08:00">2017-04-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-22 15:31:51" itemprop="dateModified" datetime="2026-09-22T15:31:51+08:00">2026-09-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/Git/2017-04-23-git.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Git/2017-04-23-git.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近用 Git 比较多，所以整理了一份常用的 Git 命令速查手册。<strong>Git 是目前世界上最先进的分布式版本控制系统。</strong></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/Git/2017-04-23-git.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1345,7 +1325,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1392,7 +1372,7 @@
                 
                   <a href="/archives/index.html%20%7C%7C%20archive">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1421,27 +1401,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1490,69 +1450,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
