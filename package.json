@@ -1,12 +1,12 @@
 {
-  "name": "ihoey_blog",
+  "name": "blog",
   "version": "6.2.0",
   "private": true,
-  "author": "ihoey <mail@ihoey.com> (https://blog.ihoey.com/)",
+  "author": "",
   "contributors": [
     {
-      "name": "ihoey",
-      "email": "mail@ihoey.com"
+      "name": "",
+      "email": ""
     }
   ],
   "license": "MIT",

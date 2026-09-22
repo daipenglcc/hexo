@@ -20,11 +20,11 @@ after_script:
   - cd ./public
   - git init
   - git config --global --unset http.proxy
-  - git config user.name "ihoey"
-  - git config user.email "mail@ihoey.com"
+  - git config user.name "youhuabujianye"
+  - git config user.email "youhuabujianye@gamil.com"
   - git add .
   - git commit -m "这个勤奋的家伙又更新了~"
-  - git push --force --quiet "https://${ihoey_blog}@${GH_REF}" master:master
+  - git push --force --quiet "https://${blog}@${GH_REF}" master:master
 
 branches:
   only:
@@ -32,4 +32,4 @@ branches:
 
 env:
   global:
-    - GH_REF: git@github.com:ihoey/blog.git
+    - GH_REF: git@github.com:daipenglcc/hexo.git

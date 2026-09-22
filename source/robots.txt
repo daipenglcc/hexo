@@ -13,5 +13,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: https://blog.ihoey.com/sitemap.xml
-Sitemap: https://blog.ihoey.com/baidusitemap.xml
+Sitemap: https://www.vueweb.cn/sitemap.xml
+Sitemap: https://www.vueweb.cn/baidusitemap.xml

@@ -7,76 +7,106 @@ tags:
 categories: CSS3
 ---
 
-熟悉前端的人都会听过`css`的伪类与伪元素，然而大多数的人都会将这两者混淆(包括我)。那今天就让我们来看看伪类和伪元素的区别吧!
+在 CSS 开发中，“伪类（Pseudo-classes）”与“伪元素（Pseudo-elements）”是经常被混淆的两个核心概念。本文从规范定义、核心区别、常见用法及现代 CSS 选择器进行系统梳理。
 
 <!-- more -->
 
-## 伪类与伪元素
+## 1. 核心定义与本质区别
 
-先说一说为什么`css`要引入伪元素和伪类，以下是`css2.1 Selectors`章节中对伪类与伪元素的描述：
+W3C 对伪类与伪元素的官方定义核心在于**是否脱离或扩展了文档树（DOM Tree）**：
 
-`CSS introduces the concepts of pseudo-elements and pseudo-classes  to permit formatting based on information that lies outside the document tree.`
+| 对比维度 | 伪类（Pseudo-classes） | 伪元素（Pseudo-elements） |
+| :--- | :--- | :--- |
+| **本质作用** | 用于匹配元素处于**某种特定状态**或符合特定结构特征 | 用于创建并修饰**DOM 树中不存在的抽象元素** |
+| **CSS3 语法规范** | **单冒号 `:`**（如 `:hover`, `:first-child`） | **双冒号 `::`**（如 `::before`, `::after`） |
+| **类比理解** | 效果等同于动态给 DOM 节点**添加一个 class 类名** | 效果等同于在 DOM 内部**插入了一个真实的虚拟标签** |
 
-- 直译过来就是：`css`引入伪类和伪元素概念是为了格式化文档树以外的信息。也就是说，伪类和伪元素是用来修饰不在文档树中的部分，比如，一句话中的第一个字母，或者是列表中的第一个元素。下面分别对伪类和伪元素进行解释：
-    + 伪类用于当已有元素处于的某个状态时，为其添加对应的样式，这个状态是根据用户行为而动态变化的。比如说，当用户悬停在指定的元素时，我们可以通过`:hover`来描述这个元素的状态。虽然它和普通的`css`类相似，可以为已有的元素添加样式，但是它只有处于`dom`树无法描述的状态下才能为元素添加样式，所以将其称为伪类。
-    + 伪元素用于创建一些不在文档树中的元素，并为其添加样式。比如说，我们可以通过`:before`来在一个元素前增加一些文本，并为这些文本添加样式。虽然用户可以看到这些文本，但是这些文本实际上不在文档树中。
+---
 
-## 伪类
+## 2. 常用伪类（Pseudo-classes）
 
-- 伪类前面是一个冒号，`E:first-child` 伪类，会对现有的元素进行筛选
-    + `:link`
-    + `:visited`
-    + `:hover`
-    + `:active`
-    + `:focus`
-    + `:not()`
-    + `:first-child`
-    + `:last-child`
-    + `:nth-child`
-    + `:nth-last-child` 从后面计数
-    + `:only-child` 只满足一个子元素
-    + `:target` 当URL带有锚名称，指向文档内某个具体的元素时，`:target`匹配该元素。
-    + `:checked` 被选中的input元素
-    + `:empty` 匹配没有子元素的元素
-    + `:valid` 匹配条件验证正确的表单元素。
+伪类用来对已有 DOM 元素的动态行为、状态或结构位置进行筛选：
 
+### ① 用户交互与状态伪类
+- `:hover`：鼠标悬停状态
+- `:active`：鼠标按下激活状态
+- `:focus` / `:focus-visible`：获得焦点状态
+- `:checked`：表单控件（单选/复选框）被选中状态
+- `:disabled` / `:enabled`：禁用 / 启用状态
 
-## 伪元素
+### ② 结构与树形伪类
+- `:first-child` / `:last-child`：作为父级下的首个 / 最后一个子元素
+- `:nth-child(n)`：第 n 个子元素（支持 `2n`、`odd`、`even` 等表达式）
+- `:only-child`：作为父级下的唯一子元素
+- `:empty`：没有任何子节点（包含文本节点）的空元素
 
-- 伪元素前面是两个冒号，`E::first-line` 伪元素。会创造出不存在的新元素，由于 `css` 对单冒号的伪元素也支持，所以这样很容易让新学者混淆。但实际上现在 `css3` 已经明确规定了伪类单冒号，伪元素双冒号的规则。
-    + `::before/:before` 在被选元素前插入内容
-    + `::after/:after` 在被元素后插入内容，其用法和特性与`:before`相似。
-    + `::first-letter/:first-letter` 匹配元素中文本的首字母。被修饰的首字母不在文档树中
-    + `::first-line/:first-line` 匹配元素中第一行的文本。这个伪元素只能用在块元素中，不能用在内联元素中。
-    + `::selection` 匹配用户被用户选中或者处于高亮状态的部分。在火狐浏览器使用时需要添加`-moz`前缀。该伪元素只支持双冒号的形式。
-    + `::placeholder` 匹配占位符的文本，只有元素设置了`placeholder`属性时，该伪元素才能生效。
-- 该伪元素不是`CSS`的标准，它的实现可能在将来会有所改变，所以要决定使用时必须谨慎。
-在一些浏览器中（`IE10`和`Firefox18`及其以下版本）会使用单冒号的形式。
-- 对于伪元素 `:before` 和 `:after` 而言，属性 `content` 是必须设置的，我们知道属性的值可以为字符串，也可以有其它形式，比如指向一张图片的 `URL:`
+### ③ 现代 CSS 高阶伪类（CSS Selectors Level 4）
+- `:not(selector)`：反选伪类，匹配不符合条件的元素
+- `:is(selector)` / `:where(selector)`：批量选择器分组与优先级简化
+- `:has(selector)`：**父选择器**，当包含指定后代时匹配该父元素
 
+---
+
+## 3. 常用伪元素（Pseudo-elements）
+
+伪元素会生成虚拟的内容容器，必须使用 **双冒号 `::`**（兼容旧浏览器时单冒号也可被解析）：
+
+### ① 内容生成（最常用）
+- `::before`：在宿主元素内容**最前方**插入生成内容
+- `::after`：在宿主元素内容**最后方**插入生成内容
+
+> **注意**：`::before` 与 `::after` 必须显式设置 `content` 属性（即便为空字符串 `content: ""`），否则伪元素不会被渲染。
+
+### ② 文本修饰与高亮
+- `::first-letter`：修饰块级元素文本的**首个字母/汉字**（常用于首字下沉排版）
+- `::first-line`：修饰块级元素文本的**第一行**（随视口宽度自适应）
+- `::selection`：修饰用户鼠标划词选中的高亮文本背景与颜色
+- `::placeholder`：修饰 input / textarea 占位符文本样式
+
+---
+
+## 4. 实战典型用法
+
+### ① 利用 `attr()` 获取属性值渲染气泡
+
+```css
+.tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
 ```
-content: url('img/icon.png')
+
+```html
+<button class="tooltip" data-tip="这是提示文字">悬停查看提示</button>
 ```
 
-- 配合伪类使用
-    + 伪元素 `:before` 还可以配合伪类使用，这里举经常与 `:before` 配合使用的伪类 `:hover` 为例：
+### ② 结合伪类与伪元素实现动态悬浮效果
 
+```css
+.btn::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: gray;
+  margin-right: 6px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+/* 当按钮处于 hover 状态时改变 ::before 伪元素的样式 */
+.btn:hover::before {
+  background: #10b981;
+}
 ```
-.before:hover:before{content:'you before'; color:red;}
-<div class="before"> me</div>
-```
 
-- 配合取值函数 `attr()` 使用
+---
 
-```
-a::before{content: attr(title)}
-<a href="https://blog.ihoey.com" title="梦魇小栈"></a>
+## 5. 总结
 
-效果
-<a href="https://blog.ihoey.com" title="梦魇小栈">梦魇小栈</a>
-```
-
-## 总结
-
-- 伪元素和伪类之所以这么容易混淆，是因为他们的效果类似而且写法相仿，但实际上 `css3` 为了区分两者，已经明确规定了伪类用一个冒号来表示，而伪元素则用两个冒号来表示。
-- 伪类的效果可以通过添加一个实际的类来达到，而伪元素的效果则需要通过添加一个实际的元素才能达到，这也是为什么他们一个称为伪类，一个称为伪元素的原因。
+- **区分标准**：看是否“创建了新节点”。修饰状态用伪类（`:`），创建虚拟内容用伪元素（`::`）。
+- **编码习惯**：在现代开发中，统一为伪类使用单冒号 `:`，伪元素使用双冒号 `::`，代码语义更清晰。

@@ -1,6 +1,6 @@
 # Hitalk 评论接入
 
-当前主题 `themes/next` 使用 Hitalk SDK 3.0.0，API 为 `https://hitalk-next-api.ihoey.com/api`。配置集中在主题 `_config.yml` 的 `hitalk` 段，不再使用 LeanCloud 评论凭据和旧版 Hitalk CDN。
+当前主题 `themes/next` 使用 Hitalk SDK 3.0.0，API 为 `https://hitalk-server.youhuabujianye.workers.dev/api`。配置集中在主题 `_config.yml` 的 `hitalk` 段，不再使用 LeanCloud 评论凭据和旧版 Hitalk CDN。
 
 2026-09-18 上线验收已完成：接入源码 e73dfac8、生产静态版本 70a0f2e8 已推送，Vercel 发布成功。用户确认页面接入正常，并确认真实邮件验证通过；没有推定其具体邮件测试场景。首页、留言板、文章页和静态资源已通过线上检查。
 

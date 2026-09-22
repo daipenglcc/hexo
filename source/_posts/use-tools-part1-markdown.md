@@ -7,177 +7,116 @@ tags:
 categories: Markdown
 ---
 
-## Markdown 介绍
-
-- *Markdown* 是一个 **轻量级  高效率** 的标记语言
-- 轻量级标记语言，`2004` 年被 `John Gruber` 创造， 它允许人们“使用易读易写的纯文本格式编写文档”， Markdown 最重要的设计就是可读性， Markdown 可以选择性的转换为 `HTML` 文档格式， 很多网站目前都使用了 `Markdown` 或者其变种，例如 `Github` 、简书等大型社区。
+Markdown 是一种轻量级标记语言，由 John Gruber 于 2004 年创建。它允许人们使用易读易写的纯文本格式编写文档，并可轻松转换为格式良好的 HTML。如今，GitHub、各大技术社区、静态博客（如 Hexo）以及笔记软件广泛采用 Markdown 作为标准的排版格式。
 
 <!--more-->
 
-## Markdown 使用场景
+## 1. 为什么选择 Markdown
 
-- 学习笔记
-- 演讲稿
-- 写书（侧重于技术相关的 内容非常适合）
-- 个人笔记
-- 文章博客
-- 教学讲义
-- 说明文档
-- 电子邮件
+- **专注内容本身**：无需被 Word 等复杂排版工具分散精力；
+- **极佳的通用性与可移植性**：纯文本存储，永远不会因软件版本淘汰而打不开；
+- **全平台支持与丰富生态**：广泛用于技术博客、API 文档、项目 README、笔记与书籍编写。
 
+---
 
-## Markdown 实时预览编辑器
+## 2. 常用 Markdown 编辑器推荐
 
-- dillinger
-- 马克飞象
-- 简书
-- MarkdownPad
-- Sublime Text
-    * 配合 Markdown Preview 插件
-- Webstorm
-    * 配合插件
-- gitbook
+- **[VS Code](https://code.visualstudio.com/)**：自带双栏实时预览（快捷键 `Cmd/Ctrl + K V`），配合插件如 *Markdown All in One* 体验极佳。
+- **[Typora](https://typoraio.cn/)**：优雅的所见即所得单栏 Markdown 编辑器。
+- **[Obsidian](https://obsidian.md/)**：基于本地 Markdown 文件的双向链接知识库笔记工具。
 
-实时预览工具只是为了达到所见即所得的效果而已， 适合初学者学习 `Markdown` ， 我们真正在进行写作的时候，其实是不需要实时预览的， 因为 Markdown 标记语言本身已经足够清晰了。
+---
 
-## Markdown 安装和配置编写预览环境(sublime)
+## 3. Markdown 基础语法
 
-- 按下键 `Ctrl+Shift+p` 调出命令面板，找到 `Package Control: install Pakage` 这一项。搜索 `markdown preview` ，点击安装。
-- `Markdown Preview` 较常用的功能是 `preview in browser` 和 `Export HTML in Sublime Text` ，前者可以在浏览器看到预览效果，后者可将 `markdown` 保存为 `html` 文件。
-- `preview in browser` 据称是实时的，但是实践上还是需要在 `st` 保存，然后浏览器刷新才能看到新的效果，好在 `markdown` 写得多的话也不需要每敲一行看一次效果。
+### ① 标题（Headings）
 
-### Webstorm
+使用 `#` 标识标题，支持 1 ~ 6 级标题：
 
-- 打开` webstorm` ，`File-->Setting-->输入plugin-->Install JetBrains plugin...-->输入markdown-->`点击右边的 `Install` ,安装完，重启 `webstorm`。
-
-### Visual Studio Code
-
-- `Visual Studio Code` 自带 `markdown` 预览,所以不需要安装插件,不过可以安装语法高亮主题
-
-### Sublime
-
-- MarkdownEditing 主题、自动补齐等功能
-- MarkdownPreview 在浏览器预览
-- MarkdownTOC 自动生成导航
-- Table Editor 自动表格编辑
-- [packagecontrol](https://packagecontrol.io/) Sublime 的插件生态系统网站
-
-只要有写作的地方，都可以使用 `Markdown` 来书写。
-
-## Markdown 标题书写
-
-```Markdown
+```markdown
 # 一级标题
 ## 二级标题
 ### 三级标题
-...
-###### 六级标签
-一共六级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
 ```
 
-## Markdown 列表书写语法
+### ② 文本样式（粗体、斜体、删除线）
 
-### 无序列表
-
-- 一级列表建议使用 `-`
-    + 二级列表建议使用 `+`
-        * 三级列表建议使用 `*`
-
-```Markdown
-- 一级标题
-    + 二级标题
-        * 三级列表
+```markdown
+**这是粗体文本**
+*这是斜体文本*
+***这是粗斜体文本***
+~~这是带删除线的文本~~
 ```
 
-### 有序列表
+### ③ 无序与有序列表
 
-1. 有序列表直接使用序列加一个点开头, 然后加一个
-2. 有序列表嵌套无序列表
-  - 有序列表中嵌套无需列表
-        + 有序列表中嵌套无需列表
+```markdown
+<!-- 无序列表（使用 - 或 *） -->
+- 项目 A
+- 项目 B
+  - 子项目 B-1
+  - 子项目 B-2
 
-```Markdown
-2. 有序列表嵌套无序列表
-  - 有序列表嵌套无序列表
-        + 有序列表嵌套无序列表
+<!-- 有序列表（数字加圆点） -->
+1. 第一步
+2. 第二步
+3. 第三步
 ```
 
-3. 有序列表嵌套有序列表
-    1. 有序列表嵌套有序列表
-        1. 有序列表嵌套有序列表
+### ④ 引用（Blockquotes）
 
-```Markdown
-3. 有序列表嵌套有序列表
-    1. 有序列表嵌套有序列表
-        1. 有序列表嵌套有序列表
+```markdown
+> 这是一个标准引用块。
+> > 引用也可以多层嵌套。
 ```
 
-#### 使用建议
+### ⑤ 超链接与图片
 
-无论是有序列表还是无序列表,如果就写一级列表不嵌套就可以紧凑写到一起即可,如果嵌套多级列表最好在列表项之间只用空行隔开
+```markdown
+<!-- 文本链接 -->
+[访问光阴小栈](https://www.vueweb.cn/)
 
-## Markdown 图片链接书写语法
-
-### Markdown 图片书写语法
-
-- `![图片](http://blog.ihoey.com/img/img.jpg)`
-
-### Markdown 链接书写语法
-
-- `[链接](http://blog.ihoey.com)`
-
-## 引用
-
-- `> 例如这样`
-
-> 例如这样
-
-## 粗体与斜体
-
-- `Markdown` 的粗体和斜体也非常简单，用两个 `*` 包含一段文本就是粗体的语法，用一个 `*` 包含一段文本就是斜体的语法
-
-```Markdown
-**这里是粗体**
-*这里是斜体*
+<!-- 插入图片（比链接多一个 ! 前缀） -->
+![图片描述文字](https://www.vueweb.cn/images/avatar.png)
 ```
 
-## 表格
+### ⑥ 行内代码与代码块
 
-```Markdown
-| 表头           | 表头            | 表头   |
-| :------------- | :-------------: | -----: |
-| 左对齐         | 居中对齐        | 右对齐 |
-| 左对齐         | 居中对齐        | 右对齐 |
-| 左对齐         | 居中对齐        | 右对齐 |
+行内代码使用单个反引号包裹，代码块使用三个反引号并声明语言高亮：
+
+````markdown
+这里是行内代码 `const a = 1;`
+
+```javascript
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+greet('World');
+```
+````
+
+### ⑦ 表格（Tables）
+
+```markdown
+| 快捷键 | 功能说明 | 适用平台 |
+| :--- | :---: | ---: |
+| Ctrl + B | 粗体 | 通用 |
+| Ctrl + I | 斜体 | 通用 |
+| Ctrl + K | 插入链接 | 通用 |
 ```
 
-| 表头           | 表头            | 表头   |
-| :------------- | :-------------: | -----: |
-| 左对齐         | 居中对齐        | 右对齐 |
-| 左对齐         | 居中对齐        | 右对齐 |
-| 左对齐         | 居中对齐        | 右对齐 |
+> **对齐方式**：`:---` 为左对齐，`:---:` 为居中对齐，`---:` 为右对齐。
 
-## 代码框
+### ⑧ 分割线与任务列表
 
-由三个 \` 反引号包裹, 行内代码在代码前后加一个 \` 反引号
+```markdown
+<!-- 分割线（三个以上的 - 或 *） -->
+---
 
-## 锚点
-
-```Markdown
-## 0. 目录{#index}
-跳转到[目录](#index)
+<!-- 任务清单 (Task Lists) -->
+- [x] 已完成的任务事项
+- [ ] 待完成的任务事项
 ```
-
-## 分隔线
-
-```Markdown
-* * *
-***
-*****
-- - -
----------------------------------------
-```
-
-显示效果都一样：
-
-***

@@ -7,105 +7,122 @@ categories:
 date: 2018-05-13 16:45:46
 ---
 
-`PM2` 是 `node` 进程管理工具，可以利用它来简化很多 `node` 应用管理的繁琐任务，如性能监控、自动重启、负载均衡等，而且使用非常简单。本文就 `PM2` 进行入门性的介绍，基本涵盖了 `PM2` 的常用的功能和配置。
+`PM2` 是 Node.js 应用程序的生产级进程管理器，内置了负载均衡、自动重启、性能监控、日志管理等强大功能，操作轻量且极其高效。本文整理了 PM2 的常用操作、核心启动参数以及生产环境生态配置文件（`ecosystem.config.js`）的最佳实践。
 
 <!-- more -->
 
-## 安装
+## 1. 全局安装
 
 ```bash
 npm install -g pm2
+# 或使用 yarn
+yarn global add pm2
 ```
 
-## 常用命令
+## 2. 核心常用命令
 
 ```bash
-pm2 start [server.js]
-# 启动服务
-pm2 list
-# 查看当前所跑服务的详情
-pm2 show [name]
-# 查看更加详细的信息这个命令可查看pm2配置 包括日志文件存放的位置等
-pm2 stop [id/name]
-# 关闭某个服务
-pm2 delete [id/name]
-# 删除某个服务
-pm2 stop all
-# 关闭所有服务
-pm2 logs
-# 查看实时日志
-pm2 restart [name]
-# 重新启动服务
+# 启动应用
+pm2 start app.js               # 启动应用
+pm2 start app.js --name my-app # 启动并命名为 my-app
+
+# 进程查看与监控
+pm2 list                       # 列出所有由 PM2 管理的进程
+pm2 status                     # 查看进程简要状态（同 list）
+pm2 monit                      # 终端仪表盘，实时监控 CPU / 内存占用
+pm2 show <id|name>             # 查看指定进程的完整详情（含路径、日志位置、环境等）
+
+# 日志查看
+pm2 logs                       # 查看所有应用的实时聚合日志
+pm2 logs <id|name>             # 查看指定应用的日志
+pm2 logs --lines 200           # 查看最后 200 行日志
+pm2 flush                      # 清空所有日志文件
+
+# 进程管理与控制
+pm2 restart <id|name>          # 重启指定应用
+pm2 reload <id|name>           # 【推荐】零停机热重载（仅对集群模式 cluster 生效）
+pm2 stop <id|name>             # 停止指定应用
+pm2 delete <id|name>           # 删除指定应用
+pm2 restart all                # 重启所有应用
+pm2 stop all                   # 停止所有应用
+pm2 delete all                 # 删除所有应用
+
+# 开机自启
+pm2 startup                    # 生成开机自启系统脚本（根据输出提示复制执行）
+pm2 save                       # 保存当前运行的应用列表，重启后自动恢复
 ```
 
-## 启动
-
-参数说明：
-- `--watch`：监听应用目录的变化，一旦发生变化，自动重启。如果要精确监听、不见听的目录，最好通过配置文件。
-- `-i --instances`：启用多少个实例，可用于负载均衡。如果 `-i 0` 或者 `-i max`，则根据当前机器核数确定实例数目。
-- `--ignore-watch`：排除监听的目录/文件，可以是特定的文件名，也可以是正则。比如 `--ignore-watch="test node_modules "some scripts""`
-- `-n --name`：应用的名称。查看应用信息的时候可以用到。
-- `-o --output <path>`：标准输出日志文件的路径。
-- `-e --error <path>`：错误输出日志文件的路径。
-
-## 监听
+## 3. 命令行常用参数
 
 ```bash
-pm2 start ./bin/www --watch
-#注意，这里用了--watch参数，意味着当你的应用代码发生变化时，pm2会帮你自动重启服务
+pm2 start app.js -i max        # 启用 Cluster 集群模式，并根据 CPU 核心数自动最大化实例
+pm2 start app.js --watch       # 监听目录文件变动，自动重启应用（适合开发环境）
+pm2 start app.js --ignore-watch="node_modules logs" # 忽略监听指定目录
+pm2 start app.js -o ./logs/out.log -e ./logs/err.log # 指定标准输出与错误日志文件路径
+pm2 start app.js --max-memory-restart 300M # 内存超过 300MB 时自动重启，防止内存泄漏
 ```
 
+## 4. 生产环境 Ecosystem 配置文件
 
-## 配置及部署
+在实际项目中，官方推荐使用 JS 格式的配置文件来统一管理环境变量、集群与自动化部署。
 
-部署的配置文件示例
+### 生成配置文件
 
-```json
-{
-  // 数组中放的是需要发布的项目一些变量的定义
-  "apps": [{
-    "name": "xxx", //项目名称
-    "script": "server.js", //用来启动的脚本
-    // "instances":2,
-    // 启动项目所需要的环境变量
-    "env": {
-      "COMMON_VARIABLE": "true", //设置为true 可以在启动的时传入外部的变量进去
-    },
-    "env_production": {
-      "NODE_ENV": "production"
+```bash
+pm2 init simple  # 生成 ecosystem.config.js 模板
+```
+
+### `ecosystem.config.js` 示例
+
+```javascript
+module.exports = {
+  apps: [
+    {
+      name: 'my-node-app',
+      script: './bin/www',
+      instances: 'max',            // 集群模式实例数，也可指定具体数字如 2
+      exec_mode: 'cluster',        // 运行模式：fork 或 cluster
+      autorestart: true,           // 进程崩溃时自动重启
+      watch: false,                // 生产环境通常建议关闭文件监听
+      max_memory_restart: '500M',  // 限制内存占用上限
+      env: {
+        NODE_ENV: 'development',
+        PORT: 3000
+      },
+      env_production: {
+        NODE_ENV: 'production',
+        PORT: 8080
+      },
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      error_file: './logs/err.log',
+      out_file: './logs/out.log',
+      merge_logs: true
     }
-  }],
-  // 部署
-  "deploy": {
-    "production": {
-      "user": "root",
-      "host": "0.0.0.0", //可以是数组 部署到多台主机
-      "ref": "origin/master", //选择拿哪个个分支的代码
-      "repo": "git@github.com:ihoey/hitalk.git", //仓库地址
-      "path": "/root/www/hitalk/production", //要发布到服务器上哪个目录下面
-      "ssh_options": "StrictHostKeyChecking=no", //避免key验证导致代码更新到远程仓库失败
-      "post-deploy": "source ~/.nvm/nvm.sh && pm2 startOrRestart ecosystem.json --env production", //发布之后执行的动作 执行开启或更新pm2运行的服务
-      "pre-deploy-local": "echo 'Deploy Done!'", //本地发布之前的动作
-      "env": { //指定部署到远程的仓库的环境 是production生产环境
-        "NODE_ENV": "production"
-      }
+  ],
+
+  // 自动化发布部署配置（可选）
+  deploy: {
+    production: {
+      user: 'deploy',
+      host: ['192.168.1.100'],
+      ref: 'origin/main',
+      repo: 'git@github.com:your_username/your_repo.git',
+      path: '/var/www/my-node-app',
+      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
-}
+};
 ```
 
-### 初始化配置
-
-第一次部署
+### 使用配置文件启动与管理
 
 ```bash
-pm2 deploy ecosystem.json production setup
+# 以开发环境变量启动
+pm2 start ecosystem.config.js
+
+# 以生产环境变量启动
+pm2 start ecosystem.config.js --env production
+
+# 热重载配置
+pm2 reload ecosystem.config.js --env production
 ```
-
-### 部署
-
-```bash
-pm2 deploy ecosystem.json production
-```
-
-好了，先记录这么多~

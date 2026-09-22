@@ -7,118 +7,142 @@ tags:
 categories: MongoDB
 ---
 
-本篇文章介绍学习MongoDB的一些常用命令,希望能帮助大家.
+整理了 MongoDB / `mongosh` 开发中最常用的基础命令、CRUD 查询、聚合分页以及索引优化操作速查。
 
 <!--more-->
 
-## 常用操作
+## 1. 基础服务与数据库操作
 
-- `Help`查看命令提示
-    + `db.help()`;
-    + `db.yourColl.help()`;
-    + `db.youColl.find().help()`;
-- 切换/创建数据库
-    + `use yourDB`;  当创建一个集合(`table`)的时候会自动创建当前数据库
-- 查询所有数据库
-    + `show dbs`;
-- 删除当前使用数据库
-    + `db.dropDatabase()`;
-- 从指定主机上克隆数据库
-    + 从指定主机上克隆数据库
-- 从指定的机器上复制指定数据库数据到某个数据库
-    + `db.copyDatabase("mydb", "temp", "127.0.0.1")`;将本机的`mydb`的数据复制到`temp`数据库中
-- 修复当前数据库
-    + `db.repairDatabase()`;
-- 查看当前使用的数据库
-    + `db.getName()`;
-- 显示当前db状态
-    + `db.stats()`;
-- 当前db版本
-    + `db.version()`;
-- 查看当前db的链接机器地址
-    + `db.getMongo()`;
+```javascript
+// 帮助命令
+help                         // 查看系统级帮助
+db.help()                    // 查看当前数据库方法帮助
+db.colName.help()            // 查看集合方法帮助
 
-## Collection聚集集合操作
+// 数据库切换与查看
+show dbs                     // 列出所有数据库
+use my_database              // 切换到指定数据库（不存在时，插入第一条数据时自动创建）
+db.getName()                 // 查看当前所在数据库名称
+db.stats()                   // 查看当前数据库的存储状态与统计信息
+db.dropDatabase()            // 删除当前数据库
+```
 
-- 创建一个聚集集合（`table`）
-    + `db.createCollection(“collName”, {size: 20, capped: 5, max: 100})`;
-- 得到指定名称的聚集集合（`table`）
-    + `db.getCollection("account")`;
-- 得到当前db的所有聚集集合
-    + `db.getCollectionNames()`;
-- 显示当前db所有聚集索引的状态
-    + `db.printCollectionStats()`;
+## 2. 集合（Collection）管理
 
-## 用户相关操作
+```javascript
+show collections             // 查看当前库下的所有集合（或 show tables）
+db.createCollection("users") // 显式创建名为 users 的集合
+db.users.drop()              // 删除 users 集合
+```
 
-- 添加一个用户
-    + `db.addUser("name")`;
-    + `db.addUser("userName", "pwd123", true)`; 添加用户、设置密码、是否只读
-- 数据库认证、安全模式
-    + `db.auth("userName", "123123")`;
-- 显示当前所有用户
-    + `show users`;
-- 删除用户
-    + `db.removeUser("userName")`;
+## 3. 文档插入（Create）
 
-## 聚集集合查询
+```javascript
+// 插入单条文档
+db.users.insertOne({
+  name: "张三",
+  age: 24,
+  tags: ["javascript", "mongodb"],
+  createAt: new Date()
+});
 
-- 查询所有记录
-    + `db.userInfo.find()`; 相当于：`select* from userInfo`;默认每页显示20条记录，当显示不下的情况下,可以用it迭代命令查询下一页数据。注意：键入it命令不能带“;”但是你可以设置每页显示数据的大小,用DBQuery.shellBatchSize= 50;这样每页就显示50条记录了。
-- 查询去掉后的当前聚集集合中的某列的重复数据
-    + `db.userInfo.distinct("name")`;会过滤掉name中的相同数据,相当于：`select distict name from userInfo`;
-- 查询`age = 22`的记录
-    + `db.userInfo.find({"age": 22})`; 相当于：`select * from userInfo where age = 22`;
-- 查询`age > 22`的记录
-    + `db.userInfo.find({age: {$gt: 22}})`;
-- 查询`age < 22`的记录
-    + `db.userInfo.find({age: {$lt: 22}})`;
-- 查询`age >= 25`的记录
-    + `db.userInfo.find({age: {$gte: 25}})`;
-- 查询`age >= 23` 并且 `age <= 26`
-    + `db.userInfo.find({age: {$gte: 23, $lte: 26}})`;
-- 查询`name`中包含 `mongo`的数据
-    + `db.userInfo.find({name: /mongo/})`;
-- 查询`name`中以`mongo`开头的
-    + `db.userInfo.find({name: /^mongo/})`;
-- 查询指定列`name`、`age`数据
-    + `db.userInfo.find({}, {name: 1, age: 1})`;当然`name`也可以用`true`或`false`,当用`ture`的情况下河`name:1`效果一样，如果用`false`就是排除`name`，显示`name`以外的列信息。
-- 查询指定列`name`、`age`数据, `age > 25`.
-    + `db.userInfo.find({age: {$gt: 25}}, {name: 1, age: 1})`;
-- 按照年龄排序
-    + 升序：`db.userInfo.find().sort({age: 1})`;
-    + 降序：`db.userInfo.find().sort({age: -1})`;
-- 查询`name = zhangsan, age = 22`的数据
-    + `db.userInfo.find({name: 'zhangsan', age: 22})`;
-- 查询前5条数据
-    + `db.userInfo.find().limit(5)`;
-- 查询10条以后的数据
-    + `db.userInfo.find().skip(10)`;
-- 查询在5-10之间的数据
-    + `db.userInfo.find().limit(10).skip(5)`;可用于分页，limit是pageSize，skip是第几页*pageSize
-- or与 查询
-    + `db.userInfo.find({$or: [{age: 22}, {age: 25}]})`;
-- 查询第一条数据
-    + `db.userInfo.findOne()`;
-    + `db.userInfo.find().limit(1)`;
-- 查询某个结果集的记录条数
-    + `db.userInfo.find({age: {$gte: 25}}).count()`;如果要返回限制之后的记录数量，要使用count(true)或者count(非0)
-    + `db.users.find().skip(10).limit(5).count(true)`;
-- 按照某列进行排序
-    + `db.userInfo.find({sex: {$exists: true}}).count()`;
+// 批量插入多条文档
+db.users.insertMany([
+  { name: "李四", age: 28 },
+  { name: "王五", age: 32 }
+]);
+```
 
-## 索引
+## 4. 文档查询（Read / Retrieve）
 
-- 创建索引
-    + `db.userInfo.ensureIndex({name: 1})`;
-    + `db.userInfo.ensureIndex({name: 1, ts: -1})`;
-- 查询当前聚集集合所有索引
-    + `db.userInfo.getIndexes()`;
-- 查看总索引记录大小
-    + `db.userInfo.totalIndexSize()`;
-- 读取当前集合的所有index信息
-    + `db.users.reIndex()`;
-- 删除指定索引
-    + `db.users.dropIndex("name_1")`;
-- 删除所有索引
-    + `db.users.dropIndexes()`;
+```javascript
+// 1. 查询全部
+db.users.find()
+
+// 2. 精确匹配查询
+db.users.find({ name: "张三" })
+
+// 3. 比较操作符 ($gt, $gte, $lt, $lte, $ne)
+db.users.find({ age: { $gt: 20 } })           // age > 20
+db.users.find({ age: { $gte: 20, $lte: 30 } }) // 20 <= age <= 30
+
+// 4. 逻辑操作符 ($or, $and, $in)
+db.users.find({ $or: [{ age: 24 }, { name: "李四" }] })
+db.users.find({ age: { $in: [24, 28, 32] } })
+
+// 5. 正则模糊匹配
+db.users.find({ name: /张/ })     // 匹配包含 "张" 的记录
+db.users.find({ name: /^张/ })    // 匹配以 "张" 开头的记录
+
+// 6. 字段投影（指定返回/排除的字段，_id 默认包含）
+db.users.find({}, { name: 1, age: 1, _id: 0 }) // 仅返回 name 和 age 字段
+
+// 7. 排序（1 为升序，-1 为降序）
+db.users.find().sort({ age: 1 })
+
+// 8. 分页（limit 限制条数，skip 跳过条数）
+db.users.find().skip(10).limit(5) // 获取第 3 页数据（每页 5 条）
+
+// 9. 查询首条与计数
+db.users.findOne({ name: "张三" })
+db.users.countDocuments({ age: { $gt: 20 } }) // 统计满足条件的文档数量
+```
+
+## 5. 文档更新（Update）
+
+```javascript
+// 更新单条满足条件的文档 ($set 保留其他字段)
+db.users.updateOne(
+  { name: "张三" },
+  { $set: { age: 25 } }
+);
+
+// 批量更新多条
+db.users.updateMany(
+  { age: { $lt: 20 } },
+  { $set: { status: "minor" } }
+);
+
+// 自增/自减操作符 ($inc)
+db.users.updateOne(
+  { name: "张三" },
+  { $inc: { age: 1 } } // age 自动 +1
+);
+```
+
+## 6. 文档删除（Delete）
+
+```javascript
+// 删除满足条件的第一条数据
+db.users.deleteOne({ name: "张三" })
+
+// 批量删除所有满足条件的数据
+db.users.deleteMany({ age: { $lt: 18 } })
+```
+
+## 7. 索引管理（Index）
+
+合理的索引可以极大地提升海量数据下的查询性能：
+
+```javascript
+// 1. 创建单字段索引（1 升序，-1 降序）
+db.users.createIndex({ name: 1 })
+
+// 2. 创建复合索引
+db.users.createIndex({ age: 1, createAt: -1 })
+
+// 3. 创建唯一索引（防止字段重复插入）
+db.users.createIndex({ email: 1 }, { unique: true })
+
+// 4. 查看当前集合的所有索引
+db.users.getIndexes()
+
+// 5. 查看索引总占用空间
+db.users.totalIndexSize()
+
+// 6. 删除指定索引
+db.users.dropIndex("name_1")
+
+// 7. 删除集合所有自定义索引
+db.users.dropIndexes()
+```

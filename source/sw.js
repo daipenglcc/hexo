@@ -1,11 +1,3 @@
-/*
- * @Author: Ihoey
- * @Email: mail@ihoey.com
- * @Date: 2019-02-12 15:20:49
- * @LastEditors: Ihoey
- * @LastEditTime: 2020-07-23 15:20:27
- */
-
 var cacheName = "bs-0-0-7";
 var apiCacheName = "api-0-0-3";
 
@@ -108,7 +100,7 @@ self.addEventListener("fetch", (e) => {
 self.addEventListener("push", (e) => {
   console.log("sw: push", e.data.text());
 
-  var title = "梦魇小栈通知";
+  var title = "光阴小栈通知";
   var options = {
     body: e.data.text(),
     icon: "/images/icons/icon_72.png",
@@ -121,5 +113,5 @@ self.addEventListener("push", (e) => {
 // 监听通知的点击事件
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
-  event.waitUntil(clients.openWindow("https://blog.ihoey.com"));
+  event.waitUntil(clients.openWindow("https://www.vueweb.cn"));
 });

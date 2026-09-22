@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Author: LoveNight
-# @Date:   2016-11-16 20:45:59
-# @Last Modified by:   ihoey
-# @Last Modified time: 2017-03-16 21:06:50
 import os
 import sys
 import json
@@ -20,7 +14,7 @@ hexo 博客专用，向百度站长平台提交所有网址
 从中找到自己的接口调用地址
 """
 
-url = 'http://data.zz.baidu.com/urls?site=blog.ihoey.com&token=7wRDqX7vpc1l69Uu'
+url = 'http://data.zz.baidu.com/urls?site=www.vueweb.cn&token=Vs1M9aQIexGFz37b'
 baidu_sitemap = os.path.join(sys.path[0], 'public', 'baidusitemap.xml')
 google_sitemap = os.path.join(sys.path[0], 'public', 'sitemap.xml')
 # sitemap = [baidu_sitemap, google_sitemap]

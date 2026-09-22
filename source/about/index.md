@@ -6,7 +6,7 @@ comments: true
 
 <blockquote class="blockquote-center">愿多年以后，我可以酌一杯清酒，烂醉如泥，梦中回到我们的曾经。</blockquote>
 
-<center>首先梦魇小栈欢迎您的到来!</center>
+<center>首先光阴小栈欢迎您的到来!</center>
 
 > <p style="text-indent: .5em; margin-bottom: 10px;">关于我</p>
 
@@ -15,17 +15,6 @@ comments: true
 关于这个站呢,就是记录下平时记不太住的还有一些自己感兴趣喜欢的一些东西
 顺便也分享给大家吧!
 就酱紫,联系方式在下面
-
-***
-
-<center> <h2>联系方式</h2> </center>
-
-- Email：<a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=mail@ihoey.com">mail@ihoey.com</a>
-- Q  Q：<a href="http://wpa.qq.com/msgrd?v=3&uin=1058221214&site=qq&menu=yes">1058221214</a>
-- 微博：<a href="http://weibo.com/hy951121">ihoeys</a>
-- 欢迎加入QQ群：<a href="https://shang.qq.com/wpa/qunwpa?idkey=9049819d22fc4a5c4906cc246fec5236c193ff1b2ad365530ead8c3590cfac06">点我呀！413700874</a>
-
-***
 
 <blockquote class="blockquote-center">Let life be beautiful like summer flowers and death like autumn leaves.</blockquote>
 

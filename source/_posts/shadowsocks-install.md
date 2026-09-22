@@ -7,125 +7,135 @@ tags:
 categories: shadowsocks
 ---
 
-轻松搭建`shadowsocks`,及相关配置说明
+记录 Linux 云服务器上 Shadowsocks 服务端的安装、多端口配置、系统网络内核调优以及开机服务托管方案。
 
 <!-- more -->
 
-## 安装shadowsocks依赖(我的服务器系统是ubuntu)
+## 1. 安装环境与依赖 (Ubuntu / Debian)
 
-- `sudo -s` // 获取超级管理员权限
-- `apt-get update` // 更新apt-get
-- `apt-get install python-pip` // 安装python包管理工具pip
-- `pip install shadowsocks` // 安装shadowsocks
+```bash
+# 更新系统包管理器
+sudo apt-get update
 
-## 配置shadowsocks
+# 安装 Python3 及 pip
+sudo apt-get install -y python3 python3-pip
 
-- `vi /etc/shadowsocks.json`
+# 安装 shadowsocks
+sudo pip3 install shadowsocks
+```
+
+## 2. 配置文件说明
+
+创建并编辑配置文件 `/etc/shadowsocks.json`：
+
+```bash
+sudo vim /etc/shadowsocks.json
+```
+
+### 单端口配置模式
 
 ```json
-//单一端口
 {
-    "server":"0.0.0.0",//服务器 ip地址 (IPv4/IPv6)
-    "server_port":1121,//服务器监听的端口,注意不要设为使用中的端口
-    "local_address":"127.0.0.1",//默认即可
-    "local_port":1080,
-    "password":"password",//密码
-    "timeout":300,//超时时间（秒）
-    "method":"aes-256-cfb",//加密方式
-    "fast_open":false
+  "server": "0.0.0.0",
+  "server_port": 8388,
+  "local_address": "127.0.0.1",
+  "local_port": 1080,
+  "password": "your_secure_password",
+  "timeout": 300,
+  "method": "aes-256-gcm",
+  "fast_open": false
 }
-
-//多端口
-  {
-   "server":"my_server_ip",  //填入你的IP地址
-   "local_address": "127.0.0.1",
-   "local_port":1080,
-    "port_password": {
-        "8381": "foobar1",    //端口号，密码
-        "8382": "foobar2",
-        "8383": "foobar3",
-        "8384": "foobar4"
-   },
-   "timeout":300,
-   "method":"aes-256-cfb",
-   "fast_open": false
-  }
 ```
 
-## 优化shadowsocks服务
-
-- 在终端输入 `vi /etc/sysctl.d/local.conf`
+### 多用户 / 多端口配置模式
 
 ```json
-  # max open files
-  fs.file-max = 1024000
-  # max read buffer
-  net.core.rmem_max = 67108864
-  # max write buffer
-  net.core.wmem_max = 67108864
-  # default read buffer
-  net.core.rmem_default = 65536
-  # default write buffer
-  net.core.wmem_default = 65536
-  # max processor input queue
-  net.core.netdev_max_backlog = 4096
-  # max backlog
-  net.core.somaxconn = 4096
-
-  # resist SYN flood attacks
-  net.ipv4.tcp_syncookies = 1
-  # reuse timewait sockets when safe
-  net.ipv4.tcp_tw_reuse = 1
-  # turn off fast timewait sockets recycling
-  net.ipv4.tcp_tw_recycle = 0
-  # short FIN timeout
-  net.ipv4.tcp_fin_timeout = 30
-  # short keepalive time
-  net.ipv4.tcp_keepalive_time = 1200
-  # outbound port range
-  net.ipv4.ip_local_port_range = 10000 65000
-  # max SYN backlog
-  net.ipv4.tcp_max_syn_backlog = 4096
-  # max timewait sockets held by system simultaneously
-  net.ipv4.tcp_max_tw_buckets = 5000
-  # TCP receive buffer
-  net.ipv4.tcp_rmem = 4096 87380 67108864
-  # TCP write buffer
-  net.ipv4.tcp_wmem = 4096 65536 67108864
-  # turn on path MTU discovery
-  net.ipv4.tcp_mtu_probing = 1
-
-  # for high-latency network
-  net.ipv4.tcp_congestion_control = hybla
-  # forward ivp4
-  net.ipv4.ip_forward = 1
+{
+  "server": "0.0.0.0",
+  "local_address": "127.0.0.1",
+  "local_port": 1080,
+  "port_password": {
+    "8381": "password_user1",
+    "8382": "password_user2"
+  },
+  "timeout": 300,
+  "method": "aes-256-gcm",
+  "fast_open": false
+}
 ```
 
-- 配置生效：`sysctl --system`
+---
 
-## 开启shadowsocks服务
+## 3. Linux 高并发与网络内核参数优化
 
-- `ssserver -c /etc/shadowsocks.json -d start`
+编辑系统配置文件 `/etc/sysctl.d/local.conf`：
 
-## 关闭
+```bash
+sudo vim /etc/sysctl.d/local.conf
+```
 
-- `ssserver -c /etc/shadowsocks.json -d stop`
+添加以下内核网络调优配置：
 
-## 重启
+```ini
+# 最大文件句柄与缓冲区
+fs.file-max = 1024000
+net.core.rmem_max = 67108864
+net.core.wmem_max = 67108864
+net.core.rmem_default = 65536
+net.core.wmem_default = 65536
+net.core.netdev_max_backlog = 4096
+net.core.somaxconn = 4096
 
-- 重启(修改配置要重启才生效)：`ssserver -c /etc/shadowsocks.json -d restart`
+# TCP 连接重用与超时控制
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+net.ipv4.ip_local_port_range = 10000 65000
+net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.tcp_max_tw_buckets = 5000
+net.ipv4.tcp_rmem = 4096 87380 67108864
+net.ipv4.tcp_wmem = 4096 65536 67108864
+net.ipv4.tcp_mtu_probing = 1
 
-## 日志
+# 启用 BBR 拥塞控制算法（Linux 4.9+）
+net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+```
 
-- `/var/log/shadowsocks.log`
+使配置立即生效：
 
-## 帮助
+```bash
+sudo sysctl --system
+```
 
-- `ssserver -h`
+---
 
-    如果出现故障，试试把`/etc/shadowsocks.json`里改为`"server"="0.0.0.0".` 小心不要掉`,`
+## 4. 服务运行与 Systemd 托管
 
-## 开机启动
+推荐使用 `systemd` 进行服务启停与开机自启管理：
 
-- 在终端输入 `vi /etc/rc.local`
-- 把 `sudo ssserver -c /etc/shadowsocks.json -d start`加进去
+新建服务描述文件 `/etc/systemd/system/shadowsocks.service`：
+
+```ini
+[Unit]
+Description=Shadowsocks Server
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks.json
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### 服务管理命令
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start shadowsocks     # 启动服务
+sudo systemctl restart shadowsocks   # 重启服务
+sudo systemctl status shadowsocks    # 查看运行状态
+sudo systemctl enable shadowsocks    # 开启开机自启
+```

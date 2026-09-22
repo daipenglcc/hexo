@@ -3,79 +3,71 @@ title: Hexo 最常用的几个命令
 date: 2015-08-28 18:29:33
 tags:
   - hexo
-  - 梦魇小栈
+  - 光阴小栈
   - 梦魇
   - houyi1121
 categories: Hexo
 ---
-Hexo 约有二十个命令，但普通用户经常使用的大概只有下列几个:
+Hexo 提供了丰富的命令行工具，日常写作与博客管理最常用的核心命令如下：
 
 <!-- more -->
 
-## hexo s
+## 1. 本地启动预览（hexo server）
 
 ```bash
-$ hexo s
+hexo s
+# 或者是完整命令：hexo server
+# 可指定端口：hexo s -p 5000
 ```
 
-### 启动本地服务器 ###
-用于预览主题。默认地址： http://localhost:4000/
+- **说明**：启动本地开发服务器，默认访问地址为 `http://localhost:4000/`。
+- **特性**：支持热重载，在修改文章内容或大部分主题文件后，保存并刷新浏览器即可实时预览。
+- **注意**：修改站点根目录的 `_config.yml` 或主题配置后，通常需要重启本地服务方能生效。
 
-* hexo s 是 hexo server 的缩写，命令效果一致；
-* 预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；
-* 对 Hexo 根目录 _config.yml 的修改，需要重启本地服务器后才能预览效果。
-
-## hexo new
-
-
-``` bash
-$ hexo new "学习笔记  六"
-```
-
-### 新建一篇标题为 学习笔记 六 的文章，因为标题里有空格，所以加上了引号。
-
-* 文章标题可以在对应 md 文件里改，新建时标题可以写的简单些，纯字母一般不加引号。
-
-## hexo d
+## 2. 新建文章与页面（hexo new）
 
 ```bash
-$ hexo d
+# 新建普通文章（标题含空格需加引号）
+hexo new "我的第一篇博客"
+
+# 新建独立自定义页面（如 about 页面，生成在 source/about/index.md）
+hexo new page about
 ```
 
-### 自动生成网站静态文件，并部署到设定的仓库。
+- **说明**：新建文章会根据 `scaffolds/post.md` 模板在 `source/_posts/` 下生成 `.md` 文件。
+- **技巧**：独立页面生成后，其访问 URL 为 `域名/about/`，不会出现在首页文章流中。
 
-* hexo d 是 hexo deploy 的缩写，命令效果一致。
+## 3. 生成静态文件（hexo generate）
 
-## hexo clean
-
-``` bash
-$ hexo clean
+```bash
+hexo g
+# 完整命令：hexo generate
+# 监听文件变动并实时编译：hexo g --watch
 ```
 
-### 清除缓存文件 db.json 和已生成的静态文件 public 。
+- **说明**：解析 Markdown、模板和静态资源，将编译后的所有网页静态文件输出到 `public/` 目录下。
 
-* 网站显示异常时可以执行这条命令试试。
+## 4. 清理缓存（hexo clean）
 
-## hexo g
-
-``` bash
-$ hexo g
+```bash
+hexo clean
 ```
 
-### 生成网站静态文件到默认设置的 public 文件夹。
+- **说明**：清除 Hexo 数据库缓存文件 `db.json` 和生成的 `public/` 文件夹。
+- **场景**：当文章更新后网页未发生变化、标签/分类混乱或页面渲染异常时，先执行 `hexo clean` 再重新编译通常能解决 90% 的问题。
 
-* 便于查看网站生成的静态文件或者手动部署网站；
-* 如果使用自动部署，不需要先执行该命令；
-* hexo g 是 hexo generate 的缩写，命令效果一致。
+## 5. 一键部署（hexo deploy）
 
-## hexo new page
-
-``` bash
-$ hexo new page aboutme
+```bash
+hexo d
+# 完整命令：hexo deploy
 ```
 
-### 新建一个标题为 aboutme 的页面，默认链接地址为 主页地址/aboutme/
+- **说明**：自动将 `public` 中的静态页面推送到 `_config.yml` 中配置的远程仓库（如 GitHub Pages、云服务器等）。
 
-* 标题可以为中文，但一般习惯用英文；
-* 页面标题和文章一样可以随意修改；
-* 页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。
+## 💡 常用组合命令
+
+```bash
+# 日常发布文章黄金流程：清理 -> 生成 -> 部署
+hexo clean && hexo g && hexo d
+```

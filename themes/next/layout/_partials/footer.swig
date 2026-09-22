@@ -5,7 +5,7 @@
   <span class="with-love" id="animate">
     <i class="fa fa-{{ theme.footer.icon.name }}"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">梦魇小栈</span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
   {% if theme.hitalk.enable and theme.hitalk.server %}
     <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
   {% endif %}
