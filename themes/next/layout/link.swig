@@ -4,16 +4,20 @@
 <ul class="ihoey-links">
   {% for e,i in site.data.links %}
     <li class="ihoey-links-item">
-        <a href="{{ i.link }}" class="group-picture" title="{{ i.name }}" target="_blank">
-            {% if i.avatar %}
-              <img data-original="{{ i.avatar }}" loading="lazy" alt="{{ i.name }}" title="{{ i.name }}" height="72px" width="72px" />
+        <a href="{{ i.link }}" class="group-picture" title="{{ i.name }}" target="_blank" rel="noopener">
+            <div class="link-avatar-wrap">
+              {% if i.avatar %}
+                <img data-original="{{ i.avatar }}" loading="lazy" alt="{{ i.name }}" title="{{ i.name }}" />
               {% else %}
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-{{e+1}}" id="link"></use>
-              </svg>
-            {% endif %}
-            <h3 class="ihoey-links-title" title="{{ i.name }}">{{ i.name }}</h3>
-            <p class="ihoey-links-des" title="{{ i.description }}">{{ i.description }}</p>
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-{{e+1}}" id="link"></use>
+                </svg>
+              {% endif %}
+            </div>
+            <div class="link-info">
+              <h3 class="ihoey-links-title" title="{{ i.name }}">{{ i.name }}</h3>
+              <p class="ihoey-links-des" title="{{ i.description }}">{{ i.description }}</p>
+            </div>
         </a>
     </li>
   {% endfor %}
