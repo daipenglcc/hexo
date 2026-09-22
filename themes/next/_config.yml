@@ -147,13 +147,13 @@ site_state: true
 # Value before `||` delimeter is the target permalink.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
-  GitHub: https://github.com/ihoey || github
-  微博: http://weibo.com/hy951121 || weibo
-  QQ: http://wpa.qq.com/msgrd?v=3&uin=1058221214&site=qq&menu=yes || qq
-  E-mail: https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=mail@ihoey.com || envelope
-  Google: https://plus.google.com/100200711230702098272 || google
-  Twitter: https://twitter.com/ihoeys || twitter
-  Facebook: https://www.facebook.com/profile.php?id=100008808609802 || facebook
+  # GitHub: https://github.com/ihoey || github
+  # 微博: http://weibo.com/hy951121 || weibo
+  # QQ: http://wpa.qq.com/msgrd?v=3&uin=1058221214&site=qq&menu=yes || qq
+  # E-mail: https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=mail@ihoey.com || envelope
+  # Google: https://plus.google.com/100200711230702098272 || google
+  # Twitter: https://twitter.com/ihoeys || twitter
+  # Facebook: https://www.facebook.com/profile.php?id=100008808609802 || facebook
   #VK Group: https://vk.com/yourname || vk
   #StackOverflow: https://stackoverflow.com/yourname || stack-overflow
   #YouTube: https://youtube.com/yourname || youtube
@@ -181,11 +181,12 @@ links_title: Links
 # links_layout: block
 #links_layout: inline
 links:
-  mythsman: https://blog.mythsman.com/
-  可乐没气的猫: https://www.isthnew.com/links
-  Bboysoul: http://www.bboysoul.com/
-  jnduan's Blog: https://jnan.org/
-  Ehlxr's Blog: https://ehlxr.me/
+  Vue.js 官网: https://cn.vuejs.org/
+  Vite 中文网: https://cn.vitejs.dev/
+  React 中文文档: https://zh-hans.react.dev/
+  Node.js 中文网: https://nodejs.cn/
+  MDN Web Docs: https://developer.mozilla.org/zh-CN/
+  GitHub: https://github.com/
 
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif

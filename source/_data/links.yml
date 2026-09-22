@@ -1,0 +1,29 @@
+- name: Vue.js 官方文档
+  link: https://cn.vuejs.org/
+  avatar: https://cn.vuejs.org/logo.svg
+  description: 渐进式 JavaScript 框架，易学易用、性能出色且功能丰富的框架。
+
+- name: Vite 官方中文文档
+  link: https://cn.vitejs.dev/
+  avatar: https://cn.vitejs.dev/logo.svg
+  description: 下一代前端开发与构建工具，极速的冷启动与即时热模块更新。
+
+- name: React 官方中文文档
+  link: https://zh-hans.react.dev/
+  avatar: https://zh-hans.react.dev/favicon-32x32.png
+  description: 用于构建 Web 与原生交互界面的 JavaScript 库。
+
+- name: Node.js 官方中文网
+  link: https://nodejs.cn/
+  avatar: https://nodejs.org/static/images/favicons/favicon.png
+  description: 基于 Chrome V8 引擎构建的开源、跨平台 JavaScript 运行时环境。
+
+- name: MDN Web Docs
+  link: https://developer.mozilla.org/zh-CN/
+  avatar: https://developer.mozilla.org/favicon-48x48.png
+  description: 面向 Web 开发者的权威开放文档与学习资源平台。
+
+- name: GitHub
+  link: https://github.com/
+  avatar: https://github.githubassets.com/favicons/favicon.svg
+  description: 全球最大的开源代码托管与开发者协同平台。
