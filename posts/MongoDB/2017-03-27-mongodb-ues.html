@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="整理了 MongoDB &#x2F; mongosh 开发中最常用的基础命令、CRUD 查询、聚合分页以及索引优化操作速查。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB学习笔记">
+<meta property="og:url" content="https://www.vueweb.cn/posts/MongoDB/2017-03-27-mongodb-ues.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="整理了 MongoDB &#x2F; mongosh 开发中最常用的基础命令、CRUD 查询、聚合分页以及索引优化操作速查。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-27T07:07:03.000Z">
+<meta property="article:modified_time" content="2026-09-22T07:38:50.241Z">
+<meta property="article:tag" content="MongoDB">
+<meta property="article:tag" content="NoSQL">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/MongoDB/2017-03-27-mongodb-ues.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MongoDB学习笔记 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />我是谁˚∆˚</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">10</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">18</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/MongoDB/2017-03-27-mongodb-ues.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">MongoDB学习笔记
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-27 15:07:03" itemprop="dateCreated datePublished" datetime="2017-03-27T15:07:03+08:00">2017-03-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-22 15:38:50" itemprop="dateModified" datetime="2026-09-22T15:38:50+08:00">2026-09-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/MongoDB/2017-03-27-mongodb-ues.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/MongoDB/2017-03-27-mongodb-ues.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>整理了 MongoDB / <code>mongosh</code> 开发中最常用的基础命令、CRUD 查询、聚合分页以及索引优化操作速查。</p>
+<a id="more"></a>
+
+<h2 id="1-基础服务与数据库操作"><a href="#1-基础服务与数据库操作" class="headerlink" title="1. 基础服务与数据库操作"></a>1. 基础服务与数据库操作</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 帮助命令</span></span><br><span class="line">help                         <span class="comment">// 查看系统级帮助</span></span><br><span class="line">db.help()                    <span class="comment">// 查看当前数据库方法帮助</span></span><br><span class="line">db.colName.help()            <span class="comment">// 查看集合方法帮助</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据库切换与查看</span></span><br><span class="line">show dbs                     <span class="comment">// 列出所有数据库</span></span><br><span class="line">use my_database              <span class="comment">// 切换到指定数据库（不存在时，插入第一条数据时自动创建）</span></span><br><span class="line">db.getName()                 <span class="comment">// 查看当前所在数据库名称</span></span><br><span class="line">db.stats()                   <span class="comment">// 查看当前数据库的存储状态与统计信息</span></span><br><span class="line">db.dropDatabase()            <span class="comment">// 删除当前数据库</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-集合（Collection）管理"><a href="#2-集合（Collection）管理" class="headerlink" title="2. 集合（Collection）管理"></a>2. 集合（Collection）管理</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show collections             <span class="comment">// 查看当前库下的所有集合（或 show tables）</span></span><br><span class="line">db.createCollection(<span class="string">"users"</span>) <span class="comment">// 显式创建名为 users 的集合</span></span><br><span class="line">db.users.drop()              <span class="comment">// 删除 users 集合</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-文档插入（Create）"><a href="#3-文档插入（Create）" class="headerlink" title="3. 文档插入（Create）"></a>3. 文档插入（Create）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入单条文档</span></span><br><span class="line">db.users.insertOne(&#123;</span><br><span class="line">  name: <span class="string">"张三"</span>,</span><br><span class="line">  age: <span class="number">24</span>,</span><br><span class="line">  tags: [<span class="string">"javascript"</span>, <span class="string">"mongodb"</span>],</span><br><span class="line">  createAt: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 批量插入多条文档</span></span><br><span class="line">db.users.insertMany([</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"李四"</span>, <span class="attr">age</span>: <span class="number">28</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"王五"</span>, <span class="attr">age</span>: <span class="number">32</span> &#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-文档查询（Read-Retrieve）"><a href="#4-文档查询（Read-Retrieve）" class="headerlink" title="4. 文档查询（Read / Retrieve）"></a>4. 文档查询（Read / Retrieve）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 查询全部</span></span><br><span class="line">db.users.find()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 精确匹配查询</span></span><br><span class="line">db.users.find(&#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 比较操作符 ($gt, $gte, $lt, $lte, $ne)</span></span><br><span class="line">db.users.find(&#123; <span class="attr">age</span>: &#123; <span class="attr">$gt</span>: <span class="number">20</span> &#125; &#125;)           <span class="comment">// age &gt; 20</span></span><br><span class="line">db.users.find(&#123; <span class="attr">age</span>: &#123; <span class="attr">$gte</span>: <span class="number">20</span>, <span class="attr">$lte</span>: <span class="number">30</span> &#125; &#125;) <span class="comment">// 20 &lt;= age &lt;= 30</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 逻辑操作符 ($or, $and, $in)</span></span><br><span class="line">db.users.find(&#123; <span class="attr">$or</span>: [&#123; <span class="attr">age</span>: <span class="number">24</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">"李四"</span> &#125;] &#125;)</span><br><span class="line">db.users.find(&#123; <span class="attr">age</span>: &#123; <span class="attr">$in</span>: [<span class="number">24</span>, <span class="number">28</span>, <span class="number">32</span>] &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 正则模糊匹配</span></span><br><span class="line">db.users.find(&#123; <span class="attr">name</span>: <span class="regexp">/张/</span> &#125;)     <span class="comment">// 匹配包含 "张" 的记录</span></span><br><span class="line">db.users.find(&#123; <span class="attr">name</span>: <span class="regexp">/^张/</span> &#125;)    <span class="comment">// 匹配以 "张" 开头的记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 字段投影（指定返回/排除的字段，_id 默认包含）</span></span><br><span class="line">db.users.find(&#123;&#125;, &#123; <span class="attr">name</span>: <span class="number">1</span>, <span class="attr">age</span>: <span class="number">1</span>, <span class="attr">_id</span>: <span class="number">0</span> &#125;) <span class="comment">// 仅返回 name 和 age 字段</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 7. 排序（1 为升序，-1 为降序）</span></span><br><span class="line">db.users.find().sort(&#123; <span class="attr">age</span>: <span class="number">1</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 8. 分页（limit 限制条数，skip 跳过条数）</span></span><br><span class="line">db.users.find().skip(<span class="number">10</span>).limit(<span class="number">5</span>) <span class="comment">// 获取第 3 页数据（每页 5 条）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 9. 查询首条与计数</span></span><br><span class="line">db.users.findOne(&#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;)</span><br><span class="line">db.users.countDocuments(&#123; <span class="attr">age</span>: &#123; <span class="attr">$gt</span>: <span class="number">20</span> &#125; &#125;) <span class="comment">// 统计满足条件的文档数量</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-文档更新（Update）"><a href="#5-文档更新（Update）" class="headerlink" title="5. 文档更新（Update）"></a>5. 文档更新（Update）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 更新单条满足条件的文档 ($set 保留其他字段)</span></span><br><span class="line">db.users.updateOne(</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">$set</span>: &#123; <span class="attr">age</span>: <span class="number">25</span> &#125; &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 批量更新多条</span></span><br><span class="line">db.users.updateMany(</span><br><span class="line">  &#123; <span class="attr">age</span>: &#123; <span class="attr">$lt</span>: <span class="number">20</span> &#125; &#125;,</span><br><span class="line">  &#123; <span class="attr">$set</span>: &#123; <span class="attr">status</span>: <span class="string">"minor"</span> &#125; &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自增/自减操作符 ($inc)</span></span><br><span class="line">db.users.updateOne(</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">$inc</span>: &#123; <span class="attr">age</span>: <span class="number">1</span> &#125; &#125; <span class="comment">// age 自动 +1</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-文档删除（Delete）"><a href="#6-文档删除（Delete）" class="headerlink" title="6. 文档删除（Delete）"></a>6. 文档删除（Delete）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除满足条件的第一条数据</span></span><br><span class="line">db.users.deleteOne(&#123; <span class="attr">name</span>: <span class="string">"张三"</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 批量删除所有满足条件的数据</span></span><br><span class="line">db.users.deleteMany(&#123; <span class="attr">age</span>: &#123; <span class="attr">$lt</span>: <span class="number">18</span> &#125; &#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="7-索引管理（Index）"><a href="#7-索引管理（Index）" class="headerlink" title="7. 索引管理（Index）"></a>7. 索引管理（Index）</h2><p>合理的索引可以极大地提升海量数据下的查询性能：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建单字段索引（1 升序，-1 降序）</span></span><br><span class="line">db.users.createIndex(&#123; <span class="attr">name</span>: <span class="number">1</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 创建复合索引</span></span><br><span class="line">db.users.createIndex(&#123; <span class="attr">age</span>: <span class="number">1</span>, <span class="attr">createAt</span>: <span class="number">-1</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 创建唯一索引（防止字段重复插入）</span></span><br><span class="line">db.users.createIndex(&#123; <span class="attr">email</span>: <span class="number">1</span> &#125;, &#123; <span class="attr">unique</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 查看当前集合的所有索引</span></span><br><span class="line">db.users.getIndexes()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 查看索引总占用空间</span></span><br><span class="line">db.users.totalIndexSize()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 删除指定索引</span></span><br><span class="line">db.users.dropIndex(<span class="string">"name_1"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 7. 删除集合所有自定义索引</span></span><br><span class="line">db.users.dropIndexes()</span><br></pre></td></tr></table></figure></div>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>满分是10分的话，这篇文章你给几分，您的支持将鼓励我继续创作！</div>
+  <div class="reward-content">
+    	<a id="github" href="https://github.com/houyi1121/Playing-reward" target="_blank" class="pos-a" title="Github"></a>
+      <a href="https://www.vueweb.cn" target="_blank" id="DonateText" title="vueweb.cn">vueweb.cn</a>
+      <ul id="donateBox" class="list pos-a">
+        <li id="PayPal"><a href="https://www.paypal.me/ihoey" target="_blank" title="PayPal">PayPal</a></li>
+        <li id="QQ" data-img="/qcode/tencent_qcode.png" title="QQ">QQ</li>
+        <li id="AliPay" data-img="/qcode/alipay_qcode.png" title="支付宝">支付宝</li>
+        <li id="WeChat" data-img="/qcode/wechat_qcode.png" title="微信支付">微信支付</li>
+      </ul>
+      <div id="QRBox" class="pos-f left-100">
+        <div id="MainBox"></div>
+      </div>
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+            <a href="/tags/NoSQL/" rel="tag"># NoSQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/MongoDB/2017-03-23-mongodb.html" rel="next" title="MongoDB安装笔记">
+                <i class="fa fa-chevron-left"></i> MongoDB安装笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/Git/2017-04-23-git.html" rel="prev" title="Git 常用命令学习及整理">
+                Git 常用命令学习及整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/MongoDB/2017-03-27-mongodb-ues.html"
+         data-hitalk-title="MongoDB学习笔记">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png?imageMogr2/thumbnail/200x200/format/png/blur/1x0/quality/75|imageslim"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description">心，若没有栖息的地方，到哪里都是流浪......</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/index.html%20%7C%7C%20archive">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ihoey" target="_blank" title="GitHub" rel="external nofollow noopener"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/hy951121" target="_blank" title="微博" rel="external nofollow noopener"><i class="fa fa-fw fa-weibo"></i>微博</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://wpa.qq.com/msgrd?v=3&uin=1058221214&site=qq&menu=yes" target="_blank" title="QQ" rel="external nofollow noopener"><i class="fa fa-fw fa-qq"></i>QQ</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=mail@ihoey.com" target="_blank" title="E-mail" rel="external nofollow noopener"><i class="fa fa-fw fa-envelope"></i>E-mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/100200711230702098272" target="_blank" title="Google" rel="external nofollow noopener"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/ihoeys" target="_blank" title="Twitter" rel="external nofollow noopener"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/profile.php?id=100008808609802" target="_blank" title="Facebook" rel="external nofollow noopener"><i class="fa fa-fw fa-facebook"></i>Facebook</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.mythsman.com/" title="mythsman" target="_blank" rel="noopener nofollow">mythsman</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.isthnew.com/links" title="可乐没气的猫" target="_blank" rel="noopener nofollow">可乐没气的猫</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.bboysoul.com/" title="Bboysoul" target="_blank" rel="noopener nofollow">Bboysoul</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jnan.org/" title="jnduan's Blog" target="_blank" rel="noopener nofollow">jnduan's Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ehlxr.me/" title="Ehlxr's Blog" target="_blank" rel="noopener nofollow">Ehlxr's Blog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基础服务与数据库操作"><span class="nav-number">1.</span> <span class="nav-text">1. 基础服务与数据库操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-集合（Collection）管理"><span class="nav-number">2.</span> <span class="nav-text">2. 集合（Collection）管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-文档插入（Create）"><span class="nav-number">3.</span> <span class="nav-text">3. 文档插入（Create）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-文档查询（Read-Retrieve）"><span class="nav-number">4.</span> <span class="nav-text">4. 文档查询（Read &#x2F; Retrieve）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-文档更新（Update）"><span class="nav-number">5.</span> <span class="nav-text">5. 文档更新（Update）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-文档删除（Delete）"><span class="nav-number">6.</span> <span class="nav-text">6. 文档删除（Delete）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-索引管理（Index）"><span class="nav-number">7.</span> <span class="nav-text">7. 索引管理（Index）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
