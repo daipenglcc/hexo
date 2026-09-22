@@ -1,12 +1,5 @@
-/*
- * @Author: henry
- * @Date:   2016-11-10 22:42:07
- * @Last Modified by: ihoey
- * @Last Modified time: 2019-03-29 16:07:25
- */
-
 console.log(
-  "%c梦魇小栈，欢迎您",
+  "%c光阴小栈，欢迎您",
   " text-shadow: 0 0 5px #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);font-size:5em"
 );
 
@@ -113,7 +106,7 @@ if ("serviceWorker" in navigator) {
 }
 
 console.log(
-  "\n %c 梦魇|专注于分享 QQ:1058221214 %c https://www.vueweb.cn/ \n\n",
+  "\n %c 梦魇|万妙之心 QQ:1058221214 %c https://www.vueweb.cn/ \n\n",
   "color: #FF0000; background: #4bffba; padding:5px 0; border-radius: 5px 5px 5px 5px;",
   "background: #fadfa3; padding:5px 0; border-radius: 5px 5px 5px 5px;"
 );
@@ -283,7 +276,7 @@ window.onload = function () {
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       $('[rel="icon"]').attr("href", "/images/fail.ico");
-      document.title = "╭(°A°`)╮ 页面崩溃啦 ~ 快回来看看~ | 梦魇小栈！";
+      document.title = "╭(°A°`)╮ 页面崩溃啦 ~ 快回来看看~ | 光阴小栈！";
       clearTimeout(titleTime);
     } else {
       $('[rel="icon"]').attr("href", "/favicon.ico");
@@ -393,9 +386,9 @@ window.onload = function () {
 
     var content = [
       `<div>${node.innerHTML}<br />`,
-      "作者：Ihoey",
+      "作者：有花不见叶",
       `链接：${location.href}`,
-      "来源：梦魇小栈",
+      "来源：光阴小栈",
       "著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。",
       "</div>",
     ];
