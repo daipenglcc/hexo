@@ -111,7 +111,7 @@ menu:
   home: / || home
   links: /links/index.html || link
   guestbook: /guestbook/index.html || comment
-  about: /about/index.html || user
+  # about: /about/index.html || user
   archives: /archives/index.html || archive
   tags: /tags/index.html || tags
   # categories: /categories
