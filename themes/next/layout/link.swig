@@ -31,14 +31,10 @@
 </ul>
 <hr>
 <h3>本站链接信息</h3>
-<ul style="padding: 0">
-    <li>名称：{{ config.title }}</li>
-    <li>地址：
-        <a href="{{ config.url }}">{{ config.url }}</a>
-    </li>
-    <li>描述：{{ config.description }}</li>
-    <li>图片：
-        <a href="{{ config.avatar }}" rel="noopener nofollow" target="_blank">{{ config.avatar }}</a>
-    </li>
-</ul>
+<div style="background: #fbfbfb; border: 1px solid #eee; border-radius: 6px; padding: 15px 20px; font-size: 14px; line-height: 1.8;">
+  <p style="margin: 4px 0;"><strong>名称：</strong>{{ config.title }}</p>
+  <p style="margin: 4px 0;"><strong>地址：</strong><a href="{{ config.url }}" target="_blank" rel="noopener">{{ config.url }}</a></p>
+  <p style="margin: 4px 0;"><strong>描述：</strong>{{ config.description }}</p>
+  <p style="margin: 4px 0; word-break: break-all;"><strong>图片：</strong><a href="{{ config.avatar }}" rel="noopener nofollow" target="_blank">{{ config.avatar }}</a></p>
+</div>
 <hr>
