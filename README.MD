@@ -88,6 +88,17 @@ npx hexo new "文章标题"
 
 ---
 
+## 📚 Cloudflare 免费资源参考文档
+
+| 服务 / 模块 | 说明 | 官方文档链接 |
+| :--- | :--- | :--- |
+| **Cloudflare Workers** | 免费额度：100,000 次请求/天，10 ms CPU 时间/请求 | [Workers 定价文档](https://developers.cloudflare.com/workers/platform/pricing/) · [Workers 配额限制](https://developers.cloudflare.com/workers/platform/limits/) |
+| **Cloudflare D1** | 免费额度：5 GB 存储，500 万行读取/天，10 万行写入/天 | [D1 定价文档](https://developers.cloudflare.com/d1/platform/pricing/) · [D1 配额限制](https://developers.cloudflare.com/d1/platform/limits/) |
+| **Cloudflare Pages** | 免费额度：不限流量带宽，500 次构建/月，无限自定义域名与 SSL | [Pages 官方文档](https://developers.cloudflare.com/pages/) · [Pages 定价与限制](https://developers.cloudflare.com/pages/platform/limits/) |
+| **Cloudflare R2** | 免费额度：10 GB 存储/月，A 类操作 100 万次/月，B 类操作 1000 万次/月，免出口流量费 | [R2 定价文档](https://developers.cloudflare.com/r2/pricing/) |
+
+---
+
 ## 📝 开源协议
 
 本项目基于 [MIT](LICENSE) 协议开源。
