@@ -1,5 +1,5 @@
 ---
-title: React Hooks 入门与实践
+title: 彻底告别 Class 组件：React Hooks 常用姿势备忘
 date: 2019-03-12 10:15:42
 tags:
   - React
@@ -7,367 +7,177 @@ tags:
 categories: React
 ---
 
-React 16.8 正式引入了 Hooks，这是 React 近年来最具颠覆性的更新。Hooks 让函数组件也能拥有状态管理和生命周期能力，写法更简洁、逻辑复用更方便。本文从实际使用角度出发，梳理 React Hooks 的核心 API 和常见模式。
+当年刚学 React 的时候，天天对着 Class 组件里的 `this.bind()` 和一堆长得要死、执行顺序玄学的生命周期函数发愁。后来 React 出了 Hooks，整个世界都清净了，再也不用去猜 `this` 到底指向谁了。
+
+现在写新项目基本都是全盘函数式组件（Functional Component）。这里把最常用的几个 Hook 整理一下，方便自己抄代码。
 
 <!-- more -->
 
-## 为什么需要 Hooks？
+## 1. useState：存数据的独苗
 
-在 Hooks 之前，React 的状态逻辑只能写在 Class 组件中。这带来了几个问题：
-
-- **逻辑复用困难**：复用有状态逻辑需要使用 HOC（高阶组件）或 Render Props，层层嵌套导致"嵌套地狱"
-- **组件越来越复杂**：一个生命周期方法里塞满了不相关的逻辑，难以拆分
-- **Class 的学习成本**：`this` 指向、`.bind()` 绑定、生命周期的执行顺序，对新手不友好
-
-Hooks 的出现让函数组件成为了 React 开发的首选方式。
-
-## 1. useState —— 状态管理
+取代了以前的 `this.state`。
 
 ```jsx
 import React, { useState } from 'react'
 
 function Counter() {
-  // 声明一个状态变量 count，初始值为 0
+  // 第一个变量是值，第二个是改值的方法。初始值设为 0
   const [count, setCount] = useState(0)
 
   return (
     <div>
-      <p>你点击了 {count} 次</p>
+      <p>点赞数：{count}</p>
+      {/* 直接调方法，爽 */}
       <button onClick={() => setCount(count + 1)}>+1</button>
+      
+      {/* 如果依赖上一次的值，最好用回调函数写法，防坑 */}
       <button onClick={() => setCount(prev => prev - 1)}>-1</button>
-      <button onClick={() => setCount(0)}>重置</button>
     </div>
   )
 }
 ```
 
-### 管理对象/数组状态
+**小坑提醒**：如果要存个大对象（比如表单），改的时候千万记得把原来的属性解构（`...prev`）塞回去，`useState` 不像以前那样会自动帮你合并对象了。
 
-```jsx
-function UserForm() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    age: 0
-  })
+## 2. useEffect：缝合怪生命周期
 
-  const handleChange = (field, value) => {
-    // 注意：必须展开旧状态，useState 不会自动合并
-    setForm(prev => ({ ...prev, [field]: value }))
-  }
-
-  return (
-    <div>
-      <input
-        value={form.name}
-        onChange={e => handleChange('name', e.target.value)}
-        placeholder="姓名"
-      />
-      <input
-        value={form.email}
-        onChange={e => handleChange('email', e.target.value)}
-        placeholder="邮箱"
-      />
-    </div>
-  )
-}
-```
-
-## 2. useEffect —— 副作用处理
-
-`useEffect` 统一处理了 Class 组件中 `componentDidMount`、`componentDidUpdate`、`componentWillUnmount` 三个生命周期：
+这玩意儿统一把 `componentDidMount`、更新和卸载全缝合在一起了，主要用来发请求、绑事件。
 
 ```jsx
 import React, { useState, useEffect } from 'react'
 
 function UserProfile({ userId }) {
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // 组件挂载或 userId 变化时执行
-    setLoading(true)
-
+    // 这里相当于 componentDidMount (加载时) 和 componentDidUpdate (userId 变了)
     fetch(`/api/users/${userId}`)
       .then(res => res.json())
-      .then(data => {
-        setUser(data)
-        setLoading(false)
-      })
+      .then(data => setUser(data))
 
-    // 返回清除函数（组件卸载或依赖变化前执行）
+    // 必须要 return 出去一个函数，这个就是组件销毁前要干的收尾工作（比如清定时器）
     return () => {
-      console.log('清除上一次的副作用')
+      console.log('打扫战场，撤退')
     }
-  }, [userId])  // 依赖数组：只有 userId 变化时才重新执行
+  }, [userId])  
+  // 👆 这里的数组叫依赖项，意思就是：只有 userId 变了，我才重新跑一次上面的代码。
+  // 如果空着 []，那就是只在页面刚加载完跑一次。
+  // 如果连数组都不写，那页面只要一刷新它就跑，很容易死循环死机！
 
-  if (loading) return <p>加载中...</p>
   return <h2>{user?.name}</h2>
 }
 ```
 
-### 依赖数组的三种用法
+## 3. useContext：拯救 Props 嵌套地狱
 
-```jsx
-// 1. 每次渲染后都执行（不传依赖数组）
-useEffect(() => {
-  console.log('每次渲染都会执行')
-})
-
-// 2. 只在挂载时执行一次（空依赖数组）
-useEffect(() => {
-  console.log('仅挂载时执行一次')
-  return () => console.log('组件卸载时执行')
-}, [])
-
-// 3. 依赖变化时执行（指定依赖）
-useEffect(() => {
-  console.log(`count 变为 ${count}`)
-}, [count])
-```
-
-### 常见的 useEffect 场景
-
-```jsx
-// 事件监听
-useEffect(() => {
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth)
-  }
-  window.addEventListener('resize', handleResize)
-  return () => window.removeEventListener('resize', handleResize)
-}, [])
-
-// 定时器
-useEffect(() => {
-  const timer = setInterval(() => {
-    setSeconds(prev => prev + 1)
-  }, 1000)
-  return () => clearInterval(timer)
-}, [])
-
-// 修改页面标题
-useEffect(() => {
-  document.title = `(${unreadCount}) 消息中心`
-}, [unreadCount])
-```
-
-## 3. useContext —— 跨组件传值
-
-配合 `React.createContext` 使用，取代了 Consumer 组件的繁琐写法：
+组件嵌套太深，传个数据要穿过祖宗十八代，太累了。有了 Context，直接隔空传功：
 
 ```jsx
 import React, { createContext, useContext, useState } from 'react'
 
-// 创建 Context
+// 先造个池子
 const ThemeContext = createContext()
 
-// Provider 组件
-function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light')
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light')
-  }
-
+// 在最外层包一层
+function App() {
+  const [theme, setTheme] = useState('dark')
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+    <ThemeContext.Provider value={theme}>
+      <Navbar />
     </ThemeContext.Provider>
   )
 }
 
-// 任意子组件中直接消费
-function ThemeButton() {
-  const { theme, toggleTheme } = useContext(ThemeContext)
-
-  return (
-    <button
-      onClick={toggleTheme}
-      style={{
-        background: theme === 'dark' ? '#333' : '#fff',
-        color: theme === 'dark' ? '#fff' : '#333'
-      }}
-    >
-      当前主题: {theme}
-    </button>
-  )
+// 随便在下面哪一层，直接伸手掏就完事了
+function Navbar() {
+  const theme = useContext(ThemeContext)
+  return <div className={`nav-${theme}`}>我是黑夜模式导航栏</div>
 }
 ```
 
-## 4. useRef —— 引用与持久值
+## 4. useRef：不管怎么刷都不变的值
 
-`useRef` 返回一个可变的 ref 对象，在组件整个生命周期内保持不变：
+有两个用处：一是绑定真实的 DOM（像以前的 `document.getElementById`），二是存一个无论组件怎么刷新，它的值都不会被重置的变量，而且**它变了不会触发页面刷新**。
 
 ```jsx
 function TextInput() {
   const inputRef = useRef(null)
-  const renderCount = useRef(0)
+  const renderCount = useRef(0) // 存个数字
 
-  // 每次渲染计数（不会触发重新渲染）
+  // 页面每次刷新我偷偷加 1，但这不会引发页面再次刷新
   renderCount.current += 1
 
   const focusInput = () => {
+    // 点按钮，让输入框光标闪烁
     inputRef.current.focus()
   }
 
   return (
     <div>
-      <input ref={inputRef} placeholder="点击按钮聚焦" />
-      <button onClick={focusInput}>聚焦输入框</button>
-      <p>渲染次数: {renderCount.current}</p>
+      <input ref={inputRef} placeholder="点下面按钮让我发光" />
+      <button onClick={focusInput}>点我聚焦</button>
+      <p>这破页面刷新了 {renderCount.current} 次</p>
     </div>
   )
 }
 ```
 
-## 5. useMemo 和 useCallback —— 性能优化
+## 5. useMemo & useCallback：性能优化的药膏
 
-### useMemo：缓存计算结果
+这两个只有在页面觉得卡的时候才需要加，没事干全加上反而会拖慢初始化速度。
+
+### useMemo（用来记计算结果）
+
+如果有个特别复杂的 for 循环计算，不想每次渲染页面都算一次：
 
 ```jsx
-function ProductList({ products, filter }) {
-  // 只有 products 或 filter 变化时才重新计算
-  const filteredProducts = useMemo(() => {
-    console.log('执行过滤计算...')
-    return products.filter(p =>
-      p.name.toLowerCase().includes(filter.toLowerCase())
-    )
-  }, [products, filter])
+function ProductList({ products, filterWord }) {
+  // 只有这两个变量变了，我才重新算。平时就拿上次算好的结果应付差事
+  const filteredList = useMemo(() => {
+    console.log('好累，开始狂算...')
+    return products.filter(p => p.name.includes(filterWord))
+  }, [products, filterWord])
 
-  return (
-    <ul>
-      {filteredProducts.map(p => (
-        <li key={p.id}>{p.name} - ¥{p.price}</li>
-      ))}
-    </ul>
-  )
+  return <ul>...</ul>
 }
 ```
 
-### useCallback：缓存函数引用
+### useCallback（用来记函数）
+
+主要是配合 `React.memo`，防止每次刷新都生成一个新函数传给子组件，导致子组件无辜跟着刷新。
 
 ```jsx
-function ParentComponent() {
-  const [count, setCount] = useState(0)
-
-  // 避免每次渲染都创建新函数，导致子组件不必要的重新渲染
-  const handleClick = useCallback((id) => {
-    console.log('处理点击:', id)
-  }, [])  // 空依赖 = 函数引用永远不变
-
-  return (
-    <div>
-      <p>{count}</p>
-      <button onClick={() => setCount(c => c + 1)}>+1</button>
-      <ChildComponent onClick={handleClick} />
-    </div>
-  )
-}
-
-// 配合 React.memo 使用效果最佳
-const ChildComponent = React.memo(({ onClick }) => {
-  console.log('子组件渲染')
-  return <button onClick={() => onClick(1)}>子按钮</button>
-})
+// 只要依赖不变，这个函数在内存里的地址就永远一样
+const handleClick = useCallback((id) => {
+  console.log('处理点击:', id)
+}, []) 
 ```
 
-## 6. 自定义 Hook —— 逻辑复用
+## 6. 自定义 Hook：最强装逼利器
 
-自定义 Hook 是 Hooks 最强大的特性之一，以 `use` 开头的函数就是自定义 Hook：
+把一堆逻辑抽出去写成一个 `useXxx` 的函数，代码立马变得清爽无比。比如我想自己封装个一键拿本地缓存的钩子：
 
 ```jsx
 // hooks/useLocalStorage.js
 function useLocalStorage(key, initialValue) {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      const item = localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
-    } catch (error) {
-      return initialValue
-    }
+  const [val, setVal] = useState(() => {
+    const item = localStorage.getItem(key)
+    return item ? JSON.parse(item) : initialValue
   })
 
-  const setValue = (value) => {
-    const valueToStore = value instanceof Function ? value(storedValue) : value
-    setStoredValue(valueToStore)
-    localStorage.setItem(key, JSON.stringify(valueToStore))
+  const setValue = (newValue) => {
+    setVal(newValue)
+    localStorage.setItem(key, JSON.stringify(newValue))
   }
 
-  return [storedValue, setValue]
+  return [val, setValue]
 }
 
-// 使用
+// 别人用的时候：
 function Settings() {
-  const [theme, setTheme] = useLocalStorage('theme', 'light')
-  const [lang, setLang] = useLocalStorage('lang', 'zh-CN')
-  // ...
+  // 跟 useState 长得一模一样，但它自己带了存本地的功能
+  const [theme, setTheme] = useLocalStorage('theme', 'dark')
 }
 ```
 
-```jsx
-// hooks/useFetch.js - 通用数据请求 Hook
-function useFetch(url) {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    let cancelled = false
-
-    setLoading(true)
-    fetch(url)
-      .then(res => res.json())
-      .then(json => {
-        if (!cancelled) {
-          setData(json)
-          setLoading(false)
-        }
-      })
-      .catch(err => {
-        if (!cancelled) {
-          setError(err)
-          setLoading(false)
-        }
-      })
-
-    return () => { cancelled = true }
-  }, [url])
-
-  return { data, loading, error }
-}
-
-// 使用
-function ArticleList() {
-  const { data, loading, error } = useFetch('/api/articles')
-
-  if (loading) return <p>加载中...</p>
-  if (error) return <p>加载失败: {error.message}</p>
-  return <ul>{data.map(a => <li key={a.id}>{a.title}</li>)}</ul>
-}
-```
-
-## Hooks 使用规则
-
-使用 Hooks 必须遵守两条规则：
-
-1. **只在函数组件的顶层调用**：不要在循环、条件语句或嵌套函数中调用 Hook
-2. **只在 React 函数组件或自定义 Hook 中调用**：不要在普通 JavaScript 函数中调用
-
-```jsx
-// ❌ 错误用法
-function Bad({ show }) {
-  if (show) {
-    const [value, setValue] = useState('')  // 不能在条件语句中
-  }
-}
-
-// ✅ 正确用法
-function Good({ show }) {
-  const [value, setValue] = useState('')
-  if (!show) return null
-  return <input value={value} onChange={e => setValue(e.target.value)} />
-}
-```
-
-Hooks 是 React 发展方向上的一次重大转变，掌握了这些核心 API，就能覆盖绝大多数 React 开发场景。
+现在基本就靠着 `useState` 和 `useEffect` 这两把刷子走天下了。偶尔搞点自定义 Hook 骗骗代码行数，比以前 Class 组件清爽太多了。

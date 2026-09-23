@@ -1,5 +1,5 @@
 ---
-title: Vite 从入门到深度使用
+title: 彻底扔掉 Webpack：Vite 踩坑与进阶指北
 date: 2021-01-10 10:30:22
 tags:
   - Vite
@@ -7,258 +7,130 @@ tags:
 categories: 前端工程化
 ---
 
-Vite 是由 Vue 的作者尤雨溪开发的下一代前端构建工具。它利用浏览器原生 ES Module 和 esbuild 实现了极速的开发服务器启动和热更新，彻底改变了前端开发体验。相比 Webpack 动辄几十秒的冷启动，Vite 的"秒开"体验让人用过就回不去了。
+当年天天对着 Webpack 动辄几十秒的冷启动发呆，喝了杯水回来还没转完。后来尤大出了 Vite，我抱着试一试的心态跑了一下，那“秒开”的速度简直感动得眼泪都要掉下来了。
+
+现在我只要新开项目，无脑上 Vite，真的是用过就回不去。这里把我平时最常用的一套配置和踩过的坑总结一下，当个脚手架备忘录。
 
 <!-- more -->
 
-## 为什么选择 Vite？
+## 1. 为什么它能那么快？
 
-传统的打包工具（如 Webpack）在开发模式下需要先把所有模块打包成 bundle 再启动服务器，项目越大启动越慢。Vite 换了一种思路：
+说白了，以前的 Webpack 是个老实人，你只要一按启动，它非要把你整个项目的代码全打包一遍，才敢把页面给你看。项目越庞大，它越慢。
 
-1. **开发环境**：直接利用浏览器原生 ESM，按需编译，不打包
-2. **生产环境**：使用 Rollup 进行高效打包
+而 Vite 是个渣男（褒义），你刚点启动它就给你个空壳页面，然后你点进哪个页面，它才现场用浏览器的原生能力（ES Module）去编译那个页面的代码。**按需编译，不打包**，这速度能不快吗？
 
-```
-传统方式:  源码 → [打包整个应用] → 启动服务器 → 等几十秒...
-Vite 方式: 源码 → 启动服务器（毫秒级）→ 浏览器按需请求模块 → 即时编译
-```
+## 2. 三秒钟建个项目
 
-## 1. 快速上手
+最直接的起手式，一行命令，连模板都给你选好了：
 
 ```bash
-# 创建项目（支持多种模板）
-npm create vite@latest my-project -- --template vue
-npm create vite@latest my-react-app -- --template react-ts
-npm create vite@latest my-vanilla-app -- --template vanilla
+# 我最常用的是 Vue 和 TS 的组合
+npm create vite@latest my-app -- --template vue-ts
 
-# 进入项目并启动
-cd my-project
+# 然后无脑三连
+cd my-app
 npm install
-npm run dev    # 感受一下秒开的快感
+npm run dev
 ```
 
-支持的模板：`vanilla`、`vue`、`vue-ts`、`react`、`react-ts`、`preact`、`lit`、`svelte`
+> **小坑提醒**：Vite 项目的入口文件 `index.html` 不在 `public` 文件夹里了，而是直接大摇大摆地躺在项目最外层的根目录下。
 
-## 2. 项目结构
+## 3. 把 vite.config.js 配得舒舒服服
 
-```
-my-project/
-├── index.html          # 入口 HTML（在项目根目录！）
-├── package.json
-├── vite.config.js      # Vite 配置文件
-├── src/
-│   ├── main.js         # 应用入口
-│   ├── App.vue
-│   ├── assets/         # 静态资源
-│   └── components/
-└── public/             # 不经过构建的静态文件
-```
-
-> 与 Webpack 不同，`index.html` 在 Vite 中是入口文件，而不是放在 public 目录中。
-
-## 3. vite.config.js 配置详解
+新生成的配置文件太素了，我一般会加上别名、代理和自动导包插件，下面这个配置直接抄过去就能用：
 
 ```javascript
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 
 export default defineConfig({
-  // 插件
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    // 自动导包神仙插件：以后写 ref, reactive 都不用在上面写 import 啦！
+    AutoImport({ imports: ['vue', 'vue-router', 'pinia'] }),
+    // UI 组件库也能自动按需导入（省去了一大堆 import 代码）
+    Components({ /* 配置具体的 UI 库解析器 */ })
+  ],
 
-  // 路径别名
+  // 路径别名：以后写 @/ 就会自动指向 src 目录，摆脱 ../../../ 的噩梦
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@utils': path.resolve(__dirname, 'src/utils')
+      '@': path.resolve(__dirname, 'src')
     }
   },
 
-  // 开发服务器
+  // 开发服务器设置
   server: {
     port: 3000,
-    open: true,        // 自动打开浏览器
-    host: '0.0.0.0',   // 局域网可访问
-    // API 代理
+    open: true, // 启动自动帮你打开浏览器
+    // 解决跨域的千古难题
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://127.0.0.1:8080', // 你后台同事的电脑 IP
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   },
 
-  // 构建配置
+  // 打包优化（上线用的）
   build: {
-    outDir: 'dist',
-    sourcemap: false,
-    // 分包策略
+    // 把比 4KB 小的图片直接转成 Base64 塞代码里，少发一次请求
+    assetsInlineLimit: 4096,
+    // 分包策略：把第三方库单独拆出去，免得每次更新业务代码用户都要重新下载全量包
     rollupOptions: {
       output: {
-        chunkFileNames: 'js/[name]-[hash].js',
-        entryFileNames: 'js/[name]-[hash].js',
-        assetFileNames: '[ext]/[name]-[hash].[ext]',
         manualChunks: {
-          // 将 vue 相关库单独打包
           'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          // 将 UI 库单独打包
           'ui-vendor': ['element-plus']
         }
       }
-    },
-    // 小于 4KB 的资源内联为 base64
-    assetsInlineLimit: 4096,
-    // 启用 CSS 代码拆分
-    cssCodeSplit: true
-  },
-
-  // CSS 预处理器配置
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/styles/variables.scss";`
-      },
-      less: {
-        javascriptEnabled: true
-      }
     }
-  },
-
-  // 环境变量前缀
-  envPrefix: 'APP_'
+  }
 })
 ```
 
-## 4. 环境变量
+## 4. 环境变量怎么搞？
 
-Vite 使用 `.env` 文件管理环境变量：
+以前写 Webpack 的时候，获取环境变量用的是 `process.env.XXX`。在 Vite 里这招不管用了，它有一套自己的规矩。
 
+首先，在项目根目录建文件：
 ```bash
-# .env                 # 所有环境
-APP_TITLE=光阴小栈
-
-# .env.development     # 开发环境
-APP_API_BASE=http://localhost:8080/api
-
-# .env.production      # 生产环境
-APP_API_BASE=https://api.vueweb.cn
+.env               # 所有人共用的
+.env.development   # 开发时候用的（比如连本地测试库）
+.env.production    # 上线时候用的（连正式库）
 ```
 
+**⚠️ 极其关键的坑**：写在这些文件里的变量名，必须用 `VITE_` 开头，不然代码里死活读不到！
+
+```text
+# 这样写是对的
+VITE_API_URL=http://localhost:8080/api
+
+# 这样写你在代码里永远拿到的是 undefined
+API_URL=http://localhost:8080/api 
+```
+
+在代码里拿出来用：
 ```javascript
-// 在代码中使用（必须以 VITE_ 或自定义前缀开头）
-console.log(import.meta.env.APP_TITLE)
-console.log(import.meta.env.APP_API_BASE)
-console.log(import.meta.env.MODE)  // 'development' 或 'production'
-console.log(import.meta.env.DEV)   // boolean
-console.log(import.meta.env.PROD)  // boolean
-```
+// 名字变长了，不过习惯就好
+const baseURL = import.meta.env.VITE_API_URL
 
-## 5. 静态资源处理
-
-```javascript
-// 直接导入 —— 返回解析后的 URL
-import logo from '@/assets/logo.png'
-// logo = '/src/assets/logo.png'（开发时）
-// logo = '/assets/logo-a1b2c3.png'（构建后带 hash）
-
-// 显式 URL 导入
-import workletUrl from './shader.js?url'
-
-// 导入为字符串
-import shaderCode from './shader.glsl?raw'
-
-// 导入为 Web Worker
-import Worker from './worker.js?worker'
-const worker = new Worker()
-```
-
-```html
-<!-- 模板中使用 -->
-<template>
-  <img :src="logo" alt="Logo" />
-
-  <!-- public 目录下的文件直接用绝对路径 -->
-  <img src="/favicon.ico" alt="Favicon" />
-</template>
-```
-
-## 6. 热更新（HMR）
-
-Vite 的 HMR 速度极快，无论项目多大都能保持毫秒级更新：
-
-```javascript
-// 自定义模块的 HMR 处理
-if (import.meta.hot) {
-  import.meta.hot.accept('./module.js', (newModule) => {
-    // 模块更新时的回调
-    console.log('模块已更新', newModule)
-  })
-
-  // 清理副作用
-  import.meta.hot.dispose(() => {
-    clearInterval(timer)
-  })
+// 判断现在是不是开发环境
+if (import.meta.env.DEV) {
+  console.log('我在本地玩泥巴')
 }
 ```
 
-## 7. 常用插件
+## 5. 迁移老项目的痛点
 
-```bash
-npm i -D @vitejs/plugin-vue          # Vue 3 SFC 支持
-npm i -D @vitejs/plugin-vue-jsx      # Vue JSX 支持
-npm i -D @vitejs/plugin-legacy       # 传统浏览器兼容
-npm i -D vite-plugin-compression     # Gzip / Brotli 压缩
-npm i -D unplugin-auto-import        # API 自动导入
-npm i -D unplugin-vue-components     # 组件自动注册
-```
+如果你想把手里祖传的 Webpack 项目迁到 Vite，要有掉几根头发的心理准备。最核心要改的地方有几个：
 
-```javascript
-// vite.config.js
-import legacy from '@vitejs/plugin-legacy'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+1. **`index.html` 搬家**：从 `public` 挪到最外面，并且手动塞个 `<script type="module" src="/src/main.js"></script>` 进去。
+2. **消灭所有 `require()`**：Vite 不认 CommonJS 这一套，遇到拿 `require` 导包、插图片的，全给我老老实实改成 `import`。
+3. **环境变量替换**：全局搜索 `process.env`，全换成 `import.meta.env`。
 
-export default defineConfig({
-  plugins: [
-    vue(),
-    // 传统浏览器支持
-    legacy({
-      targets: ['defaults', 'not IE 11']
-    }),
-    // 自动导入 Vue API（ref、computed 等不用手动 import）
-    AutoImport({
-      imports: ['vue', 'vue-router', 'pinia'],
-      resolvers: [ElementPlusResolver()]
-    }),
-    // 组件自动注册
-    Components({
-      resolvers: [ElementPlusResolver()]
-    })
-  ]
-})
-```
-
-## 8. 从 Webpack 迁移到 Vite
-
-| Webpack 概念 | Vite 对应 |
-| :--- | :--- |
-| `webpack.config.js` | `vite.config.js` |
-| `webpack-dev-server` | 内置开发服务器 |
-| `HtmlWebpackPlugin` | 不需要，`index.html` 就是入口 |
-| `require()` | `import` |
-| `process.env` | `import.meta.env` |
-| `file-loader / url-loader` | 内置静态资源处理 |
-| `DefinePlugin` | `define` 配置项 |
-| `devServer.proxy` | `server.proxy` |
-
-迁移的核心步骤：
-1. 把 `index.html` 移到项目根目录，添加 `<script type="module" src="/src/main.js"></script>`
-2. 将 `require` 改为 `import`
-3. 将 `process.env` 改为 `import.meta.env`
-4. 安装对应的 Vite 插件替代 Webpack loader
-
-Vite 代表了前端构建工具的未来方向，已经成为 Vue、Svelte 等框架的默认推荐构建方案。
+总之，只要你不是那种历史包袱巨重、依赖了十几个 Webpack 专属插件的史前巨兽项目，我都强烈建议你早点转 Vite，那种丝滑的开发体验，真的是对自己生命的救赎。

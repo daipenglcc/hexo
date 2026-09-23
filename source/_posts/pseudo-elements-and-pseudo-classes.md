@@ -1,5 +1,5 @@
 ---
-title: 重新认识伪类和伪元素
+title: CSS 里的李鬼与李逵：伪类和伪元素到底啥区别
 date: 2017-04-28 16:35:10
 tags:
   - 伪类
@@ -7,106 +7,101 @@ tags:
 categories: CSS3
 ---
 
-在 CSS 开发中，“伪类（Pseudo-classes）”与“伪元素（Pseudo-elements）”是经常被混淆的两个核心概念。本文从规范定义、核心区别、常见用法及现代 CSS 选择器进行系统梳理。
+写了这么多年 CSS，经常看到有人把 `:hover` 和 `::before` 混在一块叫“伪类”。虽然浏览器很宽容，不管你写一个冒号还是俩冒号它都能认出来并且渲染，但强迫症发作的时候，还是想把它们理清楚。
+
+这里顺便记一下这俩玩意儿在实际开发中能搞出的常用操作。
 
 <!-- more -->
 
-## 1. 核心定义与本质区别
+## 1. 到底怎么区分？
 
-W3C 对伪类与伪元素的官方定义核心在于**是否脱离或扩展了文档树（DOM Tree）**：
+其实官方的定义特别简单粗暴，就看一点：**有没有凭空造出一个新的东西来**。
 
-| 对比维度 | 伪类（Pseudo-classes） | 伪元素（Pseudo-elements） |
-| :--- | :--- | :--- |
-| **本质作用** | 用于匹配元素处于**某种特定状态**或符合特定结构特征 | 用于创建并修饰**DOM 树中不存在的抽象元素** |
-| **CSS3 语法规范** | **单冒号 `:`**（如 `:hover`, `:first-child`） | **双冒号 `::`**（如 `::before`, `::after`） |
-| **类比理解** | 效果等同于动态给 DOM 节点**添加一个 class 类名** | 效果等同于在 DOM 内部**插入了一个真实的虚拟标签** |
+- **伪类（单冒号 `:`）**：人家 DOM 节点本来就在那，你只是在它**某种状态**下（比如鼠标滑过）给它加了点样式。效果就像是你动态用 JS 往它身上套了个 class。
+- **伪元素（双冒号 `::`）**：这玩意儿在 HTML 源码里根本不存在，是你用 CSS 硬生生在页面上“无中生有”捏造出来的一个虚拟 DOM 节点。
 
----
+## 2. 常用的伪类（Pseudo-classes）
 
-## 2. 常用伪类（Pseudo-classes）
-
-伪类用来对已有 DOM 元素的动态行为、状态或结构位置进行筛选：
-
-### ① 用户交互与状态伪类
-- `:hover`：鼠标悬停状态
-- `:active`：鼠标按下激活状态
-- `:focus` / `:focus-visible`：获得焦点状态
-- `:checked`：表单控件（单选/复选框）被选中状态
-- `:disabled` / `:enabled`：禁用 / 启用状态
-
-### ② 结构与树形伪类
-- `:first-child` / `:last-child`：作为父级下的首个 / 最后一个子元素
-- `:nth-child(n)`：第 n 个子元素（支持 `2n`、`odd`、`even` 等表达式）
-- `:only-child`：作为父级下的唯一子元素
-- `:empty`：没有任何子节点（包含文本节点）的空元素
-
-### ③ 现代 CSS 高阶伪类（CSS Selectors Level 4）
-- `:not(selector)`：反选伪类，匹配不符合条件的元素
-- `:is(selector)` / `:where(selector)`：批量选择器分组与优先级简化
-- `:has(selector)`：**父选择器**，当包含指定后代时匹配该父元素
-
----
-
-## 3. 常用伪元素（Pseudo-elements）
-
-伪元素会生成虚拟的内容容器，必须使用 **双冒号 `::`**（兼容旧浏览器时单冒号也可被解析）：
-
-### ① 内容生成（最常用）
-- `::before`：在宿主元素内容**最前方**插入生成内容
-- `::after`：在宿主元素内容**最后方**插入生成内容
-
-> **注意**：`::before` 与 `::after` 必须显式设置 `content` 属性（即便为空字符串 `content: ""`），否则伪元素不会被渲染。
-
-### ② 文本修饰与高亮
-- `::first-letter`：修饰块级元素文本的**首个字母/汉字**（常用于首字下沉排版）
-- `::first-line`：修饰块级元素文本的**第一行**（随视口宽度自适应）
-- `::selection`：修饰用户鼠标划词选中的高亮文本背景与颜色
-- `::placeholder`：修饰 input / textarea 占位符文本样式
-
----
-
-## 4. 实战典型用法
-
-### ① 利用 `attr()` 获取属性值渲染气泡
+主要就是用来抓取元素状态或者找位置的：
 
 ```css
+/* 用户在瞎点瞎滑的时候 */
+.btn:hover { ... }      /* 鼠标悬停 */
+.btn:active { ... }     /* 鼠标按住不放 */
+input:focus { ... }     /* 选中的输入框 */
+
+/* 找儿子的技巧 */
+ul li:first-child { ... }   /* 第一个 li */
+ul li:last-child { ... }    /* 最后一个 li */
+ul li:nth-child(2n) { ... } /* 斑马线效果，选偶数行 */
+
+/* 新出的几个狠角色 */
+.box:not(.active) { ... }   /* 把带 active 的排除掉 */
+.card:has(img) { ... }      /* 逆天的父选择器：只要卡片里有图，就给卡片变色 */
+```
+
+## 3. 常用的伪元素（Pseudo-elements）
+
+必须要用双冒号 `::`（虽然老浏览器写单冒号也行，但现在建议全改双冒号规范一下）：
+
+```css
+/* 这俩兄弟是出场率最高的，用来画图标、画气泡、清除浮动全靠它们 */
+.box::before { content: ""; }  /* 插在最前面 */
+.box::after { content: ""; }   /* 插在最后面 */
+/* ⚠️ 必须写 content，哪怕是空的，不然伪元素出不来！ */
+
+/* 文字排版偶尔用一下 */
+p::first-letter { ... }  /* 首字下沉（像杂志那样第一个字贼大） */
+p::first-line { ... }    /* 只给第一行换个颜色 */
+
+/* 稍微好玩点的 */
+::selection { background: #3498db; color: #fff; } /* 用户鼠标划选文字时的高亮颜色 */
+input::placeholder { color: #ccc; }               /* 修改输入框提示文字的颜色 */
+```
+
+## 4. 日常开发里的实战骚操作
+
+### ① 不写 HTML，用属性把文字提出来当提示框
+
+有时候不想写一堆嵌套的 DOM，可以直接用伪元素读 `data-*` 属性。
+
+```html
+<!-- HTML 就干干净净一行 -->
+<button class="tooltip" data-tip="你点我试试？">提交</button>
+```
+
+```css
+/* 用 ::after 把它后面的气泡造出来 */
 .tooltip::after {
-  content: attr(data-tip);
+  content: attr(data-tip); /* 重点在这，直接读出 HTML 里的文字 */
   position: absolute;
   background: #333;
   color: #fff;
   padding: 4px 8px;
   border-radius: 4px;
+  display: none;
+}
+
+/* 结合伪类，滑过去才显示 */
+.tooltip:hover::after {
+  display: block;
 }
 ```
 
-```html
-<button class="tooltip" data-tip="这是提示文字">悬停查看提示</button>
-```
+### ② 给按钮加个悬浮小圆点
 
-### ② 结合伪类与伪元素实现动态悬浮效果
+想做个通知中心那种“有新消息”的红点，直接用伪元素画个圆，连图片都省了：
 
 ```css
-.btn::before {
+.msg-btn::after {
   content: "";
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: gray;
-  margin-right: 6px;
+  background: red;
   border-radius: 50%;
-  transition: background 0.3s;
-}
-
-/* 当按钮处于 hover 状态时改变 ::before 伪元素的样式 */
-.btn:hover::before {
-  background: #10b981;
+  margin-left: 5px;
 }
 ```
 
----
-
-## 5. 总结
-
-- **区分标准**：看是否“创建了新节点”。修饰状态用伪类（`:`），创建虚拟内容用伪元素（`::`）。
-- **编码习惯**：在现代开发中，统一为伪类使用单冒号 `:`，伪元素使用双冒号 `::`，代码语义更清晰。
+简单来说，以后跟别人交流别再管 `::before` 叫伪类了，不然很容易暴露咱们 CSS 不扎实。记住单冒号是状态（伪类），双冒号是造物（伪元素），就行了。

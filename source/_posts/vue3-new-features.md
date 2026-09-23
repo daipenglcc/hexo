@@ -1,5 +1,5 @@
 ---
-title: Vue 3 新特性全面解读
+title: Vue3 到底香在哪？大白话聊聊那些牛逼的新特性
 date: 2020-09-22 14:20:45
 tags:
   - Vue
@@ -8,323 +8,140 @@ tags:
 categories: Vue
 ---
 
-Vue 3 于 2020 年 9 月 18 日正式发布（代号 "One Piece"），带来了全新的 Composition API、更好的 TypeScript 支持、性能大幅提升等重磅更新。本文从实际使用角度对 Vue 3 的核心新特性做一次全面解读。
+刚开始接触 Vue3 的时候，心里其实是在骂娘的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要搞个 Composition API 折腾人，代码全挤在一起像面条一样。
+
+直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然悟了，原来 Vue3 的按逻辑组织代码这么爽。这篇就用大白话，聊聊 Vue3 那些让我用过就回不去的新特性。
 
 <!-- more -->
 
-## 1. Composition API
+## 1. 绝对的杀手锏：Composition API (组合式API)
 
-Vue 3 最核心的变化。相比 Options API 将逻辑按选项分散（data、methods、computed、watch），Composition API 允许按功能逻辑组织代码：
+如果用一句话概括就是：**把以前散落在各处的同一个功能的代码，全捏在了一起**。
 
-### setup() 函数
-
-```vue
-<template>
-  <div>
-    <p>计数: {{ count }}</p>
-    <p>双倍: {{ doubled }}</p>
-    <button @click="increment">+1</button>
-  </div>
-</template>
-
-<script>
-import { ref, computed, onMounted } from 'vue'
-
-export default {
-  setup() {
-    // 响应式状态
-    const count = ref(0)
-
-    // 计算属性
-    const doubled = computed(() => count.value * 2)
-
-    // 方法
-    function increment() {
-      count.value++
-    }
-
-    // 生命周期
-    onMounted(() => {
-      console.log('组件已挂载')
-    })
-
-    // 必须返回模板中使用的数据和方法
-    return { count, doubled, increment }
-  }
-}
-</script>
-```
-
-### reactive vs ref
-
-```javascript
-import { ref, reactive, toRefs } from 'vue'
-
-// ref —— 适合基本类型（也可用于对象）
-const count = ref(0)
-const name = ref('Tom')
-console.log(count.value)   // 访问需要 .value
-// 在 template 中自动解包，直接用 {{ count }}
-
-// reactive —— 适合对象类型
-const state = reactive({
-  user: { name: 'Tom', age: 25 },
-  articles: [],
-  loading: false
-})
-console.log(state.user.name)  // 直接访问，无需 .value
-
-// toRefs —— 解构 reactive 对象时保持响应性
-const { user, loading } = toRefs(state)
-```
-
-## 2. `<script setup>` 语法糖
-
-Vue 3.2 引入的 `<script setup>` 极大简化了 Composition API 的写法：
+搭配 Vue 3.2 之后出的 `<script setup>` 语法糖，写起来那叫一个行云流水：
 
 ```vue
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import MyComponent from './MyComponent.vue'
+// 再也不用写 export default 和让人头秃的 return 了！
+import { ref, computed } from 'vue'
 
-// 顶层变量自动暴露给模板，无需 return
+/* --- 比如这是一个点赞功能的代码，它们全凑在一起 --- */
 const count = ref(0)
 const doubled = computed(() => count.value * 2)
 
 function increment() {
   count.value++
 }
+/* ------------------------------------------------ */
 
-onMounted(() => {
-  console.log('已挂载')
-})
-
-// 定义 Props
-const props = defineProps({
-  title: { type: String, required: true },
-  size: { type: Number, default: 14 }
-})
-
-// 定义 Emits
-const emit = defineEmits(['update', 'delete'])
-
-function handleUpdate() {
-  emit('update', { id: 1 })
-}
 </script>
 
 <template>
-  <div>
-    <h2>{{ title }}</h2>
-    <p>{{ count }} / {{ doubled }}</p>
-    <button @click="increment">+1</button>
-    <MyComponent />
-  </div>
+  <!-- 上面定义的变量，直接在这就能用 -->
+  <button @click="increment">赞 {{ count }} (双倍 {{ doubled }})</button>
 </template>
 ```
 
-## 3. 响应式系统升级
+## 2. ref 和 reactive 怎么选？
 
-Vue 3 用 `Proxy` 替换了 Vue 2 的 `Object.defineProperty`，带来了实质性的改进：
+Vue2 里的数据只要塞进 `data() {}` 里它就会自动更新，Vue3 需要你自己定义。
+很多人一开始分不清这俩，其实我平时就一个粗暴的规矩：
+
+- **基本类型**（数字、字符串、布尔值）：无脑用 `ref`。
+- **对象或数组**（比如表单数据、列表）：无脑用 `reactive`。
 
 ```javascript
-import { reactive, watch, watchEffect } from 'vue'
+// ref 的坑：在 JS 里改值一定要加上 .value！但在模板里不用加
+const age = ref(18)
+age.value = 19 
 
-const state = reactive({
-  list: [1, 2, 3],
-  nested: { deep: { value: 'hello' } }
-})
-
-// ✅ Vue 3 可以检测到的变化（Vue 2 做不到）
-state.list[0] = 100          // 数组索引赋值
-state.list.length = 0         // 修改数组长度
-state.newProp = 'dynamic'    // 动态新增属性
-delete state.newProp          // 删除属性
-
-// watch —— 监听特定数据
-watch(
-  () => state.list.length,
-  (newLen, oldLen) => {
-    console.log(`列表长度: ${oldLen} → ${newLen}`)
-  }
-)
-
-// watchEffect —— 自动收集依赖
-watchEffect(() => {
-  // 里面访问了哪些响应式数据，就自动监听哪些
-  console.log(`当前列表: ${state.list.join(', ')}`)
-})
+// reactive 的好处：改起来就跟普通对象一样
+const form = reactive({ name: '铁柱', sex: '男' })
+form.name = '二妞' 
 ```
 
-## 4. Teleport 传送门
+## 3. 告别 Vue2 的惊天大坑：响应式系统升级
 
-将组件的 DOM 渲染到指定的目标位置，非常适合弹窗、通知等场景：
+在 Vue2 时代，有个被吐槽了无数次的问题：你直接往对象里塞一个新属性，或者通过索引改数组里的东西，页面死活不更新！还得去求助神仙方法 `this.$set()`。
+
+因为 Vue2 底层用的是 `Object.defineProperty`，它太笨了。Vue3 换成了 ES6 的 `Proxy`（代理机制），这个可太聪明了，你干啥它都能看到。
+
+```javascript
+const user = reactive({ name: 'Tom' })
+
+// Vue3 里随便搞，下面这三种骚操作，页面全能精准更新！
+user.age = 20           // 动态塞新属性
+delete user.name        // 删属性
+list[0] = '新东西'      // 直接改数组索引
+```
+
+## 4. Teleport 传送门：写弹窗的神器
+
+以前写弹窗最恶心的是，如果你的组件被好几层绝对定位（`position: relative`）或者隐藏（`overflow: hidden`）的父元素包着，弹窗的样式百分百要炸，死活出不来。
+
+有了 `<Teleport>`（传送门），你可以把弹窗的 HTML 代码强行“送”到页面的最外层（比如 `body` 下），不管你组件嵌套得多深。
 
 ```vue
 <template>
-  <button @click="showModal = true">打开弹窗</button>
+  <button @click="show = true">打开弹窗</button>
 
-  <!-- 将弹窗内容渲染到 body 下，而不是当前组件的 DOM 树中 -->
+  <!-- 魔法指令：把里面的 DOM 原封不动搬到 body 标签最下面去 -->
   <Teleport to="body">
-    <div v-if="showModal" class="modal-overlay">
-      <div class="modal-content">
-        <h3>弹窗标题</h3>
-        <p>弹窗内容区域</p>
-        <button @click="showModal = false">关闭</button>
-      </div>
+    <div class="modal" v-if="show">
+      这是一个绝不被遮挡的无敌弹窗
     </div>
   </Teleport>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-const showModal = ref(false)
-</script>
 ```
 
-## 5. Suspense 异步组件
+## 5. 组件支持多个根节点（Fragments）
 
-`Suspense` 提供了优雅处理异步组件加载状态的能力：
+这点真的是治好了我的强迫症。在 Vue2 里，`<template>` 下面死活只能有一个标签，经常为了过编译，在最外面套一个毫无意义的 `<div>`，导致 HTML 结构像洋葱一样。
+
+Vue3 终于放开了这个限制，你想写几个并列的标签就写几个：
 
 ```vue
+<!-- Vue3 里这样写完全没毛病 -->
 <template>
-  <Suspense>
-    <!-- 异步组件加载完成后渲染 -->
-    <template #default>
-      <AsyncDashboard />
-    </template>
-    <!-- 加载过程中显示 -->
-    <template #fallback>
-      <div class="loading">
-        <span>数据加载中...</span>
-      </div>
-    </template>
-  </Suspense>
-</template>
-
-<script setup>
-import { defineAsyncComponent } from 'vue'
-
-const AsyncDashboard = defineAsyncComponent(() =>
-  import('./Dashboard.vue')
-)
-</script>
-```
-
-```vue
-<!-- Dashboard.vue —— 使用 async setup -->
-<script setup>
-const data = await fetch('/api/dashboard').then(r => r.json())
-// setup 中可以直接 await，Suspense 会自动处理加载状态
-</script>
-
-<template>
-  <div>{{ data.title }}</div>
+  <header>网页头</header>
+  <main>正文</main>
+  <footer>网页脚</footer>
 </template>
 ```
 
-## 6. 多根节点（Fragments）
+## 6. Composables：比 Mixins 舒服一万倍的复用方案
 
-Vue 3 组件模板不再强制要求单根节点：
+以前如果几个组件有一段公用逻辑，我们会写成 Mixin。但这玩意儿简直是毒瘤，变量是从哪来的根本找不到，还会引发命名冲突。
 
-```vue
-<!-- Vue 2：必须有一个根元素 -->
-<template>
-  <div>
-    <header>头部</header>
-    <main>内容</main>
-  </div>
-</template>
-
-<!-- Vue 3：支持多根节点 -->
-<template>
-  <header>头部</header>
-  <main>内容</main>
-  <footer>底部</footer>
-</template>
-```
-
-## 7. 组合式函数（Composables）
-
-Vue 3 的逻辑复用方式，替代了 Vue 2 的 Mixins：
+Vue3 的做法是把逻辑抽成一个个纯函数（习惯叫 `useXxx`）：
 
 ```javascript
-// composables/useMouse.js
-import { ref, onMounted, onUnmounted } from 'vue'
+// composables/useMouse.js (我把获取鼠标位置的逻辑抽出来了)
+import { ref, onMounted } from 'vue'
 
 export function useMouse() {
   const x = ref(0)
   const y = ref(0)
-
-  function update(event) {
-    x.value = event.pageX
-    y.value = event.pageY
-  }
-
-  onMounted(() => window.addEventListener('mousemove', update))
-  onUnmounted(() => window.removeEventListener('mousemove', update))
-
+  
+  onMounted(() => {
+    window.addEventListener('mousemove', e => {
+      x.value = e.pageX
+      y.value = e.pageY
+    })
+  })
+  
+  // 谁用就把这俩变量扔给谁
   return { x, y }
 }
 ```
 
-```javascript
-// composables/useFetch.js
-import { ref, watchEffect } from 'vue'
-
-export function useFetch(url) {
-  const data = ref(null)
-  const error = ref(null)
-  const loading = ref(true)
-
-  watchEffect(async () => {
-    loading.value = true
-    error.value = null
-
-    try {
-      const res = await fetch(url.value || url)
-      data.value = await res.json()
-    } catch (e) {
-      error.value = e
-    } finally {
-      loading.value = false
-    }
-  })
-
-  return { data, error, loading }
-}
-```
-
+别的组件想用，直接叫过来：
 ```vue
-<!-- 在组件中组合使用 -->
 <script setup>
-import { useMouse } from '@/composables/useMouse'
-import { useFetch } from '@/composables/useFetch'
-
+import { useMouse } from './useMouse'
+// 清清爽爽，数据来源一目了然
 const { x, y } = useMouse()
-const { data, loading } = useFetch('/api/articles')
 </script>
-
-<template>
-  <p>鼠标位置: {{ x }}, {{ y }}</p>
-  <div v-if="loading">加载中...</div>
-  <ul v-else>
-    <li v-for="item in data" :key="item.id">{{ item.title }}</li>
-  </ul>
-</template>
 ```
 
-## Vue 2 vs Vue 3 快速对照
-
-| 特性 | Vue 2 | Vue 3 |
-| :--- | :--- | :--- |
-| API 风格 | Options API | Composition API + Options API |
-| 响应式实现 | Object.defineProperty | Proxy |
-| 模板根节点 | 仅单根 | 支持多根 |
-| 生命周期前缀 | beforeCreate / created | setup() 替代 |
-| 逻辑复用 | Mixins / HOC | Composables |
-| TypeScript | 需要装饰器 | 原生支持 |
-| 性能 | 基准 | 快 ~2 倍 |
-| 包体积 | ~20KB | ~10KB（Tree-shakable） |
-
-Vue 3 在保持 Vue 的易用性同时，在性能、TypeScript 支持和大型项目架构能力上都有了质的飞跃。
+除此之外，Vue3 的打包体积更小（用不到的方法根本不打进去），速度更是快了一大截。所以，如果老板没有强迫你维护那些石器时代的 Vue2 老项目，赶紧上船 Vue3 吧，真香！

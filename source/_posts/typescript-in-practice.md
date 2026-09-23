@@ -1,5 +1,5 @@
 ---
-title: TypeScript 入门到实践
+title: 被 TypeScript 毒打后的常用类型套路备忘
 date: 2020-02-18 09:30:15
 tags:
   - TypeScript
@@ -7,314 +7,151 @@ tags:
 categories: TypeScript
 ---
 
-TypeScript 在 2020 年已经从"可选项"变成了前端项目的"标配"。越来越多的框架和库（Angular、Vue 3、Deno）将 TypeScript 作为第一优先级支持。本文从实际使用角度出发，系统整理 TypeScript 的核心类型系统和日常开发中最常用的特性。
+最开始接触 TypeScript 的时候，觉得这玩意儿完全就是给自己找罪受。明明写个 JS 五分钟搞定，非要我花半小时去写类型，报错了还满屏幕飙红，最后实在受不了，满篇都是 `any`。
+
+后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被毒打久了才发现，**强类型一时爽，一直重构一直爽**。这里总结了一些平时写业务最常用的类型定义套路，当个个人的速查字典。
 
 <!-- more -->
 
-## 1. 基础类型
+## 1. 别啥都写 any 了，来点基础的
+
+老把 `any` 当救命稻草，那还不如写回 JS 呢。其实基础的类型就那么几个：
 
 ```typescript
-// 原始类型
 let isDone: boolean = false
 let count: number = 42
 let username: string = 'Tom'
-let nothing: null = null
-let notDefined: undefined = undefined
 
-// 数组
-let numbers: number[] = [1, 2, 3]
+// 数组的两种写法（看自己喜好，我偏好第一种少敲字）
+let list: number[] = [1, 2, 3]
 let names: Array<string> = ['Tom', 'Jerry']
 
-// 元组（固定长度和类型的数组）
-let tuple: [string, number] = ['Tom', 25]
-
-// 枚举
-enum Status {
-  Draft = 0,
-  Published = 1,
-  Archived = 2
-}
-let articleStatus: Status = Status.Published
-
-// any 和 unknown
-let flexible: any = '可以是任何类型'    // 跳过类型检查（尽量少用）
-let safe: unknown = '更安全的 any'      // 使用前必须进行类型收窄
-
-// void（函数无返回值）
+// 这俩兄弟平时不多见，比如有个方法连返回值都没有，那就是 void
 function log(message: string): void {
   console.log(message)
 }
 
-// never（永远不会有返回值）
-function throwError(msg: string): never {
-  throw new Error(msg)
-}
+// 实在不知道啥类型，用 unknown 别用 any
+let safe: unknown = '我是卧底' 
+// any 会让编译器闭眼，unknown 会强制你用之前先用 typeof 查一下户口
 ```
 
-## 2. 接口（Interface）
+## 2. 对象该怎么约束（Interface vs Type）
 
-接口是 TypeScript 最核心的概念之一，用于定义对象的结构：
+我们写前端，最多的就是接后端传过来的 JSON 对象，定义它们的结构通常有两种写法：`interface` 和 `type`。
+
+### 个人习惯用 Interface 定义后台数据格式
+因为 `interface` 可以像类一样继承，写起来比较清爽：
 
 ```typescript
-// 定义用户接口
+// 定规矩
 interface User {
   id: number
   name: string
-  email: string
-  age?: number          // 可选属性
-  readonly createdAt: string  // 只读属性
+  avatar?: string         // 加上 ? 表示这玩意不一定有（可选）
+  readonly createdAt: string  // 只读，改了就报错
 }
 
-// 使用接口约束对象
-const user: User = {
-  id: 1,
-  name: 'Tom',
-  email: 'tom@example.com',
-  createdAt: '2020-01-01'
-}
-
-// 接口继承
+// 比如后台加了个管理员身份，直接继承再补充就行
 interface Admin extends User {
   permissions: string[]
-  department: string
 }
 
-const admin: Admin = {
-  id: 2,
-  name: 'Admin',
-  email: 'admin@example.com',
+const boss: Admin = {
+  id: 1,
+  name: '老板',
   createdAt: '2020-01-01',
-  permissions: ['read', 'write', 'delete'],
-  department: '技术部'
+  permissions: ['踢人', '删库']
 }
 ```
 
-### 函数类型接口
+### 用 Type 玩花活（联合类型）
+碰到那些不确定的类型，比如一个 ID 可能是字符串也可能是数字，就得用 `type` 的联合类型了：
 
 ```typescript
-interface SearchFunc {
-  (keyword: string, page: number): Promise<SearchResult[]>
-}
-
-interface ApiResponse<T> {
-  code: number
-  message: string
-  data: T
-}
-
-// 使用
-const searchArticles: SearchFunc = async (keyword, page) => {
-  const res = await fetch(`/api/search?q=${keyword}&page=${page}`)
-  return res.json()
-}
-```
-
-## 3. 类型别名（Type）
-
-`type` 和 `interface` 都能定义类型，各有适用场景：
-
-```typescript
-// 联合类型
-type Status = 'loading' | 'success' | 'error'
 type ID = string | number
-
-// 交叉类型
-type Timestamped = {
-  createdAt: string
-  updatedAt: string
-}
-type Article = {
-  title: string
-  content: string
-} & Timestamped
-
-// 条件选择
-function processId(id: ID) {
-  if (typeof id === 'string') {
-    return id.toUpperCase()  // TypeScript 自动收窄为 string
-  }
-  return id.toFixed(2)       // 收窄为 number
-}
+type Status = 'loading' | 'success' | 'error' // 这个写 UI 组件状态特别爽，输入直接有提示
 ```
 
-> **经验法则**：定义对象结构优先用 `interface`（可扩展），定义联合类型、工具类型用 `type`。
+## 3. 让人头秃的泛型（Generics）
 
-## 4. 泛型（Generics）
+泛型就是类型里的“变量”。当你写个通用方法，不知道别人会传什么进来，但你又想原封不动地返回相同的类型，就用泛型 `<T>`。
 
-泛型让代码具备类型安全的同时保持灵活性：
+最经典的就是我们封 Axios 接口返回格式的时候：
 
 ```typescript
-// 泛型函数
-function getFirst<T>(arr: T[]): T | undefined {
-  return arr[0]
-}
-
-const firstNum = getFirst<number>([1, 2, 3])     // number | undefined
-const firstStr = getFirst(['a', 'b', 'c'])        // string | undefined（自动推断）
-
-// 泛型接口 —— API 响应封装
+// 包装一个通用的接口响应壳子
 interface ApiResponse<T> {
   code: number
   message: string
-  data: T
-  timestamp: number
+  data: T    // 核心数据丢在这里，由外面决定是啥
 }
 
-interface UserInfo {
+// 定义一个具体的文章结构
+interface Article {
   id: number
-  name: string
-  avatar: string
+  title: string
 }
 
-// 使用时指定具体类型
-async function fetchUser(id: number): Promise<ApiResponse<UserInfo>> {
-  const res = await fetch(`/api/users/${id}`)
+// 调接口的时候，顺便把类型塞进去
+async function getArticle(id: number): Promise<ApiResponse<Article>> {
+  const res = await fetch(`/api/articles/${id}`)
   return res.json()
 }
 
-// 泛型约束
-interface HasId {
-  id: number
-}
-
-function findById<T extends HasId>(items: T[], id: number): T | undefined {
-  return items.find(item => item.id === id)
-}
+// 这样拿到手的数据点进去，直接就能提示 data.title
 ```
 
-## 5. 类型收窄与类型守卫
+## 4. 几个自带的逆天工具包
 
-```typescript
-// typeof 收窄
-function format(value: string | number): string {
-  if (typeof value === 'number') {
-    return value.toFixed(2)
-  }
-  return value.trim()
-}
+TS 其实内置了很多“快捷指令”，能帮你少写几百行重复的 `interface`。这也是我最喜欢的功能：
 
-// instanceof 收窄
-function handleError(error: Error | string) {
-  if (error instanceof Error) {
-    console.log(error.message)
-    console.log(error.stack)
-  } else {
-    console.log(error)
-  }
-}
-
-// in 操作符收窄
-interface Bird { fly(): void; layEggs(): void }
-interface Fish { swim(): void; layEggs(): void }
-
-function move(animal: Bird | Fish) {
-  if ('fly' in animal) {
-    animal.fly()
-  } else {
-    animal.swim()
-  }
-}
-
-// 自定义类型守卫
-function isString(value: unknown): value is string {
-  return typeof value === 'string'
-}
-
-function process(input: unknown) {
-  if (isString(input)) {
-    console.log(input.toUpperCase())  // 确认是 string
-  }
-}
-```
-
-## 6. 常用工具类型
-
-TypeScript 内置了大量工具类型，掌握这些可以减少重复定义：
-
+假设我们有个很胖的原始对象：
 ```typescript
 interface User {
   id: number
   name: string
   email: string
   age: number
-  avatar: string
 }
-
-// Partial<T> —— 所有属性变为可选
-type UpdateUserDto = Partial<User>
-// 等同于 { id?: number; name?: string; email?: string; ... }
-
-// Required<T> —— 所有属性变为必填
-type StrictUser = Required<User>
-
-// Pick<T, K> —— 选取部分属性
-type UserBasic = Pick<User, 'id' | 'name' | 'avatar'>
-// { id: number; name: string; avatar: string }
-
-// Omit<T, K> —— 排除部分属性
-type CreateUserDto = Omit<User, 'id'>
-// { name: string; email: string; age: number; avatar: string }
-
-// Record<K, V> —— 构造键值对类型
-type PageConfig = Record<string, { title: string; path: string }>
-const pages: PageConfig = {
-  home: { title: '首页', path: '/' },
-  about: { title: '关于', path: '/about' }
-}
-
-// Readonly<T> —— 所有属性变为只读
-type FrozenUser = Readonly<User>
 ```
 
-## 7. 在 Vue 项目中使用 TypeScript
-
+**场景 1：我只想在列表里展示几个字段**
+用 `Pick` 抠出来：
 ```typescript
-// Vue 2 + TypeScript（使用 vue-class-component）
-import { Component, Prop, Vue } from 'vue-property-decorator'
-
-@Component
-export default class ArticleList extends Vue {
-  @Prop({ required: true }) readonly category!: string
-
-  articles: Article[] = []
-  loading = false
-
-  get filteredArticles(): Article[] {
-    return this.articles.filter(a => a.category === this.category)
-  }
-
-  async mounted() {
-    this.loading = true
-    this.articles = await fetchArticles(this.category)
-    this.loading = false
-  }
-
-  handleClick(article: Article): void {
-    this.$router.push(`/article/${article.id}`)
-  }
-}
+type UserListVO = Pick<User, 'id' | 'name'>
+// 结果就只剩：{ id: number; name: string }
 ```
 
-## 8. tsconfig.json 常用配置
+**场景 2：新增用户的时候，后台还没给 ID，没法传**
+用 `Omit` 踢出去：
+```typescript
+type CreateUserForm = Omit<User, 'id'>
+// 结果就是：{ name: string; email: string; age: number }
+```
+
+**场景 3：表单更新，用户想改哪个字段就传哪个，不强制传**
+用 `Partial` 全变成可选的（加个 `?`）：
+```typescript
+type UpdateUserDto = Partial<User>
+// 结果就是：{ id?: number; name?: string; email?: string; age?: number }
+```
+
+## 5. 项目根目录的 tsconfig.json 怎么配
+
+自己搭脚手架经常不知道那个配置文件填啥，我平时基本上就抄这一套：
 
 ```json
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "ES2018",               // 编译成的 JS 版本
     "module": "ESNext",
-    "moduleResolution": "node",
-    "strict": true,
+    "strict": true,                   // 这个必须开，不开 TS 等于白写
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
+    "skipLibCheck": true,             // 不去检查 node_modules 里的类型报错，不然烦死
+    "resolveJsonModule": true,        // 允许 import 一个 json 文件
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"]                // 配一下别名，搭配 webpack/vite 的别名用
     }
   },
   "include": ["src/**/*.ts", "src/**/*.vue"],
@@ -322,4 +159,4 @@ export default class ArticleList extends Vue {
 }
 ```
 
-TypeScript 的学习曲线在初期会感到有些陡峭，但一旦习惯了类型思维，在编辑器的智能提示、重构安全性和团队协作中会感受到明显的收益。
+其实用久了你就会发现，写 TS 就是在一门心思给程序写文档，只不过这个文档不仅给人看，机器还能帮你检查语法。前期痛苦几天，后期爽得飞起。

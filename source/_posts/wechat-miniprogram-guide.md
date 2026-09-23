@@ -1,5 +1,5 @@
 ---
-title: 微信小程序开发入门笔记
+title: 微信小程序开发避坑录：从零搞个能跑的项目
 date: 2019-10-25 11:20:35
 tags:
   - 小程序
@@ -7,325 +7,172 @@ tags:
 categories: 小程序
 ---
 
-微信小程序自 2017 年发布以来持续火热，2019 年已经成为移动端开发不可忽视的一环。相比传统 H5 应用，小程序在微信生态内拥有更好的性能表现和用户触达能力。本文从项目搭建到核心知识点，整理了小程序开发的入门要点。
+前端干久了，难免会被老板抓壮丁去搞微信小程序。一开始以为这玩意儿就是套了壳的 Vue，真上手去官网下了个开发者工具才发现，它的标签语法、生命周期甚至连 CSS 名字（WXSS）全是一套独立的体系，搞得人晕头转向。
+
+跌跌撞撞总算摸透了它最基础的套路，整理了一份傻瓜式的入门笔记，下次再有新项目要开荒，直接拿这篇来抄作业就行了。
 
 <!-- more -->
 
-## 1. 项目结构
+## 1. 长什么样？文件结构摸底
 
-一个标准的小程序项目包含以下核心文件：
+一个小程序页面，不想 Vue 那样全写在 `.vue` 一个文件里，它非要拆成四个文件，强迫症看着是挺整齐的：
 
 ```
-├── app.js          # 小程序入口逻辑（应用生命周期）
-├── app.json        # 全局配置（页面路径、窗口样式、TabBar 等）
-├── app.wxss        # 全局样式
+├── app.js          # 全局的老大，小程序一启动就跑这里
+├── app.json        # 配置文件，全屋的装修风格都在这定（比如底部导航栏）
+├── app.wxss        # 全局公共样式
 ├── pages/
-│   ├── index/
-│   │   ├── index.js      # 页面逻辑
-│   │   ├── index.json    # 页面配置
-│   │   ├── index.wxml    # 页面模板（类似 HTML）
-│   │   └── index.wxss    # 页面样式（类似 CSS）
-│   └── detail/
-│       ├── detail.js
-│       ├── detail.json
-│       ├── detail.wxml
-│       └── detail.wxss
-├── components/     # 自定义组件
-├── utils/          # 工具函数
-└── project.config.json  # 项目配置
+│   ├── index/      # 首页
+│   │   ├── index.js      # 写 JS 逻辑的
+│   │   ├── index.json    # 这页单独的配置（比如改个标题）
+│   │   ├── index.wxml    # 就是 HTML
+│   │   └── index.wxss    # 就是 CSS
 ```
 
-## 2. 全局配置 app.json
+## 2. 第一关：把底部导航栏（TabBar）搞出来
+
+通常做个 App 第一步就是配底下那几个按钮，去全局的 `app.json` 里面加个 `tabBar` 节点就行了，图片自己去下点小 icon 扔进去：
 
 ```json
 {
   "pages": [
     "pages/index/index",
-    "pages/list/list",
-    "pages/detail/detail",
     "pages/mine/mine"
   ],
-  "window": {
-    "navigationBarTitleText": "光阴小栈",
-    "navigationBarBackgroundColor": "#2d8cf0",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#f5f5f5",
-    "enablePullDownRefresh": false
-  },
   "tabBar": {
-    "color": "#999",
-    "selectedColor": "#2d8cf0",
+    "color": "#999999",
+    "selectedColor": "#1296db",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": "大厅",
         "iconPath": "images/home.png",
         "selectedIconPath": "images/home-active.png"
       },
       {
         "pagePath": "pages/mine/mine",
         "text": "我的",
-        "iconPath": "images/mine.png",
-        "selectedIconPath": "images/mine-active.png"
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user-active.png"
       }
     ]
   }
 }
 ```
 
-## 3. 页面生命周期
+## 3. 第二关：页面怎么写？（WXML vs HTML）
+
+忘了你的 `<div>` 和 `<span>` 吧，微信不吃这一套，他们自己造了词：
+- `<div>` 变成了 `<view>`
+- `<span>` 变成了 `<text>`
+- `<img>` 变成了 `<image>`
+
+写数据绑定的时候倒是很亲切，也是双花括号，但有些细节极其容易踩坑：
+
+```html
+<!-- 插变量一样是两片大括号 -->
+<view>{{ title }}</view>
+
+<!-- 循环渲染（注意 wx:key 不用加大括号了） -->
+<view wx:for="{{ list }}" wx:key="id" wx:for-item="item">
+  {{ index }} - {{ item.name }}
+</view>
+
+<!-- 点击事件，不用 @click，得用 bindtap -->
+<button bindtap="handleClick">点我一下</button>
+<!-- 如果你想阻止事件冒泡往上传递，用 catchtap -->
+<button catchtap="handleStop">点我，但我不会通知父元素</button>
+```
+
+## 4. 第三关：数据怎么变？（让人头疼的 setData）
+
+这是从 Vue 转过来最难受的地方。Vue 里 `this.name = '铁柱'` 页面就更新了，在小程序里，你这样改页面理都不理你，必须老老实实用原生的 `setData`：
 
 ```javascript
-// pages/index/index.js
 Page({
+  // 数据全放这里
   data: {
-    articles: [],
-    loading: false,
-    page: 1
+    message: '你好',
+    count: 0
   },
 
-  // 页面加载（只执行一次）
-  onLoad(options) {
-    console.log('页面参数:', options)
-    this.loadArticles()
-  },
+  handleClick() {
+    // ❌ 错误示范：这样写数据变了，但页面不会变
+    // this.data.count = 1 
 
-  // 页面显示（每次切换回来都会触发）
-  onShow() {
-    console.log('页面显示')
-  },
-
-  // 页面初次渲染完成
-  onReady() {
-    console.log('页面渲染完成')
-  },
-
-  // 页面隐藏
-  onHide() {
-    console.log('页面隐藏')
-  },
-
-  // 页面卸载
-  onUnload() {
-    console.log('页面卸载')
-  },
-
-  // 下拉刷新
-  onPullDownRefresh() {
-    this.setData({ page: 1 })
-    this.loadArticles().then(() => {
-      wx.stopPullDownRefresh()
-    })
-  },
-
-  // 触底加载更多
-  onReachBottom() {
-    this.setData({ page: this.data.page + 1 })
-    this.loadMoreArticles()
-  },
-
-  // 自定义方法
-  loadArticles() {
-    this.setData({ loading: true })
-    return new Promise((resolve) => {
-      wx.request({
-        url: 'https://api.example.com/articles',
-        data: { page: this.data.page },
-        success: (res) => {
-          this.setData({
-            articles: res.data.list,
-            loading: false
-          })
-          resolve()
-        }
-      })
+    // ✅ 正确姿势：只能用 setData 通知它
+    this.setData({
+      count: this.data.count + 1,
+      message: '我被点击了'
     })
   }
 })
 ```
 
-## 4. 数据绑定与模板语法
+## 5. 第四关：网络请求怎么发？
 
-小程序模板语法（WXML）和 Vue 模板有相似之处，但也有不少差异：
-
-```html
-<!-- 数据绑定用双花括号 -->
-<view class="article-card">
-  <text>{{ title }}</text>
-  <text>阅读量: {{ readCount }}</text>
-</view>
-
-<!-- 条件渲染 -->
-<view wx:if="{{ status === 'loading' }}">加载中...</view>
-<view wx:elif="{{ status === 'empty' }}">暂无数据</view>
-<view wx:else>
-  <!-- 列表渲染 -->
-  <view wx:for="{{ articles }}" wx:key="id" wx:for-item="article">
-    <text>{{ index + 1 }}. {{ article.title }}</text>
-    <text class="date">{{ article.date }}</text>
-  </view>
-</view>
-
-<!-- 事件绑定用 bind / catch -->
-<button bindtap="handleSubmit">提交</button>
-<button catchtap="handleCancel">取消（阻止冒泡）</button>
-
-<!-- 双向绑定（简易） -->
-<input model:value="{{ inputValue }}" placeholder="请输入" />
-```
-
-## 5. 网络请求封装
+小程序里没有内置 `axios`，发请求用它自带的 `wx.request`，写法很古老，一般我会自己用 Promise 粗略封装一层扔在 `utils/request.js` 里：
 
 ```javascript
-// utils/request.js
-const BASE_URL = 'https://api.example.com'
+const BASE_URL = 'https://api.mywebsite.com'
 
-function request({ url, method = 'GET', data = {} }) {
+export function request(url, method = 'GET', data = {}) {
   return new Promise((resolve, reject) => {
-    wx.showLoading({ title: '加载中' })
+    // 顺手搞个加载中动画
+    wx.showLoading({ title: '拼命加载中...' })
 
     wx.request({
-      url: `${BASE_URL}${url}`,
-      method,
-      data,
+      url: BASE_URL + url,
+      method: method,
+      data: data,
       header: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${wx.getStorageSync('token')}`
+        // 比如在这里塞个登录 Token 啥的
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       },
-      success(res) {
+      success: (res) => {
         if (res.statusCode === 200) {
           resolve(res.data)
-        } else if (res.statusCode === 401) {
-          // token 过期，跳转登录
-          wx.redirectTo({ url: '/pages/login/login' })
-          reject(new Error('未授权'))
         } else {
-          wx.showToast({ title: '请求失败', icon: 'none' })
-          reject(new Error(res.data.message || '请求失败'))
+          wx.showToast({ title: '出错了兄弟', icon: 'none' })
+          reject(res)
         }
       },
-      fail(err) {
-        wx.showToast({ title: '网络异常', icon: 'none' })
-        reject(err)
-      },
-      complete() {
-        wx.hideLoading()
+      complete: () => {
+        wx.hideLoading() // 完事了把动画关掉
       }
     })
   })
 }
+```
+然后在页面里就可以舒服地用了：
+```javascript
+import { request } from '../../utils/request'
 
-// 导出快捷方法
-module.exports = {
-  get: (url, data) => request({ url, method: 'GET', data }),
-  post: (url, data) => request({ url, method: 'POST', data }),
-  put: (url, data) => request({ url, method: 'PUT', data }),
-  del: (url, data) => request({ url, method: 'DELETE', data })
-}
+Page({
+  async onLoad() {
+    // 现在支持 async/await 了，写起来爽得多
+    const res = await request('/articles', 'GET')
+    this.setData({ list: res.data })
+  }
+})
 ```
 
-## 6. 自定义组件
+## 6. 一些高频 API 速查
 
-小程序支持组件化开发：
+经常用到，但我脑子经常短路忘掉拼写的几个 API：
 
 ```javascript
-// components/article-card/article-card.js
-Component({
-  properties: {
-    title: { type: String, value: '' },
-    date: { type: String, value: '' },
-    cover: { type: String, value: '' },
-    readCount: { type: Number, value: 0 }
-  },
-  data: {
-    liked: false
-  },
-  methods: {
-    onTapCard() {
-      this.triggerEvent('tap', { title: this.properties.title })
-    },
-    onToggleLike() {
-      this.setData({ liked: !this.data.liked })
-      this.triggerEvent('like', { liked: this.data.liked })
-    }
-  }
-})
+// 页面怎么跳？
+wx.navigateTo({ url: '/pages/detail/detail?id=123' })  // 普通跳转，左上角能点返回
+wx.redirectTo({ url: '/pages/login/login' })             // 重定向，回不去了
+wx.switchTab({ url: '/pages/index/index' })               // 跳到底部导航栏的页面，必须用这个！
+
+// 弹个窗
+wx.showToast({ title: '搞定了', icon: 'success' })
+
+// 存点本地数据（比如历史记录）
+wx.setStorageSync('searchHistory', ['Vue', 'React'])
+const history = wx.getStorageSync('searchHistory')
 ```
 
-```html
-<!-- components/article-card/article-card.wxml -->
-<view class="card" bindtap="onTapCard">
-  <image class="cover" src="{{ cover }}" mode="aspectFill" />
-  <view class="info">
-    <text class="title">{{ title }}</text>
-    <view class="meta">
-      <text class="date">{{ date }}</text>
-      <text class="read">{{ readCount }} 阅读</text>
-    </view>
-  </view>
-  <view class="like {{ liked ? 'active' : '' }}" catchtap="onToggleLike">
-    ♥
-  </view>
-</view>
-```
-
-使用组件前需要在页面的 JSON 中注册：
-
-```json
-{
-  "usingComponents": {
-    "article-card": "/components/article-card/article-card"
-  }
-}
-```
-
-## 7. 本地存储
-
-```javascript
-// 同步存储（适合轻量数据）
-wx.setStorageSync('userInfo', { name: 'Tom', id: 1 })
-const user = wx.getStorageSync('userInfo')
-wx.removeStorageSync('userInfo')
-
-// 异步存储（适合较大数据，不阻塞 UI）
-wx.setStorage({
-  key: 'historyList',
-  data: historyArray,
-  success() {
-    console.log('保存成功')
-  }
-})
-```
-
-## 8. 常用 API 速查
-
-```javascript
-// 页面跳转
-wx.navigateTo({ url: '/pages/detail/detail?id=123' })  // 保留当前页
-wx.redirectTo({ url: '/pages/login/login' })             // 关闭当前页
-wx.switchTab({ url: '/pages/index/index' })               // 切换 Tab
-wx.navigateBack({ delta: 1 })                             // 返回上一页
-
-// 用户交互
-wx.showToast({ title: '操作成功', icon: 'success' })
-wx.showModal({
-  title: '提示',
-  content: '确定要删除吗？',
-  success(res) {
-    if (res.confirm) console.log('用户点击确定')
-  }
-})
-wx.showActionSheet({
-  itemList: ['拍照', '从相册选择'],
-  success(res) {
-    console.log('选择了:', res.tapIndex)
-  }
-})
-
-// 获取系统信息
-const sysInfo = wx.getSystemInfoSync()
-console.log('屏幕宽度:', sysInfo.windowWidth)
-console.log('系统:', sysInfo.platform)
-```
-
-小程序的开发体验和 Web 前端有不少共通之处，掌握了上述基础知识后，结合微信开发者文档就可以开始实际项目开发了。
+总结下来，小程序的门槛其实不高，只要你习惯了它那套 `setData` 和不按套路出牌的 HTML 标签，基本上写两天就能熟练干活了。不说了，去对付老板的新需求了。

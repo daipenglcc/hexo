@@ -1,5 +1,5 @@
 ---
-title: Webpack 4 性能优化实战指南
+title: 老项目抢救指南：Webpack 4 到底还能怎么优化
 date: 2019-07-08 15:30:22
 tags:
   - Webpack
@@ -8,62 +8,48 @@ tags:
 categories: 前端工程化
 ---
 
-Webpack 作为前端构建的事实标准，在处理大型项目时常常面临构建速度慢、产出体积大的问题。本文结合 Webpack 4 的实际项目经验，从构建速度和产出优化两个维度，整理了一套可落地的性能优化方案。
+虽然现在满世界都在吹 Vite 甚至 Rspack 有多快，但现实往往是骨感的：手里还有好几个祖传的 Webpack 4 老项目要维护，因为历史包袱太重根本没法升版本。
+
+以前每次按个保存（Ctrl+S），我都得去倒杯茶等它那十几秒的热更新转完，简直是折磨。上个月实在受不了了，抽了两个周末把项目底朝天优化了一遍，冷启动和热更新的速度总算降到了能忍受的几秒钟。把这次“抢救”用到的一些管用的招数记下来，以后留着给其他项目续命。
 
 <!-- more -->
 
-## 一、构建速度优化
+## 一、咋让它打包快一点？
 
-### 1. 缩小文件搜索范围
+### 1. 别让它像无头苍蝇一样乱找
+
+Webpack 慢的一个大原因是它在遍历文件。告诉它明确的搜寻范围，别去扫描那些几万个文件的 `node_modules`。
 
 ```javascript
 // webpack.config.js
 module.exports = {
-  resolve: {
-    // 指定扩展名，减少文件查找
-    extensions: ['.js', '.vue', '.json'],
-    // 设置别名，避免层层 ../
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@components': path.resolve(__dirname, 'src/components')
-    },
-    // 指定模块查找目录，避免向上递归搜索
-    modules: [path.resolve(__dirname, 'node_modules')]
-  },
   module: {
     rules: [
       {
         test: /\.js$/,
         use: 'babel-loader',
-        // 明确排除 node_modules，大幅减少编译文件量
+        // 这一句很关键，把 node_modules 排除掉，速度提升巨大！
         exclude: /node_modules/,
-        // 或者用 include 指定只编译 src 目录
+        // 或者更狠一点，只让它管 src 下面的文件
         include: path.resolve(__dirname, 'src')
       }
-    ],
-    // 对已知不含 import/require 的大型库跳过解析
-    noParse: /jquery|lodash/
+    ]
   }
 }
 ```
 
-### 2. 使用 DllPlugin 预编译第三方库
+### 2. 第三方大块头预先打包（DllPlugin）
 
-将不经常变动的第三方库（Vue、React、Lodash 等）预先打包成 DLL 文件，后续构建直接引用，不再重复编译：
+像 Vue、React、Echarts 这些包巨大无比，偏偏它们又是一万年不更新的。每次写业务代码都让 Webpack 重新编译它们一遍，纯属浪费生命。
+
+用 `DllPlugin` 把它们单独打成一个包，以后就直接拿来用：
 
 ```javascript
-// webpack.dll.config.js
-const webpack = require('webpack')
-const path = require('path')
-
+// 单独搞个 webpack.dll.config.js，运行一次就行
 module.exports = {
   entry: {
-    vendor: ['vue', 'vue-router', 'vuex', 'axios', 'element-ui']
-  },
-  output: {
-    path: path.resolve(__dirname, 'dll'),
-    filename: '[name].dll.js',
-    library: '[name]_library'
+    // 把这些死胖子全扔进去
+    vendor: ['vue', 'vue-router', 'vuex', 'axios']
   },
   plugins: [
     new webpack.DllPlugin({
@@ -74,18 +60,11 @@ module.exports = {
 }
 ```
 
-```javascript
-// webpack.config.js 中引用
-plugins: [
-  new webpack.DllReferencePlugin({
-    manifest: require('./dll/vendor.manifest.json')
-  })
-]
-```
+然后在普通的配置里引用这个 `manifest.json`，构建速度肉眼可见地变快。
 
-### 3. 开启多进程编译
+### 3. 给 Webpack 加点多线程魔法
 
-利用 `thread-loader` 或 `HappyPack` 将 Loader 的执行并行化：
+Webpack 默认是单线程干活的，咱们可以装个 `thread-loader`，利用电脑的多核 CPU 让它并行干活。
 
 ```javascript
 module: {
@@ -95,149 +74,64 @@ module: {
       use: [
         {
           loader: 'thread-loader',
-          options: {
-            workers: 3  // 开启 3 个 worker 进程
-          }
+          options: { workers: 3 } // 开 3 个小弟帮忙打工
         },
         'babel-loader'
-      ],
-      exclude: /node_modules/
-    }
-  ]
-}
-```
-
-### 4. 利用缓存加速二次构建
-
-```javascript
-module: {
-  rules: [
-    {
-      test: /\.js$/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: {
-            // 开启 Babel 编译缓存
-            cacheDirectory: true
-          }
-        }
       ]
     }
   ]
-},
-plugins: [
-  // 模块标识符缓存
-  new webpack.HashedModuleIdsPlugin()
-]
-```
-
-## 二、产出体积优化
-
-### 1. Tree Shaking（摇树优化）
-
-Webpack 4 在 `production` 模式下默认开启 Tree Shaking，但需要确保代码满足条件：
-
-```javascript
-// ✅ 使用 ES Module 的命名导出（可以 Tree Shaking）
-export function formatDate(date) { /* ... */ }
-export function formatMoney(num) { /* ... */ }
-
-// ❌ 使用 CommonJS（无法 Tree Shaking）
-module.exports = { formatDate, formatMoney }
-```
-
-```javascript
-// package.json 中标记无副作用
-{
-  "sideEffects": [
-    "*.css",
-    "*.less"
-  ]
 }
 ```
+> **踩坑提醒**：如果你的项目特别小就别搞这个了，开子线程的开销比打包本身还费时间。
 
-### 2. Code Splitting（代码分割）
+## 二、咋让打包出来的文件小一点？
+
+产出文件太大，用户打开网页就得转半天圈圈。
+
+### 1. 拆包策略（Code Splitting）
+
+别把所有代码全揉成一个几 MB 的 `app.js`。把公共包单独拎出来。
 
 ```javascript
-// webpack.config.js
 optimization: {
   splitChunks: {
     chunks: 'all',
     cacheGroups: {
-      // 第三方库单独打包
+      // 第三方包单独拆成 vendor.js
       vendor: {
         name: 'vendor',
         test: /[\\/]node_modules[\\/]/,
-        priority: 10,
-        chunks: 'initial'
+        priority: 10
       },
-      // 公共模块提取
+      // 业务里大家都在用的公共代码也拆出来
       common: {
         name: 'common',
-        minChunks: 2,
-        priority: 5,
-        reuseExistingChunk: true
+        minChunks: 2, // 只要被引用过两次就拆走
+        priority: 5
       }
     }
   }
 }
 ```
 
-### 3. 路由懒加载
+### 2. 路由必须懒加载
 
-按需加载路由组件，首屏只加载必要的代码：
+一进首页就把管理后台的所有页面代码全下载下来，这就是耍流氓。一定要配路由按需加载。
 
 ```javascript
-// Vue Router 懒加载
+// 在 Vue 路由表里这么写，它就会被拆成独立的文件
 const routes = [
   {
-    path: '/',
-    component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue')
-  },
-  {
     path: '/about',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
-  },
-  {
-    path: '/dashboard',
-    component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
+    // 神奇的魔法注释，指定打包出来的文件名
+    component: () => import(/* webpackChunkName: "about_page" */ '@/views/About.vue')
   }
 ]
-
-// React 路由懒加载
-const Home = React.lazy(() => import('./pages/Home'))
-const About = React.lazy(() => import('./pages/About'))
 ```
 
-### 4. 压缩与混淆
+### 3. 把图片压成干尸
 
-```javascript
-const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-
-module.exports = {
-  optimization: {
-    minimizer: [
-      // JS 压缩
-      new TerserPlugin({
-        parallel: true,         // 多进程压缩
-        cache: true,            // 开启缓存
-        terserOptions: {
-          compress: {
-            drop_console: true, // 移除 console.log
-            drop_debugger: true
-          }
-        }
-      }),
-      // CSS 压缩
-      new OptimizeCSSAssetsPlugin()
-    ]
-  }
-}
-```
-
-### 5. 图片与静态资源优化
+小图片根本没必要发 HTTP 请求，直接转成 Base64 塞进代码里。大图片用插件强行压缩质量。
 
 ```javascript
 module: {
@@ -248,16 +142,8 @@ module: {
         {
           loader: 'url-loader',
           options: {
-            limit: 8192,  // 8KB 以下转为 base64 内联
-            name: 'images/[name].[hash:8].[ext]'
-          }
-        },
-        {
-          loader: 'image-webpack-loader',
-          options: {
-            mozjpeg: { quality: 65 },
-            pngquant: { quality: [0.65, 0.9] },
-            gifsicle: { interlaced: false }
+            limit: 8192,  // 小于 8KB 的图片，直接转 Base64！
+            name: 'img/[name].[hash:8].[ext]'
           }
         }
       ]
@@ -266,41 +152,22 @@ module: {
 }
 ```
 
-## 三、分析工具
+## 三、怎么知道哪里慢？
 
-优化前先用工具分析瓶颈在哪：
+千万别瞎优化，找个“温度计”测一下。我最爱用 `webpack-bundle-analyzer`，它会生成一张五颜六色的图，那个方块面积最大，就说明那个包最占空间，一抓一个准。
 
 ```bash
-# 安装分析插件
-npm i -D webpack-bundle-analyzer speed-measure-webpack-plugin
+# 跑完这句，自动在浏览器打开分析报告
+npm install webpack-bundle-analyzer -D
 ```
 
 ```javascript
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
-const smp = new SpeedMeasurePlugin()
 
-// 使用 SpeedMeasurePlugin 包裹配置，查看各 Loader/Plugin 耗时
-module.exports = smp.wrap({
-  plugins: [
-    // 生成可视化体积报告
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: 'bundle-report.html'
-    })
-  ]
-})
+plugins: [
+  // 找出那个让打包变肥的罪魁祸首
+  new BundleAnalyzerPlugin()
+]
 ```
 
-## 优化效果对比
-
-在一个中型 Vue 项目（约 200 个组件）中实测优化前后：
-
-| 指标 | 优化前 | 优化后 | 提升 |
-| :--- | :---: | :---: | :---: |
-| 冷启动构建 | 68s | 23s | ↓ 66% |
-| 热更新 | 3.2s | 0.8s | ↓ 75% |
-| 产出体积 | 2.8MB | 890KB | ↓ 68% |
-| 首屏加载 | 4.5s | 1.8s | ↓ 60% |
-
-构建优化是个持续的过程，关键是先用分析工具找到瓶颈，再针对性地应用上述策略。
+这套组合拳打下来，我那个破项目冷启动从快一分钟多降到了 20 秒左右，热更新进到了两秒内，产物体积缩水了一半。虽然比不上新一代工具，但起码能让我心情舒畅地活到下班了。
