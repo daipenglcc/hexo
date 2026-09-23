@@ -175,19 +175,18 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="2025 年，”Vibe Coding”（氛围编程）这个概念在技术圈迅速风靡——开发者不再需要从零逐行敲打语法样板，而是通过自然语言向 AI 传达业务意图与系统架构，由 AI 生成、调整并组合完整的工程代码。作为这场变革的代表工具，Cursor 将 AI 编程助手从被动的”补全插件”升级为了能够感知整个代码库上下文的”全栈结对编程伙伴”。本文从交互模式、实战案例、工程配置到思维转变，深度剖析 Cu">
+  <meta name="description" content="最近经常听到 “Vibe Coding”（氛围编程）这个词，大概意思就是不用一行行敲代码，直接用自然语言描述需求，让 AI 去生成和修改代码。带着点好奇，我下载了最近讨论挺多的 Cursor 编辑器试了试。 简单体验下来，感觉确实和之前的 AI 补全插件不太一样，它更像是一个知道你整个项目结构的助手。这里随便聊聊我最近用它的一些体会。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cursor 与 Vibe Coding：AI 驱动的开发新范式">
+<meta property="og:title" content="试了下 Cursor 和所谓的 Vibe Coding">
 <meta property="og:url" content="https://www.vueweb.cn/posts/AI/2025-10-20-cursor-vibe-coding.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="2025 年，”Vibe Coding”（氛围编程）这个概念在技术圈迅速风靡——开发者不再需要从零逐行敲打语法样板，而是通过自然语言向 AI 传达业务意图与系统架构，由 AI 生成、调整并组合完整的工程代码。作为这场变革的代表工具，Cursor 将 AI 编程助手从被动的”补全插件”升级为了能够感知整个代码库上下文的”全栈结对编程伙伴”。本文从交互模式、实战案例、工程配置到思维转变，深度剖析 Cu">
+<meta property="og:description" content="最近经常听到 “Vibe Coding”（氛围编程）这个词，大概意思就是不用一行行敲代码，直接用自然语言描述需求，让 AI 去生成和修改代码。带着点好奇，我下载了最近讨论挺多的 Cursor 编辑器试了试。 简单体验下来，感觉确实和之前的 AI 补全插件不太一样，它更像是一个知道你整个项目结构的助手。这里随便聊聊我最近用它的一些体会。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-20T02:30:25.000Z">
-<meta property="article:modified_time" content="2026-09-23T03:58:35.124Z">
+<meta property="article:modified_time" content="2026-09-23T06:36:01.798Z">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="效率工具">
 <meta property="article:tag" content="Cursor">
-<meta property="article:tag" content="Vibe Coding">
 <meta name="twitter:card" content="summary">
 
 
@@ -207,7 +206,7 @@
   };
 </script>
 
-  <title>Cursor 与 Vibe Coding：AI 驱动的开发新范式 | 光阴小栈</title>
+  <title>试了下 Cursor 和所谓的 Vibe Coding | 光阴小栈</title>
   
 
 
@@ -342,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">63</span></a>
   </li>
         
         
@@ -421,7 +420,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Cursor 与 Vibe Coding：AI 驱动的开发新范式
+          <h2 class="post-title" itemprop="name headline">试了下 Cursor 和所谓的 Vibe Coding
               
             
           </h2>
@@ -463,7 +462,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:58:35" itemprop="dateModified" datetime="2026-09-23T11:58:35+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:36:01" itemprop="dateModified" datetime="2026-09-23T14:36:01+08:00">2026-09-23</time>
               
             
           </span>
@@ -532,123 +531,31 @@
       
 
       
-        <p>2025 年，”Vibe Coding”（氛围编程）这个概念在技术圈迅速风靡——开发者不再需要从零逐行敲打语法样板，而是通过自然语言向 AI 传达业务意图与系统架构，由 AI 生成、调整并组合完整的工程代码。作为这场变革的代表工具，Cursor 将 AI 编程助手从被动的”补全插件”升级为了能够感知整个代码库上下文的”全栈结对编程伙伴”。本文从交互模式、实战案例、工程配置到思维转变，深度剖析 Cursor 的核心用法与工作流。</p>
+        <p>最近经常听到 “Vibe Coding”（氛围编程）这个词，大概意思就是不用一行行敲代码，直接用自然语言描述需求，让 AI 去生成和修改代码。带着点好奇，我下载了最近讨论挺多的 Cursor 编辑器试了试。</p>
+<p>简单体验下来，感觉确实和之前的 AI 补全插件不太一样，它更像是一个知道你整个项目结构的助手。这里随便聊聊我最近用它的一些体会。</p>
 <a id="more"></a>
 
-<h2 id="1-什么是-Vibe-Coding-与开发范式转移"><a href="#1-什么是-Vibe-Coding-与开发范式转移" class="headerlink" title="1. 什么是 Vibe Coding 与开发范式转移"></a>1. 什么是 Vibe Coding 与开发范式转移</h2><p>Andrej Karpathy（OpenAI 联合创始人、前特斯拉 AI 总监）曾这样描述 “Vibe Coding”：</p>
-<blockquote>
-<p>“你不再逐行书写代码，而是向 AI 描述你想要的功能，AI 生成代码，你审查、测试并调整，来回迭代直到满意。你感知（vibe）系统演进的走向，而不是深陷在语法细节中。”</p>
-</blockquote>
-<h3 id="传统开发-vs-AI-辅助-vs-Vibe-Coding"><a href="#传统开发-vs-AI-辅助-vs-Vibe-Coding" class="headerlink" title="传统开发 vs AI 辅助 vs Vibe Coding"></a>传统开发 vs AI 辅助 vs Vibe Coding</h3><table>
-<thead>
-<tr>
-<th align="left">维度</th>
-<th align="left">传统模式 (2020 前)</th>
-<th align="left">代码补全模式 (2022-2023)</th>
-<th align="left">Vibe Coding (2025+)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>核心工具</strong></td>
-<td align="left">VS Code / WebStorm</td>
-<td align="left">GitHub Copilot / Tabnine</td>
-<td align="left">Cursor / Windsurf</td>
-</tr>
-<tr>
-<td align="left"><strong>主要交互方式</strong></td>
-<td align="left">手动敲击键盘</td>
-<td align="left">行内补全按 Tab</td>
-<td align="left">多文件 Composer + 自然语言会话</td>
-</tr>
-<tr>
-<td align="left"><strong>代码生成粒度</strong></td>
-<td align="left">单行或简单代码块</td>
-<td align="left">函数级局部补全</td>
-<td align="left">跨文件模块 / 完整功能闭环</td>
-</tr>
-<tr>
-<td align="left"><strong>上下文感知</strong></td>
-<td align="left">无 / 依赖 LSP</td>
-<td align="left">当前打开的单文件</td>
-<td align="left">全仓库语义索引 (<code>@codebase</code>)</td>
-</tr>
-<tr>
-<td align="left"><strong>开发者重心</strong></td>
-<td align="left">70% 编码 + 20% 调试 + 10% 架构</td>
-<td align="left">50% 编码 + 30% 审查 + 20% 调试</td>
-<td align="left">40% 架构设计 + 40% 意图审查 + 20% 验收</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="2-Cursor-核心交互模式与操作技巧"><a href="#2-Cursor-核心交互模式与操作技巧" class="headerlink" title="2. Cursor 核心交互模式与操作技巧"></a>2. Cursor 核心交互模式与操作技巧</h2><p>Cursor 深度定制了 VS Code 底层，其效率优势来自于四大杀手级功能协同：</p>
-<h3 id="2-1-Tab-补全：多行预测与跨文件意图感知"><a href="#2-1-Tab-补全：多行预测与跨文件意图感知" class="headerlink" title="2.1 Tab 补全：多行预测与跨文件意图感知"></a>2.1 Tab 补全：多行预测与跨文件意图感知</h3><p>不同于普通单行补全，Cursor 的 <code>Copilot++</code>（Cursor Tab）模型会根据光标位置与近期编辑历史，预测开发者接下来想要修改的整块逻辑：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 示例：当你修改了接口定义的字段时</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> UserProfile &#123;</span><br><span class="line">  id: <span class="built_in">string</span>;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  email: <span class="built_in">string</span>;</span><br><span class="line">  <span class="comment">// 新增字段：</span></span><br><span class="line">  role: <span class="string">'admin'</span> | <span class="string">'member'</span> | <span class="string">'guest'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 光标移动到工厂函数中，按一次 Tab 即可自动补全对应的新增逻辑与默认值：</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createDefaultProfile</span>(<span class="params">id: <span class="built_in">string</span>, name: <span class="built_in">string</span></span>): <span class="title">UserProfile</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    id,</span><br><span class="line">    name,</span><br><span class="line">    email: <span class="string">''</span>,</span><br><span class="line">    role: <span class="string">'member'</span>, <span class="comment">// Cursor 自动推导并预测补全</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="以前的插件和-Cursor-的区别"><a href="#以前的插件和-Cursor-的区别" class="headerlink" title="以前的插件和 Cursor 的区别"></a>以前的插件和 Cursor 的区别</h2><p>平时用 Copilot 这类工具，主要是帮我们补全下一行，或者写个小函数。</p>
+<p>Cursor 给我的感觉是，它的颗粒度变大了。你不用停留在某一行的细节里，可以直接跨好几个文件跟它提需求。比如你要加个评论功能，它可以同时去改你的数据模型表、后端的路由文件、前端的 UI 组件。</p>
+<h2 id="几个用得还算顺手的功能"><a href="#几个用得还算顺手的功能" class="headerlink" title="几个用得还算顺手的功能"></a>几个用得还算顺手的功能</h2><p>试用期间，有这么几个操作是用得比较多的：</p>
+<h3 id="1-Tab-补全"><a href="#1-Tab-补全" class="headerlink" title="1. Tab 补全"></a>1. Tab 补全</h3><p>它的 Tab 补全不仅仅是接后面的字，有时候你改了一个接口字段，走到下面某个调用的地方，它会自动预测出你想补全相关的逻辑：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> UserProfile &#123;</span><br><span class="line">  id: <span class="built_in">string</span>;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  <span class="comment">// 比如我在这儿加了个角色字段</span></span><br><span class="line">  role: <span class="string">'admin'</span> | <span class="string">'member'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createDefaultProfile</span>(<span class="params">id: <span class="built_in">string</span></span>): <span class="title">UserProfile</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    id,</span><br><span class="line">    name: <span class="string">'test'</span>,</span><br><span class="line">    <span class="comment">// 刚敲一个回车，它可能就把 role: 'member' 提示出来了</span></span><br><span class="line">    role: <span class="string">'member'</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="2-2-Cmd-K：行内智能编辑与局部重构"><a href="#2-2-Cmd-K：行内智能编辑与局部重构" class="headerlink" title="2.2 Cmd + K：行内智能编辑与局部重构"></a>2.2 Cmd + K：行内智能编辑与局部重构</h3><p>在编辑器中选中任意代码片段，按下 <code>Cmd + K</code>（Windows: <code>Ctrl + K</code>），直接用自然语言描述修改要求：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重构前：回调地狱风格的异步文件读取</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readConfig</span>(<span class="params">callback: (err: <span class="built_in">Error</span> | <span class="literal">null</span>, data?: <span class="built_in">any</span>) =&gt; <span class="built_in">void</span></span>) </span>&#123;</span><br><span class="line">  fs.readFile(<span class="string">'/path/to/config.json'</span>, <span class="string">'utf8'</span>, <span class="function">(<span class="params">err, content</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> callback(err);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> parsed = <span class="built_in">JSON</span>.parse(content);</span><br><span class="line">      callback(<span class="literal">null</span>, parsed);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      callback(e <span class="keyword">as</span> <span class="built_in">Error</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 选中上述函数，按 Cmd + K 输入："改写为 async/await 风格，增加 Zod 类型校验，并使用 try-catch 包裹"</span></span><br><span class="line"><span class="comment">// 重构后：</span></span><br><span class="line"><span class="keyword">import</span> &#123; promises <span class="keyword">as</span> fs &#125; <span class="keyword">from</span> <span class="string">'fs'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; z &#125; <span class="keyword">from</span> <span class="string">'zod'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AppConfigSchema = z.object(&#123;</span><br><span class="line">  port: z.number().default(<span class="number">3000</span>),</span><br><span class="line">  host: z.string().default(<span class="string">'localhost'</span>),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> AppConfig = z.infer&lt;<span class="keyword">typeof</span> AppConfigSchema&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readConfig</span>(<span class="params"></span>): <span class="title">Promise</span>&lt;<span class="title">AppConfig</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> rawContent = <span class="keyword">await</span> fs.readFile(<span class="string">'/path/to/config.json'</span>, <span class="string">'utf8'</span>);</span><br><span class="line">    <span class="keyword">const</span> parsedJson = <span class="built_in">JSON</span>.parse(rawContent);</span><br><span class="line">    <span class="keyword">return</span> AppConfigSchema.parse(parsedJson);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'配置读取或解析失败:'</span>, error);</span><br><span class="line">    <span class="keyword">throw</span> error;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="2-3-Composer-Cmd-I-：跨文件架构级生成"><a href="#2-3-Composer-Cmd-I-：跨文件架构级生成" class="headerlink" title="2.3 Composer (Cmd + I)：跨文件架构级生成"></a>2.3 Composer (Cmd + I)：跨文件架构级生成</h3><p>Composer 是 Cursor 区别于普通 AI 插件最强大的功能。它可以同时在工作区中创建、重构多个关联文件：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Prompt 示例（Composer）：</span><br><span class="line">&quot;请在项目中添加一个文章评论模块，包含：</span><br><span class="line">1. prisma&#x2F;schema.prisma: 增加 Comment 数据表模型，关联 User 和 Post</span><br><span class="line">2. src&#x2F;services&#x2F;commentService.ts: 实现评论的增删查和敏感词过滤</span><br><span class="line">3. src&#x2F;app&#x2F;api&#x2F;comments&#x2F;route.ts: Next.js App Router API 路由处理 GET 和 POST</span><br><span class="line">4. src&#x2F;components&#x2F;CommentBox.tsx: 客户端评论列表与输入框组件</span><br><span class="line">请严格遵循项目现有的 TypeScript 强类型与 Tailwind CSS 规范。&quot;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="2-4-上下文引用系统"><a href="#2-4-上下文引用系统" class="headerlink" title="2.4 @ 上下文引用系统"></a>2.4 @ 上下文引用系统</h3><p>在 Chat 和 Composer 对话框中，善用 <code>@</code> 能够将精确的上下文注入提示词中，避免 AI 产生幻觉：</p>
-<table>
-<thead>
-<tr>
-<th align="left">引用标签</th>
-<th align="left">作用机制</th>
-<th align="left">最佳使用姿势</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>@codebase</code></td>
-<td align="left">基于向量嵌入搜索整个项目代码库</td>
-<td align="left"><code>@codebase 项目中所有未捕获异常是如何统一上报的？</code></td>
-</tr>
-<tr>
-<td align="left"><code>@file</code></td>
-<td align="left">将指定文件完整加入 Prompt 上下文</td>
-<td align="left"><code>@file:auth.ts 帮我在这份代码中增加刷新 Token 的逻辑</code></td>
-</tr>
-<tr>
-<td align="left"><code>@folder</code></td>
-<td align="left">将一个目录内的所有文件结构与内容引入</td>
-<td align="left"><code>@folder:src/components 评估当前组件库是否存在重复封装</code></td>
-</tr>
-<tr>
-<td align="left"><code>@docs</code></td>
-<td align="left">引用官方第三方框架文档索引</td>
-<td align="left"><code>@docs:Next.js App Router 中如何正确使用 generateMetadata</code></td>
-</tr>
-<tr>
-<td align="left"><code>@git</code></td>
-<td align="left">引用近期 Commit 记录与变更差异</td>
-<td align="left"><code>@git 帮我为上一条 commit 生成一段符合规范的 Release Notes</code></td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="3-实战：使用-Cursor-从-0-到-1-编写功能模块"><a href="#3-实战：使用-Cursor-从-0-到-1-编写功能模块" class="headerlink" title="3. 实战：使用 Cursor 从 0 到 1 编写功能模块"></a>3. 实战：使用 Cursor 从 0 到 1 编写功能模块</h2><p>以构建一个标准的用户角色鉴权中间件为例，体验标准的 Vibe Coding 流程：</p>
-<h3 id="第一步：在-Chat-中梳理设计规范与需求"><a href="#第一步：在-Chat-中梳理设计规范与需求" class="headerlink" title="第一步：在 Chat 中梳理设计规范与需求"></a>第一步：在 Chat 中梳理设计规范与需求</h3><p>通过自然语言明确类型边界与防护机制：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// types/auth.ts - 由 Cursor 根据需求生成的类型定义</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Role = <span class="string">'admin'</span> | <span class="string">'editor'</span> | <span class="string">'viewer'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> AuthUser &#123;</span><br><span class="line">  id: <span class="built_in">string</span>;</span><br><span class="line">  email: <span class="built_in">string</span>;</span><br><span class="line">  role: Role;</span><br><span class="line">  permissions: <span class="built_in">string</span>[];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> AuthContext &#123;</span><br><span class="line">  user: AuthUser | <span class="literal">null</span>;</span><br><span class="line">  isAuthenticated: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="第二步：生成中间件与权限校验守卫"><a href="#第二步：生成中间件与权限校验守卫" class="headerlink" title="第二步：生成中间件与权限校验守卫"></a>第二步：生成中间件与权限校验守卫</h3><p>使用 <code>Cmd + I</code> 调出 Composer 编写守卫函数：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware/authorize.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; NextRequest, NextResponse &#125; <span class="keyword">from</span> <span class="string">'next/server'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; verifyJwtToken &#125; <span class="keyword">from</span> <span class="string">'@/lib/jwt'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Role &#125; <span class="keyword">from</span> <span class="string">'@/types/auth'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">authorizeRoles</span>(<span class="params">allowedRoles: Role[]</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">middleware</span>(<span class="params">req: NextRequest</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> authHeader = req.headers.get(<span class="string">'authorization'</span>);</span><br><span class="line">    <span class="keyword">if</span> (!authHeader || !authHeader.startsWith(<span class="string">'Bearer '</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> NextResponse.json(</span><br><span class="line">        &#123; code: <span class="number">401</span>, message: <span class="string">'未提供有效的授权凭证'</span> &#125;,</span><br><span class="line">        &#123; status: <span class="number">401</span> &#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> token = authHeader.split(<span class="string">' '</span>)[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">const</span> decoded = <span class="keyword">await</span> verifyJwtToken(token);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!decoded || !allowedRoles.includes(decoded.role)) &#123;</span><br><span class="line">      <span class="keyword">return</span> NextResponse.json(</span><br><span class="line">        &#123; code: <span class="number">403</span>, message: <span class="string">'权限不足，无法访问该接口'</span> &#125;,</span><br><span class="line">        &#123; status: <span class="number">403</span> &#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 鉴权通过，向下游传递附加的用户信息头</span></span><br><span class="line">    <span class="keyword">const</span> requestHeaders = <span class="keyword">new</span> Headers(req.headers);</span><br><span class="line">    requestHeaders.set(<span class="string">'x-user-id'</span>, decoded.id);</span><br><span class="line">    requestHeaders.set(<span class="string">'x-user-role'</span>, decoded.role);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> NextResponse.next(&#123;</span><br><span class="line">      request: &#123; headers: requestHeaders &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="第三步：让-Cursor-为其编写自动化单元测试"><a href="#第三步：让-Cursor-为其编写自动化单元测试" class="headerlink" title="第三步：让 Cursor 为其编写自动化单元测试"></a>第三步：让 Cursor 为其编写自动化单元测试</h3><p>直接选中上述代码，使用 <code>Cmd + K</code> 输入：*”使用 Vitest 为这个授权中间件编写完整的测试用例，覆盖 401、403 和成功通行三种场景”*：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware/__tests__/authorize.test.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; describe, it, expect, vi &#125; <span class="keyword">from</span> <span class="string">'vitest'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; NextRequest &#125; <span class="keyword">from</span> <span class="string">'next/server'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; authorizeRoles &#125; <span class="keyword">from</span> <span class="string">'../authorize'</span>;</span><br><span class="line"></span><br><span class="line">vi.mock(<span class="string">'@/lib/jwt'</span>, <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">  verifyJwtToken: vi.fn(<span class="keyword">async</span> (token: <span class="built_in">string</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (token === <span class="string">'valid_admin'</span>) <span class="keyword">return</span> &#123; id: <span class="string">'u1'</span>, role: <span class="string">'admin'</span> &#125;;</span><br><span class="line">    <span class="keyword">if</span> (token === <span class="string">'valid_viewer'</span>) <span class="keyword">return</span> &#123; id: <span class="string">'u2'</span>, role: <span class="string">'viewer'</span> &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;),</span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'authorizeRoles 中间件测试'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  it(<span class="string">'未提供 token 时应拦截并返回 401'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> middleware = authorizeRoles([<span class="string">'admin'</span>]);</span><br><span class="line">    <span class="keyword">const</span> req = <span class="keyword">new</span> NextRequest(<span class="string">'http://localhost:3000/api/dashboard'</span>);</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> middleware(req);</span><br><span class="line"></span><br><span class="line">    expect(res.status).toBe(<span class="number">401</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'角色不匹配时应拦截并返回 403'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> middleware = authorizeRoles([<span class="string">'admin'</span>]);</span><br><span class="line">    <span class="keyword">const</span> req = <span class="keyword">new</span> NextRequest(<span class="string">'http://localhost:3000/api/dashboard'</span>, &#123;</span><br><span class="line">      headers: &#123; authorization: <span class="string">'Bearer valid_viewer'</span> &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> middleware(req);</span><br><span class="line"></span><br><span class="line">    expect(res.status).toBe(<span class="number">403</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'凭证与角色合法时应顺利放行'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> middleware = authorizeRoles([<span class="string">'admin'</span>]);</span><br><span class="line">    <span class="keyword">const</span> req = <span class="keyword">new</span> NextRequest(<span class="string">'http://localhost:3000/api/dashboard'</span>, &#123;</span><br><span class="line">      headers: &#123; authorization: <span class="string">'Bearer valid_admin'</span> &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> middleware(req);</span><br><span class="line"></span><br><span class="line">    expect(res.status).toBe(<span class="number">200</span>);</span><br><span class="line">    expect(res.headers.get(<span class="string">'x-user-role'</span>)).toBe(<span class="string">'admin'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div>
-
-<hr>
-<h2 id="4-深度配置：打造专属的-cursorrules"><a href="#4-深度配置：打造专属的-cursorrules" class="headerlink" title="4. 深度配置：打造专属的 .cursorrules"></a>4. 深度配置：打造专属的 <code>.cursorrules</code></h2><p>在项目根目录创建 <code>.cursorrules</code> 文件，可以让 Cursor 始终严格遵循团队的代码规范与业务约定：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 团队工程规范配置与偏好约定</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 1. 核心技术栈</span></span><br><span class="line"><span class="bullet">- </span>框架：Next.js 14+ (App Router)</span><br><span class="line"><span class="bullet">- </span>语言：TypeScript (开启 strict 模式，严禁使用 any)</span><br><span class="line"><span class="bullet">- </span>样式：Tailwind CSS (遵循语义化类名排列)</span><br><span class="line"><span class="bullet">- </span>数据校验：Zod</span><br><span class="line"><span class="bullet">- </span>测试工具：Vitest + React Testing Library</span><br><span class="line"></span><br><span class="line"><span class="section">## 2. 编码风格与设计模式</span></span><br><span class="line"><span class="bullet">- </span>组件设计：优先采用函数式组件与 React Hooks；服务端组件 (RSC) 与客户端组件明确区分。</span><br><span class="line"><span class="bullet">- </span>目录结构：文件统一采用 kebab-case 命名，组件采用 PascalCase 命名。</span><br><span class="line"><span class="bullet">- </span>模块导出：优先使用具名导出 (Named Exports)，避免 default export 导致重构搜寻困难。</span><br><span class="line"><span class="bullet">- </span>导入别名：所有跨目录模块引用一律使用 <span class="code">`@/`</span> 前缀。</span><br><span class="line"></span><br><span class="line"><span class="section">## 3. 错误处理与防御性编程</span></span><br><span class="line"><span class="bullet">- </span>所有异步 API 路由必须使用结构化 try-catch 包裹，并统一返回 <span class="code">`&#123; code: number, data: T, message: string &#125;`</span> 结构。</span><br><span class="line"><span class="bullet">- </span>外部输入参数必须使用 Zod Schema 进行运行时 Parse 校验。</span><br><span class="line"></span><br><span class="line"><span class="section">## 4. 严禁事项</span></span><br><span class="line"><span class="bullet">- </span>严禁在客户端组件（带 'use client'）中直接引入包含数据库密钥的服务端模块。</span><br><span class="line"><span class="bullet">- </span>严禁提交包含硬编码秘钥（API Key、Token）的代码。</span><br></pre></td></tr></table></figure></div>
-
-<hr>
-<h2 id="5-高效-Vibe-Coding-工作流与避坑法则"><a href="#5-高效-Vibe-Coding-工作流与避坑法则" class="headerlink" title="5. 高效 Vibe Coding 工作流与避坑法则"></a>5. 高效 Vibe Coding 工作流与避坑法则</h2><p>在享受 AI 带来十倍效率提升的同时，也需要警惕潜在的工程隐患：</p>
-<h3 id="5-1-黄金实践守则"><a href="#5-1-黄金实践守则" class="headerlink" title="5.1 黄金实践守则"></a>5.1 黄金实践守则</h3><ol>
-<li><strong>分步推进，小步提交</strong>：<br>切忌一次性让 AI “帮我做个电商系统”。应将其拆分为：”定义 Prisma 模型” → “实现服务端查询 Service” → “封装 API” → “编写前端视图”。每完成一步，运行 <code>git commit</code>，随时保留回滚断点。</li>
-<li><strong>严苛把关 PR 与测试覆盖</strong>：<br>AI 很容易写出”看起来很完美，实则边界溢出”的代码。单元测试是 Vibe Coding 的安全带，让 AI 写完业务代码后立即让其配套补充单测。</li>
-<li><strong>保持对架构主干的控制力</strong>：<br>你可以让 AI 编写具体函数的实现，但数据库范式设计、模块边界划分、鉴权通信协议等关键架构，必须由人类架构师牢牢把握。</li>
+<h3 id="2-行内修改-Cmd-K"><a href="#2-行内修改-Cmd-K" class="headerlink" title="2. 行内修改 (Cmd + K)"></a>2. 行内修改 (Cmd + K)</h3><p>遇到以前写的一坨回调地狱，或者想快速改个写法，直接选中按 <code>Cmd + K</code>，输入你的要求：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 选中之前的回调代码，输入："改成 async/await 加上 try-catch"</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readConfig</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> rawContent = <span class="keyword">await</span> fs.readFile(<span class="string">'/path/to/config.json'</span>, <span class="string">'utf8'</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(rawContent);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>它会直接在原地给你替换掉，看着还挺爽的。</p>
+<h3 id="3-多文件生成-Composer"><a href="#3-多文件生成-Composer" class="headerlink" title="3. 多文件生成 (Composer)"></a>3. 多文件生成 (Composer)</h3><p>这是我觉得它稍微有点东西的地方。按 <code>Cmd + I</code> 唤出 Composer，可以直接给它布置“大作业”。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">比如我会这样写需求：</span><br><span class="line">&quot;给项目加个评论模块。</span><br><span class="line">需要在 prisma 里加 Comment 表；</span><br><span class="line">在 api&#x2F;comments 写个带基础过滤的后端路由；</span><br><span class="line">在前端加个简单的列表展示。样式照着现有的 Tailwind 风格写。&quot;</span><br></pre></td></tr></table></figure></div>
+<p>它能同时生成和修改好几个文件，你可以在旁边一个一个审核同意。</p>
+<h3 id="4-引用上下文"><a href="#4-引用上下文" class="headerlink" title="4. @ 引用上下文"></a>4. @ 引用上下文</h3><p>这招能减少它胡说八道的几率。你可以用 <code>@</code> 把当前项目的某个特定文件喂给它，比如 <code>@api.ts 这个文件里的鉴权逻辑，搬到我现在的代码里</code>。或者直接 <code>@codebase</code> 搜整个项目，不过搜整个项目有时候感觉还是有点偏差。</p>
+<h2 id="一些局限和坑"><a href="#一些局限和坑" class="headerlink" title="一些局限和坑"></a>一些局限和坑</h2><p>虽然看着很美好，但在真实项目里用，还是有不少局限的：</p>
+<ol>
+<li><strong>不能一次步子迈太大</strong>：要是你一上来就让它“写个电商系统”，它肯定给你搞得乱七八糟。还是得拆成很细的需求，比如“先建个用户表”，“再写个查询接口”。小步走才比较稳。</li>
+<li><strong>单测不能省</strong>：它生成的代码有时候边界条件处理得很粗糙，看着跑通了，其实一遇到异常数据就崩。还是得老老实实写点测试用例护航，或者干脆让它自己先写单测再写业务代码。</li>
+<li><strong>你得知道整个架构长啥样</strong>：它擅长干苦力活，但数据库怎么设计、模块间怎么通信，这些大方向还是得自己心里有数。你不管，它就随便瞎写。</li>
 </ol>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Cursor 代表的不仅仅是一款更聪明的编辑器，它标志着软件工程正式迈入人机协同的全新阶段。在 Vibe Coding 的时代，代码编写的体力消耗被极大地释放，程序员的核心竞争力正在从”死记语法糖与 API”转变为”<strong>系统抽象能力、严谨的需求拆解力以及敏锐的代码审查能力</strong>“。</p>
+<h2 id="随便总结一下"><a href="#随便总结一下" class="headerlink" title="随便总结一下"></a>随便总结一下</h2><p>Cursor 这类工具确实省了不少敲键盘的力气，那种不用频繁查 API 文档的感觉还挺顺的。不过写代码的核心终究不是敲字，而是理清业务逻辑和系统设计。</p>
+<p>整体来说体验还行，能少干点重复性的体力活。感兴趣的朋友可以去官网下个试试，反正基础功能也能白嫖。</p>
 
       
     </div>
@@ -681,8 +588,6 @@
             <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" rel="tag"># 效率工具</a>
           
             <a href="/tags/Cursor/" rel="tag"># Cursor</a>
-          
-            <a href="/tags/Vibe-Coding/" rel="tag"># Vibe Coding</a>
           
         </div>
       
@@ -736,7 +641,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/AI/2025-10-20-cursor-vibe-coding.html"
-         data-hitalk-title="Cursor 与 Vibe Coding：AI 驱动的开发新范式">
+         data-hitalk-title="试了下 Cursor 和所谓的 Vibe Coding">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

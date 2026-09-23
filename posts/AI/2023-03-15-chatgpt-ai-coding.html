@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="2023 年初，ChatGPT 引爆了全球对 AI 的关注。作为开发者，AI 最直接的应用场景之一就是辅助编程。从代码生成、Bug 调试到技术方案讨论，AI 正在重新定义开发者的工作方式。本文记录了我在实际开发中使用 ChatGPT 辅助编程的一些经验和思考。">
+  <meta name="description" content="刚开始听说 ChatGPT 能写代码的时候，说实话我是抱有怀疑态度的。毕竟平时遇到坑，连 StackOverflow 都不一定能马上解决，一个 AI 真的能懂业务逻辑吗？ 但实际用了一段时间后，感觉还行，确实改变了我平时写代码的一些习惯。这里简单记录下最近的一些使用感受。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ChatGPT 与 AI 辅助编程初体验">
 <meta property="og:url" content="https://www.vueweb.cn/posts/AI/2023-03-15-chatgpt-ai-coding.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="2023 年初，ChatGPT 引爆了全球对 AI 的关注。作为开发者，AI 最直接的应用场景之一就是辅助编程。从代码生成、Bug 调试到技术方案讨论，AI 正在重新定义开发者的工作方式。本文记录了我在实际开发中使用 ChatGPT 辅助编程的一些经验和思考。">
+<meta property="og:description" content="刚开始听说 ChatGPT 能写代码的时候，说实话我是抱有怀疑态度的。毕竟平时遇到坑，连 StackOverflow 都不一定能马上解决，一个 AI 真的能懂业务逻辑吗？ 但实际用了一段时间后，感觉还行，确实改变了我平时写代码的一些习惯。这里简单记录下最近的一些使用感受。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-15T02:20:33.000Z">
-<meta property="article:modified_time" content="2026-09-23T03:34:24.449Z">
+<meta property="article:modified_time" content="2026-09-23T06:35:46.281Z">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="ChatGPT">
 <meta property="article:tag" content="效率工具">
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">63</span></a>
   </li>
         
         
@@ -462,7 +462,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:34:24" itemprop="dateModified" datetime="2026-09-23T11:34:24+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:35:46" itemprop="dateModified" datetime="2026-09-23T14:35:46+08:00">2026-09-23</time>
               
             
           </span>
@@ -531,108 +531,52 @@
       
 
       
-        <p>2023 年初，ChatGPT 引爆了全球对 AI 的关注。作为开发者，AI 最直接的应用场景之一就是辅助编程。从代码生成、Bug 调试到技术方案讨论，AI 正在重新定义开发者的工作方式。本文记录了我在实际开发中使用 ChatGPT 辅助编程的一些经验和思考。</p>
+        <p>刚开始听说 ChatGPT 能写代码的时候，说实话我是抱有怀疑态度的。毕竟平时遇到坑，连 StackOverflow 都不一定能马上解决，一个 AI 真的能懂业务逻辑吗？</p>
+<p>但实际用了一段时间后，感觉还行，确实改变了我平时写代码的一些习惯。这里简单记录下最近的一些使用感受。</p>
 <a id="more"></a>
 
-<h2 id="AI-能帮开发者做什么"><a href="#AI-能帮开发者做什么" class="headerlink" title="AI 能帮开发者做什么"></a>AI 能帮开发者做什么</h2><p>实际用了一段时间后，AI 辅助编程在以下场景中确实能提升效率：</p>
-<h3 id="1-代码生成"><a href="#1-代码生成" class="headerlink" title="1. 代码生成"></a>1. 代码生成</h3><p>给出清晰的需求描述，AI 可以快速生成基础代码框架：</p>
-<p><strong>提示词示例</strong>：</p>
+<h2 id="平时主要拿它做什么"><a href="#平时主要拿它做什么" class="headerlink" title="平时主要拿它做什么"></a>平时主要拿它做什么</h2><p>试了一圈下来，发现它在下面几个场景里还挺顺的：</p>
+<h3 id="1-撸基础代码"><a href="#1-撸基础代码" class="headerlink" title="1. 撸基础代码"></a>1. 撸基础代码</h3><p>平时写些重复性比较高的代码，可以直接让它生成一个底座。比如要写个接口：</p>
+<p><strong>我会这样问</strong>：</p>
 <blockquote>
-<p>用 Node.js + Express 写一个文件上传接口，要求：</p>
-<ol>
-<li>使用 multer 中间件</li>
-<li>限制文件大小 5MB</li>
-<li>只允许上传图片（jpg/png/gif）</li>
-<li>上传成功返回文件 URL</li>
-</ol>
+<p>用 Node.js + Express 写个文件上传，用 multer，限制 5MB，只能传图片，传完返回 URL。</p>
 </blockquote>
-<p>AI 生成的代码通常能覆盖 80% 的功能，剩下 20% 需要根据项目实际情况调整（如错误处理、业务逻辑、安全验证等）。</p>
-<h3 id="2-代码解读"><a href="#2-代码解读" class="headerlink" title="2. 代码解读"></a>2. 代码解读</h3><p>面对不熟悉的代码库或复杂的算法实现，直接把代码贴给 AI 让它解释：</p>
+<p>它给出的代码基本上能覆盖大概 80% 的逻辑。剩下那 20% 肯定还得自己改，比如业务报错处理、具体的鉴权校验什么的。但总归比从零开始敲要省事。</p>
+<h3 id="2-看不懂别人的代码时"><a href="#2-看不懂别人的代码时" class="headerlink" title="2. 看不懂别人的代码时"></a>2. 看不懂别人的代码时</h3><p>接手老项目或者看开源库源码，遇到那种绕来绕去的逻辑，直接把代码贴进去让它解释，体验还不错。</p>
 <blockquote>
-<p>请解释这段代码的作用，逐行说明：</p>
+<p>帮我看看这段防抖代码具体是怎么运作的：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay, immediate</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) clearTimeout(timer)</span><br><span class="line">    <span class="keyword">if</span> (immediate &amp;&amp; !timer) &#123;</span><br><span class="line">      fn.apply(<span class="keyword">this</span>, args)</span><br><span class="line">    &#125;</span><br><span class="line">    timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!immediate) fn.apply(<span class="keyword">this</span>, args)</span><br><span class="line">      timer = <span class="literal">null</span></span><br><span class="line">    &#125;, delay)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>这比去搜索引擎翻博客找答案快多了。</p>
 </blockquote>
-<p>这比搜索引擎找答案再自己理解要快得多。</p>
-<h3 id="3-Bug-调试"><a href="#3-Bug-调试" class="headerlink" title="3. Bug 调试"></a>3. Bug 调试</h3><p>遇到报错时，可以把错误信息和相关代码一起提供给 AI：</p>
+<h3 id="3-查报错"><a href="#3-查报错" class="headerlink" title="3. 查报错"></a>3. 查报错</h3><p>遇到控制台标红，把报错信息连带相关代码扔进去：</p>
 <blockquote>
-<p>下面的 Vue 组件在切换路由时会报 “Cannot read property ‘map’ of undefined” 错误。<br>请帮我分析原因并给出修复方案：<br>[贴上组件代码]</p>
+<p>这个 Vue 组件切路由报错 “Cannot read property ‘map’ of undefined”，帮我看下问题在哪：<br>[贴上代码]</p>
 </blockquote>
-<p>AI 通常能准确定位到问题（比如异步数据未加载完成时就尝试渲染），并给出修复建议。</p>
-<h3 id="4-正则表达式编写"><a href="#4-正则表达式编写" class="headerlink" title="4. 正则表达式编写"></a>4. 正则表达式编写</h3><p>正则表达式一直是很多人的痛点，AI 在这方面效果特别好：</p>
+<p>大部分时候它能很快指出问题（比如数据还没加载完就渲染了），并给出修改建议。</p>
+<h3 id="4-写正则"><a href="#4-写正则" class="headerlink" title="4. 写正则"></a>4. 写正则</h3><p>这个算是最爽的点。正则这东西过段时间不写就容易忘，现在直接提需求：</p>
 <blockquote>
-<p>写一个正则表达式，匹配中国大陆手机号码：</p>
-<ul>
-<li>以 1 开头，第二位是 3-9</li>
-<li>总共 11 位数字</li>
-<li>前后不能有其他数字</li>
-</ul>
+<p>写个正则匹配手机号：1 开头，第二位是 3-9，总共 11 位。</p>
 </blockquote>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> phoneRegex = <span class="regexp">/(?&lt;!\d)1[3-9]\d&#123;9&#125;(?!\d)/g</span></span><br></pre></td></tr></table></figure></div>
+<p>直接拿来测一下没问题就能用，挺省心的。</p>
+<h3 id="5-简单探讨下方案"><a href="#5-简单探讨下方案" class="headerlink" title="5. 简单探讨下方案"></a>5. 简单探讨下方案</h3><p>在动手写之前，可以让它给点思路。比如要做个权限管理，我会问：</p>
+<blockquote>
+<p>要做一个简单的电商后台权限系统，菜单和按钮级都要控制，前端用 Vue 3，给点前后端的设计建议。</p>
+</blockquote>
+<p>它给的方案往往比较中规中矩，但作为起步参考是够了。</p>
+<h2 id="一些小经验"><a href="#一些小经验" class="headerlink" title="一些小经验"></a>一些小经验</h2><p>用多了发现，你提问的方式很大程度上决定了它给出的结果。</p>
+<h3 id="别问得太宽泛"><a href="#别问得太宽泛" class="headerlink" title="别问得太宽泛"></a>别问得太宽泛</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">❌ 这样问不太行：</span><br><span class="line">&quot;帮我写一个登录功能&quot;</span><br><span class="line"></span><br><span class="line">✅ 这样问比较稳：</span><br><span class="line">&quot;用 Vue 3 Composition API + TypeScript 写个登录表单，要包含账号密码、基础校验、加载状态，用 Element Plus&quot;</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="5-技术方案探讨"><a href="#5-技术方案探讨" class="headerlink" title="5. 技术方案探讨"></a>5. 技术方案探讨</h3><p>在做架构决策时，可以把需求和约束告诉 AI，让它给出不同方案的对比：</p>
-<blockquote>
-<p>我需要为一个电商后台实现权限管理系统。要求：</p>
-<ul>
-<li>支持角色（Role）和权限（Permission）多对多关系</li>
-<li>支持菜单级和按钮级权限控制</li>
-<li>前端用 Vue 3 + Vue Router</li>
-</ul>
-<p>请给出前后端的技术方案设计</p>
-</blockquote>
-<h2 id="高效使用-AI-的技巧"><a href="#高效使用-AI-的技巧" class="headerlink" title="高效使用 AI 的技巧"></a>高效使用 AI 的技巧</h2><h3 id="提示词工程（Prompt-Engineering）"><a href="#提示词工程（Prompt-Engineering）" class="headerlink" title="提示词工程（Prompt Engineering）"></a>提示词工程（Prompt Engineering）</h3><p>好的提示词直接决定了 AI 输出的质量：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">❌ 模糊提示：</span><br><span class="line">&quot;帮我写一个登录功能&quot;</span><br><span class="line"></span><br><span class="line">✅ 结构化提示：</span><br><span class="line">&quot;用 Vue 3 Composition API + TypeScript 编写一个登录表单组件，要求：</span><br><span class="line">1. 包含用户名和密码输入框</span><br><span class="line">2. 用户名必填，密码至少 6 位</span><br><span class="line">3. 提交时调用 &#x2F;api&#x2F;login 接口（POST）</span><br><span class="line">4. 加载状态管理（按钮禁用 + 加载动画）</span><br><span class="line">5. 错误处理和提示</span><br><span class="line">6. 使用 Element Plus 的表单组件&quot;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="角色设定"><a href="#角色设定" class="headerlink" title="角色设定"></a>角色设定</h3><p>给 AI 一个身份设定能获得更专业的输出：</p>
-<blockquote>
-<p>你是一位有 10 年经验的 Node.js 后端工程师。请审查以下代码中的安全隐患和性能问题，并给出改进建议。</p>
-</blockquote>
-<h3 id="迭代优化"><a href="#迭代优化" class="headerlink" title="迭代优化"></a>迭代优化</h3><p>第一次生成的代码很少是完美的，通过持续对话来迭代：</p>
-<blockquote>
-<p>第一轮：生成基础代码<br>第二轮：”请添加 TypeScript 类型定义”<br>第三轮：”请添加错误处理和边界情况”<br>第四轮：”请优化性能，添加缓存机制”</p>
-</blockquote>
-<h2 id="AI-编程的局限性"><a href="#AI-编程的局限性" class="headerlink" title="AI 编程的局限性"></a>AI 编程的局限性</h2><p>用了几个月后，也观察到一些明显的不足：</p>
+<h3 id="多聊几轮"><a href="#多聊几轮" class="headerlink" title="多聊几轮"></a>多聊几轮</h3><p>很少有一次就能生成完美代码的情况。一般都是先让它搭个架子，然后接着说“加上类型定义”、“补充下错误处理”，慢慢调整到能用的状态。</p>
+<h2 id="感觉比较明显的局限性"><a href="#感觉比较明显的局限性" class="headerlink" title="感觉比较明显的局限性"></a>感觉比较明显的局限性</h2><p>当然，这东西肯定不是完美的，用下来也踩了不少坑：</p>
 <ol>
-<li><strong>知识时效性</strong>：AI 的训练数据有截止日期，对最新版本的 API 和库可能不准确。某次让它写 Vue 3.3 的新特性代码，生成的还是旧版 API</li>
-<li><strong>幻觉问题</strong>：AI 有时会编造不存在的 API 或方法，看起来像模像样但实际无法运行。要养成核实文档的习惯</li>
-<li><strong>上下文理解</strong>：对于复杂项目的整体架构和业务逻辑，AI 只能看到你给它的片段，无法理解全貌</li>
-<li><strong>安全风险</strong>：直接把公司的业务代码贴到公开的 AI 服务中存在数据泄露风险，需要注意脱敏</li>
+<li><strong>会一本正经地胡说八道（幻觉）</strong>：有时候它会捏造一些根本不存在的 API。看着特别合理，一跑就报错，所以它给的偏门方法还是得查查文档确认下。</li>
+<li><strong>时效性问题</strong>：稍微新一点的框架版本（比如某些新出的语法糖），它可能根本不知道，还会用老一套的写法教你。</li>
+<li><strong>理解不了整个项目</strong>：它只能看懂你贴给它的那几行代码。涉及到复杂业务流转或者全局架构调整，它就帮不上什么忙了。</li>
+<li><strong>安全问题</strong>：公司核心的业务代码肯定是不能随便往里贴的。</li>
 </ol>
-<h2 id="推荐的-AI-编程工具"><a href="#推荐的-AI-编程工具" class="headerlink" title="推荐的 AI 编程工具"></a>推荐的 AI 编程工具</h2><table>
-<thead>
-<tr>
-<th align="left">工具</th>
-<th align="left">特点</th>
-<th align="left">适用场景</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">ChatGPT</td>
-<td align="left">对话式，擅长方案讨论和代码生成</td>
-<td align="left">技术调研、代码审查、学习</td>
-</tr>
-<tr>
-<td align="left">GitHub Copilot</td>
-<td align="left">IDE 内实时代码补全</td>
-<td align="left">日常编码、快速补全</td>
-</tr>
-<tr>
-<td align="left">Cursor</td>
-<td align="left">AI-first 的代码编辑器</td>
-<td align="left">完整的 AI 编程体验</td>
-</tr>
-<tr>
-<td align="left">通义灵码</td>
-<td align="left">阿里云出品，中文友好</td>
-<td align="left">国内开发者日常使用</td>
-</tr>
-</tbody></table>
-<h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><p>AI 辅助编程不是要取代开发者，而是改变了开发者的工作重心：</p>
-<ul>
-<li>**从”写代码”到”审代码”**：AI 生成初稿，开发者负责审查、优化和整合</li>
-<li>**从”记 API”到”描述需求”**：不需要记住每个 API 的参数，但需要能清晰地描述需求</li>
-<li><strong>底层能力依然重要</strong>：数据结构、算法、设计模式这些基础功，决定了你能否判断 AI 输出的质量</li>
-</ul>
-<p>AI 编程工具正在快速进化，保持学习和适应，让它成为提升效率的利器而不是依赖的拐杖。</p>
+<h2 id="简单总结"><a href="#简单总结" class="headerlink" title="简单总结"></a>简单总结</h2><p>总的来说，AI 辅助编程改变了一些工作习惯。以前可能要花很多时间去查 API 怎么拼写、查某个配置怎么配，现在这些脏活累活可以让它代劳，自己可以把更多心思放在业务逻辑和代码审查上。</p>
+<p>工具确实能提高点效率，但最终判断代码质量、能不能上生产环境的，还是咱们自己。感兴趣的可以搜一下自己顺手的工具试一试。</p>
 
       
     </div>
