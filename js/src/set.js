@@ -106,7 +106,7 @@ if ("serviceWorker" in navigator) {
 }
 
 console.log(
-  "\n %c 梦魇|万妙之心 QQ:2808707765 %c https://www.vueweb.cn/ \n\n",
+  "\n %c 光阴小栈|万妙之心 QQ:2808707765 %c https://www.vueweb.cn/ \n\n",
   "color: #FF0000; background: #4bffba; padding:5px 0; border-radius: 5px 5px 5px 5px;",
   "background: #fadfa3; padding:5px 0; border-radius: 5px 5px 5px 5px;"
 );
