@@ -1,5 +1,5 @@
 ---
-title: MongoDB安装笔记
+title: 各个平台上怎么最快装个 MongoDB
 date: 2017-03-23 16:25:11
 tags:
   - MongoDB
@@ -7,48 +7,56 @@ tags:
 categories: MongoDB
 ---
 
-`MongoDB` 是一个跨平台的、面向文档存储的分布式 NoSQL 数据库，具备高性能、高可用与弹性横向扩展能力。其数据存储格式为 BSON（类似 JSON 的二进制格式），非常契合现代 Web 及 Node.js 应用开发。
+平时写全栈小项目，MongoDB 算是个万金油选择，BSON 格式直接跟 Node.js 对接非常顺手。不过每次换个新电脑或者搞个新云服务器，总得去重新查怎么装这玩意。官方文档写的有点太长了，所以在这里把我觉得最省事儿的几种安装方式记下来当个备忘。
 
 <!--more-->
 
-## 1. 各平台安装指南
+## 1. 怎么装最快？
 
-### ① macOS（推荐 Homebrew）
+### ① macOS（认准 Homebrew）
+
+用 Mac 开发的话基本无脑 brew 就行了，没啥好折腾的：
 
 ```bash
-# 添加官方 MongoDB Homebrew Tap
+# 先把官方的库加上
 brew tap mongodb/brew
 
-# 安装 MongoDB 社区版服务
+# 下载安装
 brew install mongodb-community
 
-# 启动与停止后台服务
+# 这俩命令控制后台起停
 brew services start mongodb-community
 brew services stop mongodb-community
 ```
 
-### ② Linux (Ubuntu / Debian)
+### ② Linux (Ubuntu / Debian 服务器上)
+
+买了个云服务器要搭环境的话，一般这么敲：
 
 ```bash
-# 1. 导入官方 GPG 公钥并添加官方源
+# 1. 拿一下官方的签名钥匙
 sudo apt-get install -y gnupg curl
 curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
 
-# 添加软件源
+# 把源地址写进去
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 
-# 2. 安装并启动服务
+# 2. 跑安装
 sudo apt-get update
 sudo apt-get install -y mongodb-org
+
+# 起飞，顺便弄个开机自启
 sudo systemctl start mongod
-sudo systemctl enable mongod # 开机自启
+sudo systemctl enable mongod 
 ```
 
-### ③ Docker 快速运行（跨平台最推荐）
+### ③ 终极偷懒法：用 Docker （推荐）
+
+管你什么系统，只要电脑上有 Docker，一句命令解决战斗，还不用担心搞脏系统环境：
 
 ```bash
-# 拉取并运行 MongoDB 容器
+# 把宿主机 27017 端口映射出来，顺带把数据存在家目录下面，免得容器一删数据全飞了
 docker run -d \
   --name my-mongo \
   -p 27017:27017 \
@@ -56,25 +64,23 @@ docker run -d \
   mongo:latest
 ```
 
-### ④ Windows 安装
+### ④ Windows 平台
 
-- 前往 [MongoDB 官方下载中心](https://www.mongodb.com/try/download/community) 下载 `.msi` 安装包。
-- 运行安装向导，勾选 **"Install MongoD as a Service"**（自动配置为 Windows 系统服务），一路点击 Next 即可完成。
+Windows 就老老实实去 [MongoDB 官方下载中心](https://www.mongodb.com/try/download/community) 下那个 `.msi` 安装包。
+安装的时候有个选项叫 **"Install MongoD as a Service"**（就是当成系统服务后台运行），一定要打上勾，一路下一步就行。
 
----
+## 2. 怎么连上去？
 
-## 2. 数据库启动与连接
+服务起好了之后，你需要知道这俩：
 
-### 默认端口与数据目录
+- 默认监听的端口：`27017`
+- 默认存数据的文件夹：如果是实体安装，一般在 Linux/Mac 的 `/data/db` 里头。
 
-- 默认监听端口：`27017`
-- 默认数据目录：Linux/macOS 为 `/data/db` 或 `/var/lib/mongodb`
-
-### 客户端连接
-
-在终端中直接运行 MongoDB 交互式 Shell：
+要进去敲代码测试的话，打开终端输入：
 
 ```bash
-# 连接本地数据库（旧版为 mongo，新版推荐 mongosh）
+# 老版本敲 mongo，新版本改成这个了
 mongosh
 ```
+
+进去之后随便敲个 `show dbs` 试试水，如果没报错，那就是妥了，可以开始干活了。

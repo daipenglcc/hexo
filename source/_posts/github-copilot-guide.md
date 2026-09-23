@@ -1,5 +1,5 @@
 ---
-title: GitHub Copilot 深度使用指南与最佳实践
+title: 用了一年 GitHub Copilot，聊聊怎么用最顺手
 date: 2024-05-10 16:30:20
 tags:
   - AI
@@ -8,204 +8,101 @@ tags:
 categories: AI
 ---
 
-GitHub Copilot 已经从"尝鲜"阶段进入了"日常必备"阶段。经过一年多的深度使用，我整理了一些让 Copilot 效率最大化的技巧和实践经验。和纯对话式的 ChatGPT 不同，Copilot 的核心价值在于**编辑器内的即时代码辅助**，使用得当可以显著提升编码速度。
+Copilot 刚出的时候觉得是个玩具，现在几乎每天敲代码都离不开了。比起在网页上跟 ChatGPT 聊天复制粘贴，它在编辑器里直接按 Tab 补全的感觉确实更连贯。
+
+这篇算是我自己这两年摸索出来的一些常用姿势，整理一下当个备忘录。
 
 <!-- more -->
 
-## 1. 基础设置
+## 1. 最基础的装配
 
-### 安装与激活
+我是用 VS Code，必备的就俩插件：
+- **GitHub Copilot**：负责写代码时在光标后面疯狂提示，按 `Tab` 接受。
+- **GitHub Copilot Chat**：侧边栏的一个对话框，遇到跑不通的代码可以直接把报错丢给它。
 
-在 VS Code 中安装 `GitHub Copilot` 和 `GitHub Copilot Chat` 两个扩展：
+常用的几个快捷键（我是 macOS，Windows 把 Cmd 换成 Ctrl 就行）：
+- `Tab`：写得不错，收了
+- `Esc`：这写的什么鬼，关掉
+- `Alt + ]`：换一个提示看看
+- `Cmd + Shift + I`：直接唤出对话框提问
 
-- **Copilot**：行内代码补全，Tab 接受建议
-- **Copilot Chat**：侧边栏对话面板，支持复杂交互
+## 2. 也是最实用的：写注释让它干活
 
-### 关键快捷键
-
-| 操作 | macOS | Windows |
-| :--- | :--- | :--- |
-| 接受建议 | `Tab` | `Tab` |
-| 拒绝建议 | `Esc` | `Esc` |
-| 查看多个建议 | `Alt + ]` / `Alt + [` | `Alt + ]` / `Alt + [` |
-| 触发行内建议 | `Alt + \` | `Alt + \` |
-| 打开 Copilot Chat | `Cmd + Shift + I` | `Ctrl + Shift + I` |
-
-## 2. 注释驱动开发
-
-Copilot 最有效的使用方式之一是"先写注释，再让 AI 生成代码"：
+与其自己敲代码，不如把注释写明白点，让它去填空。
 
 ```typescript
-// 根据日期范围获取文章列表
-// 参数：startDate, endDate, page, pageSize
-// 返回：分页的文章列表，包含总数
-// 需要对日期参数做校验
-async function getArticlesByDateRange(
-  startDate: string,
-  endDate: string,
-  page: number = 1,
-  pageSize: number = 10
-) {
-  // Copilot 会根据注释自动生成完整实现
-  // 包括参数校验、数据库查询、分页计算等
-}
-```
-
-### 注释越详细，生成质量越高
-
-```typescript
-// ❌ 模糊注释
+// ❌ 以前这样写注释它可能看不懂你在干嘛：
 // 处理用户数据
 
-// ✅ 详细注释
-// 将后端返回的用户列表数据转换为前端 Table 组件需要的格式
-// 1. 将 created_at 时间戳转为 'YYYY-MM-DD HH:mm' 格式
-// 2. 将 role 枚举值映射为中文（admin -> 管理员，user -> 普通用户）
-// 3. 拼接 fullName = firstName + ' ' + lastName
-// 4. 计算每个用户的最后活跃天数
+// ✅ 现在我会写得很啰嗦，当成跟人说话一样：
+// 把后端接口拿到的用户列表，转成下面前端 Table 组件要的格式：
+// 1. 把 created_at 时间戳转成 'YYYY-MM-DD'
+// 2. 将 role 映射为中文（admin -> 管理员，user -> 普通用户）
+// 3. 算出每个用户最后一次登录是几天前
 ```
 
-## 3. 上下文感知
+写完这段注释，回车，它基本上就能把那个冗长的数据转换函数一字不差地写出来了。
 
-Copilot 会分析当前打开的文件和相关上下文来提供更精准的建议：
+## 3. 它是怎么猜懂我的
 
-### 让 Copilot 理解你的项目结构
+后来我发现，只要你把相关的文件打开放在旁边的标签页，它的提示就会变准很多。
+
+比如你正在写一个接口函数：
 
 ```typescript
-// 在文件顶部通过 import 让 Copilot 了解项目依赖
+// 在顶部把用到的类型和工具引进来
 import { prisma } from '@/lib/prisma'
-import { ApiResponse, PaginatedResult } from '@/types/api'
+import { ApiResponse } from '@/types/api'
 import { formatDate } from '@/utils/date'
 
-// Copilot 会基于这些导入推断出：
-// - 你使用 Prisma ORM
-// - 你有统一的 API 响应类型
-// - 你有自定义的日期工具函数
-// 后续生成的代码会自动使用这些工具
+// 当你往下敲代码的时候，它就已经知道：
+// - 你是用 Prisma 查库
+// - 你的返回格式得包一层 ApiResponse
+// - 遇到日期要用 formatDate
 ```
 
-### 保持相关文件打开
+有时候如果你在旁边开着 `types.ts` 和控制器的文件，它甚至能顺着你刚才写的方法继续往下猜你要写啥。
 
-同时打开与当前工作相关的文件（类型定义、接口、工具函数等），Copilot 会参考这些文件的内容：
+## 4. 侧边栏 Chat 的几个花样
 
-```
-打开的标签页：
-├── types/article.ts      # 文章类型定义
-├── services/article.ts   # 当前正在写的服务层
-└── controllers/article.ts # 控制器（Copilot 会参考其调用方式）
-```
+敲代码卡壳的时候，用侧边栏也是挺爽的。常用的几个斜杠命令：
 
-## 4. Copilot Chat 高效用法
-
-### 代码解释
-
-选中一段代码，在 Chat 中输入：
-
-```
-/explain 这段代码的执行流程是什么？有什么潜在问题？
+```text
+/explain 框选一段恶心的祖传代码，让它给你解释这到底是啥意思
+/refactor 把一段嵌套了五层的 if-else 发给它，让它用策略模式重构一下
+/tests 选中一个核心的工具函数，让它顺手把单元测试写了
+/fix 遇到一长串红色的 TypeScript 报错看不懂，直接整个丢进去让它修
 ```
 
-### 代码重构
+## 5. 个人觉得很爽的几个场景
 
-```
-/refactor 将这个函数重构为使用策略模式，消除 switch-case
-```
+### 批量复制粘贴的时候
 
-### 生成测试
-
-```
-/tests 为这个函数生成单元测试，覆盖正常情况、边界情况和异常情况
-```
-
-### 修复问题
-
-```
-/fix TypeError: Cannot read properties of undefined (reading 'map')
-```
-
-### 使用斜杠命令
-
-| 命令 | 用途 |
-| :--- | :--- |
-| `/explain` | 解释选中的代码 |
-| `/fix` | 修复代码问题 |
-| `/tests` | 生成单元测试 |
-| `/doc` | 生成文档注释 |
-| `/new` | 创建新文件/项目 |
-| `@workspace` | 基于整个工作区上下文提问 |
-| `@vscode` | VS Code 相关操作和设置 |
-
-## 5. 实战技巧
-
-### 批量生成相似代码
-
-写好第一个，后面的 Copilot 会举一反三：
+写后端接口，很多时候代码长得差不多：
 
 ```typescript
-// 写好第一个 API 请求函数
+// 当你手敲完第一个接口：
 export async function getUsers(): Promise<ApiResponse<User[]>> {
   const res = await fetch('/api/users')
   return res.json()
 }
 
-// 输入 "export async function get" 后，
-// Copilot 会自动推断出后续类似函数：
+// 只要你敲下 export async function get...
+// 后面关于文章、评论的接口，只要按 Tab 就一直能补全下去
 export async function getArticles(): Promise<ApiResponse<Article[]>> {
   const res = await fetch('/api/articles')
   return res.json()
 }
-
-export async function getComments(articleId: string): Promise<ApiResponse<Comment[]>> {
-  const res = await fetch(`/api/articles/${articleId}/comments`)
-  return res.json()
-}
 ```
 
-### 类型定义生成
+### 写正则
 
-给出 JSON 示例，让 Copilot 推断 TypeScript 类型：
-
-```typescript
-// 后端返回的数据格式如下：
-// {
-//   "id": 1,
-//   "title": "文章标题",
-//   "content": "文章内容",
-//   "author": { "id": 1, "name": "Tom", "avatar": "https://..." },
-//   "tags": ["Vue", "TypeScript"],
-//   "viewCount": 1234,
-//   "createdAt": "2024-01-01T00:00:00Z",
-//   "published": true
-// }
-// 请生成对应的 TypeScript 接口
-
-interface Author {
-  id: number
-  name: string
-  avatar: string
-}
-
-interface Article {
-  id: number
-  title: string
-  content: string
-  author: Author
-  tags: string[]
-  viewCount: number
-  createdAt: string
-  published: boolean
-}
-```
-
-### 正则和复杂逻辑
-
-Copilot 在模式匹配和数据转换上非常有效：
+正则这玩意儿过几个月就忘，现在我都直接用嘴写：
 
 ```typescript
-// 将 markdown 文本中的所有图片链接提取出来
-// 格式：![alt](url) 或 ![alt](url "title")
+// 把 markdown 里面的图片链接都扣出来，格式类似于 ![alt](url)
 function extractImageUrls(markdown: string): string[] {
-  // Copilot 生成
+  // 这行正则我连脑子都不想动，直接按 Tab
   const regex = /!\[.*?\]\((.*?)(?:\s+".*?")?\)/g
   const urls: string[] = []
   let match
@@ -216,13 +113,10 @@ function extractImageUrls(markdown: string): string[] {
 }
 ```
 
-## 6. 使用原则
+## 简单总结一下
 
-经过大量实践后总结的几条原则：
+1. **别全信**：大方向一般没问题，但边界条件（比如没考虑到 undefined、数组越界）还是得自己用肉眼扫一遍。
+2. **小步走**：别指望写一句注释让它写个几十行的复杂逻辑，拆成小方法一点点生成比较靠谱。
+3. **保持自己的代码规范**：你代码写得乱，它就会跟着乱写；你代码清爽，它生成的也就干净。本质上它就是个高级的复读机。
 
-1. **信任但验证**：Copilot 的建议通常方向正确，但细节（边界处理、异常情况）需要人工确认
-2. **小步快跑**：每次让它生成一小块逻辑，验证通过后再继续，比一次生成大段代码更可控
-3. **保持代码风格一致**：项目中已有的代码风格会影响 Copilot 的输出，所以保持良好的代码规范等于训练 Copilot
-4. **不要过度依赖**：核心业务逻辑和架构设计仍然需要开发者自己思考
-
-Copilot 是一个强大的编码加速器，它不会替代开发者思考，但能让"从想法到代码"的过程更加高效。
+总的来说，这玩意儿确实能省不少体力活，没试过的强烈建议装上体验一下，挺顺手的。

@@ -1,5 +1,5 @@
 ---
-title: Linux常用命令笔记
+title: 日常运维：Linux 常用命令备忘录
 date: 2017-05-26 21:49:04
 tags:
   - Linux
@@ -7,131 +7,105 @@ tags:
 categories: Linux
 ---
 
-记录日常开发与服务器运维中高频实用的 `Linux` 命令与核心配置。
+虽然平时主要写业务代码，但有时候出了线上问题，或者自己折腾个小服务器，总得去命令行里查个日志、杀个进程。Linux 命令太多根本记不全，这里把我自己最高频用到的一些烂笔头记下来，省得每次都去现搜。
 
 <!-- more -->
 
-## 1. 软件安装与管理 (Ubuntu / Debian)
+## 1. 装包卸包 (Ubuntu / Debian 系)
 
 ```bash
-sudo apt-get update              # 更新软件包列表索引
-sudo apt-get upgrade             # 升级已安装的所有软件包
-sudo apt-get install <package>   # 安装指定软件包（如 git, nginx, curl）
-sudo apt-get remove <package>    # 卸载指定软件包
-sudo apt-get autoremove          # 自动清理不再需要的孤立依赖包
+sudo apt-get update              # 先同步下软件源，一般装软件前必敲
+sudo apt-get upgrade             # 更新所有软件
+sudo apt-get install <package>   # 装软件（比如 git, nginx）
+sudo apt-get remove <package>    # 卸载
+sudo apt-get autoremove          # 顺手清理下没人要的依赖包
 ```
 
-## 2. Nginx 服务管理与配置
+## 2. Nginx 起停
 
-### 服务管理
+折腾自己博客或者前台项目的时候最常用的：
 
 ```bash
-sudo systemctl start nginx       # 启动 Nginx
-sudo systemctl stop nginx        # 停止 Nginx
-sudo systemctl restart nginx     # 重启 Nginx
-sudo systemctl reload nginx      # 平滑重载配置文件（不中断现有连接）
-sudo nginx -t                    # 测试并检查 Nginx 配置文件语法是否正确
-ps -ef | grep nginx              # 查看 Nginx 相关进程
+sudo systemctl start nginx       # 起飞
+sudo systemctl stop nginx        # 停掉
+sudo systemctl restart nginx     # 重启（比较暴力）
+sudo systemctl reload nginx      # 平滑重启（改了配置后一般用这个，不影响正在访问的人）
+sudo nginx -t                    # 改完配置文件先测一下有没有手抖敲错
+ps -ef | grep nginx              # 看看 nginx 到底在不在跑
 ```
 
-### 基础 Nginx 配置示例
-
-文件路径：`/etc/nginx/sites-available/default` 或 `/etc/nginx/conf.d/default.conf`
+顺便贴一个单页应用（SPA）最常见的 Nginx 兜底配置：
 
 ```nginx
 server {
     listen 80 default_server;
-    listen [::]:80 default_server;
-    server_name example.com www.example.com;
+    server_name example.com;
 
     root /var/www/html;
-    index index.html index.htm;
+    index index.html;
 
+    # 这个配置最关键，解决 Vue/React 前端路由刷新报 404 的问题
     location / {
-        try_files $uri $uri/ /index.html =404;
+        try_files $uri $uri/ /index.html;
     }
 
-    # 静态资源缓存配置
+    # 静态资源缓存一下
     location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
         expires 30d;
         add_header Cache-Control "public, no-transform";
     }
-
-    error_page 404 /404.html;
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-        root /var/www/html;
-    }
 }
 ```
 
-## 3. 常用系统与进程管理命令
+## 3. 查进程和端口
+
+本地开发或者服务器经常遇到“端口被占用”这种恶心事，找犯人就靠这俩：
 
 ```bash
-# 端口与网络占用
-lsof -i :80                      # 查看 80 端口被哪个进程占用
-netstat -tunlp | grep :80        # 查看监听 80 端口的程序
+lsof -i :80                      # 看看 80 端口被谁占了
+netstat -tunlp | grep :80        # 效果差不多
 
-# 进程管理
-ps aux | grep node               # 查找指定程序的进程号 (PID)
-kill -9 <PID>                    # 强制结束指定 PID 的进程
-killall node                     # 结束所有同名进程
-
-# 磁盘与内存查看
-df -h                            # 查看磁盘各分区使用空间
-du -sh <dir_name>                # 查看指定文件夹占用的总大小
-free -m                          # 查看当前内存使用情况（以 MB 为单位）
-top                              # 实时监控 CPU、内存占用及进程动态
+# 找个死循环或者僵尸进程杀掉
+ps aux | grep node               # 搜一下 node 相关的进程
+kill -9 <PID>                    # 拿着上面搜到的 PID，一枪崩了（-9 是强制）
+killall node                     # 嫌麻烦直接团灭所有 node 进程
 ```
 
-## 4. 文件权限与归档解压
-
-### 权限管理（chmod / chown）
-
+如果是服务器快卡死了，看一下资源：
 ```bash
-chmod 755 filename               # 所有人可读可执行，仅属主可写
-chmod -R 755 /path/to/dir        # 递归修改目录下所有文件的权限
-chown -R www-data:www-data /var/www # 递归修改文件/目录的拥有者与用户组
+df -h                            # 看看硬盘还剩多少空间
+du -sh <文件夹>                  # 看看那个该死的 log 文件夹有多大
+free -m                          # 看内存
+top                              # 动态看 CPU 和内存情况，类似 Windows 的任务管理器
 ```
 
-> **权限数字含义**：`r` (读)=4，`w` (写)=2，`x` (执行)=1。
-> 例如 `7 (4+2+1)` 为读写执行全部权限，`5 (4+1)` 为读与执行权限。
+## 4. 改权限和压缩解压
 
-### 打包与解压（tar / zip）
+遇到什么 "Permission denied"，最简单粗暴但也是最常用的解决方式：
 
 ```bash
-# tar.gz 格式
-tar -zcvf archive.tar.gz /path   # 打包并压缩指定目录
-tar -zxvf archive.tar.gz         # 解压到当前目录
-tar -zxvf archive.tar.gz -C /dir # 解压到指定目录
+chmod -R 755 /path/to/dir        # 给个 755 权限（自己能读写执行，别人只能读和执行）
+chown -R www-data:www-data /dir  # 把文件夹的主人改成 www-data（部署网站常用）
+```
+
+传文件上服务器前，打包解包：
+
+```bash
+# tar.gz 最常见
+tar -zcvf 打包后的名字.tar.gz /要打包的目录    # 压缩
+tar -zxvf 压缩包.tar.gz -C /解压到哪里          # 解压
 
 # zip 格式
-zip -r archive.zip folder/       # 压缩为 zip 文件
-unzip archive.zip -d /dir        # 解压 zip 文件到指定目录
+zip -r 名字.zip 文件夹/
+unzip 压缩包.zip -d /目录
 ```
 
-## 5. Linux 用户与密码安全文件
-
-系统用户信息主要保存在 `/etc/passwd` 和 `/etc/shadow`：
-
-### `/etc/passwd` 结构解析
-
-```text
-root:x:0:0:root:/root:/bin/bash
-```
-
-1. **用户名**（如 `root`）
-2. **密码占位符**（统一显示为 `x`，真实加密密码存放在 shadow 文件中）
-3. **UID**（用户 ID，0 为 root，普通用户一般为 1000+）
-4. **GID**（所属主组 ID）
-5. **用户描述信息**
-6. **用户主目录**（如 `/root` 或 `/home/username`）
-7. **登录后默认 Shell**（如 `/bin/bash`）
-
-## 6. 主机名与 Hosts 解析
+## 5. 看点系统信息
 
 ```bash
-hostname                         # 查看当前主机名
-hostnamectl set-hostname <新名称> # 永久修改主机名（Systemd 标准命令）
-cat /etc/hosts                   # 查看本地 DNS 解析映射表
+hostname                         # 我在哪台机器上
+hostnamectl set-hostname <新名>   # 给机器改个名
+cat /etc/hosts                   # 看看本地的 DNS 解析规则
 ```
+
+平时运维能把上面这些命令敲熟，应付日常 80% 的突发状况感觉也差不多够了。如果还要写复杂的 Shell 脚本，那就老老实实去查手册或者问 AI 吧。
