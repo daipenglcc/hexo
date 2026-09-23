@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="Next.js 14 带来了 App Router 的全面稳定、Server Actions、部分预渲染（PPR）等重磅特性，进一步巩固了其 React 全栈框架的地位。本文以搭建一个博客应用为例，记录 Next.js 14 全栈开发的核心知识点和实践经验。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Next.js 14 构建全栈应用实践">
+<meta property="og:url" content="https://www.vueweb.cn/posts/React/2024-01-22-nextjs14-fullstack.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="Next.js 14 带来了 App Router 的全面稳定、Server Actions、部分预渲染（PPR）等重磅特性，进一步巩固了其 React 全栈框架的地位。本文以搭建一个博客应用为例，记录 Next.js 14 全栈开发的核心知识点和实践经验。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-22T01:15:40.000Z">
+<meta property="article:modified_time" content="2026-09-23T03:35:43.769Z">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Next.js">
+<meta property="article:tag" content="全栈">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/React/2024-01-22-nextjs14-fullstack.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>用 Next.js 14 构建全栈应用实践 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/React/2024-01-22-nextjs14-fullstack.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">用 Next.js 14 构建全栈应用实践
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-01-22 09:15:40" itemprop="dateCreated datePublished" datetime="2024-01-22T09:15:40+08:00">2024-01-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 11:35:43" itemprop="dateModified" datetime="2026-09-23T11:35:43+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/React/2024-01-22-nextjs14-fullstack.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/React/2024-01-22-nextjs14-fullstack.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Next.js 14 带来了 App Router 的全面稳定、Server Actions、部分预渲染（PPR）等重磅特性，进一步巩固了其 React 全栈框架的地位。本文以搭建一个博客应用为例，记录 Next.js 14 全栈开发的核心知识点和实践经验。</p>
+<a id="more"></a>
+
+<h2 id="1-创建项目"><a href="#1-创建项目" class="headerlink" title="1. 创建项目"></a>1. 创建项目</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx create-next-app@latest my-blog --typescript --tailwind --eslint --app --src-dir</span><br><span class="line"><span class="built_in">cd</span> my-blog</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-App-Router-路由系统"><a href="#2-App-Router-路由系统" class="headerlink" title="2. App Router 路由系统"></a>2. App Router 路由系统</h2><p>Next.js 14 使用基于文件系统的路由，App Router 以 <code>app/</code> 目录为根：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">src&#x2F;app&#x2F;</span><br><span class="line">├── layout.tsx          # 根布局（全局 Layout）</span><br><span class="line">├── page.tsx            # 首页 &#x2F;</span><br><span class="line">├── loading.tsx         # 加载状态 UI</span><br><span class="line">├── error.tsx           # 错误边界 UI</span><br><span class="line">├── not-found.tsx       # 404 页面</span><br><span class="line">├── blog&#x2F;</span><br><span class="line">│   ├── page.tsx        # &#x2F;blog</span><br><span class="line">│   └── [slug]&#x2F;</span><br><span class="line">│       ├── page.tsx    # &#x2F;blog&#x2F;:slug（动态路由）</span><br><span class="line">│       └── loading.tsx</span><br><span class="line">├── api&#x2F;</span><br><span class="line">│   └── articles&#x2F;</span><br><span class="line">│       └── route.ts    # API 路由 &#x2F;api&#x2F;articles</span><br><span class="line">└── (auth)&#x2F;             # 路由组（不影响 URL）</span><br><span class="line">    ├── login&#x2F;</span><br><span class="line">    │   └── page.tsx    # &#x2F;login</span><br><span class="line">    └── register&#x2F;</span><br><span class="line">        └── page.tsx    # &#x2F;register</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="布局组件"><a href="#布局组件" class="headerlink" title="布局组件"></a>布局组件</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; src&#x2F;app&#x2F;layout.tsx</span><br><span class="line">import type &#123; Metadata &#125; from &#39;next&#39;</span><br><span class="line">import &#123; Inter &#125; from &#39;next&#x2F;font&#x2F;google&#39;</span><br><span class="line">import &#39;.&#x2F;globals.css&#39;</span><br><span class="line"></span><br><span class="line">const inter &#x3D; Inter(&#123; subsets: [&#39;latin&#39;] &#125;)</span><br><span class="line"></span><br><span class="line">export const metadata: Metadata &#x3D; &#123;</span><br><span class="line">  title: &#123;</span><br><span class="line">    template: &#39;%s | 光阴小栈&#39;,</span><br><span class="line">    default: &#39;光阴小栈&#39;</span><br><span class="line">  &#125;,</span><br><span class="line">  description: &#39;一个技术博客&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default function RootLayout(&#123;</span><br><span class="line">  children</span><br><span class="line">&#125;: &#123;</span><br><span class="line">  children: React.ReactNode</span><br><span class="line">&#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;html lang&#x3D;&quot;zh-CN&quot;&gt;</span><br><span class="line">      &lt;body className&#x3D;&#123;inter.className&#125;&gt;</span><br><span class="line">        &lt;nav className&#x3D;&quot;navbar&quot;&gt;</span><br><span class="line">          &#123;&#x2F;* 导航栏 *&#x2F;&#125;</span><br><span class="line">        &lt;&#x2F;nav&gt;</span><br><span class="line">        &lt;main&gt;&#123;children&#125;&lt;&#x2F;main&gt;</span><br><span class="line">        &lt;footer&gt;</span><br><span class="line">          &#123;&#x2F;* 页脚 *&#x2F;&#125;</span><br><span class="line">        &lt;&#x2F;footer&gt;</span><br><span class="line">      &lt;&#x2F;body&gt;</span><br><span class="line">    &lt;&#x2F;html&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-服务端组件-vs-客户端组件"><a href="#3-服务端组件-vs-客户端组件" class="headerlink" title="3. 服务端组件 vs 客户端组件"></a>3. 服务端组件 vs 客户端组件</h2><p>Next.js 14 默认所有组件都是<strong>服务端组件（Server Components）</strong>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 服务端组件（默认）—— 可以直接读数据库、调用 API</span><br><span class="line">&#x2F;&#x2F; ✅ 在服务器执行，不会打包到客户端 JS</span><br><span class="line">async function ArticleList() &#123;</span><br><span class="line">  &#x2F;&#x2F; 直接在组件中获取数据（无需 useEffect）</span><br><span class="line">  const articles &#x3D; await fetch(&#39;https:&#x2F;&#x2F;api.example.com&#x2F;articles&#39;, &#123;</span><br><span class="line">    next: &#123; revalidate: 60 &#125;  &#x2F;&#x2F; ISR：60秒后重新验证</span><br><span class="line">  &#125;).then(r &#x3D;&gt; r.json())</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &#123;articles.map((article: any) &#x3D;&gt; (</span><br><span class="line">        &lt;li key&#x3D;&#123;article.id&#125;&gt;</span><br><span class="line">          &lt;h3&gt;&#123;article.title&#125;&lt;&#x2F;h3&gt;</span><br><span class="line">          &lt;p&gt;&#123;article.summary&#125;&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;&#x2F;li&gt;</span><br><span class="line">      ))&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 客户端组件 —— 需要交互、状态、浏览器 API 时使用</span><br><span class="line">&#39;use client&#39;  &#x2F;&#x2F; 必须在文件顶部声明</span><br><span class="line"></span><br><span class="line">import &#123; useState &#125; from &#39;react&#39;</span><br><span class="line"></span><br><span class="line">export function LikeButton(&#123; articleId &#125;: &#123; articleId: string &#125;) &#123;</span><br><span class="line">  const [liked, setLiked] &#x3D; useState(false)</span><br><span class="line">  const [count, setCount] &#x3D; useState(0)</span><br><span class="line"></span><br><span class="line">  const handleLike &#x3D; async () &#x3D;&gt; &#123;</span><br><span class="line">    setLiked(!liked)</span><br><span class="line">    setCount(prev &#x3D;&gt; liked ? prev - 1 : prev + 1)</span><br><span class="line">    await fetch(&#96;&#x2F;api&#x2F;articles&#x2F;$&#123;articleId&#125;&#x2F;like&#96;, &#123; method: &#39;POST&#39; &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;button onClick&#x3D;&#123;handleLike&#125;&gt;</span><br><span class="line">      &#123;liked ? &#39;❤️&#39; : &#39;🤍&#39;&#125; &#123;count&#125;</span><br><span class="line">    &lt;&#x2F;button&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="如何选择？"><a href="#如何选择？" class="headerlink" title="如何选择？"></a>如何选择？</h3><table>
+<thead>
+<tr>
+<th align="left">需求</th>
+<th align="left">使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">数据获取、数据库查询</td>
+<td align="left">服务端组件</td>
+</tr>
+<tr>
+<td align="left">访问后端资源</td>
+<td align="left">服务端组件</td>
+</tr>
+<tr>
+<td align="left">敏感信息（API Key 等）</td>
+<td align="left">服务端组件</td>
+</tr>
+<tr>
+<td align="left">事件监听（onClick 等）</td>
+<td align="left">客户端组件</td>
+</tr>
+<tr>
+<td align="left">useState / useEffect</td>
+<td align="left">客户端组件</td>
+</tr>
+<tr>
+<td align="left">浏览器 API（localStorage 等）</td>
+<td align="left">客户端组件</td>
+</tr>
+</tbody></table>
+<h2 id="4-Server-Actions"><a href="#4-Server-Actions" class="headerlink" title="4. Server Actions"></a>4. Server Actions</h2><p>Next.js 14 的 Server Actions 让表单处理变得极其简洁，无需手动创建 API 路由：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;blog&#x2F;new&#x2F;page.tsx</span><br><span class="line">import &#123; redirect &#125; from &#39;next&#x2F;navigation&#39;</span><br><span class="line">import &#123; revalidatePath &#125; from &#39;next&#x2F;cache&#39;</span><br><span class="line"></span><br><span class="line">export default function NewArticlePage() &#123;</span><br><span class="line">  async function createArticle(formData: FormData) &#123;</span><br><span class="line">    &#39;use server&#39;  &#x2F;&#x2F; 标记为 Server Action</span><br><span class="line"></span><br><span class="line">    const title &#x3D; formData.get(&#39;title&#39;) as string</span><br><span class="line">    const content &#x3D; formData.get(&#39;content&#39;) as string</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 直接操作数据库（这段代码只在服务端运行）</span><br><span class="line">    await db.article.create(&#123;</span><br><span class="line">      data: &#123; title, content, published: true &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 重新验证缓存</span><br><span class="line">    revalidatePath(&#39;&#x2F;blog&#39;)</span><br><span class="line">    &#x2F;&#x2F; 重定向</span><br><span class="line">    redirect(&#39;&#x2F;blog&#39;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;form action&#x3D;&#123;createArticle&#125;&gt;</span><br><span class="line">      &lt;input name&#x3D;&quot;title&quot; placeholder&#x3D;&quot;文章标题&quot; required &#x2F;&gt;</span><br><span class="line">      &lt;textarea name&#x3D;&quot;content&quot; placeholder&#x3D;&quot;文章内容&quot; required &#x2F;&gt;</span><br><span class="line">      &lt;button type&#x3D;&quot;submit&quot;&gt;发布文章&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;form&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-数据获取策略"><a href="#5-数据获取策略" class="headerlink" title="5. 数据获取策略"></a>5. 数据获取策略</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 1. 静态数据（构建时获取，SSG）</span><br><span class="line">async function StaticPage() &#123;</span><br><span class="line">  const data &#x3D; await fetch(&#39;https:&#x2F;&#x2F;api.example.com&#x2F;data&#39;, &#123;</span><br><span class="line">    cache: &#39;force-cache&#39;  &#x2F;&#x2F; 默认行为</span><br><span class="line">  &#125;)</span><br><span class="line">  return &lt;div&gt;&#123;&#x2F;* ... *&#x2F;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 2. 动态数据（每次请求都获取，SSR）</span><br><span class="line">async function DynamicPage() &#123;</span><br><span class="line">  const data &#x3D; await fetch(&#39;https:&#x2F;&#x2F;api.example.com&#x2F;data&#39;, &#123;</span><br><span class="line">    cache: &#39;no-store&#39;</span><br><span class="line">  &#125;)</span><br><span class="line">  return &lt;div&gt;&#123;&#x2F;* ... *&#x2F;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 3. 增量静态再生（ISR）</span><br><span class="line">async function ISRPage() &#123;</span><br><span class="line">  const data &#x3D; await fetch(&#39;https:&#x2F;&#x2F;api.example.com&#x2F;data&#39;, &#123;</span><br><span class="line">    next: &#123; revalidate: 60 &#125;  &#x2F;&#x2F; 60秒后重新验证</span><br><span class="line">  &#125;)</span><br><span class="line">  return &lt;div&gt;&#123;&#x2F;* ... *&#x2F;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-API-路由"><a href="#6-API-路由" class="headerlink" title="6. API 路由"></a>6. API 路由</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/api/articles/route.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; NextRequest, NextResponse &#125; <span class="keyword">from</span> <span class="string">'next/server'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">GET</span>(<span class="params">request: NextRequest</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> searchParams = request.nextUrl.searchParams</span><br><span class="line">  <span class="keyword">const</span> page = <span class="built_in">Number</span>(searchParams.get(<span class="string">'page'</span>)) || <span class="number">1</span></span><br><span class="line">  <span class="keyword">const</span> limit = <span class="built_in">Number</span>(searchParams.get(<span class="string">'limit'</span>)) || <span class="number">10</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> articles = <span class="keyword">await</span> db.article.findMany(&#123;</span><br><span class="line">    skip: (page - <span class="number">1</span>) * limit,</span><br><span class="line">    take: limit,</span><br><span class="line">    orderBy: &#123; createdAt: <span class="string">'desc'</span> &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> NextResponse.json(&#123;</span><br><span class="line">    data: articles,</span><br><span class="line">    page,</span><br><span class="line">    limit</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">POST</span>(<span class="params">request: NextRequest</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> body = <span class="keyword">await</span> request.json()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> article = <span class="keyword">await</span> db.article.create(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      title: body.title,</span><br><span class="line">      content: body.content</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> NextResponse.json(&#123; data: article &#125;, &#123; status: <span class="number">201</span> &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/api/articles/[id]/route.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">GET</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  request: NextRequest,</span></span></span><br><span class="line"><span class="function"><span class="params">  &#123; params &#125;: &#123; params: &#123; id: <span class="built_in">string</span> &#125; &#125;</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> article = <span class="keyword">await</span> db.article.findUnique(&#123;</span><br><span class="line">    where: &#123; id: params.id &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!article) &#123;</span><br><span class="line">    <span class="keyword">return</span> NextResponse.json(</span><br><span class="line">      &#123; error: <span class="string">'文章不存在'</span> &#125;,</span><br><span class="line">      &#123; status: <span class="number">404</span> &#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> NextResponse.json(&#123; data: article &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="7-加载状态与错误处理"><a href="#7-加载状态与错误处理" class="headerlink" title="7. 加载状态与错误处理"></a>7. 加载状态与错误处理</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;blog&#x2F;loading.tsx（同级路由的加载状态）</span><br><span class="line">export default function Loading() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className&#x3D;&quot;loading-container&quot;&gt;</span><br><span class="line">      &lt;div className&#x3D;&quot;skeleton-card&quot; &#x2F;&gt;</span><br><span class="line">      &lt;div className&#x3D;&quot;skeleton-card&quot; &#x2F;&gt;</span><br><span class="line">      &lt;div className&#x3D;&quot;skeleton-card&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;blog&#x2F;error.tsx</span><br><span class="line">&#39;use client&#39;</span><br><span class="line"></span><br><span class="line">export default function Error(&#123;</span><br><span class="line">  error,</span><br><span class="line">  reset</span><br><span class="line">&#125;: &#123;</span><br><span class="line">  error: Error &amp; &#123; digest?: string &#125;</span><br><span class="line">  reset: () &#x3D;&gt; void</span><br><span class="line">&#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className&#x3D;&quot;error-page&quot;&gt;</span><br><span class="line">      &lt;h2&gt;出错了&lt;&#x2F;h2&gt;</span><br><span class="line">      &lt;p&gt;&#123;error.message&#125;&lt;&#x2F;p&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;reset&#125;&gt;重试&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="8-中间件"><a href="#8-中间件" class="headerlink" title="8. 中间件"></a>8. 中间件</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware.ts（项目根目录）</span></span><br><span class="line"><span class="keyword">import</span> &#123; NextResponse &#125; <span class="keyword">from</span> <span class="string">'next/server'</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; NextRequest &#125; <span class="keyword">from</span> <span class="string">'next/server'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">middleware</span>(<span class="params">request: NextRequest</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 检查登录状态</span></span><br><span class="line">  <span class="keyword">const</span> token = request.cookies.get(<span class="string">'token'</span>)?.value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (request.nextUrl.pathname.startsWith(<span class="string">'/admin'</span>) &amp;&amp; !token) &#123;</span><br><span class="line">    <span class="keyword">return</span> NextResponse.redirect(<span class="keyword">new</span> URL(<span class="string">'/login'</span>, request.url))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> NextResponse.next()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> config = &#123;</span><br><span class="line">  matcher: [<span class="string">'/admin/:path*'</span>, <span class="string">'/api/admin/:path*'</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>Next.js 14 将 React 的服务端能力发挥到了极致，是 2024 年构建全栈 Web 应用的优秀选择。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/Next-js/" rel="tag"># Next.js</a>
+          
+            <a href="/tags/%E5%85%A8%E6%A0%88/" rel="tag"># 全栈</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2023-09-08-monorepo-engineering.html" rel="next" title="大前端时代的 Monorepo 工程化实践">
+                <i class="fa fa-chevron-left"></i> 大前端时代的 Monorepo 工程化实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/AI/2024-05-10-github-copilot-guide.html" rel="prev" title="GitHub Copilot 深度使用指南与最佳实践">
+                GitHub Copilot 深度使用指南与最佳实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/React/2024-01-22-nextjs14-fullstack.html"
+         data-hitalk-title="用 Next.js 14 构建全栈应用实践">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="随着业务增长，前端项目往往会拆分出多个子应用、组件库、工具库和配置包。传统的多仓库（Polyrepo）管理方式带来了版本同步困难、代码复用成本高等问题。Monorepo（单一仓库管理多个项目）成为越来越多团队的选择。本文以 pnpm workspace 为核心，记录 Monorepo 工程化的实践方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大前端时代的 Monorepo 工程化实践">
+<meta property="og:url" content="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2023-09-08-monorepo-engineering.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="随着业务增长，前端项目往往会拆分出多个子应用、组件库、工具库和配置包。传统的多仓库（Polyrepo）管理方式带来了版本同步困难、代码复用成本高等问题。Monorepo（单一仓库管理多个项目）成为越来越多团队的选择。本文以 pnpm workspace 为核心，记录 Monorepo 工程化的实践方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-08T07:40:22.000Z">
+<meta property="article:modified_time" content="2026-09-23T03:35:02.274Z">
+<meta property="article:tag" content="前端工程化">
+<meta property="article:tag" content="Monorepo">
+<meta property="article:tag" content="pnpm">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/前端工程化/2023-09-08-monorepo-engineering.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>大前端时代的 Monorepo 工程化实践 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2023-09-08-monorepo-engineering.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">大前端时代的 Monorepo 工程化实践
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-09-08 15:40:22" itemprop="dateCreated datePublished" datetime="2023-09-08T15:40:22+08:00">2023-09-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 11:35:02" itemprop="dateModified" datetime="2026-09-23T11:35:02+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">前端工程化</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2023-09-08-monorepo-engineering.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2023-09-08-monorepo-engineering.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着业务增长，前端项目往往会拆分出多个子应用、组件库、工具库和配置包。传统的多仓库（Polyrepo）管理方式带来了版本同步困难、代码复用成本高等问题。Monorepo（单一仓库管理多个项目）成为越来越多团队的选择。本文以 pnpm workspace 为核心，记录 Monorepo 工程化的实践方案。</p>
+<a id="more"></a>
+
+<h2 id="为什么选择-Monorepo"><a href="#为什么选择-Monorepo" class="headerlink" title="为什么选择 Monorepo"></a>为什么选择 Monorepo</h2><table>
+<thead>
+<tr>
+<th align="left">维度</th>
+<th align="left">Polyrepo（多仓库）</th>
+<th align="left">Monorepo（单仓库）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">代码复用</td>
+<td align="left">需要发布 npm 包后引用</td>
+<td align="left">直接 workspace 引用</td>
+</tr>
+<tr>
+<td align="left">版本管理</td>
+<td align="left">各仓库独立版本</td>
+<td align="left">统一管控，保持同步</td>
+</tr>
+<tr>
+<td align="left">原子提交</td>
+<td align="left">跨仓库改动需多次 PR</td>
+<td align="left">一次 PR 覆盖所有改动</td>
+</tr>
+<tr>
+<td align="left">工具链</td>
+<td align="left">每个仓库独立配置</td>
+<td align="left">统一 ESLint / TS / 构建配置</td>
+</tr>
+<tr>
+<td align="left">CI/CD</td>
+<td align="left">每个仓库独立流水线</td>
+<td align="left">统一流水线，按变更触发</td>
+</tr>
+<tr>
+<td align="left">上手成本</td>
+<td align="left">低</td>
+<td align="left">需要一定的工程化基础</td>
+</tr>
+</tbody></table>
+<h2 id="1-项目结构"><a href="#1-项目结构" class="headerlink" title="1. 项目结构"></a>1. 项目结构</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">my-monorepo&#x2F;</span><br><span class="line">├── package.json           # 根配置</span><br><span class="line">├── pnpm-workspace.yaml    # 工作空间声明</span><br><span class="line">├── turbo.json             # Turborepo 构建配置</span><br><span class="line">├── .eslintrc.js           # 统一 ESLint 配置</span><br><span class="line">├── tsconfig.base.json     # 统一 TypeScript 基础配置</span><br><span class="line">├── packages&#x2F;</span><br><span class="line">│   ├── ui&#x2F;                # 公共组件库</span><br><span class="line">│   │   ├── package.json</span><br><span class="line">│   │   ├── src&#x2F;</span><br><span class="line">│   │   └── tsconfig.json</span><br><span class="line">│   ├── utils&#x2F;             # 公共工具库</span><br><span class="line">│   │   ├── package.json</span><br><span class="line">│   │   └── src&#x2F;</span><br><span class="line">│   └── config&#x2F;            # 共享配置（ESLint、TS 等）</span><br><span class="line">│       └── package.json</span><br><span class="line">├── apps&#x2F;</span><br><span class="line">│   ├── web&#x2F;               # 主站应用</span><br><span class="line">│   │   ├── package.json</span><br><span class="line">│   │   └── src&#x2F;</span><br><span class="line">│   ├── admin&#x2F;             # 后台管理</span><br><span class="line">│   │   ├── package.json</span><br><span class="line">│   │   └── src&#x2F;</span><br><span class="line">│   └── docs&#x2F;              # 文档站点</span><br><span class="line">│       ├── package.json</span><br><span class="line">│       └── src&#x2F;</span><br><span class="line">└── scripts&#x2F;               # 自动化脚本</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-pnpm-Workspace-配置"><a href="#2-pnpm-Workspace-配置" class="headerlink" title="2. pnpm Workspace 配置"></a>2. pnpm Workspace 配置</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pnpm-workspace.yaml</span></span><br><span class="line"><span class="attr">packages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">'packages/*'</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">'apps/*'</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根目录 package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"my-monorepo"</span>,</span><br><span class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"dev"</span>: <span class="string">"turbo run dev"</span>,</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"turbo run build"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"turbo run lint"</span>,</span><br><span class="line">    <span class="attr">"clean"</span>: <span class="string">"turbo run clean &amp;&amp; rm -rf node_modules"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"turbo"</span>: <span class="string">"^1.10.0"</span>,</span><br><span class="line">    <span class="attr">"typescript"</span>: <span class="string">"^5.0.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-创建共享工具包"><a href="#3-创建共享工具包" class="headerlink" title="3. 创建共享工具包"></a>3. 创建共享工具包</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// packages/utils/package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"@my/utils"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"./src/index.ts"</span>,</span><br><span class="line">  <span class="attr">"types"</span>: <span class="string">"./src/index.ts"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"tsup src/index.ts --format cjs,esm --dts"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"eslint src/"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// packages/utils/src/index.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">date: <span class="built_in">Date</span> | <span class="built_in">string</span>, format = 'YYYY-MM-DD'</span>): <span class="title">string</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>(date)</span><br><span class="line">  <span class="keyword">const</span> year = d.getFullYear()</span><br><span class="line">  <span class="keyword">const</span> month = <span class="built_in">String</span>(d.getMonth() + <span class="number">1</span>).padStart(<span class="number">2</span>, <span class="string">'0'</span>)</span><br><span class="line">  <span class="keyword">const</span> day = <span class="built_in">String</span>(d.getDate()).padStart(<span class="number">2</span>, <span class="string">'0'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> format</span><br><span class="line">    .replace(<span class="string">'YYYY'</span>, <span class="built_in">String</span>(year))</span><br><span class="line">    .replace(<span class="string">'MM'</span>, month)</span><br><span class="line">    .replace(<span class="string">'DD'</span>, day)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>&lt;<span class="title">T</span> <span class="title">extends</span> (<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt; <span class="title">any</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  fn: T,</span></span></span><br><span class="line"><span class="function"><span class="params">  delay: <span class="built_in">number</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>): (<span class="params">...args: Parameters&lt;T&gt;</span>) =&gt; <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timer: ReturnType&lt;<span class="keyword">typeof</span> setTimeout&gt;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"><span class="keyword">this</span>: <span class="built_in">any</span>, ...args: Parameters&lt;T&gt;</span>) </span>&#123;</span><br><span class="line">    clearTimeout(timer)</span><br><span class="line">    timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> fn.apply(<span class="keyword">this</span>, args), delay)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>&lt;<span class="title">T</span>&gt;(<span class="params">obj: T</span>): <span class="title">T</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> structuredClone(obj)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-创建共享-UI-组件库"><a href="#4-创建共享-UI-组件库" class="headerlink" title="4. 创建共享 UI 组件库"></a>4. 创建共享 UI 组件库</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// packages/ui/package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"@my/ui"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"./src/index.ts"</span>,</span><br><span class="line">  <span class="attr">"types"</span>: <span class="string">"./src/index.ts"</span>,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"vue"</span>: <span class="string">"^3.3.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"vite build"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"eslint src/"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- packages&#x2F;ui&#x2F;src&#x2F;components&#x2F;Button&#x2F;Button.vue --&gt;</span><br><span class="line">&lt;script setup lang&#x3D;&quot;ts&quot;&gt;</span><br><span class="line">interface Props &#123;</span><br><span class="line">  type?: &#39;primary&#39; | &#39;secondary&#39; | &#39;danger&#39;</span><br><span class="line">  size?: &#39;small&#39; | &#39;medium&#39; | &#39;large&#39;</span><br><span class="line">  loading?: boolean</span><br><span class="line">  disabled?: boolean</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">withDefaults(defineProps&lt;Props&gt;(), &#123;</span><br><span class="line">  type: &#39;primary&#39;,</span><br><span class="line">  size: &#39;medium&#39;,</span><br><span class="line">  loading: false,</span><br><span class="line">  disabled: false</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">defineEmits&lt;&#123;</span><br><span class="line">  click: [event: MouseEvent]</span><br><span class="line">&#125;&gt;()</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button</span><br><span class="line">    :class&#x3D;&quot;[&#39;btn&#39;, &#96;btn--$&#123;type&#125;&#96;, &#96;btn--$&#123;size&#125;&#96;]&quot;</span><br><span class="line">    :disabled&#x3D;&quot;disabled || loading&quot;</span><br><span class="line">    @click&#x3D;&quot;$emit(&#39;click&#39;, $event)&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    &lt;span v-if&#x3D;&quot;loading&quot; class&#x3D;&quot;btn__spinner&quot; &#x2F;&gt;</span><br><span class="line">    &lt;slot &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;button&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-在应用中引用内部包"><a href="#5-在应用中引用内部包" class="headerlink" title="5. 在应用中引用内部包"></a>5. 在应用中引用内部包</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apps/web/package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"@my/web"</span>,</span><br><span class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"@my/ui"</span>: <span class="string">"workspace:*"</span>,</span><br><span class="line">    <span class="attr">"@my/utils"</span>: <span class="string">"workspace:*"</span>,</span><br><span class="line">    <span class="attr">"vue"</span>: <span class="string">"^3.3.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pnpm 安装 workspace 内部依赖</span></span><br><span class="line">pnpm add @my/utils --filter @my/web</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- apps&#x2F;web&#x2F;src&#x2F;App.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; Button &#125; from &#39;@my&#x2F;ui&#39;</span><br><span class="line">import &#123; formatDate &#125; from &#39;@my&#x2F;utils&#39;</span><br><span class="line"></span><br><span class="line">const today &#x3D; formatDate(new Date())</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;p&gt;今天是 &#123;&#123; today &#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;Button type&#x3D;&quot;primary&quot; @click&#x3D;&quot;handleClick&quot;&gt;点击&lt;&#x2F;Button&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-Turborepo-构建编排"><a href="#6-Turborepo-构建编排" class="headerlink" title="6. Turborepo 构建编排"></a>6. Turborepo 构建编排</h2><p>Turborepo 提供了增量构建和并行执行能力：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// turbo.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"https://turbo.build/schema.json"</span>,</span><br><span class="line">  <span class="attr">"pipeline"</span>: &#123;</span><br><span class="line">    <span class="attr">"build"</span>: &#123;</span><br><span class="line">      <span class="attr">"dependsOn"</span>: [<span class="string">"^build"</span>],</span><br><span class="line">      <span class="attr">"outputs"</span>: [<span class="string">"dist/**"</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"dev"</span>: &#123;</span><br><span class="line">      <span class="attr">"cache"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"persistent"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"lint"</span>: &#123;</span><br><span class="line">      <span class="attr">"outputs"</span>: []</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"clean"</span>: &#123;</span><br><span class="line">      <span class="attr">"cache"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 常用命令</span></span><br><span class="line">pnpm turbo run build                    <span class="comment"># 构建所有包（增量 + 并行）</span></span><br><span class="line">pnpm turbo run build --filter=@my/web   <span class="comment"># 只构建指定包</span></span><br><span class="line">pnpm turbo run dev --filter=@my/web     <span class="comment"># 启动指定应用的开发服务</span></span><br><span class="line">pnpm turbo run lint                     <span class="comment"># 全量 lint</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="7-统一配置管理"><a href="#7-统一配置管理" class="headerlink" title="7. 统一配置管理"></a>7. 统一配置管理</h2><h3 id="TypeScript-配置继承"><a href="#TypeScript-配置继承" class="headerlink" title="TypeScript 配置继承"></a>TypeScript 配置继承</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tsconfig.base.json（根目录）</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"ES2020"</span>,</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"ESNext"</span>,</span><br><span class="line">    <span class="attr">"moduleResolution"</span>: <span class="string">"bundler"</span>,</span><br><span class="line">    <span class="attr">"strict"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"esModuleInterop"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"skipLibCheck"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"declaration"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"declarationMap"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"sourceMap"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// packages/utils/tsconfig.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"extends"</span>: <span class="string">"../../tsconfig.base.json"</span>,</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"outDir"</span>: <span class="string">"./dist"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"include"</span>: [<span class="string">"src"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="8-pnpm-常用命令"><a href="#8-pnpm-常用命令" class="headerlink" title="8. pnpm 常用命令"></a>8. pnpm 常用命令</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装所有包的依赖</span></span><br><span class="line">pnpm install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给根目录添加开发依赖</span></span><br><span class="line">pnpm add -Dw turbo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给指定包添加依赖</span></span><br><span class="line">pnpm add axios --filter @my/web</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给所有包执行脚本</span></span><br><span class="line">pnpm -r run build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看包之间的依赖关系</span></span><br><span class="line">pnpm ls -r --depth 0</span><br></pre></td></tr></table></figure></div>
+
+<p>Monorepo 的初始搭建成本虽然比单项目要高，但随着项目规模和团队人数的增长，它在代码复用、版本管理和开发体验上的优势会越来越明显。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag"># 前端工程化</a>
+          
+            <a href="/tags/Monorepo/" rel="tag"># Monorepo</a>
+          
+            <a href="/tags/pnpm/" rel="tag"># pnpm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/AI/2023-03-15-chatgpt-ai-coding.html" rel="next" title="ChatGPT 与 AI 辅助编程初体验">
+                <i class="fa fa-chevron-left"></i> ChatGPT 与 AI 辅助编程初体验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/React/2024-01-22-nextjs14-fullstack.html" rel="prev" title="用 Next.js 14 构建全栈应用实践">
+                用 Next.js 14 构建全栈应用实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2023-09-08-monorepo-engineering.html"
+         data-hitalk-title="大前端时代的 Monorepo 工程化实践">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

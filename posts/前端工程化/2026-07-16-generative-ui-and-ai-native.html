@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="过去的十多年里，前端开发的核心思想一直建立在”状态驱动视图（UI &#x3D; f(state)）”的稳固基石之上：产品经理定义交互原型，后端提供 CRUD REST&#x2F;GraphQL 接口，前端工程师编写状态机并组装组件树。 然而进入 2026 年，随着大模型与 Agent 能力的全面普及，一种全新的应用范式——AI Native 与 Generative UI（生成式用户界面） 正在深刻改变前端架构。用户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Native 时代的前端架构演进：从组件驱动到生成式 UI (Generative UI)">
+<meta property="og:url" content="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="过去的十多年里，前端开发的核心思想一直建立在”状态驱动视图（UI &#x3D; f(state)）”的稳固基石之上：产品经理定义交互原型，后端提供 CRUD REST&#x2F;GraphQL 接口，前端工程师编写状态机并组装组件树。 然而进入 2026 年，随着大模型与 Agent 能力的全面普及，一种全新的应用范式——AI Native 与 Generative UI（生成式用户界面） 正在深刻改变前端架构。用户">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-16T08:40:00.000Z">
+<meta property="article:modified_time" content="2026-09-23T04:04:59.314Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="前端架构">
+<meta property="article:tag" content="Generative UI">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="全栈开发">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/前端工程化/2026-07-16-generative-ui-and-ai-native.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>AI Native 时代的前端架构演进：从组件驱动到生成式 UI (Generative UI) | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">AI Native 时代的前端架构演进：从组件驱动到生成式 UI (Generative UI)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2026-07-16 16:40:00" itemprop="dateCreated datePublished" datetime="2026-07-16T16:40:00+08:00">2026-07-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 12:04:59" itemprop="dateModified" datetime="2026-09-23T12:04:59+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">前端工程化</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>过去的十多年里，前端开发的核心思想一直建立在”状态驱动视图（UI = f(state)）”的稳固基石之上：产品经理定义交互原型，后端提供 CRUD REST/GraphQL 接口，前端工程师编写状态机并组装组件树。</p>
+<p>然而进入 2026 年，随着大模型与 Agent 能力的全面普及，一种全新的应用范式——<strong>AI Native 与 Generative UI（生成式用户界面）</strong> 正在深刻改变前端架构。用户不再满足于面对单调的对话框打字，也不再适应在层级深不见底的传统后台菜单中翻找表单；系统需要根据用户的实时意图，动态组装并流式渲染出具备丰富交互能力的富组件。</p>
+<a id="more"></a>
+
+<h2 id="1-什么是-Generative-UI？"><a href="#1-什么是-Generative-UI？" class="headerlink" title="1. 什么是 Generative UI？"></a>1. 什么是 Generative UI？</h2><p>传统对话式 AI 最大的局限在于：<strong>模型只能返回纯文本或 Markdown 代码块</strong>。如果用户查询”帮我查下周飞往东京的机票并选择座位”，传统的输出是一长段杂乱的航班时刻文本；而用户真正需要的是：</p>
+<ul>
+<li>一张直观展示准点率和机型的航班卡片；</li>
+<li>一个可点击选择靠窗或靠走道的 SVG 座位图；</li>
+<li>一个一键提交下单的结账按钮。</li>
+</ul>
+<p><strong>Generative UI（生成式 UI）</strong> 便是将大模型的工具调用（Tool Calling）与现代前端组件体系（如 React Server Components）直接结合，让模型在推理过程中直接返回交互式 UI 组件，而非枯燥的字符。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">【传统 LLM 输出】</span><br><span class="line">User: &quot;帮我查明天去上海的高铁&quot;</span><br><span class="line">LLM:  &quot;G101 次，08:00 出发，二等座 553 元；G103 次...&quot; (纯文本列表)</span><br><span class="line"></span><br><span class="line">【Generative UI】</span><br><span class="line">User: &quot;帮我查明天去上海的高铁&quot;</span><br><span class="line">LLM:  ┌──────────────────────────────────────────────┐</span><br><span class="line">      │  🚄 G101  北京南 08:00 ──&gt; 上海虹桥 12:35       │</span><br><span class="line">      │  余票充足   ¥553    [ 选择席位 ]  [ 直接预订 ]  │</span><br><span class="line">      └──────────────────────────────────────────────┘ (原生 React 交互组件)</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="2-演进历程：从-Markdown-到组件流"><a href="#2-演进历程：从-Markdown-到组件流" class="headerlink" title="2. 演进历程：从 Markdown 到组件流"></a>2. 演进历程：从 Markdown 到组件流</h2><p>前端对于 AI 交互界面的探索经历了三个阶段：</p>
+<table>
+<thead>
+<tr>
+<th align="left">阶段</th>
+<th align="left">典型时期</th>
+<th align="left">渲染机制</th>
+<th align="left">局限性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>阶段 1：纯文本与 Markdown</strong></td>
+<td align="left">2023</td>
+<td align="left">前端解析 Markdown / 代码高亮</td>
+<td align="left">缺乏动态交互能力，表单与图表无法操作</td>
+</tr>
+<tr>
+<td align="left"><strong>阶段 2：JSON Schema + 模版映射</strong></td>
+<td align="left">2024</td>
+<td align="left">模型输出特定 JSON，前端用 switch-case 匹配固定模版</td>
+<td align="left">灵活性低，每次新增交互类型都需要改前后端两端</td>
+</tr>
+<tr>
+<td align="left"><strong>阶段 3：流式 RSC 与组件水合</strong></td>
+<td align="left">2025-2026</td>
+<td align="left">基于 React Server Components，服务端直接流式投递 UI 节点</td>
+<td align="left">具备完整客户端交互状态，支持动画与即时水合</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-实战：基于-Vercel-AI-SDK-实现-Generative-UI"><a href="#3-实战：基于-Vercel-AI-SDK-实现-Generative-UI" class="headerlink" title="3. 实战：基于 Vercel AI SDK 实现 Generative UI"></a>3. 实战：基于 Vercel AI SDK 实现 Generative UI</h2><p>现代全栈框架中，利用 Next.js App Router 配合 Vercel AI SDK 的 <code>streamUI</code>，可以极度自然地实现意图到组件的转换。</p>
+<h3 id="3-1-服务端定义-Actions-与-Tools"><a href="#3-1-服务端定义-Actions-与-Tools" class="headerlink" title="3.1 服务端定义 Actions 与 Tools"></a>3.1 服务端定义 Actions 与 Tools</h3><p>在服务端 Server Action 中，定义模型在触发工具时直接渲染对应的 React 组件：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;actions.tsx</span><br><span class="line">&#39;use server&#39;;</span><br><span class="line"></span><br><span class="line">import &#123; createAI, streamUI &#125; from &#39;ai&#x2F;rsc&#39;;</span><br><span class="line">import &#123; openai &#125; from &#39;@ai-sdk&#x2F;openai&#39;;</span><br><span class="line">import &#123; z &#125; from &#39;zod&#39;;</span><br><span class="line">import &#123; FlightCard &#125; from &#39;@&#x2F;components&#x2F;flight-card&#39;;</span><br><span class="line">import &#123; FlightSkeleton &#125; from &#39;@&#x2F;components&#x2F;flight-skeleton&#39;;</span><br><span class="line"></span><br><span class="line">export async function submitUserMessage(userInput: string) &#123;</span><br><span class="line">  &#39;use server&#39;;</span><br><span class="line"></span><br><span class="line">  const ui &#x3D; await streamUI(&#123;</span><br><span class="line">    model: openai(&#39;gpt-4o&#39;),</span><br><span class="line">    prompt: userInput,</span><br><span class="line">    system: &#39;你是一名专业的差旅助手。当用户查询航班时，调用 searchFlights 工具展示交互卡片。&#39;,</span><br><span class="line">    text: (&#123; content &#125;) &#x3D;&gt; &lt;div&gt;&#123;content&#125;&lt;&#x2F;div&gt;,</span><br><span class="line">    tools: &#123;</span><br><span class="line">      searchFlights: &#123;</span><br><span class="line">        description: &#39;查询从出发地到目的地的航班信息并展示交互卡片&#39;,</span><br><span class="line">        parameters: z.object(&#123;</span><br><span class="line">          from: z.string().describe(&#39;出发城市&#39;),</span><br><span class="line">          to: z.string().describe(&#39;目的城市&#39;),</span><br><span class="line">          date: z.string().describe(&#39;出发日期，格式 YYYY-MM-DD&#39;),</span><br><span class="line">        &#125;),</span><br><span class="line">        &#x2F;&#x2F; 在模型决定调用工具但数据尚未返回时的占位骨架屏</span><br><span class="line">        loading: () &#x3D;&gt; &lt;FlightSkeleton &#x2F;&gt;,</span><br><span class="line">        &#x2F;&#x2F; 真正执行查询并返回可交互客户端组件</span><br><span class="line">        generate: async (&#123; from, to, date &#125;) &#x3D;&gt; &#123;</span><br><span class="line">          &#x2F;&#x2F; 模拟调用底层航空业务微服务</span><br><span class="line">          const flightData &#x3D; await fetchFlightsFromDB(from, to, date);</span><br><span class="line"></span><br><span class="line">          return (</span><br><span class="line">            &lt;FlightCard</span><br><span class="line">              from&#x3D;&#123;from&#125;</span><br><span class="line">              to&#x3D;&#123;to&#125;</span><br><span class="line">              date&#x3D;&#123;date&#125;</span><br><span class="line">              flights&#x3D;&#123;flightData&#125;</span><br><span class="line">            &#x2F;&gt;</span><br><span class="line">          );</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  return &#123;</span><br><span class="line">    id: Date.now(),</span><br><span class="line">    display: ui.value,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-2-客户端组件交互"><a href="#3-2-客户端组件交互" class="headerlink" title="3.2 客户端组件交互"></a>3.2 客户端组件交互</h3><p><code>FlightCard</code> 是一个标准的客户端组件（Client Component），它不仅展示信息，还内嵌了完整的本地交互逻辑（如展开选座弹窗、加入购物车等）：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; components&#x2F;flight-card.tsx</span><br><span class="line">&#39;use client&#39;;</span><br><span class="line"></span><br><span class="line">import React, &#123; useState &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">interface Flight &#123;</span><br><span class="line">  id: string;</span><br><span class="line">  flightNo: string;</span><br><span class="line">  departTime: string;</span><br><span class="line">  arriveTime: string;</span><br><span class="line">  price: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function FlightCard(&#123;</span><br><span class="line">  from,</span><br><span class="line">  to,</span><br><span class="line">  date,</span><br><span class="line">  flights,</span><br><span class="line">&#125;: &#123;</span><br><span class="line">  from: string;</span><br><span class="line">  to: string;</span><br><span class="line">  date: string;</span><br><span class="line">  flights: Flight[];</span><br><span class="line">&#125;) &#123;</span><br><span class="line">  const [selectedFlight, setSelectedFlight] &#x3D; useState&lt;string | null&gt;(null);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className&#x3D;&quot;rounded-xl border border-slate-200 bg-white p-4 shadow-sm my-3&quot;&gt;</span><br><span class="line">      &lt;div className&#x3D;&quot;flex items-center justify-between pb-3 border-b border-slate-100&quot;&gt;</span><br><span class="line">        &lt;span className&#x3D;&quot;font-semibold text-slate-800&quot;&gt;&#123;from&#125; ✈️ &#123;to&#125;&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span className&#x3D;&quot;text-xs text-slate-500&quot;&gt;&#123;date&#125;&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">      &lt;div className&#x3D;&quot;mt-3 space-y-2&quot;&gt;</span><br><span class="line">        &#123;flights.map((f) &#x3D;&gt; (</span><br><span class="line">          &lt;div</span><br><span class="line">            key&#x3D;&#123;f.id&#125;</span><br><span class="line">            className&#x3D;&#123;&#96;flex items-center justify-between p-3 rounded-lg cursor-pointer transition $&#123;</span><br><span class="line">              selectedFlight &#x3D;&#x3D;&#x3D; f.id ? &#39;bg-blue-50 border border-blue-400&#39; : &#39;bg-slate-50 hover:bg-slate-100&#39;</span><br><span class="line">            &#125;&#96;&#125;</span><br><span class="line">            onClick&#x3D;&#123;() &#x3D;&gt; setSelectedFlight(f.id)&#125;</span><br><span class="line">          &gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">              &lt;span className&#x3D;&quot;font-medium text-slate-900&quot;&gt;&#123;f.flightNo&#125;&lt;&#x2F;span&gt;</span><br><span class="line">              &lt;span className&#x3D;&quot;ml-3 text-sm text-slate-500&quot;&gt;&#123;f.departTime&#125; - &#123;f.arriveTime&#125;&lt;&#x2F;span&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;div className&#x3D;&quot;flex items-center gap-3&quot;&gt;</span><br><span class="line">              &lt;span className&#x3D;&quot;font-bold text-amber-600&quot;&gt;¥&#123;f.price&#125;&lt;&#x2F;span&gt;</span><br><span class="line">              &lt;button</span><br><span class="line">                className&#x3D;&quot;px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700&quot;</span><br><span class="line">                onClick&#x3D;&#123;(e) &#x3D;&gt; &#123;</span><br><span class="line">                  e.stopPropagation();</span><br><span class="line">                  alert(&#96;已预订 $&#123;f.flightNo&#125; 航班！&#96;);</span><br><span class="line">                &#125;&#125;</span><br><span class="line">              &gt;</span><br><span class="line">                预订</span><br><span class="line">              &lt;&#x2F;button&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">        ))&#125;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="4-架构挑战与工程应对策略"><a href="#4-架构挑战与工程应对策略" class="headerlink" title="4. 架构挑战与工程应对策略"></a>4. 架构挑战与工程应对策略</h2><p>引入 Generative UI 后，前端开发将面临以往传统页面不曾遇到的新挑战：</p>
+<h3 id="4-1-状态树的混合治理"><a href="#4-1-状态树的混合治理" class="headerlink" title="4.1 状态树的混合治理"></a>4.1 状态树的混合治理</h3><ul>
+<li><strong>AI 会话状态</strong>：消息历史流、Token 生成进度、Tool 挂起状态；</li>
+<li><strong>组件本地状态</strong>：用户在生成的卡片上勾选的 Checkbox、展开的折叠面板；</li>
+<li><strong>全局业务状态</strong>：购物车金额、全局用户登录态。</li>
+</ul>
+<p><strong>最佳实践</strong>：遵循”单向意图流”，卡片内部操作若影响全局业务，应通过标准的客户端状态管理器（如 Zustand）或 React Context 进行分发，避免将易失性的 UI 状态重新喂回模型的对话上下文中引起 Token 膨胀。</p>
+<h3 id="4-2-流式加载体验与布局抖动（CLS）"><a href="#4-2-流式加载体验与布局抖动（CLS）" class="headerlink" title="4.2 流式加载体验与布局抖动（CLS）"></a>4.2 流式加载体验与布局抖动（CLS）</h3><p>当大模型在思考或调用多个级联工具时，客户端会出现持续数秒的等待。</p>
+<ul>
+<li>必须针对每一个 Generative Tool 提供高保真的 <code>loading</code> 骨架屏组件；</li>
+<li>限制动态容器的最大最小高度（<code>min-height</code>），防止内容输出完毕后页面发生剧烈跳动。</li>
+</ul>
+<h3 id="4-3-模型幻觉与边界降级（Fallback）"><a href="#4-3-模型幻觉与边界降级（Fallback）" class="headerlink" title="4.3 模型幻觉与边界降级（Fallback）"></a>4.3 模型幻觉与边界降级（Fallback）</h3><p>大模型偶尔可能给出不合法的参数组合（例如出发地与目的地相同，或者格式错误的日期）。</p>
+<ul>
+<li>工具入参必须通过严格的 Schema（如 <code>zod</code>）进行安全守门；</li>
+<li>一旦参数校验未通过，优雅降级为纯文本友好提示，绝不能抛出未捕获的 Uncaught Error 导致白屏。</li>
+</ul>
+<hr>
+<h2 id="总结：前端工程师的新定位"><a href="#总结：前端工程师的新定位" class="headerlink" title="总结：前端工程师的新定位"></a>总结：前端工程师的新定位</h2><p>Generative UI 的兴起并不意味着前端组件工程师的被取代，而是赋予了前端更深维度的系统职责：</p>
+<ul>
+<li><strong>从前的关注点</strong>：组件如何布局、CSS 是否像素级还原、事件监听如何绑定；</li>
+<li><strong>未来的关注点</strong>：<strong>设计原子级 UI 能力协议</strong>、<strong>构建意图与组件的映射语义</strong>、<strong>保障人机共创过程中的可访问性与极致流畅度</strong>。</li>
+</ul>
+<p>在 AI Native 时代，能够驾驭模型推理、Server Components 流式通信与复杂客户端状态的前端开发者，将成为串联 AI 智能与人类直觉体验的关键桥梁。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84/" rel="tag"># 前端架构</a>
+          
+            <a href="/tags/Generative-UI/" rel="tag"># Generative UI</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag"># 全栈开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/AI/2026-03-12-mcp-protocol-in-depth.html" rel="next" title="Model Context Protocol (MCP) 实战：构建你自己的 AI 外部工具与服务">
+                <i class="fa fa-chevron-left"></i> Model Context Protocol (MCP) 实战：构建你自己的 AI 外部工具与服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html"
+         data-hitalk-title="AI Native 时代的前端架构演进：从组件驱动到生成式 UI (Generative UI)">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

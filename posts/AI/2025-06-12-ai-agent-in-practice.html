@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="2025 年，AI 应用的焦点从简单的对话和内容生成，转向了更具自主性的 AI Agent（智能体）。Agent 不仅能”说”，更能通过调用工具、执行代码、访问外部系统来完成复杂任务。本文记录 AI Agent 的核心概念和开发实践。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Agent 开发实战：从概念到落地">
+<meta property="og:url" content="https://www.vueweb.cn/posts/AI/2025-06-12-ai-agent-in-practice.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="2025 年，AI 应用的焦点从简单的对话和内容生成，转向了更具自主性的 AI Agent（智能体）。Agent 不仅能”说”，更能通过调用工具、执行代码、访问外部系统来完成复杂任务。本文记录 AI Agent 的核心概念和开发实践。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-12T06:50:30.000Z">
+<meta property="article:modified_time" content="2026-09-23T04:05:39.146Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/AI/2025-06-12-ai-agent-in-practice.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>AI Agent 开发实战：从概念到落地 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/AI/2025-06-12-ai-agent-in-practice.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">AI Agent 开发实战：从概念到落地
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2025-06-12 14:50:30" itemprop="dateCreated datePublished" datetime="2025-06-12T14:50:30+08:00">2025-06-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 12:05:39" itemprop="dateModified" datetime="2026-09-23T12:05:39+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/AI/2025-06-12-ai-agent-in-practice.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/AI/2025-06-12-ai-agent-in-practice.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>2025 年，AI 应用的焦点从简单的对话和内容生成，转向了更具自主性的 AI Agent（智能体）。Agent 不仅能”说”，更能通过调用工具、执行代码、访问外部系统来完成复杂任务。本文记录 AI Agent 的核心概念和开发实践。</p>
+<a id="more"></a>
+
+<h2 id="1-什么是-AI-Agent"><a href="#1-什么是-AI-Agent" class="headerlink" title="1. 什么是 AI Agent"></a>1. 什么是 AI Agent</h2><p>Agent 的核心区别于普通 AI 对话：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">普通 ChatBot:</span><br><span class="line">  用户提问 → LLM 回答 → 结束</span><br><span class="line"></span><br><span class="line">AI Agent:</span><br><span class="line">  用户下达目标 → LLM 分析任务 → 规划步骤 → 调用工具执行 → 观察结果</span><br><span class="line">  → 判断是否完成 → 继续执行或返回最终结果</span><br></pre></td></tr></table></figure></div>
+
+<p>一个 Agent 由三部分组成：</p>
+<ul>
+<li><strong>大模型（Brain）</strong>：负责理解、推理和决策</li>
+<li><strong>工具（Tools）</strong>：Agent 可以调用的外部能力（API、数据库、代码执行等）</li>
+<li><strong>记忆（Memory）</strong>：对话历史和中间结果的存储</li>
+</ul>
+<h2 id="2-Agent-的工作循环"><a href="#2-Agent-的工作循环" class="headerlink" title="2. Agent 的工作循环"></a>2. Agent 的工作循环</h2><p>Agent 遵循经典的 <strong>ReAct（Reasoning + Acting）</strong> 模式：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">循环开始 →</span><br><span class="line">  1. Thought（思考）：分析当前状况，决定下一步做什么</span><br><span class="line">  2. Action（行动）：选择并调用一个工具</span><br><span class="line">  3. Observation（观察）：获取工具返回的结果</span><br><span class="line">  4. 重复 1-3，直到任务完成</span><br><span class="line">← 返回最终答案</span><br></pre></td></tr></table></figure></div>
+
+<p>实际例子：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">用户: &quot;帮我查一下北京今天的天气，如果温度超过30度，给我发一封邮件提醒&quot;</span><br><span class="line"></span><br><span class="line">Agent 思考: 需要先查询天气，再根据温度决定是否发邮件</span><br><span class="line">Agent 行动: 调用 weather_api.get(&quot;北京&quot;)</span><br><span class="line">Agent 观察: &#123;&quot;温度&quot;: 33, &quot;天气&quot;: &quot;晴&quot;, &quot;湿度&quot;: 45&#125;</span><br><span class="line">Agent 思考: 温度 33°C &gt; 30°C，需要发送提醒邮件</span><br><span class="line">Agent 行动: 调用 email.send(to&#x3D;&quot;user@example.com&quot;, subject&#x3D;&quot;高温提醒&quot;, body&#x3D;&quot;北京今天33°C...&quot;)</span><br><span class="line">Agent 观察: &#123;&quot;status&quot;: &quot;sent&quot;&#125;</span><br><span class="line">Agent 回答: &quot;北京今天33°C，已经给您发送了高温提醒邮件。&quot;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-用-LangChain-构建-Agent"><a href="#3-用-LangChain-构建-Agent" class="headerlink" title="3. 用 LangChain 构建 Agent"></a>3. 用 LangChain 构建 Agent</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.agents <span class="keyword">import</span> AgentExecutor, create_openai_tools_agent</span><br><span class="line"><span class="keyword">from</span> langchain.chat_models <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.tools <span class="keyword">import</span> tool</span><br><span class="line"><span class="keyword">from</span> langchain.prompts <span class="keyword">import</span> ChatPromptTemplate, MessagesPlaceholder</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义工具</span></span><br><span class="line"><span class="meta">@tool</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search_articles</span><span class="params">(keyword: str)</span> -&gt; str:</span></span><br><span class="line">    <span class="string">"""根据关键词搜索博客文章，返回相关文章列表"""</span></span><br><span class="line">    response = requests.get(</span><br><span class="line">        <span class="string">f"https://api.example.com/articles?q=<span class="subst">&#123;keyword&#125;</span>"</span></span><br><span class="line">    )</span><br><span class="line">    articles = response.json()[<span class="string">"data"</span>]</span><br><span class="line">    <span class="keyword">return</span> json.dumps([</span><br><span class="line">        &#123;<span class="string">"title"</span>: a[<span class="string">"title"</span>], <span class="string">"url"</span>: a[<span class="string">"url"</span>]&#125;</span><br><span class="line">        <span class="keyword">for</span> a <span class="keyword">in</span> articles[:<span class="number">5</span>]</span><br><span class="line">    ], ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@tool</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_weather</span><span class="params">(city: str)</span> -&gt; str:</span></span><br><span class="line">    <span class="string">"""获取指定城市的实时天气信息"""</span></span><br><span class="line">    response = requests.get(</span><br><span class="line">        <span class="string">f"https://api.weather.com/current?city=<span class="subst">&#123;city&#125;</span>"</span></span><br><span class="line">    )</span><br><span class="line">    data = response.json()</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f"<span class="subst">&#123;city&#125;</span>: <span class="subst">&#123;data[<span class="string">'temp'</span>]&#125;</span>°C, <span class="subst">&#123;data[<span class="string">'weather'</span>]&#125;</span>, 湿度<span class="subst">&#123;data[<span class="string">'humidity'</span>]&#125;</span>%"</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@tool</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate</span><span class="params">(expression: str)</span> -&gt; str:</span></span><br><span class="line">    <span class="string">"""计算数学表达式，如 '2 + 3 * 4'"""</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        result = eval(expression)</span><br><span class="line">        <span class="keyword">return</span> str(result)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f"计算错误: <span class="subst">&#123;e&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 Agent</span></span><br><span class="line">llm = ChatOpenAI(model=<span class="string">"gpt-4"</span>, temperature=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">prompt = ChatPromptTemplate.from_messages([</span><br><span class="line">    (<span class="string">"system"</span>, <span class="string">"你是一个智能助手，可以使用工具帮助用户完成任务。"</span></span><br><span class="line">               <span class="string">"在使用工具前请先思考需要什么信息，然后选择合适的工具。"</span>),</span><br><span class="line">    MessagesPlaceholder(variable_name=<span class="string">"chat_history"</span>, optional=<span class="literal">True</span>),</span><br><span class="line">    (<span class="string">"human"</span>, <span class="string">"&#123;input&#125;"</span>),</span><br><span class="line">    MessagesPlaceholder(variable_name=<span class="string">"agent_scratchpad"</span>),</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">tools = [search_articles, get_weather, calculate]</span><br><span class="line">agent = create_openai_tools_agent(llm, tools, prompt)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Agent 执行器</span></span><br><span class="line">agent_executor = AgentExecutor(</span><br><span class="line">    agent=agent,</span><br><span class="line">    tools=tools,</span><br><span class="line">    verbose=<span class="literal">True</span>,          <span class="comment"># 打印思考过程</span></span><br><span class="line">    max_iterations=<span class="number">5</span>,      <span class="comment"># 最大迭代次数</span></span><br><span class="line">    handle_parsing_errors=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行</span></span><br><span class="line">result = agent_executor.invoke(&#123;</span><br><span class="line">    <span class="string">"input"</span>: <span class="string">"搜索关于 Vue3 的文章，并帮我计算如果每天读2篇需要多少天"</span></span><br><span class="line">&#125;)</span><br><span class="line">print(result[<span class="string">"output"</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-用-Node-js-构建工具调用-Agent"><a href="#4-用-Node-js-构建工具调用-Agent" class="headerlink" title="4. 用 Node.js 构建工具调用 Agent"></a>4. 用 Node.js 构建工具调用 Agent</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> OpenAI <span class="keyword">from</span> <span class="string">'openai'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> openai = <span class="keyword">new</span> OpenAI()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义工具</span></span><br><span class="line"><span class="keyword">const</span> tools: OpenAI.ChatCompletionTool[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">type</span>: <span class="string">'function'</span>,</span><br><span class="line">    <span class="function"><span class="keyword">function</span>: </span>&#123;</span><br><span class="line">      name: <span class="string">'search_database'</span>,</span><br><span class="line">      description: <span class="string">'在数据库中搜索文章'</span>,</span><br><span class="line">      parameters: &#123;</span><br><span class="line">        <span class="keyword">type</span>: <span class="string">'object'</span>,</span><br><span class="line">        properties: &#123;</span><br><span class="line">          keyword: &#123; <span class="keyword">type</span>: <span class="string">'string'</span>, description: <span class="string">'搜索关键词'</span> &#125;,</span><br><span class="line">          limit: &#123; <span class="keyword">type</span>: <span class="string">'number'</span>, description: <span class="string">'返回数量'</span>, <span class="keyword">default</span>: <span class="number">5</span> &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        required: [<span class="string">'keyword'</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">type</span>: <span class="string">'function'</span>,</span><br><span class="line">    <span class="function"><span class="keyword">function</span>: </span>&#123;</span><br><span class="line">      name: <span class="string">'send_notification'</span>,</span><br><span class="line">      description: <span class="string">'发送通知消息给用户'</span>,</span><br><span class="line">      parameters: &#123;</span><br><span class="line">        <span class="keyword">type</span>: <span class="string">'object'</span>,</span><br><span class="line">        properties: &#123;</span><br><span class="line">          title: &#123; <span class="keyword">type</span>: <span class="string">'string'</span>, description: <span class="string">'通知标题'</span> &#125;,</span><br><span class="line">          content: &#123; <span class="keyword">type</span>: <span class="string">'string'</span>, description: <span class="string">'通知内容'</span> &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        required: [<span class="string">'title'</span>, <span class="string">'content'</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 工具执行函数映射</span></span><br><span class="line"><span class="keyword">const</span> toolHandlers: Record&lt;<span class="built_in">string</span>, <span class="function">(<span class="params">args: <span class="built_in">any</span></span>) =&gt;</span> <span class="built_in">Promise</span>&lt;<span class="built_in">string</span>&gt;&gt; = &#123;</span><br><span class="line">  <span class="keyword">async</span> search_database(&#123; keyword, limit = <span class="number">5</span> &#125;) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">`/api/search?q=<span class="subst">$&#123;keyword&#125;</span>&amp;limit=<span class="subst">$&#123;limit&#125;</span>`</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.stringify(<span class="keyword">await</span> res.json())</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">async</span> send_notification(&#123; title, content &#125;) &#123;</span><br><span class="line">    <span class="keyword">await</span> fetch(<span class="string">'/api/notify'</span>, &#123;</span><br><span class="line">      method: <span class="string">'POST'</span>,</span><br><span class="line">      body: <span class="built_in">JSON</span>.stringify(&#123; title, content &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.stringify(&#123; success: <span class="literal">true</span> &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Agent 执行循环</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">runAgent</span>(<span class="params">userMessage: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> messages: OpenAI.ChatCompletionMessageParam[] = [</span><br><span class="line">    &#123; role: <span class="string">'system'</span>, content: <span class="string">'你是一个智能助手，可以搜索文章和发送通知。'</span> &#125;,</span><br><span class="line">    &#123; role: <span class="string">'user'</span>, content: userMessage &#125;</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> iterations = <span class="number">0</span></span><br><span class="line">  <span class="keyword">const</span> MAX_ITERATIONS = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (iterations &lt; MAX_ITERATIONS) &#123;</span><br><span class="line">    <span class="keyword">const</span> response = <span class="keyword">await</span> openai.chat.completions.create(&#123;</span><br><span class="line">      model: <span class="string">'gpt-4'</span>,</span><br><span class="line">      messages,</span><br><span class="line">      tools,</span><br><span class="line">      tool_choice: <span class="string">'auto'</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> assistantMessage = response.choices[<span class="number">0</span>].message</span><br><span class="line">    messages.push(assistantMessage)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果没有工具调用，说明 Agent 已完成</span></span><br><span class="line">    <span class="keyword">if</span> (!assistantMessage.tool_calls?.length) &#123;</span><br><span class="line">      <span class="keyword">return</span> assistantMessage.content</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行每个工具调用</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> toolCall of assistantMessage.tool_calls) &#123;</span><br><span class="line">      <span class="keyword">const</span> handler = toolHandlers[toolCall<span class="function">.<span class="keyword">function</span>.<span class="title">name</span>]</span></span><br><span class="line"><span class="function">      <span class="title">const</span> <span class="title">args</span> = <span class="title">JSON</span>.<span class="title">parse</span>(<span class="params">toolCall.<span class="keyword">function</span>.<span class="built_in">arguments</span></span>)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">      <span class="title">console</span>.<span class="title">log</span>(<span class="params">`🔧 调用工具: $&#123;toolCall.<span class="keyword">function</span>.name&#125;`, args</span>)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">      <span class="title">const</span> <span class="title">result</span> = <span class="title">await</span> <span class="title">handler</span>(<span class="params">args</span>)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">      // 将工具结果反馈给 <span class="title">LLM</span></span></span><br><span class="line"><span class="function">      <span class="title">messages</span>.<span class="title">push</span>(<span class="params">&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">        role: 'tool',</span></span></span><br><span class="line"><span class="function"><span class="params">        tool_call_id: toolCall.id,</span></span></span><br><span class="line"><span class="function"><span class="params">        content: result</span></span></span><br><span class="line"><span class="function"><span class="params">      &#125;</span>)</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    <span class="title">iterations</span>++</span></span><br><span class="line"><span class="function">  &#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">  <span class="title">return</span> '达到最大迭代次数，任务未完成'</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// 使用</span></span><br><span class="line"><span class="function"><span class="title">const</span> <span class="title">answer</span> = <span class="title">await</span> <span class="title">runAgent</span>(<span class="params">'帮我搜索最新的 AI 相关文章，然后发一条总结通知给我'</span>)</span></span><br><span class="line"><span class="function"><span class="title">console</span>.<span class="title">log</span>(<span class="params">answer</span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-Agent-设计要点"><a href="#5-Agent-设计要点" class="headerlink" title="5. Agent 设计要点"></a>5. Agent 设计要点</h2><h3 id="5-1-工具设计原则"><a href="#5-1-工具设计原则" class="headerlink" title="5.1 工具设计原则"></a>5.1 工具设计原则</h3><ul>
+<li><strong>单一职责</strong>：每个工具只做一件事</li>
+<li><strong>清晰描述</strong>：工具的 description 写清楚用途和参数含义，这是 LLM 选择工具的依据</li>
+<li><strong>错误处理</strong>：工具要返回明确的错误信息，让 Agent 能够做出调整</li>
+</ul>
+<h3 id="5-2-安全边界"><a href="#5-2-安全边界" class="headerlink" title="5.2 安全边界"></a>5.2 安全边界</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 限制 Agent 的能力范围</span></span><br><span class="line">agent_executor = AgentExecutor(</span><br><span class="line">    agent=agent,</span><br><span class="line">    tools=tools,</span><br><span class="line">    max_iterations=<span class="number">10</span>,          <span class="comment"># 防止无限循环</span></span><br><span class="line">    max_execution_time=<span class="number">60</span>,      <span class="comment"># 超时限制</span></span><br><span class="line">    early_stopping_method=<span class="string">"force"</span>,  <span class="comment"># 超出限制直接停止</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="5-3-记忆管理"><a href="#5-3-记忆管理" class="headerlink" title="5.3 记忆管理"></a>5.3 记忆管理</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.memory <span class="keyword">import</span> ConversationBufferWindowMemory</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只保留最近 10 轮对话</span></span><br><span class="line">memory = ConversationBufferWindowMemory(</span><br><span class="line">    memory_key=<span class="string">"chat_history"</span>,</span><br><span class="line">    return_messages=<span class="literal">True</span>,</span><br><span class="line">    k=<span class="number">10</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-Agent-的适用场景"><a href="#6-Agent-的适用场景" class="headerlink" title="6. Agent 的适用场景"></a>6. Agent 的适用场景</h2><table>
+<thead>
+<tr>
+<th align="left">场景</th>
+<th align="left">例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">数据分析助手</td>
+<td align="left">查询数据库 → 计算统计 → 生成报告</td>
+</tr>
+<tr>
+<td align="left">客服机器人</td>
+<td align="left">理解问题 → 查知识库 → 创建工单</td>
+</tr>
+<tr>
+<td align="left">开发辅助</td>
+<td align="left">读代码 → 分析问题 → 生成修复方案</td>
+</tr>
+<tr>
+<td align="left">自动化运维</td>
+<td align="left">监控告警 → 诊断原因 → 执行修复</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Agent 的核心价值在于将 LLM 的推理能力与外部工具的执行能力结合，实现真正的”AI 办事”而不只是”AI 聊天”。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/Agent/" rel="tag"># Agent</a>
+          
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/AI/2025-02-18-ollama-deepseek-local-llm.html" rel="next" title="本地大模型开发指南：Ollama 与 DeepSeek 实战">
+                <i class="fa fa-chevron-left"></i> 本地大模型开发指南：Ollama 与 DeepSeek 实战
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/AI/2025-10-20-cursor-vibe-coding.html" rel="prev" title="Cursor 与 Vibe Coding：AI 驱动的开发新范式">
+                Cursor 与 Vibe Coding：AI 驱动的开发新范式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/AI/2025-06-12-ai-agent-in-practice.html"
+         data-hitalk-title="AI Agent 开发实战：从概念到落地">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

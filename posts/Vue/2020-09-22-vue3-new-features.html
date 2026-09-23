@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="Vue 3 于 2020 年 9 月 18 日正式发布（代号 “One Piece”），带来了全新的 Composition API、更好的 TypeScript 支持、性能大幅提升等重磅更新。本文从实际使用角度对 Vue 3 的核心新特性做一次全面解读。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue 3 新特性全面解读">
+<meta property="og:url" content="https://www.vueweb.cn/posts/Vue/2020-09-22-vue3-new-features.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="Vue 3 于 2020 年 9 月 18 日正式发布（代号 “One Piece”），带来了全新的 Composition API、更好的 TypeScript 支持、性能大幅提升等重磅更新。本文从实际使用角度对 Vue 3 的核心新特性做一次全面解读。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-22T06:20:45.000Z">
+<meta property="article:modified_time" content="2026-09-23T03:18:25.729Z">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Vue3">
+<meta property="article:tag" content="Composition API">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/Vue/2020-09-22-vue3-new-features.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Vue 3 新特性全面解读 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Vue/2020-09-22-vue3-new-features.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Vue 3 新特性全面解读
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-22 14:20:45" itemprop="dateCreated datePublished" datetime="2020-09-22T14:20:45+08:00">2020-09-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 11:18:25" itemprop="dateModified" datetime="2026-09-23T11:18:25+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/Vue/2020-09-22-vue3-new-features.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Vue/2020-09-22-vue3-new-features.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Vue 3 于 2020 年 9 月 18 日正式发布（代号 “One Piece”），带来了全新的 Composition API、更好的 TypeScript 支持、性能大幅提升等重磅更新。本文从实际使用角度对 Vue 3 的核心新特性做一次全面解读。</p>
+<a id="more"></a>
+
+<h2 id="1-Composition-API"><a href="#1-Composition-API" class="headerlink" title="1. Composition API"></a>1. Composition API</h2><p>Vue 3 最核心的变化。相比 Options API 将逻辑按选项分散（data、methods、computed、watch），Composition API 允许按功能逻辑组织代码：</p>
+<h3 id="setup-函数"><a href="#setup-函数" class="headerlink" title="setup() 函数"></a>setup() 函数</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;p&gt;计数: &#123;&#123; count &#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;p&gt;双倍: &#123;&#123; doubled &#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;button @click&#x3D;&quot;increment&quot;&gt;+1&lt;&#x2F;button&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; ref, computed, onMounted &#125; from &#39;vue&#39;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    &#x2F;&#x2F; 响应式状态</span><br><span class="line">    const count &#x3D; ref(0)</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 计算属性</span><br><span class="line">    const doubled &#x3D; computed(() &#x3D;&gt; count.value * 2)</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 方法</span><br><span class="line">    function increment() &#123;</span><br><span class="line">      count.value++</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 生命周期</span><br><span class="line">    onMounted(() &#x3D;&gt; &#123;</span><br><span class="line">      console.log(&#39;组件已挂载&#39;)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 必须返回模板中使用的数据和方法</span><br><span class="line">    return &#123; count, doubled, increment &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="reactive-vs-ref"><a href="#reactive-vs-ref" class="headerlink" title="reactive vs ref"></a>reactive vs ref</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, reactive, toRefs &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ref —— 适合基本类型（也可用于对象）</span></span><br><span class="line"><span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">const</span> name = ref(<span class="string">'Tom'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(count.value)   <span class="comment">// 访问需要 .value</span></span><br><span class="line"><span class="comment">// 在 template 中自动解包，直接用 &#123;&#123; count &#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// reactive —— 适合对象类型</span></span><br><span class="line"><span class="keyword">const</span> state = reactive(&#123;</span><br><span class="line">  user: &#123; <span class="attr">name</span>: <span class="string">'Tom'</span>, <span class="attr">age</span>: <span class="number">25</span> &#125;,</span><br><span class="line">  articles: [],</span><br><span class="line">  loading: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(state.user.name)  <span class="comment">// 直接访问，无需 .value</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// toRefs —— 解构 reactive 对象时保持响应性</span></span><br><span class="line"><span class="keyword">const</span> &#123; user, loading &#125; = toRefs(state)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-lt-script-setup-gt-语法糖"><a href="#2-lt-script-setup-gt-语法糖" class="headerlink" title="2. &lt;script setup&gt; 语法糖"></a>2. <code>&lt;script setup&gt;</code> 语法糖</h2><p>Vue 3.2 引入的 <code>&lt;script setup&gt;</code> 极大简化了 Composition API 的写法：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; ref, computed, onMounted &#125; from &#39;vue&#39;</span><br><span class="line">import MyComponent from &#39;.&#x2F;MyComponent.vue&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 顶层变量自动暴露给模板，无需 return</span><br><span class="line">const count &#x3D; ref(0)</span><br><span class="line">const doubled &#x3D; computed(() &#x3D;&gt; count.value * 2)</span><br><span class="line"></span><br><span class="line">function increment() &#123;</span><br><span class="line">  count.value++</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">onMounted(() &#x3D;&gt; &#123;</span><br><span class="line">  console.log(&#39;已挂载&#39;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 定义 Props</span><br><span class="line">const props &#x3D; defineProps(&#123;</span><br><span class="line">  title: &#123; type: String, required: true &#125;,</span><br><span class="line">  size: &#123; type: Number, default: 14 &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 定义 Emits</span><br><span class="line">const emit &#x3D; defineEmits([&#39;update&#39;, &#39;delete&#39;])</span><br><span class="line"></span><br><span class="line">function handleUpdate() &#123;</span><br><span class="line">  emit(&#39;update&#39;, &#123; id: 1 &#125;)</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;&#123;&#123; title &#125;&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123; count &#125;&#125; &#x2F; &#123;&#123; doubled &#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;button @click&#x3D;&quot;increment&quot;&gt;+1&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;MyComponent &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-响应式系统升级"><a href="#3-响应式系统升级" class="headerlink" title="3. 响应式系统升级"></a>3. 响应式系统升级</h2><p>Vue 3 用 <code>Proxy</code> 替换了 Vue 2 的 <code>Object.defineProperty</code>，带来了实质性的改进：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; reactive, watch, watchEffect &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state = reactive(&#123;</span><br><span class="line">  list: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">  nested: &#123; <span class="attr">deep</span>: &#123; <span class="attr">value</span>: <span class="string">'hello'</span> &#125; &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ Vue 3 可以检测到的变化（Vue 2 做不到）</span></span><br><span class="line">state.list[<span class="number">0</span>] = <span class="number">100</span>          <span class="comment">// 数组索引赋值</span></span><br><span class="line">state.list.length = <span class="number">0</span>         <span class="comment">// 修改数组长度</span></span><br><span class="line">state.newProp = <span class="string">'dynamic'</span>    <span class="comment">// 动态新增属性</span></span><br><span class="line"><span class="keyword">delete</span> state.newProp          <span class="comment">// 删除属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// watch —— 监听特定数据</span></span><br><span class="line">watch(</span><br><span class="line">  () =&gt; state.list.length,</span><br><span class="line">  (newLen, oldLen) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`列表长度: <span class="subst">$&#123;oldLen&#125;</span> → <span class="subst">$&#123;newLen&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// watchEffect —— 自动收集依赖</span></span><br><span class="line">watchEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 里面访问了哪些响应式数据，就自动监听哪些</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`当前列表: <span class="subst">$&#123;state.list.join(<span class="string">', '</span>)&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-Teleport-传送门"><a href="#4-Teleport-传送门" class="headerlink" title="4. Teleport 传送门"></a>4. Teleport 传送门</h2><p>将组件的 DOM 渲染到指定的目标位置，非常适合弹窗、通知等场景：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button @click&#x3D;&quot;showModal &#x3D; true&quot;&gt;打开弹窗&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 将弹窗内容渲染到 body 下，而不是当前组件的 DOM 树中 --&gt;</span><br><span class="line">  &lt;Teleport to&#x3D;&quot;body&quot;&gt;</span><br><span class="line">    &lt;div v-if&#x3D;&quot;showModal&quot; class&#x3D;&quot;modal-overlay&quot;&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;modal-content&quot;&gt;</span><br><span class="line">        &lt;h3&gt;弹窗标题&lt;&#x2F;h3&gt;</span><br><span class="line">        &lt;p&gt;弹窗内容区域&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;button @click&#x3D;&quot;showModal &#x3D; false&quot;&gt;关闭&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;Teleport&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; ref &#125; from &#39;vue&#39;</span><br><span class="line">const showModal &#x3D; ref(false)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-Suspense-异步组件"><a href="#5-Suspense-异步组件" class="headerlink" title="5. Suspense 异步组件"></a>5. Suspense 异步组件</h2><p><code>Suspense</code> 提供了优雅处理异步组件加载状态的能力：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;Suspense&gt;</span><br><span class="line">    &lt;!-- 异步组件加载完成后渲染 --&gt;</span><br><span class="line">    &lt;template #default&gt;</span><br><span class="line">      &lt;AsyncDashboard &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;template&gt;</span><br><span class="line">    &lt;!-- 加载过程中显示 --&gt;</span><br><span class="line">    &lt;template #fallback&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;loading&quot;&gt;</span><br><span class="line">        &lt;span&gt;数据加载中...&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;template&gt;</span><br><span class="line">  &lt;&#x2F;Suspense&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; defineAsyncComponent &#125; from &#39;vue&#39;</span><br><span class="line"></span><br><span class="line">const AsyncDashboard &#x3D; defineAsyncComponent(() &#x3D;&gt;</span><br><span class="line">  import(&#39;.&#x2F;Dashboard.vue&#39;)</span><br><span class="line">)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Dashboard.vue —— 使用 async setup --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">const data &#x3D; await fetch(&#39;&#x2F;api&#x2F;dashboard&#39;).then(r &#x3D;&gt; r.json())</span><br><span class="line">&#x2F;&#x2F; setup 中可以直接 await，Suspense 会自动处理加载状态</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; data.title &#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-多根节点（Fragments）"><a href="#6-多根节点（Fragments）" class="headerlink" title="6. 多根节点（Fragments）"></a>6. 多根节点（Fragments）</h2><p>Vue 3 组件模板不再强制要求单根节点：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Vue 2：必须有一个根元素 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;header&gt;头部&lt;&#x2F;header&gt;</span><br><span class="line">    &lt;main&gt;内容&lt;&#x2F;main&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Vue 3：支持多根节点 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;header&gt;头部&lt;&#x2F;header&gt;</span><br><span class="line">  &lt;main&gt;内容&lt;&#x2F;main&gt;</span><br><span class="line">  &lt;footer&gt;底部&lt;&#x2F;footer&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="7-组合式函数（Composables）"><a href="#7-组合式函数（Composables）" class="headerlink" title="7. 组合式函数（Composables）"></a>7. 组合式函数（Composables）</h2><p>Vue 3 的逻辑复用方式，替代了 Vue 2 的 Mixins：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// composables/useMouse.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref, onMounted, onUnmounted &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">useMouse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> x = ref(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> y = ref(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    x.value = event.pageX</span><br><span class="line">    y.value = event.pageY</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onMounted(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">window</span>.addEventListener(<span class="string">'mousemove'</span>, update))</span><br><span class="line">  onUnmounted(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">window</span>.removeEventListener(<span class="string">'mousemove'</span>, update))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; x, y &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// composables/useFetch.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref, watchEffect &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">useFetch</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> data = ref(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> error = ref(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> loading = ref(<span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line">  watchEffect(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    loading.value = <span class="literal">true</span></span><br><span class="line">    error.value = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> res = <span class="keyword">await</span> fetch(url.value || url)</span><br><span class="line">      data.value = <span class="keyword">await</span> res.json()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      error.value = e</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      loading.value = <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; data, error, loading &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 在组件中组合使用 --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; useMouse &#125; from &#39;@&#x2F;composables&#x2F;useMouse&#39;</span><br><span class="line">import &#123; useFetch &#125; from &#39;@&#x2F;composables&#x2F;useFetch&#39;</span><br><span class="line"></span><br><span class="line">const &#123; x, y &#125; &#x3D; useMouse()</span><br><span class="line">const &#123; data, loading &#125; &#x3D; useFetch(&#39;&#x2F;api&#x2F;articles&#39;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p&gt;鼠标位置: &#123;&#123; x &#125;&#125;, &#123;&#123; y &#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;div v-if&#x3D;&quot;loading&quot;&gt;加载中...&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;ul v-else&gt;</span><br><span class="line">    &lt;li v-for&#x3D;&quot;item in data&quot; :key&#x3D;&quot;item.id&quot;&gt;&#123;&#123; item.title &#125;&#125;&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ul&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Vue-2-vs-Vue-3-快速对照"><a href="#Vue-2-vs-Vue-3-快速对照" class="headerlink" title="Vue 2 vs Vue 3 快速对照"></a>Vue 2 vs Vue 3 快速对照</h2><table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">Vue 2</th>
+<th align="left">Vue 3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">API 风格</td>
+<td align="left">Options API</td>
+<td align="left">Composition API + Options API</td>
+</tr>
+<tr>
+<td align="left">响应式实现</td>
+<td align="left">Object.defineProperty</td>
+<td align="left">Proxy</td>
+</tr>
+<tr>
+<td align="left">模板根节点</td>
+<td align="left">仅单根</td>
+<td align="left">支持多根</td>
+</tr>
+<tr>
+<td align="left">生命周期前缀</td>
+<td align="left">beforeCreate / created</td>
+<td align="left">setup() 替代</td>
+</tr>
+<tr>
+<td align="left">逻辑复用</td>
+<td align="left">Mixins / HOC</td>
+<td align="left">Composables</td>
+</tr>
+<tr>
+<td align="left">TypeScript</td>
+<td align="left">需要装饰器</td>
+<td align="left">原生支持</td>
+</tr>
+<tr>
+<td align="left">性能</td>
+<td align="left">基准</td>
+<td align="left">快 ~2 倍</td>
+</tr>
+<tr>
+<td align="left">包体积</td>
+<td align="left">~20KB</td>
+<td align="left">~10KB（Tree-shakable）</td>
+</tr>
+</tbody></table>
+<p>Vue 3 在保持 Vue 的易用性同时，在性能、TypeScript 支持和大型项目架构能力上都有了质的飞跃。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+            <a href="/tags/Vue3/" rel="tag"># Vue3</a>
+          
+            <a href="/tags/Composition-API/" rel="tag"># Composition API</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/DevOps/2020-06-15-docker-frontend-deploy.html" rel="next" title="Docker 入门与前端部署实践">
+                <i class="fa fa-chevron-left"></i> Docker 入门与前端部署实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-01-10-vite-deep-guide.html" rel="prev" title="Vite 从入门到深度使用">
+                Vite 从入门到深度使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/Vue/2020-09-22-vue3-new-features.html"
+         data-hitalk-title="Vue 3 新特性全面解读">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

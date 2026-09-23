@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="在 AI 应用爆发的初期，每个开发者想要为大模型接入外部数据或操作（如读取本地 Git 仓库、操作 MySQL 数据库、触发构建流程），都必须在各自的框架里重复实现一遍插件或 Function Calling 胶水代码。直到 2025 年末至 2026 年，Model Context Protocol（MCP，模型上下文协议） 迅速成为了业界事实上的统一标准。如果说各类 LLM 是现代计算的主机，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Model Context Protocol (MCP) 实战：构建你自己的 AI 外部工具与服务">
+<meta property="og:url" content="https://www.vueweb.cn/posts/AI/2026-03-12-mcp-protocol-in-depth.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="在 AI 应用爆发的初期，每个开发者想要为大模型接入外部数据或操作（如读取本地 Git 仓库、操作 MySQL 数据库、触发构建流程），都必须在各自的框架里重复实现一遍插件或 Function Calling 胶水代码。直到 2025 年末至 2026 年，Model Context Protocol（MCP，模型上下文协议） 迅速成为了业界事实上的统一标准。如果说各类 LLM 是现代计算的主机，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-12T03:15:30.000Z">
+<meta property="article:modified_time" content="2026-09-23T04:03:31.847Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="效率工具">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="架构设计">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/AI/2026-03-12-mcp-protocol-in-depth.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Model Context Protocol (MCP) 实战：构建你自己的 AI 外部工具与服务 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/AI/2026-03-12-mcp-protocol-in-depth.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Model Context Protocol (MCP) 实战：构建你自己的 AI 外部工具与服务
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2026-03-12 11:15:30" itemprop="dateCreated datePublished" datetime="2026-03-12T11:15:30+08:00">2026-03-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 12:03:31" itemprop="dateModified" datetime="2026-09-23T12:03:31+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/AI/2026-03-12-mcp-protocol-in-depth.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/AI/2026-03-12-mcp-protocol-in-depth.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在 AI 应用爆发的初期，每个开发者想要为大模型接入外部数据或操作（如读取本地 Git 仓库、操作 MySQL 数据库、触发构建流程），都必须在各自的框架里重复实现一遍插件或 Function Calling 胶水代码。直到 2025 年末至 2026 年，<strong>Model Context Protocol（MCP，模型上下文协议）</strong> 迅速成为了业界事实上的统一标准。如果说各类 LLM 是现代计算的主机，那么 MCP 就相当于 AI 世界的 “USB-C” 接口规范。</p>
+<p>本文将深入拆解 MCP 的核心架构，并带领大家用 TypeScript 从零手写一个自定义的 MCP Server，实现本地数据查询与自动化操作。</p>
+<a id="more"></a>
+
+<h2 id="1-什么是-Model-Context-Protocol-MCP"><a href="#1-什么是-Model-Context-Protocol-MCP" class="headerlink" title="1. 什么是 Model Context Protocol (MCP)"></a>1. 什么是 Model Context Protocol (MCP)</h2><p>Model Context Protocol 是由 Anthropic 开源、现已被 Cursor、Claude Desktop、Zed、VS Code 等主流 AI 编程与日常工具广泛支持的开放标准协议。</p>
+<h3 id="1-1-痛点与破局"><a href="#1-1-痛点与破局" class="headerlink" title="1.1 痛点与破局"></a>1.1 痛点与破局</h3><p>在 MCP 出现前：</p>
+<ul>
+<li>Cursor 有自己的扩展系统</li>
+<li>Claude Desktop 有一套私有的工具调用配置</li>
+<li>自建的 AI Agent 框架（如 LangChain、LlamaIndex）各有各的 Tool 抽象</li>
+</ul>
+<p>这导致开发者为某一个工具编写的数据库连接插件，无法直接复用给其他 AI 客户端。而 MCP 的诞生解决了这一碎片化痛点：<strong>只要你实现了一个标准的 MCP Server，任何支持 MCP 的客户端均可即插即用。</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────┐</span><br><span class="line">│  AI 客户端 (MCP Host &#x2F; Client)         │</span><br><span class="line">│  (Claude Desktop &#x2F; Cursor &#x2F; Antigravity)│</span><br><span class="line">└──────────────────┬─────────────────────┘</span><br><span class="line">                   │ MCP 协议 (STDIO &#x2F; SSE)</span><br><span class="line">┌──────────────────▼─────────────────────┐</span><br><span class="line">│  MCP Server (提供服务与能力)           │</span><br><span class="line">│  ├─ Resources (文件、日志、数据库表)   │</span><br><span class="line">│  ├─ Tools     (增删改查、执行脚本、调用API)│</span><br><span class="line">│  └─ Prompts   (预置专业工作流提示词)   │</span><br><span class="line">└────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="2-MCP-的三大核心构件"><a href="#2-MCP-的三大核心构件" class="headerlink" title="2. MCP 的三大核心构件"></a>2. MCP 的三大核心构件</h2><p>MCP 协议规范中将服务端提供的能力抽象为三个基本维度：</p>
+<table>
+<thead>
+<tr>
+<th align="left">构件</th>
+<th align="left">角色定位</th>
+<th align="left">典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Resources</strong></td>
+<td align="left">数据的只读访问抽象</td>
+<td align="left">让 AI 直接把本地文件、数据库 Schema、系统日志作为上下文阅读</td>
+</tr>
+<tr>
+<td align="left"><strong>Tools</strong></td>
+<td align="left">可调用的函数与行为</td>
+<td align="left">允许 AI 执行外部动作：运行 SQL、调用 REST API、发送邮件</td>
+</tr>
+<tr>
+<td align="left"><strong>Prompts</strong></td>
+<td align="left">预定义的交互模板</td>
+<td align="left">帮助用户预设常用的特定提示词流程（如 Code Review、Debug 模版）</td>
+</tr>
+</tbody></table>
+<p>通信机制上，MCP 支持两种主要传输层：</p>
+<ol>
+<li><strong>STDIO（标准输入输出）</strong>：客户端通过子进程直接唤起 Server，通过进程标准输入/输出进行 JSON-RPC 通信，速度快、免鉴权，非常适合本地工具。</li>
+<li><strong>SSE / HTTP</strong>：通过 HTTP Server-Sent Events 进行长连接通信，适合部署在远端服务器或集群中的团队级共享服务。</li>
+</ol>
+<hr>
+<h2 id="3-实战：用-TypeScript-编写-SQLite-数据查询-MCP-Server"><a href="#3-实战：用-TypeScript-编写-SQLite-数据查询-MCP-Server" class="headerlink" title="3. 实战：用 TypeScript 编写 SQLite 数据查询 MCP Server"></a>3. 实战：用 TypeScript 编写 SQLite 数据查询 MCP Server</h2><p>接下来，我们使用官方 SDK <code>@modelcontextprotocol/sdk</code> 和 <code>zod</code>，构建一个可以让 AI 客户端安全查询本地 SQLite 数据库的 MCP Server。</p>
+<h3 id="3-1-初始化项目与依赖"><a href="#3-1-初始化项目与依赖" class="headerlink" title="3.1 初始化项目与依赖"></a>3.1 初始化项目与依赖</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir mcp-sqlite-server</span><br><span class="line"><span class="built_in">cd</span> mcp-sqlite-server</span><br><span class="line">npm init -y</span><br><span class="line">npm install @modelcontextprotocol/sdk zod better-sqlite3</span><br><span class="line">npm install -D typescript @types/node @types/better-sqlite3 tsx</span><br><span class="line">npx tsc --init</span><br></pre></td></tr></table></figure></div>
+
+<p>在 <code>tsconfig.json</code> 中确保开启现代模块解析：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"ES2022"</span>,</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"NodeNext"</span>,</span><br><span class="line">    <span class="attr">"moduleResolution"</span>: <span class="string">"NodeNext"</span>,</span><br><span class="line">    <span class="attr">"esModuleInterop"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"strict"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"skipLibCheck"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-2-编写-MCP-Server-核心逻辑"><a href="#3-2-编写-MCP-Server-核心逻辑" class="headerlink" title="3.2 编写 MCP Server 核心逻辑"></a>3.2 编写 MCP Server 核心逻辑</h3><p>新建 <code>src/index.ts</code>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Server &#125; <span class="keyword">from</span> <span class="string">"@modelcontextprotocol/sdk/server/index.js"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; StdioServerTransport &#125; <span class="keyword">from</span> <span class="string">"@modelcontextprotocol/sdk/server/stdio.js"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  CallToolRequestSchema,</span><br><span class="line">  ListToolsRequestSchema,</span><br><span class="line">  ListResourcesRequestSchema,</span><br><span class="line">  ReadResourceRequestSchema,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">"@modelcontextprotocol/sdk/types.js"</span>;</span><br><span class="line"><span class="keyword">import</span> Database <span class="keyword">from</span> <span class="string">"better-sqlite3"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; z &#125; <span class="keyword">from</span> <span class="string">"zod"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化本地数据库（此处使用内存或本地 db 文件）</span></span><br><span class="line"><span class="keyword">const</span> db = <span class="keyword">new</span> Database(<span class="string">"app.db"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化测试表</span></span><br><span class="line">db.exec(<span class="string">`</span></span><br><span class="line"><span class="string">  CREATE TABLE IF NOT EXISTS users (</span></span><br><span class="line"><span class="string">    id INTEGER PRIMARY KEY AUTOINCREMENT,</span></span><br><span class="line"><span class="string">    name TEXT NOT NULL,</span></span><br><span class="line"><span class="string">    role TEXT NOT NULL,</span></span><br><span class="line"><span class="string">    email TEXT UNIQUE</span></span><br><span class="line"><span class="string">  );</span></span><br><span class="line"><span class="string">  INSERT OR IGNORE INTO users (id, name, role, email) VALUES</span></span><br><span class="line"><span class="string">    (1, 'Alice', 'admin', 'alice@company.com'),</span></span><br><span class="line"><span class="string">    (2, 'Bob', 'developer', 'bob@company.com'),</span></span><br><span class="line"><span class="string">    (3, 'Charlie', 'tester', 'charlie@company.com');</span></span><br><span class="line"><span class="string">`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化 MCP Server</span></span><br><span class="line"><span class="keyword">const</span> server = <span class="keyword">new</span> Server(</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"local-sqlite-inspector"</span>,</span><br><span class="line">    version: <span class="string">"1.0.0"</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    capabilities: &#123;</span><br><span class="line">      resources: &#123;&#125;,</span><br><span class="line">      tools: &#123;&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 注册 Resources：将数据库表结构作为只读资源暴露</span></span><br><span class="line">server.setRequestHandler(ListResourcesRequestSchema, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    resources: [</span><br><span class="line">      &#123;</span><br><span class="line">        uri: <span class="string">"sqlite://schema"</span>,</span><br><span class="line">        name: <span class="string">"Database Schema"</span>,</span><br><span class="line">        mimeType: <span class="string">"text/plain"</span>,</span><br><span class="line">        description: <span class="string">"当前 SQLite 数据库中的所有表结构定义"</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.setRequestHandler(ReadResourceRequestSchema, <span class="keyword">async</span> (request) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (request.params.uri === <span class="string">"sqlite://schema"</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> tables = db.prepare(<span class="string">"SELECT sql FROM sqlite_master WHERE type='table'"</span>).all();</span><br><span class="line">    <span class="keyword">const</span> schemaText = tables.map(<span class="function">(<span class="params">t: <span class="built_in">any</span></span>) =&gt;</span> t.sql).join(<span class="string">"\n\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      contents: [</span><br><span class="line">        &#123;</span><br><span class="line">          uri: request.params.uri,</span><br><span class="line">          mimeType: <span class="string">"text/plain"</span>,</span><br><span class="line">          text: schemaText,</span><br><span class="line">        &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Resource not found"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 注册 Tools：提供只读 SQL 查询工具</span></span><br><span class="line"><span class="keyword">const</span> QuerySchema = z.object(&#123;</span><br><span class="line">  sql: z.string().describe(<span class="string">"要执行的 SQL 查询语句（必须是 SELECT 语句）"</span>),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.setRequestHandler(ListToolsRequestSchema, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    tools: [</span><br><span class="line">      &#123;</span><br><span class="line">        name: <span class="string">"execute_sql_query"</span>,</span><br><span class="line">        description: <span class="string">"在本地 SQLite 数据库中执行 SELECT 只读查询"</span>,</span><br><span class="line">        inputSchema: &#123;</span><br><span class="line">          <span class="keyword">type</span>: <span class="string">"object"</span>,</span><br><span class="line">          properties: &#123;</span><br><span class="line">            sql: &#123;</span><br><span class="line">              <span class="keyword">type</span>: <span class="string">"string"</span>,</span><br><span class="line">              description: <span class="string">"只读 SELECT 语句，禁止包含 DROP/DELETE/INSERT/UPDATE"</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;,</span><br><span class="line">          required: [<span class="string">"sql"</span>],</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.setRequestHandler(CallToolRequestSchema, <span class="keyword">async</span> (request) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (request.params.name === <span class="string">"execute_sql_query"</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; sql &#125; = QuerySchema.parse(request.params.arguments);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 安全检查：强制只读，防止破坏性指令</span></span><br><span class="line">    <span class="keyword">const</span> trimmed = sql.trim().toLowerCase();</span><br><span class="line">    <span class="keyword">if</span> (!trimmed.startsWith(<span class="string">"select"</span>) &amp;&amp; !trimmed.startsWith(<span class="string">"explain"</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        isError: <span class="literal">true</span>,</span><br><span class="line">        content: [&#123; <span class="keyword">type</span>: <span class="string">"text"</span>, text: <span class="string">"权限拦截：此工具只允许执行 SELECT 或 EXPLAIN 查询！"</span> &#125;],</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> rows = db.prepare(sql).all();</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        content: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="keyword">type</span>: <span class="string">"text"</span>,</span><br><span class="line">            text: <span class="built_in">JSON</span>.stringify(rows, <span class="literal">null</span>, <span class="number">2</span>),</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err: <span class="built_in">any</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        isError: <span class="literal">true</span>,</span><br><span class="line">        content: [&#123; <span class="keyword">type</span>: <span class="string">"text"</span>, text: <span class="string">`SQL 执行失败: <span class="subst">$&#123;err.message&#125;</span>`</span> &#125;],</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Tool not found: <span class="subst">$&#123;request.params.name&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">### <span class="number">3.3</span> 启动并连接传输层 (STDIO)</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> transport = <span class="keyword">new</span> StdioServerTransport();</span><br><span class="line">  <span class="keyword">await</span> server.connect(transport);</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">"Local SQLite MCP Server running on stdio"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">run().catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">"Fatal error:"</span>, err);</span><br><span class="line">  process.exit(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p><strong>注意</strong>：由于 STDIO 传输依赖标准输出（<code>stdout</code>）传输 JSON-RPC 数据，所有的调试日志、诊断信息一律使用 <code>console.error</code> 输出到标准错误（<code>stderr</code>），否则会导致协议解析崩溃！</p>
+</blockquote>
+<hr>
+<h2 id="4-接入客户端进行联调"><a href="#4-接入客户端进行联调" class="headerlink" title="4. 接入客户端进行联调"></a>4. 接入客户端进行联调</h2><p>在你的客户端配置文件（如 Claude Desktop 的 <code>claude_desktop_config.json</code> 或 Cursor 的 MCP 设置页面）中添加：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"mcpServers"</span>: &#123;</span><br><span class="line">    <span class="attr">"sqlite-inspector"</span>: &#123;</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"npx"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-y"</span>,</span><br><span class="line">        <span class="string">"tsx"</span>,</span><br><span class="line">        <span class="string">"/Users/username/mcp-sqlite-server/src/index.ts"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>配置保存后重启客户端，即可直接在对话中对 AI 提问：</p>
+<blockquote>
+<p><em>“请先读取 sqlite://schema 了解有哪些表，然后告诉我系统里有哪些角色的用户？”</em></p>
+</blockquote>
+<p>AI 会自动发现 <code>sqlite://schema</code> 资源，并调用 <code>execute_sql_query</code> 执行 <code>SELECT role, count(*) FROM users GROUP BY role</code>，最后以人类友好的方式把分析结果展示出来。</p>
+<hr>
+<h2 id="5-MCP-开发中的安全与架构建议"><a href="#5-MCP-开发中的安全与架构建议" class="headerlink" title="5. MCP 开发中的安全与架构建议"></a>5. MCP 开发中的安全与架构建议</h2><ol>
+<li><strong>最小权限原则（Least Privilege）</strong>：<br>暴露给 AI 的 Tool 必须做严格的参数校验和权限收敛。涉及到写操作（如更新订单、删除数据、发送线上请求）的 Tool，建议设置 <code>requireConfirmation</code> 或在客户端配置中加入人机交互确认（Human-in-the-loop）。</li>
+<li><strong>结构化上下文传输</strong>：<br>充分利用 MCP Resources 机制将结构体、配置规范化输出，避免把海量无关日志直接堆进单次调用中。</li>
+<li><strong>可观测性与审计日志</strong>：<br>在 MCP Server 内部记录所有收到的 Tool 调用入参和返回结果，形成清晰的操作审计流，便于追溯。</li>
+</ol>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>MCP 的普及标志着 AI 编程与大模型应用开发进入了标准化与模块化的新纪元。它打破了不同模型、不同开发工具之间的生态壁垒。无论未来大模型的技术底座如何演进，掌握 MCP 协议标准都将成为全栈工程师扩展系统能力、让 AI 真正深入具体业务场景的必备技能。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" rel="tag"># 效率工具</a>
+          
+            <a href="/tags/MCP/" rel="tag"># MCP</a>
+          
+            <a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" rel="tag"># 架构设计</a>
+          
+            <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/AI/2025-10-20-cursor-vibe-coding.html" rel="next" title="Cursor 与 Vibe Coding：AI 驱动的开发新范式">
+                <i class="fa fa-chevron-left"></i> Cursor 与 Vibe Coding：AI 驱动的开发新范式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html" rel="prev" title="AI Native 时代的前端架构演进：从组件驱动到生成式 UI (Generative UI)">
+                AI Native 时代的前端架构演进：从组件驱动到生成式 UI (Generative UI) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/AI/2026-03-12-mcp-protocol-in-depth.html"
+         data-hitalk-title="Model Context Protocol (MCP) 实战：构建你自己的 AI 外部工具与服务">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

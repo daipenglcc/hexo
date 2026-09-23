@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="微信小程序自 2017 年发布以来持续火热，2019 年已经成为移动端开发不可忽视的一环。相比传统 H5 应用，小程序在微信生态内拥有更好的性能表现和用户触达能力。本文从项目搭建到核心知识点，整理了小程序开发的入门要点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序开发入门笔记">
+<meta property="og:url" content="https://www.vueweb.cn/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="微信小程序自 2017 年发布以来持续火热，2019 年已经成为移动端开发不可忽视的一环。相比传统 H5 应用，小程序在微信生态内拥有更好的性能表现和用户触达能力。本文从项目搭建到核心知识点，整理了小程序开发的入门要点。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-25T03:20:35.000Z">
+<meta property="article:modified_time" content="2026-09-23T03:16:25.609Z">
+<meta property="article:tag" content="小程序">
+<meta property="article:tag" content="微信">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/小程序/2019-10-25-wechat-miniprogram-guide.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>微信小程序开发入门笔记 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">微信小程序开发入门笔记
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-25 11:20:35" itemprop="dateCreated datePublished" datetime="2019-10-25T11:20:35+08:00">2019-10-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 11:16:25" itemprop="dateModified" datetime="2026-09-23T11:16:25+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>微信小程序自 2017 年发布以来持续火热，2019 年已经成为移动端开发不可忽视的一环。相比传统 H5 应用，小程序在微信生态内拥有更好的性能表现和用户触达能力。本文从项目搭建到核心知识点，整理了小程序开发的入门要点。</p>
+<a id="more"></a>
+
+<h2 id="1-项目结构"><a href="#1-项目结构" class="headerlink" title="1. 项目结构"></a>1. 项目结构</h2><p>一个标准的小程序项目包含以下核心文件：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">├── app.js          # 小程序入口逻辑（应用生命周期）</span><br><span class="line">├── app.json        # 全局配置（页面路径、窗口样式、TabBar 等）</span><br><span class="line">├── app.wxss        # 全局样式</span><br><span class="line">├── pages&#x2F;</span><br><span class="line">│   ├── index&#x2F;</span><br><span class="line">│   │   ├── index.js      # 页面逻辑</span><br><span class="line">│   │   ├── index.json    # 页面配置</span><br><span class="line">│   │   ├── index.wxml    # 页面模板（类似 HTML）</span><br><span class="line">│   │   └── index.wxss    # 页面样式（类似 CSS）</span><br><span class="line">│   └── detail&#x2F;</span><br><span class="line">│       ├── detail.js</span><br><span class="line">│       ├── detail.json</span><br><span class="line">│       ├── detail.wxml</span><br><span class="line">│       └── detail.wxss</span><br><span class="line">├── components&#x2F;     # 自定义组件</span><br><span class="line">├── utils&#x2F;          # 工具函数</span><br><span class="line">└── project.config.json  # 项目配置</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-全局配置-app-json"><a href="#2-全局配置-app-json" class="headerlink" title="2. 全局配置 app.json"></a>2. 全局配置 app.json</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"pages"</span>: [</span><br><span class="line">    <span class="string">"pages/index/index"</span>,</span><br><span class="line">    <span class="string">"pages/list/list"</span>,</span><br><span class="line">    <span class="string">"pages/detail/detail"</span>,</span><br><span class="line">    <span class="string">"pages/mine/mine"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"window"</span>: &#123;</span><br><span class="line">    <span class="attr">"navigationBarTitleText"</span>: <span class="string">"光阴小栈"</span>,</span><br><span class="line">    <span class="attr">"navigationBarBackgroundColor"</span>: <span class="string">"#2d8cf0"</span>,</span><br><span class="line">    <span class="attr">"navigationBarTextStyle"</span>: <span class="string">"white"</span>,</span><br><span class="line">    <span class="attr">"backgroundColor"</span>: <span class="string">"#f5f5f5"</span>,</span><br><span class="line">    <span class="attr">"enablePullDownRefresh"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"tabBar"</span>: &#123;</span><br><span class="line">    <span class="attr">"color"</span>: <span class="string">"#999"</span>,</span><br><span class="line">    <span class="attr">"selectedColor"</span>: <span class="string">"#2d8cf0"</span>,</span><br><span class="line">    <span class="attr">"list"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"pagePath"</span>: <span class="string">"pages/index/index"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"首页"</span>,</span><br><span class="line">        <span class="attr">"iconPath"</span>: <span class="string">"images/home.png"</span>,</span><br><span class="line">        <span class="attr">"selectedIconPath"</span>: <span class="string">"images/home-active.png"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"pagePath"</span>: <span class="string">"pages/mine/mine"</span>,</span><br><span class="line">        <span class="attr">"text"</span>: <span class="string">"我的"</span>,</span><br><span class="line">        <span class="attr">"iconPath"</span>: <span class="string">"images/mine.png"</span>,</span><br><span class="line">        <span class="attr">"selectedIconPath"</span>: <span class="string">"images/mine-active.png"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-页面生命周期"><a href="#3-页面生命周期" class="headerlink" title="3. 页面生命周期"></a>3. 页面生命周期</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/index/index.js</span></span><br><span class="line">Page(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    articles: [],</span><br><span class="line">    loading: <span class="literal">false</span>,</span><br><span class="line">    page: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 页面加载（只执行一次）</span></span><br><span class="line">  onLoad(options) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'页面参数:'</span>, options)</span><br><span class="line">    <span class="keyword">this</span>.loadArticles()</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 页面显示（每次切换回来都会触发）</span></span><br><span class="line">  onShow() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'页面显示'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 页面初次渲染完成</span></span><br><span class="line">  onReady() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'页面渲染完成'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 页面隐藏</span></span><br><span class="line">  onHide() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'页面隐藏'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 页面卸载</span></span><br><span class="line">  onUnload() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'页面卸载'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 下拉刷新</span></span><br><span class="line">  onPullDownRefresh() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setData(&#123; <span class="attr">page</span>: <span class="number">1</span> &#125;)</span><br><span class="line">    <span class="keyword">this</span>.loadArticles().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      wx.stopPullDownRefresh()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 触底加载更多</span></span><br><span class="line">  onReachBottom() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setData(&#123; <span class="attr">page</span>: <span class="keyword">this</span>.data.page + <span class="number">1</span> &#125;)</span><br><span class="line">    <span class="keyword">this</span>.loadMoreArticles()</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 自定义方法</span></span><br><span class="line">  loadArticles() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setData(&#123; <span class="attr">loading</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      wx.request(&#123;</span><br><span class="line">        url: <span class="string">'https://api.example.com/articles'</span>,</span><br><span class="line">        data: &#123; <span class="attr">page</span>: <span class="keyword">this</span>.data.page &#125;,</span><br><span class="line">        success: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">            articles: res.data.list,</span><br><span class="line">            loading: <span class="literal">false</span></span><br><span class="line">          &#125;)</span><br><span class="line">          resolve()</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-数据绑定与模板语法"><a href="#4-数据绑定与模板语法" class="headerlink" title="4. 数据绑定与模板语法"></a>4. 数据绑定与模板语法</h2><p>小程序模板语法（WXML）和 Vue 模板有相似之处，但也有不少差异：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 数据绑定用双花括号 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"article-card"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span>&gt;</span>&#123;&#123; title &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span>&gt;</span>阅读量: &#123;&#123; readCount &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 条件渲染 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:if</span>=<span class="string">"&#123;&#123; status === 'loading' &#125;&#125;"</span>&gt;</span>加载中...<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:elif</span>=<span class="string">"&#123;&#123; status === 'empty' &#125;&#125;"</span>&gt;</span>暂无数据<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:else</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 列表渲染 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:for</span>=<span class="string">"&#123;&#123; articles &#125;&#125;"</span> <span class="attr">wx:key</span>=<span class="string">"id"</span> <span class="attr">wx:for-item</span>=<span class="string">"article"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span>&#123;&#123; index + 1 &#125;&#125;. &#123;&#123; article.title &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"date"</span>&gt;</span>&#123;&#123; article.date &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 事件绑定用 bind / catch --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">bindtap</span>=<span class="string">"handleSubmit"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">catchtap</span>=<span class="string">"handleCancel"</span>&gt;</span>取消（阻止冒泡）<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 双向绑定（简易） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">model:value</span>=<span class="string">"&#123;&#123; inputValue &#125;&#125;"</span> <span class="attr">placeholder</span>=<span class="string">"请输入"</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-网络请求封装"><a href="#5-网络请求封装" class="headerlink" title="5. 网络请求封装"></a>5. 网络请求封装</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/request.js</span></span><br><span class="line"><span class="keyword">const</span> BASE_URL = <span class="string">'https://api.example.com'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">&#123; url, method = <span class="string">'GET'</span>, data = &#123;&#125; &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    wx.showLoading(&#123; <span class="attr">title</span>: <span class="string">'加载中'</span> &#125;)</span><br><span class="line"></span><br><span class="line">    wx.request(&#123;</span><br><span class="line">      url: <span class="string">`<span class="subst">$&#123;BASE_URL&#125;</span><span class="subst">$&#123;url&#125;</span>`</span>,</span><br><span class="line">      method,</span><br><span class="line">      data,</span><br><span class="line">      header: &#123;</span><br><span class="line">        <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>,</span><br><span class="line">        <span class="string">'Authorization'</span>: <span class="string">`Bearer <span class="subst">$&#123;wx.getStorageSync(<span class="string">'token'</span>)&#125;</span>`</span></span><br><span class="line">      &#125;,</span><br><span class="line">      success(res) &#123;</span><br><span class="line">        <span class="keyword">if</span> (res.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">          resolve(res.data)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (res.statusCode === <span class="number">401</span>) &#123;</span><br><span class="line">          <span class="comment">// token 过期，跳转登录</span></span><br><span class="line">          wx.redirectTo(&#123; <span class="attr">url</span>: <span class="string">'/pages/login/login'</span> &#125;)</span><br><span class="line">          reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'未授权'</span>))</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          wx.showToast(&#123; <span class="attr">title</span>: <span class="string">'请求失败'</span>, <span class="attr">icon</span>: <span class="string">'none'</span> &#125;)</span><br><span class="line">          reject(<span class="keyword">new</span> <span class="built_in">Error</span>(res.data.message || <span class="string">'请求失败'</span>))</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      fail(err) &#123;</span><br><span class="line">        wx.showToast(&#123; <span class="attr">title</span>: <span class="string">'网络异常'</span>, <span class="attr">icon</span>: <span class="string">'none'</span> &#125;)</span><br><span class="line">        reject(err)</span><br><span class="line">      &#125;,</span><br><span class="line">      complete() &#123;</span><br><span class="line">        wx.hideLoading()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出快捷方法</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="keyword">get</span>: (url, data) =&gt; request(&#123; url, <span class="attr">method</span>: <span class="string">'GET'</span>, data &#125;),</span><br><span class="line">  post: <span class="function">(<span class="params">url, data</span>) =&gt;</span> request(&#123; url, <span class="attr">method</span>: <span class="string">'POST'</span>, data &#125;),</span><br><span class="line">  put: <span class="function">(<span class="params">url, data</span>) =&gt;</span> request(&#123; url, <span class="attr">method</span>: <span class="string">'PUT'</span>, data &#125;),</span><br><span class="line">  del: <span class="function">(<span class="params">url, data</span>) =&gt;</span> request(&#123; url, <span class="attr">method</span>: <span class="string">'DELETE'</span>, data &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-自定义组件"><a href="#6-自定义组件" class="headerlink" title="6. 自定义组件"></a>6. 自定义组件</h2><p>小程序支持组件化开发：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// components/article-card/article-card.js</span></span><br><span class="line">Component(&#123;</span><br><span class="line">  properties: &#123;</span><br><span class="line">    title: &#123; <span class="attr">type</span>: <span class="built_in">String</span>, <span class="attr">value</span>: <span class="string">''</span> &#125;,</span><br><span class="line">    date: &#123; <span class="attr">type</span>: <span class="built_in">String</span>, <span class="attr">value</span>: <span class="string">''</span> &#125;,</span><br><span class="line">    cover: &#123; <span class="attr">type</span>: <span class="built_in">String</span>, <span class="attr">value</span>: <span class="string">''</span> &#125;,</span><br><span class="line">    readCount: &#123; <span class="attr">type</span>: <span class="built_in">Number</span>, <span class="attr">value</span>: <span class="number">0</span> &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    liked: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    onTapCard() &#123;</span><br><span class="line">      <span class="keyword">this</span>.triggerEvent(<span class="string">'tap'</span>, &#123; <span class="attr">title</span>: <span class="keyword">this</span>.properties.title &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    onToggleLike() &#123;</span><br><span class="line">      <span class="keyword">this</span>.setData(&#123; <span class="attr">liked</span>: !<span class="keyword">this</span>.data.liked &#125;)</span><br><span class="line">      <span class="keyword">this</span>.triggerEvent(<span class="string">'like'</span>, &#123; <span class="attr">liked</span>: <span class="keyword">this</span>.data.liked &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- components/article-card/article-card.wxml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"card"</span> <span class="attr">bindtap</span>=<span class="string">"onTapCard"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">image</span> <span class="attr">class</span>=<span class="string">"cover"</span> <span class="attr">src</span>=<span class="string">"&#123;&#123; cover &#125;&#125;"</span> <span class="attr">mode</span>=<span class="string">"aspectFill"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"info"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>&#123;&#123; title &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"meta"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"date"</span>&gt;</span>&#123;&#123; date &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"read"</span>&gt;</span>&#123;&#123; readCount &#125;&#125; 阅读<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"like &#123;&#123; liked ? 'active' : '' &#125;&#125;"</span> <span class="attr">catchtap</span>=<span class="string">"onToggleLike"</span>&gt;</span></span><br><span class="line">    ♥</span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>使用组件前需要在页面的 JSON 中注册：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"usingComponents"</span>: &#123;</span><br><span class="line">    <span class="attr">"article-card"</span>: <span class="string">"/components/article-card/article-card"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="7-本地存储"><a href="#7-本地存储" class="headerlink" title="7. 本地存储"></a>7. 本地存储</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同步存储（适合轻量数据）</span></span><br><span class="line">wx.setStorageSync(<span class="string">'userInfo'</span>, &#123; <span class="attr">name</span>: <span class="string">'Tom'</span>, <span class="attr">id</span>: <span class="number">1</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> user = wx.getStorageSync(<span class="string">'userInfo'</span>)</span><br><span class="line">wx.removeStorageSync(<span class="string">'userInfo'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步存储（适合较大数据，不阻塞 UI）</span></span><br><span class="line">wx.setStorage(&#123;</span><br><span class="line">  key: <span class="string">'historyList'</span>,</span><br><span class="line">  data: historyArray,</span><br><span class="line">  success() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'保存成功'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="8-常用-API-速查"><a href="#8-常用-API-速查" class="headerlink" title="8. 常用 API 速查"></a>8. 常用 API 速查</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 页面跳转</span></span><br><span class="line">wx.navigateTo(&#123; <span class="attr">url</span>: <span class="string">'/pages/detail/detail?id=123'</span> &#125;)  <span class="comment">// 保留当前页</span></span><br><span class="line">wx.redirectTo(&#123; <span class="attr">url</span>: <span class="string">'/pages/login/login'</span> &#125;)             <span class="comment">// 关闭当前页</span></span><br><span class="line">wx.switchTab(&#123; <span class="attr">url</span>: <span class="string">'/pages/index/index'</span> &#125;)               <span class="comment">// 切换 Tab</span></span><br><span class="line">wx.navigateBack(&#123; <span class="attr">delta</span>: <span class="number">1</span> &#125;)                             <span class="comment">// 返回上一页</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 用户交互</span></span><br><span class="line">wx.showToast(&#123; <span class="attr">title</span>: <span class="string">'操作成功'</span>, <span class="attr">icon</span>: <span class="string">'success'</span> &#125;)</span><br><span class="line">wx.showModal(&#123;</span><br><span class="line">  title: <span class="string">'提示'</span>,</span><br><span class="line">  content: <span class="string">'确定要删除吗？'</span>,</span><br><span class="line">  success(res) &#123;</span><br><span class="line">    <span class="keyword">if</span> (res.confirm) <span class="built_in">console</span>.log(<span class="string">'用户点击确定'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">wx.showActionSheet(&#123;</span><br><span class="line">  itemList: [<span class="string">'拍照'</span>, <span class="string">'从相册选择'</span>],</span><br><span class="line">  success(res) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'选择了:'</span>, res.tapIndex)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取系统信息</span></span><br><span class="line"><span class="keyword">const</span> sysInfo = wx.getSystemInfoSync()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'屏幕宽度:'</span>, sysInfo.windowWidth)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'系统:'</span>, sysInfo.platform)</span><br></pre></td></tr></table></figure></div>
+
+<p>小程序的开发体验和 Web 前端有不少共通之处，掌握了上述基础知识后，结合微信开发者文档就可以开始实际项目开发了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># 小程序</a>
+          
+            <a href="/tags/%E5%BE%AE%E4%BF%A1/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2019-07-08-webpack4-optimization.html" rel="next" title="Webpack 4 性能优化实战指南">
+                <i class="fa fa-chevron-left"></i> Webpack 4 性能优化实战指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/TypeScript/2020-02-18-typescript-in-practice.html" rel="prev" title="TypeScript 入门到实践">
+                TypeScript 入门到实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html"
+         data-hitalk-title="微信小程序开发入门笔记">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,5 +1,5 @@
-https://www.vueweb.cn/posts/Node/2018-05-13-pm2-study.html
-https://www.vueweb.cn/posts/Linux/2017-05-26-liunx-shell.html
-https://www.vueweb.cn/posts/Node/2017-05-10-npm.html
-https://www.vueweb.cn/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html
-https://www.vueweb.cn/posts/Git/2017-04-23-git.html
+https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html
+https://www.vueweb.cn/posts/AI/2026-03-12-mcp-protocol-in-depth.html
+https://www.vueweb.cn/posts/AI/2025-10-20-cursor-vibe-coding.html
+https://www.vueweb.cn/posts/AI/2025-06-12-ai-agent-in-practice.html
+https://www.vueweb.cn/posts/AI/2025-02-18-ollama-deepseek-local-llm.html

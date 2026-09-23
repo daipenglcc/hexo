@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="大模型（LLM）虽然能力强大，但存在知识截止、幻觉以及无法访问私有数据等问题。RAG（Retrieval-Augmented Generation，检索增强生成）是目前解决这些问题最实用的方案——先从知识库中检索相关信息，再将检索结果作为上下文交给大模型生成回答。本文从原理到实现，记录 RAG 的入门实践。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAG 技术入门：为你的应用接入大模型知识库">
+<meta property="og:url" content="https://www.vueweb.cn/posts/AI/2024-09-15-rag-knowledge-base.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="大模型（LLM）虽然能力强大，但存在知识截止、幻觉以及无法访问私有数据等问题。RAG（Retrieval-Augmented Generation，检索增强生成）是目前解决这些问题最实用的方案——先从知识库中检索相关信息，再将检索结果作为上下文交给大模型生成回答。本文从原理到实现，记录 RAG 的入门实践。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-15T03:20:45.000Z">
+<meta property="article:modified_time" content="2026-09-23T04:06:06.049Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="大模型">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/AI/2024-09-15-rag-knowledge-base.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>RAG 技术入门：为你的应用接入大模型知识库 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">33</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">65</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/AI/2024-09-15-rag-knowledge-base.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">RAG 技术入门：为你的应用接入大模型知识库
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-09-15 11:20:45" itemprop="dateCreated datePublished" datetime="2024-09-15T11:20:45+08:00">2024-09-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-09-23 12:06:06" itemprop="dateModified" datetime="2026-09-23T12:06:06+08:00">2026-09-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/AI/2024-09-15-rag-knowledge-base.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/AI/2024-09-15-rag-knowledge-base.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>大模型（LLM）虽然能力强大，但存在知识截止、幻觉以及无法访问私有数据等问题。RAG（Retrieval-Augmented Generation，检索增强生成）是目前解决这些问题最实用的方案——先从知识库中检索相关信息，再将检索结果作为上下文交给大模型生成回答。本文从原理到实现，记录 RAG 的入门实践。</p>
+<a id="more"></a>
+
+<h2 id="RAG-是什么"><a href="#RAG-是什么" class="headerlink" title="RAG 是什么"></a>RAG 是什么</h2><p>简单来说，RAG 在大模型回答问题之前，先”帮它查资料”：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">传统 LLM:</span><br><span class="line">  用户提问 → 大模型直接回答（可能过时或编造）</span><br><span class="line"></span><br><span class="line">RAG 流程:</span><br><span class="line">  用户提问 → 从知识库检索相关文档 → 将文档 + 问题一起交给大模型 → 生成有据可依的回答</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="为什么需要-RAG"><a href="#为什么需要-RAG" class="headerlink" title="为什么需要 RAG"></a>为什么需要 RAG</h3><table>
+<thead>
+<tr>
+<th align="left">问题</th>
+<th align="left">纯 LLM</th>
+<th align="left">RAG</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">知识时效</td>
+<td align="left">训练数据有截止日期</td>
+<td align="left">可以接入最新文档</td>
+</tr>
+<tr>
+<td align="left">幻觉问题</td>
+<td align="left">可能编造答案</td>
+<td align="left">基于检索到的真实数据回答</td>
+</tr>
+<tr>
+<td align="left">私有数据</td>
+<td align="left">无法访问企业内部数据</td>
+<td align="left">可以索引企业知识库</td>
+</tr>
+<tr>
+<td align="left">成本</td>
+<td align="left">微调模型成本高</td>
+<td align="left">只需维护向量数据库</td>
+</tr>
+<tr>
+<td align="left">可解释性</td>
+<td align="left">黑盒输出</td>
+<td align="left">可以展示引用来源</td>
+</tr>
+</tbody></table>
+<h2 id="核心流程"><a href="#核心流程" class="headerlink" title="核心流程"></a>核心流程</h2><p>RAG 分为两个阶段：</p>
+<h3 id="阶段一：索引（Indexing）——-构建知识库"><a href="#阶段一：索引（Indexing）——-构建知识库" class="headerlink" title="阶段一：索引（Indexing）—— 构建知识库"></a>阶段一：索引（Indexing）—— 构建知识库</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原始文档 → 文本分割 → 向量化（Embedding） → 存入向量数据库</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 伪代码示例</span></span><br><span class="line"><span class="keyword">from</span> langchain.text_splitter <span class="keyword">import</span> RecursiveCharacterTextSplitter</span><br><span class="line"><span class="keyword">from</span> langchain.embeddings <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"><span class="keyword">from</span> langchain.vectorstores <span class="keyword">import</span> Chroma</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 加载文档</span></span><br><span class="line">documents = load_documents(<span class="string">"./docs/"</span>)  <span class="comment"># PDF、Markdown、网页等</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 文本分割</span></span><br><span class="line">splitter = RecursiveCharacterTextSplitter(</span><br><span class="line">    chunk_size=<span class="number">500</span>,       <span class="comment"># 每块 500 个字符</span></span><br><span class="line">    chunk_overlap=<span class="number">50</span>,     <span class="comment"># 块之间重叠 50 个字符</span></span><br><span class="line">    separators=[<span class="string">"\n\n"</span>, <span class="string">"\n"</span>, <span class="string">"。"</span>, <span class="string">"."</span>, <span class="string">" "</span>]</span><br><span class="line">)</span><br><span class="line">chunks = splitter.split_documents(documents)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 向量化并存入数据库</span></span><br><span class="line">embeddings = OpenAIEmbeddings()</span><br><span class="line">vectorstore = Chroma.from_documents(</span><br><span class="line">    documents=chunks,</span><br><span class="line">    embedding=embeddings,</span><br><span class="line">    persist_directory=<span class="string">"./chroma_db"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="阶段二：检索与生成（Retrieval-amp-Generation）"><a href="#阶段二：检索与生成（Retrieval-amp-Generation）" class="headerlink" title="阶段二：检索与生成（Retrieval &amp; Generation）"></a>阶段二：检索与生成（Retrieval &amp; Generation）</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户提问 → 问题向量化 → 在向量数据库中检索相似文档 → 组装 Prompt → LLM 生成回答</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.chat_models <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.chains <span class="keyword">import</span> RetrievalQA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载已有的向量数据库</span></span><br><span class="line">vectorstore = Chroma(</span><br><span class="line">    persist_directory=<span class="string">"./chroma_db"</span>,</span><br><span class="line">    embedding_function=OpenAIEmbeddings()</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建检索器</span></span><br><span class="line">retriever = vectorstore.as_retriever(</span><br><span class="line">    search_type=<span class="string">"similarity"</span>,</span><br><span class="line">    search_kwargs=&#123;<span class="string">"k"</span>: <span class="number">3</span>&#125;   <span class="comment"># 检索最相关的 3 个文档块</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建问答链</span></span><br><span class="line">qa_chain = RetrievalQA.from_chain_type(</span><br><span class="line">    llm=ChatOpenAI(model=<span class="string">"gpt-4"</span>, temperature=<span class="number">0</span>),</span><br><span class="line">    chain_type=<span class="string">"stuff"</span>,       <span class="comment"># 将所有检索结果拼接到 prompt 中</span></span><br><span class="line">    retriever=retriever,</span><br><span class="line">    return_source_documents=<span class="literal">True</span>  <span class="comment"># 返回引用来源</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提问</span></span><br><span class="line">result = qa_chain(&#123;<span class="string">"query"</span>: <span class="string">"公司的年假制度是怎样的？"</span>&#125;)</span><br><span class="line">print(result[<span class="string">"result"</span>])</span><br><span class="line">print(<span class="string">"引用来源:"</span>, result[<span class="string">"source_documents"</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-用-Node-js-实现简易-RAG"><a href="#3-用-Node-js-实现简易-RAG" class="headerlink" title="3. 用 Node.js 实现简易 RAG"></a>3. 用 Node.js 实现简易 RAG</h2><p>对于前端/Node.js 开发者，可以使用 LangChain.js：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i langchain @langchain/openai @langchain/community chromadb</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rag-demo.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; ChatOpenAI, OpenAIEmbeddings &#125; <span class="keyword">from</span> <span class="string">'@langchain/openai'</span></span><br><span class="line"><span class="keyword">import</span> &#123; Chroma &#125; <span class="keyword">from</span> <span class="string">'@langchain/community/vectorstores/chroma'</span></span><br><span class="line"><span class="keyword">import</span> &#123; RecursiveCharacterTextSplitter &#125; <span class="keyword">from</span> <span class="string">'langchain/text_splitter'</span></span><br><span class="line"><span class="keyword">import</span> &#123; RetrievalQAChain &#125; <span class="keyword">from</span> <span class="string">'langchain/chains'</span></span><br><span class="line"><span class="keyword">import</span> &#123; TextLoader &#125; <span class="keyword">from</span> <span class="string">'langchain/document_loaders/fs/text'</span></span><br><span class="line"><span class="keyword">import</span> &#123; DirectoryLoader &#125; <span class="keyword">from</span> <span class="string">'langchain/document_loaders/fs/directory'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 加载文档</span></span><br><span class="line"><span class="keyword">const</span> loader = <span class="keyword">new</span> DirectoryLoader(<span class="string">'./knowledge-base'</span>, &#123;</span><br><span class="line">  <span class="string">'.md'</span>: <span class="function">(<span class="params">path</span>) =&gt;</span> <span class="keyword">new</span> TextLoader(path),</span><br><span class="line">  <span class="string">'.txt'</span>: <span class="function">(<span class="params">path</span>) =&gt;</span> <span class="keyword">new</span> TextLoader(path)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> docs = <span class="keyword">await</span> loader.load()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 文本分割</span></span><br><span class="line"><span class="keyword">const</span> splitter = <span class="keyword">new</span> RecursiveCharacterTextSplitter(&#123;</span><br><span class="line">  chunkSize: <span class="number">500</span>,</span><br><span class="line">  chunkOverlap: <span class="number">50</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> chunks = <span class="keyword">await</span> splitter.splitDocuments(docs)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 创建向量存储</span></span><br><span class="line"><span class="keyword">const</span> embeddings = <span class="keyword">new</span> OpenAIEmbeddings()</span><br><span class="line"><span class="keyword">const</span> vectorStore = <span class="keyword">await</span> Chroma.fromDocuments(chunks, embeddings, &#123;</span><br><span class="line">  collectionName: <span class="string">'my-knowledge-base'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 创建问答链</span></span><br><span class="line"><span class="keyword">const</span> llm = <span class="keyword">new</span> ChatOpenAI(&#123; <span class="attr">modelName</span>: <span class="string">'gpt-4'</span>, <span class="attr">temperature</span>: <span class="number">0</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> chain = RetrievalQAChain.fromLLM(llm, vectorStore.asRetriever(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 提问</span></span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> chain.call(&#123;</span><br><span class="line">  query: <span class="string">'项目的部署流程是什么？'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(response.text)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-关键概念解析"><a href="#4-关键概念解析" class="headerlink" title="4. 关键概念解析"></a>4. 关键概念解析</h2><h3 id="4-1-文本分割（Chunking）"><a href="#4-1-文本分割（Chunking）" class="headerlink" title="4.1 文本分割（Chunking）"></a>4.1 文本分割（Chunking）</h3><p>分割策略直接影响检索质量：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">文档太大（整篇文章作为一块）：</span><br><span class="line">  → 检索精度低，噪音多，浪费 Token</span><br><span class="line"></span><br><span class="line">文档太小（按句子分割）：</span><br><span class="line">  → 上下文断裂，语义不完整</span><br><span class="line"></span><br><span class="line">推荐策略：</span><br><span class="line">  → 500-1000 字符一块，块之间有 10-20% 重叠</span><br><span class="line">  → 按段落或语义边界分割</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="4-2-向量化（Embedding）"><a href="#4-2-向量化（Embedding）" class="headerlink" title="4.2 向量化（Embedding）"></a>4.2 向量化（Embedding）</h3><p>将文本转换为高维数值向量，语义相似的文本在向量空间中距离更近：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;Vue 组件通信&quot; → [0.12, -0.34, 0.56, ...]  ← 512维或1536维向量</span><br><span class="line">&quot;React Props 传值&quot; → [0.11, -0.33, 0.55, ...]  ← 语义相近，向量也相近</span><br><span class="line">&quot;今天天气真好&quot; → [0.89, 0.23, -0.67, ...]  ← 语义不同，向量距离远</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="4-3-向量检索"><a href="#4-3-向量检索" class="headerlink" title="4.3 向量检索"></a>4.3 向量检索</h3><p>通过计算问题向量与知识库中所有文档向量的相似度（余弦相似度），找到最相关的文档：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">用户问题: &quot;如何配置 Nginx 的反向代理？&quot;</span><br><span class="line">   ↓ 向量化</span><br><span class="line">   ↓ 在向量数据库中搜索最相似的文档块</span><br><span class="line">   ↓</span><br><span class="line">检索结果:</span><br><span class="line">  1. [相似度 0.92] &quot;Nginx 反向代理配置详解...&quot;</span><br><span class="line">  2. [相似度 0.87] &quot;proxy_pass 参数说明...&quot;</span><br><span class="line">  3. [相似度 0.83] &quot;Nginx location 匹配规则...&quot;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-优化技巧"><a href="#5-优化技巧" class="headerlink" title="5. 优化技巧"></a>5. 优化技巧</h2><ol>
+<li><strong>混合检索</strong>：结合关键词搜索（BM25）和向量语义搜索，取长补短</li>
+<li><strong>重排序（Reranking）</strong>：对初步检索结果用交叉编码器重新排序，提高精度</li>
+<li><strong>元数据过滤</strong>：给文档块添加元数据（来源、日期、分类），检索时可以按条件过滤</li>
+<li><strong>查询改写</strong>：用 LLM 将模糊的用户问题改写为更精确的检索查询</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RAG 是当前大模型应用中最实用的技术之一，门槛相对较低，适合开发者快速上手为自己的产品注入 AI 能力。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+            <a href="/tags/RAG/" rel="tag"># RAG</a>
+          
+            <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag"># 大模型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/AI/2024-05-10-github-copilot-guide.html" rel="next" title="GitHub Copilot 深度使用指南与最佳实践">
+                <i class="fa fa-chevron-left"></i> GitHub Copilot 深度使用指南与最佳实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/AI/2025-02-18-ollama-deepseek-local-llm.html" rel="prev" title="本地大模型开发指南：Ollama 与 DeepSeek 实战">
+                本地大模型开发指南：Ollama 与 DeepSeek 实战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/AI/2024-09-15-rag-knowledge-base.html"
+         data-hitalk-title="RAG 技术入门：为你的应用接入大模型知识库">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
