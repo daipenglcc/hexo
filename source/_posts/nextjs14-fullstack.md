@@ -1,5 +1,5 @@
 ---
-title: 用 Next.js 14 构建全栈应用实践
+title: 折腾 Next.js 14：全栈开发踩坑与基础配置
 date: 2024-01-22 09:15:40
 tags:
   - Next.js
@@ -8,11 +8,13 @@ tags:
 categories: React
 ---
 
-Next.js 14 带来了 App Router 的全面稳定、Server Actions、部分预渲染（PPR）等重磅特性，进一步巩固了其 React 全栈框架的地位。本文以搭建一个博客应用为例，记录 Next.js 14 全栈开发的核心知识点和实践经验。
+最近写点个人小项目，发现 Next.js 14 的 App Router 终于算是彻底稳了。以前搞前后端分离还得单独弄个 Node.js 服务端，现在直接把读写数据库的逻辑全塞进 Server Actions 里，一把梭的感觉确实爽。这篇就把基础的建站流程整理一下，当个脚手架备忘。
 
 <!-- more -->
 
-## 1. 创建项目
+## 1. 一把梭建项目
+
+我一般直接用下面这个命令，该带的 `TypeScript` 和 `Tailwind` 都带上了：
 
 ```bash
 npx create-next-app@latest my-blog --typescript --tailwind --eslint --app --src-dir
@@ -20,48 +22,31 @@ cd my-blog
 npm run dev
 ```
 
-## 2. App Router 路由系统
+## 2. 那个让人又爱又恨的 App Router
 
-Next.js 14 使用基于文件系统的路由，App Router 以 `app/` 目录为根：
+Next.js 14 强制推 App Router，刚开始从 Pages 迁过来确实有点蒙。说白了，它就是靠文件夹名字来定路由：
 
-```
+```text
 src/app/
-├── layout.tsx          # 根布局（全局 Layout）
-├── page.tsx            # 首页 /
-├── loading.tsx         # 加载状态 UI
-├── error.tsx           # 错误边界 UI
-├── not-found.tsx       # 404 页面
+├── layout.tsx          # 每一页都会套用的最外层壳子
+├── page.tsx            # 就是你的首页 /
+├── loading.tsx         # 还没加载出来时转圈圈的骨架屏
+├── error.tsx           # 报错了显示的页面（不会直接白屏崩溃）
 ├── blog/
-│   ├── page.tsx        # /blog
+│   ├── page.tsx        # 对应 /blog
 │   └── [slug]/
-│       ├── page.tsx    # /blog/:slug（动态路由）
-│       └── loading.tsx
-├── api/
-│   └── articles/
-│       └── route.ts    # API 路由 /api/articles
-└── (auth)/             # 路由组（不影响 URL）
-    ├── login/
-    │   └── page.tsx    # /login
-    └── register/
-        └── page.tsx    # /register
+│       └── page.tsx    # 动态路由，对应 /blog/xxx
 ```
 
-### 布局组件
+写个最简单的外壳（Layout）：
 
 ```tsx
 // src/app/layout.tsx
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: {
-    template: '%s | 光阴小栈',
-    default: '光阴小栈'
-  },
-  description: '一个技术博客'
+export const metadata = {
+  title: '光阴小栈',
+  description: '随便写写技术'
 }
 
 export default function RootLayout({
@@ -71,14 +56,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className={inter.className}>
-        <nav className="navbar">
-          {/* 导航栏 */}
-        </nav>
+      <body>
+        <nav>导航栏在这</nav>
+        {/* 你写的具体页面都会塞进这里 */}
         <main>{children}</main>
-        <footer>
-          {/* 页脚 */}
-        </footer>
       </body>
     </html>
   )
@@ -87,246 +68,93 @@ export default function RootLayout({
 
 ## 3. 服务端组件 vs 客户端组件
 
-Next.js 14 默认所有组件都是**服务端组件（Server Components）**：
+这个是最容易搞混的。简单来说：
+**默认全是服务端组件**。在服务端组件里，你不能用 `useState`，不能绑 `onClick`，但你可以直接读库！
 
 ```tsx
-// 服务端组件（默认）—— 可以直接读数据库、调用 API
-// ✅ 在服务器执行，不会打包到客户端 JS
+// 这是一个服务端组件，直接请求数据，不用写 useEffect！
+// 这玩意在服务器跑完，发给浏览器的是纯 HTML，SEO 极好
 async function ArticleList() {
-  // 直接在组件中获取数据（无需 useEffect）
-  const articles = await fetch('https://api.example.com/articles', {
-    next: { revalidate: 60 }  // ISR：60秒后重新验证
-  }).then(r => r.json())
+  const res = await fetch('https://api.example.com/articles')
+  const articles = await res.json()
 
   return (
     <ul>
-      {articles.map((article: any) => (
-        <li key={article.id}>
-          <h3>{article.title}</h3>
-          <p>{article.summary}</p>
-        </li>
+      {articles.map((item: any) => (
+        <li key={item.id}>{item.title}</li>
       ))}
     </ul>
   )
 }
 ```
 
+如果你的组件有个按钮需要点，或者要保存点状态，那就必须在文件最上面加一句 `'use client'`：
+
 ```tsx
-// 客户端组件 —— 需要交互、状态、浏览器 API 时使用
-'use client'  // 必须在文件顶部声明
+'use client'  // 没这句直接报错
 
 import { useState } from 'react'
 
-export function LikeButton({ articleId }: { articleId: string }) {
-  const [liked, setLiked] = useState(false)
+export function LikeButton() {
   const [count, setCount] = useState(0)
 
-  const handleLike = async () => {
-    setLiked(!liked)
-    setCount(prev => liked ? prev - 1 : prev + 1)
-    await fetch(`/api/articles/${articleId}/like`, { method: 'POST' })
-  }
-
   return (
-    <button onClick={handleLike}>
-      {liked ? '❤️' : '🤍'} {count}
+    <button onClick={() => setCount(count + 1)}>
+      点赞 {count}
     </button>
   )
 }
 ```
 
-### 如何选择？
+## 4. 彻底抛弃 API 路由的 Server Actions
 
-| 需求 | 使用 |
-| :--- | :--- |
-| 数据获取、数据库查询 | 服务端组件 |
-| 访问后端资源 | 服务端组件 |
-| 敏感信息（API Key 等） | 服务端组件 |
-| 事件监听（onClick 等） | 客户端组件 |
-| useState / useEffect | 客户端组件 |
-| 浏览器 API（localStorage 等） | 客户端组件 |
-
-## 4. Server Actions
-
-Next.js 14 的 Server Actions 让表单处理变得极其简洁，无需手动创建 API 路由：
+以前写个表单提交，还得专门去 `/api/` 下面建个路由，前端再去 fetch。现在用 Server Actions，简直不要太爽：
 
 ```tsx
 // app/blog/new/page.tsx
 import { redirect } from 'next/navigation'
-import { revalidatePath } from 'next/cache'
 
 export default function NewArticlePage() {
-  async function createArticle(formData: FormData) {
-    'use server'  // 标记为 Server Action
+  
+  // 这个函数只在服务器上跑，直接连数据库都没问题
+  async function submitForm(formData: FormData) {
+    'use server'  // 魔法指令
 
-    const title = formData.get('title') as string
-    const content = formData.get('content') as string
+    const title = formData.get('title')
+    
+    // 假装我们在操作数据库
+    console.log('保存到数据库:', title)
 
-    // 直接操作数据库（这段代码只在服务端运行）
-    await db.article.create({
-      data: { title, content, published: true }
-    })
-
-    // 重新验证缓存
-    revalidatePath('/blog')
-    // 重定向
+    // 保存完直接跳回列表页
     redirect('/blog')
   }
 
   return (
-    <form action={createArticle}>
+    // 原生表单直接绑个 action
+    <form action={submitForm}>
       <input name="title" placeholder="文章标题" required />
-      <textarea name="content" placeholder="文章内容" required />
-      <button type="submit">发布文章</button>
+      <button type="submit">发布</button>
     </form>
   )
 }
 ```
 
-## 5. 数据获取策略
+## 5. 偶尔还是得写 API 的情况
 
-```tsx
-// 1. 静态数据（构建时获取，SSG）
-async function StaticPage() {
-  const data = await fetch('https://api.example.com/data', {
-    cache: 'force-cache'  // 默认行为
-  })
-  return <div>{/* ... */}</div>
-}
-
-// 2. 动态数据（每次请求都获取，SSR）
-async function DynamicPage() {
-  const data = await fetch('https://api.example.com/data', {
-    cache: 'no-store'
-  })
-  return <div>{/* ... */}</div>
-}
-
-// 3. 增量静态再生（ISR）
-async function ISRPage() {
-  const data = await fetch('https://api.example.com/data', {
-    next: { revalidate: 60 }  // 60秒后重新验证
-  })
-  return <div>{/* ... */}</div>
-}
-```
-
-## 6. API 路由
+如果是给小程序或者别人提供接口，还是得老老实实写 API 路由：
 
 ```typescript
-// app/api/articles/route.ts
-import { NextRequest, NextResponse } from 'next/server'
-
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
-  const page = Number(searchParams.get('page')) || 1
-  const limit = Number(searchParams.get('limit')) || 10
-
-  const articles = await db.article.findMany({
-    skip: (page - 1) * limit,
-    take: limit,
-    orderBy: { createdAt: 'desc' }
-  })
-
-  return NextResponse.json({
-    data: articles,
-    page,
-    limit
-  })
-}
-
-export async function POST(request: NextRequest) {
-  const body = await request.json()
-
-  const article = await db.article.create({
-    data: {
-      title: body.title,
-      content: body.content
-    }
-  })
-
-  return NextResponse.json({ data: article }, { status: 201 })
-}
-```
-
-```typescript
-// app/api/articles/[id]/route.ts
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const article = await db.article.findUnique({
-    where: { id: params.id }
-  })
-
-  if (!article) {
-    return NextResponse.json(
-      { error: '文章不存在' },
-      { status: 404 }
-    )
-  }
-
-  return NextResponse.json({ data: article })
-}
-```
-
-## 7. 加载状态与错误处理
-
-```tsx
-// app/blog/loading.tsx（同级路由的加载状态）
-export default function Loading() {
-  return (
-    <div className="loading-container">
-      <div className="skeleton-card" />
-      <div className="skeleton-card" />
-      <div className="skeleton-card" />
-    </div>
-  )
-}
-```
-
-```tsx
-// app/blog/error.tsx
-'use client'
-
-export default function Error({
-  error,
-  reset
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
-  return (
-    <div className="error-page">
-      <h2>出错了</h2>
-      <p>{error.message}</p>
-      <button onClick={reset}>重试</button>
-    </div>
-  )
-}
-```
-
-## 8. 中间件
-
-```typescript
-// middleware.ts（项目根目录）
+// app/api/hello/route.ts
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
-  // 检查登录状态
-  const token = request.cookies.get('token')?.value
-
-  if (request.nextUrl.pathname.startsWith('/admin') && !token) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
-
-  return NextResponse.next()
+export async function GET() {
+  return NextResponse.json({ message: '你好啊' })
 }
 
-export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*']
+export async function POST(request: Request) {
+  const body = await request.json()
+  return NextResponse.json({ received: body })
 }
 ```
 
-Next.js 14 将 React 的服务端能力发挥到了极致，是 2024 年构建全栈 Web 应用的优秀选择。
+其实玩熟了之后发现，Next.js 的思路就是尽量把活丢给服务器干，浏览器只负责展示和少量交互。虽然一开始有点折腾，但配合 Vercel 一键部署，一个人搞定全栈小项目确实非常快。
