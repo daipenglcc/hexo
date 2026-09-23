@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="记录 Linux 云服务器上 Shadowsocks 服务端的安装、多端口配置、系统网络内核调优以及开机服务托管方案。">
+  <meta name="description" content="买了个海外的 VPS，闲着也是闲着，干脆自己搭个 Shadowsocks（简称 ss）用来查查资料。虽然现在市面上一键安装脚本满天飞，但为了安全起见，也为了搞清楚它到底怎么跑的，我还是习惯自己手动走一遍流程。 顺便把 Linux 的网络内核参数调优也记下来了，不然遇到晚高峰，网速慢得能让人抓狂。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="科学上网之shadowsocks 服务端安装">
+<meta property="og:title" content="自己动手搭梯子：Shadowsocks 服务端安装与调优">
 <meta property="og:url" content="https://www.vueweb.cn/posts/shadowsocks/2017-03-16-shadowsocks-install.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="记录 Linux 云服务器上 Shadowsocks 服务端的安装、多端口配置、系统网络内核调优以及开机服务托管方案。">
+<meta property="og:description" content="买了个海外的 VPS，闲着也是闲着，干脆自己搭个 Shadowsocks（简称 ss）用来查查资料。虽然现在市面上一键安装脚本满天飞，但为了安全起见，也为了搞清楚它到底怎么跑的，我还是习惯自己手动走一遍流程。 顺便把 Linux 的网络内核参数调优也记下来了，不然遇到晚高峰，网速慢得能让人抓狂。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-16T10:38:46.000Z">
-<meta property="article:modified_time" content="2026-09-22T07:39:01.321Z">
+<meta property="article:modified_time" content="2026-09-23T06:52:49.813Z">
 <meta property="article:tag" content="科学上网">
 <meta property="article:tag" content="shadowsocks">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
   };
 </script>
 
-  <title>科学上网之shadowsocks 服务端安装 | 光阴小栈</title>
+  <title>自己动手搭梯子：Shadowsocks 服务端安装与调优 | 光阴小栈</title>
   
 
 
@@ -419,7 +419,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">科学上网之shadowsocks 服务端安装
+          <h2 class="post-title" itemprop="name headline">自己动手搭梯子：Shadowsocks 服务端安装与调优
               
             
           </h2>
@@ -461,7 +461,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-22 15:39:01" itemprop="dateModified" datetime="2026-09-22T15:39:01+08:00">2026-09-22</time>
+                <time title="修改时间：2026-09-23 14:52:49" itemprop="dateModified" datetime="2026-09-23T14:52:49+08:00">2026-09-23</time>
               
             
           </span>
@@ -530,34 +530,45 @@
       
 
       
-        <p>记录 Linux 云服务器上 Shadowsocks 服务端的安装、多端口配置、系统网络内核调优以及开机服务托管方案。</p>
+        <p>买了个海外的 VPS，闲着也是闲着，干脆自己搭个 Shadowsocks（简称 ss）用来查查资料。虽然现在市面上一键安装脚本满天飞，但为了安全起见，也为了搞清楚它到底怎么跑的，我还是习惯自己手动走一遍流程。</p>
+<p>顺便把 Linux 的网络内核参数调优也记下来了，不然遇到晚高峰，网速慢得能让人抓狂。</p>
 <a id="more"></a>
 
-<h2 id="1-安装环境与依赖-Ubuntu-Debian"><a href="#1-安装环境与依赖-Ubuntu-Debian" class="headerlink" title="1. 安装环境与依赖 (Ubuntu / Debian)"></a>1. 安装环境与依赖 (Ubuntu / Debian)</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新系统包管理器</span></span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Python3 及 pip</span></span><br><span class="line">sudo apt-get install -y python3 python3-pip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 shadowsocks</span></span><br><span class="line">sudo pip3 install shadowsocks</span><br></pre></td></tr></table></figure></div>
+<h2 id="1-撸起袖子装环境-Ubuntu-Debian"><a href="#1-撸起袖子装环境-Ubuntu-Debian" class="headerlink" title="1. 撸起袖子装环境 (Ubuntu / Debian)"></a>1. 撸起袖子装环境 (Ubuntu / Debian)</h2><p>Shadowsocks 原本是 Python 写的，所以先把 Python 环境搞好就行：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先把系统包管理器更新一下</span></span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 装个 python3 和 pip</span></span><br><span class="line">sudo apt-get install -y python3 python3-pip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这一句就装好了，极其简单</span></span><br><span class="line">sudo pip3 install shadowsocks</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="2-配置文件说明"><a href="#2-配置文件说明" class="headerlink" title="2. 配置文件说明"></a>2. 配置文件说明</h2><p>创建并编辑配置文件 <code>/etc/shadowsocks.json</code>：</p>
+<h2 id="2-写个配置文件"><a href="#2-写个配置文件" class="headerlink" title="2. 写个配置文件"></a>2. 写个配置文件</h2><p>它不会自动帮你搞配置，得自己新建个文件告诉它监听哪个端口、密码是啥。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/shadowsocks.json</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="单端口配置模式"><a href="#单端口配置模式" class="headerlink" title="单端口配置模式"></a>单端口配置模式</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">  <span class="attr">"server_port"</span>: <span class="number">8388</span>,</span><br><span class="line">  <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">  <span class="attr">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"your_secure_password"</span>,</span><br><span class="line">  <span class="attr">"timeout"</span>: <span class="number">300</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"aes-256-gcm"</span>,</span><br><span class="line">  <span class="attr">"fast_open"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>我一般用这种最简单的<strong>单端口配置</strong>，自己一个人用够了：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">  <span class="attr">"server_port"</span>: <span class="number">8388</span>,</span><br><span class="line">  <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">  <span class="attr">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"密码搞复杂点_1234!"</span>,</span><br><span class="line">  <span class="attr">"timeout"</span>: <span class="number">300</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"aes-256-gcm"</span>, </span><br><span class="line">  <span class="attr">"fast_open"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p><code>method</code> 加密方式我选了 <code>aes-256-gcm</code>，现在主流客户端都支持，而且速度和安全性平衡得不错。</p>
+</blockquote>
+<p>如果想分享给室友或者同学，怕他们流量乱用想分开算，就搞个<strong>多端口配置</strong>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">  <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">  <span class="attr">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">  <span class="attr">"port_password"</span>: &#123;</span><br><span class="line">    <span class="attr">"8381"</span>: <span class="string">"室友A的密码"</span>,</span><br><span class="line">    <span class="attr">"8382"</span>: <span class="string">"室友B的密码"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"timeout"</span>: <span class="number">300</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"aes-256-gcm"</span>,</span><br><span class="line">  <span class="attr">"fast_open"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="多用户-多端口配置模式"><a href="#多用户-多端口配置模式" class="headerlink" title="多用户 / 多端口配置模式"></a>多用户 / 多端口配置模式</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">  <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">  <span class="attr">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">  <span class="attr">"port_password"</span>: &#123;</span><br><span class="line">    <span class="attr">"8381"</span>: <span class="string">"password_user1"</span>,</span><br><span class="line">    <span class="attr">"8382"</span>: <span class="string">"password_user2"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"timeout"</span>: <span class="number">300</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"aes-256-gcm"</span>,</span><br><span class="line">  <span class="attr">"fast_open"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="3-把服务丢到后台跑（Systemd-托管）"><a href="#3-把服务丢到后台跑（Systemd-托管）" class="headerlink" title="3. 把服务丢到后台跑（Systemd 托管）"></a>3. 把服务丢到后台跑（Systemd 托管）</h2><p>总不能在终端里一直挂着吧。我们把它交给 Linux 自带的 <code>systemd</code> 管家，这样就算服务器重启，它也能自动跟着起来。</p>
+<p>建个启动脚本：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/systemd/system/shadowsocks.service</span><br></pre></td></tr></table></figure></div>
 
-<hr>
-<h2 id="3-Linux-高并发与网络内核参数优化"><a href="#3-Linux-高并发与网络内核参数优化" class="headerlink" title="3. Linux 高并发与网络内核参数优化"></a>3. Linux 高并发与网络内核参数优化</h2><p>编辑系统配置文件 <code>/etc/sysctl.d/local.conf</code>：</p>
+<p>往里面塞这几句咒语：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="INI"><figure class="iseeu highlight /ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Shadowsocks Server</span><br><span class="line"><span class="attr">After</span>=network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="comment"># 注意检查你的 ssserver 装在哪了，有时候在 /usr/bin/ 下面</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/bin/ssserver -c /etc/shadowsocks.json</span><br><span class="line"><span class="attr">Restart</span>=always</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure></div>
+
+<p>然后就是一套丝滑的连招，把它跑起来：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl start shadowsocks     <span class="comment"># 起飞</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> shadowsocks    <span class="comment"># 设为开机自启，不用管它了</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-关键一步：Linux-内核网络优化"><a href="#4-关键一步：Linux-内核网络优化" class="headerlink" title="4. 关键一步：Linux 内核网络优化"></a>4. 关键一步：Linux 内核网络优化</h2><p>很多人装完测速发现看个 720P 都卡。因为 Linux 原生的 TCP 参数是给正常的网页服务器准备的，咱们用来搞数据转发，得给它“打点鸡血”，特别是要开启 BBR 加速。</p>
+<p>打开系统内核配置文件：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sysctl.d/local.conf</span><br></pre></td></tr></table></figure></div>
 
-<p>添加以下内核网络调优配置：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="INI"><figure class="iseeu highlight /ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最大文件句柄与缓冲区</span></span><br><span class="line"><span class="attr">fs.file-max</span> = <span class="number">1024000</span></span><br><span class="line"><span class="attr">net.core.rmem_max</span> = <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.core.wmem_max</span> = <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.core.rmem_default</span> = <span class="number">65536</span></span><br><span class="line"><span class="attr">net.core.wmem_default</span> = <span class="number">65536</span></span><br><span class="line"><span class="attr">net.core.netdev_max_backlog</span> = <span class="number">4096</span></span><br><span class="line"><span class="attr">net.core.somaxconn</span> = <span class="number">4096</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># TCP 连接重用与超时控制</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_syncookies</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_tw_reuse</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_fin_timeout</span> = <span class="number">30</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_keepalive_time</span> = <span class="number">1200</span></span><br><span class="line"><span class="attr">net.ipv4.ip_local_port_range</span> = <span class="number">10000</span> <span class="number">65000</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_max_syn_backlog</span> = <span class="number">4096</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_max_tw_buckets</span> = <span class="number">5000</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_rmem</span> = <span class="number">4096</span> <span class="number">87380</span> <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_wmem</span> = <span class="number">4096</span> <span class="number">65536</span> <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_mtu_probing</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用 BBR 拥塞控制算法（Linux 4.9+）</span></span><br><span class="line"><span class="attr">net.core.default_qdisc</span> = fq</span><br><span class="line"><span class="attr">net.ipv4.tcp_congestion_control</span> = bbr</span><br></pre></td></tr></table></figure></div>
+<p>把下面这些优化参数全部复制进去：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="INI"><figure class="iseeu highlight /ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把文件句柄和缓冲区开大，别那么抠搜</span></span><br><span class="line"><span class="attr">fs.file-max</span> = <span class="number">1024000</span></span><br><span class="line"><span class="attr">net.core.rmem_max</span> = <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.core.wmem_max</span> = <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.core.rmem_default</span> = <span class="number">65536</span></span><br><span class="line"><span class="attr">net.core.wmem_default</span> = <span class="number">65536</span></span><br><span class="line"><span class="attr">net.core.netdev_max_backlog</span> = <span class="number">4096</span></span><br><span class="line"><span class="attr">net.core.somaxconn</span> = <span class="number">4096</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># TCP 连接复用，减少握手浪费的时间</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_syncookies</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_tw_reuse</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_fin_timeout</span> = <span class="number">30</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_keepalive_time</span> = <span class="number">1200</span></span><br><span class="line"><span class="attr">net.ipv4.ip_local_port_range</span> = <span class="number">10000</span> <span class="number">65000</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_max_syn_backlog</span> = <span class="number">4096</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_max_tw_buckets</span> = <span class="number">5000</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_rmem</span> = <span class="number">4096</span> <span class="number">87380</span> <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_wmem</span> = <span class="number">4096</span> <span class="number">65536</span> <span class="number">67108864</span></span><br><span class="line"><span class="attr">net.ipv4.tcp_mtu_probing</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 核心魔法：开启 BBR 拥塞控制（Google 开源的黑科技，速度直接起飞）</span></span><br><span class="line"><span class="attr">net.core.default_qdisc</span> = fq</span><br><span class="line"><span class="attr">net.ipv4.tcp_congestion_control</span> = bbr</span><br></pre></td></tr></table></figure></div>
 
-<p>使配置立即生效：</p>
+<p>写完保存，然后敲下面这句让它立即生效：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl --system</span><br></pre></td></tr></table></figure></div>
 
-<hr>
-<h2 id="4-服务运行与-Systemd-托管"><a href="#4-服务运行与-Systemd-托管" class="headerlink" title="4. 服务运行与 Systemd 托管"></a>4. 服务运行与 Systemd 托管</h2><p>推荐使用 <code>systemd</code> 进行服务启停与开机自启管理：</p>
-<p>新建服务描述文件 <code>/etc/systemd/system/shadowsocks.service</code>：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="INI"><figure class="iseeu highlight /ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Shadowsocks Server</span><br><span class="line"><span class="attr">After</span>=network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/bin/ssserver -c /etc/shadowsocks.json</span><br><span class="line"><span class="attr">Restart</span>=always</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="服务管理命令"><a href="#服务管理命令" class="headerlink" title="服务管理命令"></a>服务管理命令</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl start shadowsocks     <span class="comment"># 启动服务</span></span><br><span class="line">sudo systemctl restart shadowsocks   <span class="comment"># 重启服务</span></span><br><span class="line">sudo systemctl status shadowsocks    <span class="comment"># 查看运行状态</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> shadowsocks    <span class="comment"># 开启开机自启</span></span><br></pre></td></tr></table></figure></div>
+<p>最后，千万记得去云服务器的后台把安全组/防火墙对应的端口（比如上面的 8388）打开。搞定这些，基本上在本地填好 IP 密码，就可以愉快地去外面看看世界了。</p>
 
       
     </div>
@@ -600,8 +611,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/Markdown/2016-11-27-use-tools-part1-markdown.html" rel="next" title="工具使用篇之Markdown">
-                <i class="fa fa-chevron-left"></i> 工具使用篇之Markdown
+              <a href="/posts/Markdown/2016-11-27-use-tools-part1-markdown.html" rel="next" title="写作利器：Markdown 高频语法速查">
+                <i class="fa fa-chevron-left"></i> 写作利器：Markdown 高频语法速查
               </a>
             
           </div>
@@ -610,8 +621,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/MongoDB/2017-03-23-mongodb.html" rel="prev" title="MongoDB安装笔记">
-                MongoDB安装笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/MongoDB/2017-03-23-mongodb.html" rel="prev" title="各个平台上怎么最快装个 MongoDB">
+                各个平台上怎么最快装个 MongoDB <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -641,7 +652,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/shadowsocks/2017-03-16-shadowsocks-install.html"
-         data-hitalk-title="科学上网之shadowsocks 服务端安装">
+         data-hitalk-title="自己动手搭梯子：Shadowsocks 服务端安装与调优">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

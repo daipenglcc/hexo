@@ -423,7 +423,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/Vue/2020-09-22-vue3-new-features.html" itemprop="url">
-                  Vue 3 新特性全面解读
+                  Vue3 到底香在哪？大白话聊聊那些牛逼的新特性
                 </a>
               
             
@@ -466,7 +466,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:18:25" itemprop="dateModified" datetime="2026-09-23T11:18:25+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:54:30" itemprop="dateModified" datetime="2026-09-23T14:54:30+08:00">2026-09-23</time>
               
             
           </span>
@@ -528,7 +528,8 @@
 
       
         
-          <p>Vue 3 于 2020 年 9 月 18 日正式发布（代号 “One Piece”），带来了全新的 Composition API、更好的 TypeScript 支持、性能大幅提升等重磅更新。本文从实际使用角度对 Vue 3 的核心新特性做一次全面解读。</p>
+          <p>刚开始接触 Vue3 的时候，心里其实是在骂娘的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要搞个 Composition API 折腾人，代码全挤在一起像面条一样。</p>
+<p>直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然悟了，原来 Vue3 的按逻辑组织代码这么爽。这篇就用大白话，聊聊 Vue3 那些让我用过就回不去的新特性。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/Vue/2020-09-22-vue3-new-features.html" rel="contents">
@@ -794,7 +795,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/TypeScript/2020-02-18-typescript-in-practice.html" itemprop="url">
-                  TypeScript 入门到实践
+                  被 TypeScript 毒打后的常用类型套路备忘
                 </a>
               
             
@@ -837,7 +838,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:17:06" itemprop="dateModified" datetime="2026-09-23T11:17:06+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:52:51" itemprop="dateModified" datetime="2026-09-23T14:52:51+08:00">2026-09-23</time>
               
             
           </span>
@@ -899,7 +900,8 @@
 
       
         
-          <p>TypeScript 在 2020 年已经从”可选项”变成了前端项目的”标配”。越来越多的框架和库（Angular、Vue 3、Deno）将 TypeScript 作为第一优先级支持。本文从实际使用角度出发，系统整理 TypeScript 的核心类型系统和日常开发中最常用的特性。</p>
+          <p>最开始接触 TypeScript 的时候，觉得这玩意儿完全就是给自己找罪受。明明写个 JS 五分钟搞定，非要我花半小时去写类型，报错了还满屏幕飙红，最后实在受不了，满篇都是 <code>any</code>。</p>
+<p>后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被毒打久了才发现，<strong>强类型一时爽，一直重构一直爽</strong>。这里总结了一些平时写业务最常用的类型定义套路，当个个人的速查字典。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/TypeScript/2020-02-18-typescript-in-practice.html" rel="contents">
@@ -979,7 +981,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html" itemprop="url">
-                  微信小程序开发入门笔记
+                  微信小程序开发避坑录：从零搞个能跑的项目
                 </a>
               
             
@@ -1022,7 +1024,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:16:25" itemprop="dateModified" datetime="2026-09-23T11:16:25+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:54:34" itemprop="dateModified" datetime="2026-09-23T14:54:34+08:00">2026-09-23</time>
               
             
           </span>
@@ -1084,7 +1086,8 @@
 
       
         
-          <p>微信小程序自 2017 年发布以来持续火热，2019 年已经成为移动端开发不可忽视的一环。相比传统 H5 应用，小程序在微信生态内拥有更好的性能表现和用户触达能力。本文从项目搭建到核心知识点，整理了小程序开发的入门要点。</p>
+          <p>前端干久了，难免会被老板抓壮丁去搞微信小程序。一开始以为这玩意儿就是套了壳的 Vue，真上手去官网下了个开发者工具才发现，它的标签语法、生命周期甚至连 CSS 名字（WXSS）全是一套独立的体系，搞得人晕头转向。</p>
+<p>跌跌撞撞总算摸透了它最基础的套路，整理了一份傻瓜式的入门笔记，下次再有新项目要开荒，直接拿这篇来抄作业就行了。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html" rel="contents">
@@ -1164,7 +1167,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2019-07-08-webpack4-optimization.html" itemprop="url">
-                  Webpack 4 性能优化实战指南
+                  老项目抢救指南：Webpack 4 到底还能怎么优化
                 </a>
               
             
@@ -1207,7 +1210,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:15:44" itemprop="dateModified" datetime="2026-09-23T11:15:44+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:54:32" itemprop="dateModified" datetime="2026-09-23T14:54:32+08:00">2026-09-23</time>
               
             
           </span>
@@ -1269,7 +1272,8 @@
 
       
         
-          <p>Webpack 作为前端构建的事实标准，在处理大型项目时常常面临构建速度慢、产出体积大的问题。本文结合 Webpack 4 的实际项目经验，从构建速度和产出优化两个维度，整理了一套可落地的性能优化方案。</p>
+          <p>虽然现在满世界都在吹 Vite 甚至 Rspack 有多快，但现实往往是骨感的：手里还有好几个祖传的 Webpack 4 老项目要维护，因为历史包袱太重根本没法升版本。</p>
+<p>以前每次按个保存（Ctrl+S），我都得去倒杯茶等它那十几秒的热更新转完，简直是折磨。上个月实在受不了了，抽了两个周末把项目底朝天优化了一遍，冷启动和热更新的速度总算降到了能忍受的几秒钟。把这次“抢救”用到的一些管用的招数记下来，以后留着给其他项目续命。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2019-07-08-webpack4-optimization.html" rel="contents">

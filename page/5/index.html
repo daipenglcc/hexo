@@ -423,7 +423,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/React/2019-03-12-react-hooks-guide.html" itemprop="url">
-                  React Hooks 入门与实践
+                  彻底告别 Class 组件：React Hooks 常用姿势备忘
                 </a>
               
             
@@ -466,7 +466,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:15:06" itemprop="dateModified" datetime="2026-09-23T11:15:06+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:52:40" itemprop="dateModified" datetime="2026-09-23T14:52:40+08:00">2026-09-23</time>
               
             
           </span>
@@ -528,7 +528,8 @@
 
       
         
-          <p>React 16.8 正式引入了 Hooks，这是 React 近年来最具颠覆性的更新。Hooks 让函数组件也能拥有状态管理和生命周期能力，写法更简洁、逻辑复用更方便。本文从实际使用角度出发，梳理 React Hooks 的核心 API 和常见模式。</p>
+          <p>当年刚学 React 的时候，天天对着 Class 组件里的 <code>this.bind()</code> 和一堆长得要死、执行顺序玄学的生命周期函数发愁。后来 React 出了 Hooks，整个世界都清净了，再也不用去猜 <code>this</code> 到底指向谁了。</p>
+<p>现在写新项目基本都是全盘函数式组件（Functional Component）。这里把最常用的几个 Hook 整理一下，方便自己抄代码。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/React/2019-03-12-react-hooks-guide.html" rel="contents">
@@ -793,7 +794,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/Vue/2018-08-15-vue-bindind-bindind-bindind.html" itemprop="url">
-                  Vue.js 组件通信方式总结
+                  Vue 组件传值太痛苦？这 6 种通信方式必须拿下
                 </a>
               
             
@@ -836,7 +837,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:13:33" itemprop="dateModified" datetime="2026-09-23T11:13:33+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:54:15" itemprop="dateModified" datetime="2026-09-23T14:54:15+08:00">2026-09-23</time>
               
             
           </span>
@@ -898,7 +899,8 @@
 
       
         
-          <p>在 Vue.js 项目开发中，组件间的数据通信是绑定不开的核心问题。随着应用规模的增长，如何优雅地在组件之间传递数据、触发行为，直接决定了代码的可维护性。本文系统梳理了 Vue 2.x 中常用的组件通信方式及其适用场景。</p>
+          <p>刚开始学 Vue 的时候，觉得这框架啥都好，就是组件拆多了以后，数据传过来传过去太让人抓狂。父传子、子传父还能搞得清，碰到嵌套了三四层的组件要互通有无，直接就蒙圈了。</p>
+<p>后来写业务写多了才发现，Vue 组件之间通信来来回回也就那么几种套路。我把平时写代码最常用的 6 种方式整理了出来，用熟了基本上就没有你传不到的数据。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/Vue/2018-08-15-vue-bindind-bindind-bindind.html" rel="contents">
@@ -978,7 +980,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/Node/2018-05-13-pm2-study.html" itemprop="url">
-                  记一下 pm2 常用配置及命令
+                  Node.js 必备：PM2 常用保活命令备忘
                 </a>
               
             
@@ -1021,7 +1023,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-22 15:37:38" itemprop="dateModified" datetime="2026-09-22T15:37:38+08:00">2026-09-22</time>
+                <time title="修改时间：2026-09-23 14:52:14" itemprop="dateModified" datetime="2026-09-23T14:52:14+08:00">2026-09-23</time>
               
             
           </span>
@@ -1083,7 +1085,8 @@
 
       
         
-          <p><code>PM2</code> 是 Node.js 应用程序的生产级进程管理器，内置了负载均衡、自动重启、性能监控、日志管理等强大功能，操作轻量且极其高效。本文整理了 PM2 的常用操作、核心启动参数以及生产环境生态配置文件（<code>ecosystem.config.js</code>）的最佳实践。</p>
+          <p>以前刚搞 Node.js 的时候，写完接口直接在服务器敲个 <code>node app.js</code> 就算上线了。结果 ssh 终端一关，或者代码抛个异常没接住，服务当场就挂了。后来老老实实切到了 PM2，它能帮你一直在后台盯着进程，挂了自动重启，算是彻底告别了半夜起来修接口的噩梦。</p>
+<p>这里整理点我平时用的操作和配置文件写法。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/Node/2018-05-13-pm2-study.html" rel="contents">
@@ -1163,7 +1166,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/Linux/2017-05-26-liunx-shell.html" itemprop="url">
-                  Linux常用命令笔记
+                  日常运维：Linux 常用命令备忘录
                 </a>
               
             
@@ -1206,7 +1209,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-22 15:37:52" itemprop="dateModified" datetime="2026-09-22T15:37:52+08:00">2026-09-22</time>
+                <time title="修改时间：2026-09-23 14:48:03" itemprop="dateModified" datetime="2026-09-23T14:48:03+08:00">2026-09-23</time>
               
             
           </span>
@@ -1268,7 +1271,7 @@
 
       
         
-          <p>记录日常开发与服务器运维中高频实用的 <code>Linux</code> 命令与核心配置。</p>
+          <p>虽然平时主要写业务代码，但有时候出了线上问题，或者自己折腾个小服务器，总得去命令行里查个日志、杀个进程。Linux 命令太多根本记不全，这里把我自己最高频用到的一些烂笔头记下来，省得每次都去现搜。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/Linux/2017-05-26-liunx-shell.html" rel="contents">
