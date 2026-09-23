@@ -1,5 +1,5 @@
 ---
-title: CSS 新特性实战：Container Queries 与 :has() 选择器
+title: 终于能用了：CSS 的容器查询和 :has() 选择器
 date: 2022-10-12 11:25:40
 tags:
   - CSS
@@ -7,290 +7,158 @@ tags:
 categories: CSS3
 ---
 
-2022 年 CSS 迎来了几个重量级新特性的落地支持。其中 Container Queries（容器查询）和 `:has()` 选择器是最值得关注的两个，它们分别解决了响应式设计和选择器能力上的长期痛点。本文通过实际案例演示这些新特性的用法。
+以前写响应式布局，最烦的就是只能看着屏幕宽度（Viewport）来调样式。一个卡片组件放到侧边栏和主区域，还得写两套类名去控制。前阵子看文档发现 Container Queries 和 `:has()` 终于大规模支持了，试着改了下老项目的代码，感觉还挺香的。
 
 <!-- more -->
 
 ## 一、Container Queries（容器查询）
 
-### 问题背景
+### 以前的痛点
 
-传统的 Media Queries 基于**视口（viewport）**宽度来做响应式布局，但组件并不总是占满整个视口。一个卡片组件在侧边栏中只有 300px 宽，和在主内容区 800px 宽时，应该有不同的布局方式——这正是 Container Queries 要解决的问题。
+以前用 `@media (max-width: 768px)`，判断的是整个浏览器的宽度。但很多时候，我们只想知道“这个组件所在的容器有多宽”。比如一个商品卡片，不管屏幕多大，只要给它的坑位小于 300px，它就应该竖着排。
 
-### 基本用法
+### 现在怎么写
+
+先给父容器声明一下“我要监听你的尺寸”：
 
 ```css
 /* 1. 声明容器 */
 .card-wrapper {
-  container-type: inline-size;  /* 基于内联方向（宽度）的容器查询 */
-  container-name: card;         /* 可选：命名容器 */
+  /* 监听内联方向（也就是宽度） */
+  container-type: inline-size;
+  /* 顺便取个名字，方便后面调用 */
+  container-name: card;
 }
 
-/* 简写 */
+/* 也可以简写成这样 */
 .card-wrapper {
   container: card / inline-size;
 }
+```
 
-/* 2. 基于容器宽度编写响应式样式 */
+然后再写卡片本身的响应式：
+
+```css
 .card {
   display: grid;
   gap: 1rem;
-  padding: 1rem;
 }
 
-/* 容器宽度 >= 400px 时，改为水平布局 */
+/* 当名叫 card 的容器宽度大于 400px 时，变成左右布局 */
 @container card (min-width: 400px) {
   .card {
     grid-template-columns: 200px 1fr;
   }
 }
 
-/* 容器宽度 >= 700px 时，进一步调整 */
+/* 容器大于 700px 时，再变一下 */
 @container card (min-width: 700px) {
   .card {
     grid-template-columns: 250px 1fr auto;
   }
-
-  .card__title {
-    font-size: 1.5rem;
-  }
 }
 ```
+
+对应的 HTML 结构大概是这样：
 
 ```html
 <div class="card-wrapper">
   <article class="card">
-    <img class="card__cover" src="cover.jpg" alt="" />
+    <img src="cover.jpg" alt="" />
     <div class="card__body">
-      <h3 class="card__title">文章标题</h3>
-      <p class="card__summary">文章摘要内容...</p>
-    </div>
-    <div class="card__meta">
-      <span>2022-10-12</span>
-      <span>128 阅读</span>
+      <h3>文章标题</h3>
     </div>
   </article>
 </div>
 ```
 
-### 容器查询单位
-
-Container Queries 还引入了一组新的单位：
+除了这个，还多了几个单位，比如 `cqw`（容器宽度的 1%），用它来做字体自适应挺顺手的：
 
 ```css
 .card__title {
-  /* cqw: 容器宽度的 1% */
+  /* 字体大小跟着容器宽度走 */
   font-size: clamp(1rem, 3cqw, 2rem);
-}
-
-.card__cover {
-  /* cqi: 容器内联尺寸的 1% */
-  width: 30cqi;
-}
-```
-
-| 单位 | 含义 |
-| :--- | :--- |
-| `cqw` | 容器宽度的 1% |
-| `cqh` | 容器高度的 1% |
-| `cqi` | 容器内联方向尺寸的 1% |
-| `cqb` | 容器块方向尺寸的 1% |
-| `cqmin` | `cqi` 和 `cqb` 中较小的值 |
-| `cqmax` | `cqi` 和 `cqb` 中较大的值 |
-
-### 实际场景：Dashboard 卡片
-
-```css
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.stat-card-container {
-  container: stat / inline-size;
-}
-
-.stat-card {
-  padding: 1.5rem;
-  border-radius: 12px;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* 窄容器：垂直布局 */
-.stat-card .stat-value {
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-/* 宽容器：水平展示更多信息 */
-@container stat (min-width: 350px) {
-  .stat-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .stat-card .stat-chart {
-    display: block;  /* 空间足够时显示迷你图表 */
-    width: 120px;
-  }
 }
 ```
 
 ## 二、:has() 选择器（父元素选择器）
 
-### 问题背景
+### 终于能从儿子选爸爸了
 
-CSS 长期以来只能从父元素向子元素选择，无法根据子元素的状态反选父元素。`:has()` 被称为"CSS 中缺失的最后一块拼图"，它可以根据后代、兄弟元素的存在或状态来选择元素。
+以前 CSS 只能顺着写 `.parent .child`，如果想实现“当里面有图片时，父容器背景变灰”，纯 CSS 是做不到的，只能写 JS 去加类名。`:has()` 算是补齐了这个短板。
 
-### 基本用法
+### 几个顺手的场景
 
-```css
-/* 选中包含 img 子元素的 .card */
-.card:has(img) {
-  grid-template-columns: 200px 1fr;
-}
+**1. 表单报错高亮**
 
-/* 选中不包含 img 的 .card */
-.card:not(:has(img)) {
-  grid-template-columns: 1fr;
-}
-
-/* 选中包含 .badge 的导航项 */
-.nav-item:has(.badge) {
-  font-weight: bold;
-}
-```
-
-### 实战案例
-
-#### 1. 表单验证视觉反馈
+如果输入框不合法，直接把外层容器标红，以前得用 JS 监听，现在一行 CSS 搞定：
 
 ```css
-/* 当输入框处于无效状态时，整个表单组高亮 */
+/* 当里面有处于 invalid 状态的 input 时 */
 .form-group:has(input:invalid) {
   border-left: 3px solid #e74c3c;
   background-color: #fef2f2;
 }
 
-/* 当输入框获得焦点时，高亮整个组 */
-.form-group:has(input:focus) {
-  border-left: 3px solid #3498db;
-  background-color: #eff6ff;
-}
-
-/* 当复选框被选中时，改变父容器样式 */
+/* 选中了复选框，就把卡片边框变蓝 */
 .option-card:has(input[type="checkbox"]:checked) {
   border-color: #3498db;
-  background-color: #eff6ff;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
 }
 ```
 
-#### 2. 根据内容自适应布局
+**2. 列表样式自适应**
+
+如果文章没配封面图，就不留空位，直接整行显示：
 
 ```css
-/* 文章列表：有封面图时使用双栏布局 */
+/* 有封面的卡片，左右排版 */
 .article-item:has(.cover-image) {
   display: grid;
   grid-template-columns: 200px 1fr;
-  gap: 1rem;
 }
 
-/* 没有封面图时，正常单栏 */
+/* 没封面的卡片，正常上下排 */
 .article-item:not(:has(.cover-image)) {
   display: block;
 }
-
-/* 侧边栏有内容时，主区域缩窄 */
-.page-layout:has(.sidebar:not(:empty)) {
-  grid-template-columns: 1fr 300px;
-}
 ```
 
-#### 3. 交互增强
+**3. 下拉菜单交互**
 
 ```css
-/* 当下拉菜单展开时，给触发按钮添加样式 */
+/* 菜单打开时，给按钮换个样式 */
 .dropdown:has(.menu[open]) .dropdown-trigger {
   background-color: #f0f0f0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-/* 当表格行有被选中的复选框时 */
-tr:has(input[type="checkbox"]:checked) {
-  background-color: #e8f4fd;
-}
-
-/* figure 包含 figcaption 时添加底部间距 */
-figure:has(figcaption) {
-  margin-bottom: 2rem;
-}
-figure:not(:has(figcaption)) {
-  margin-bottom: 1rem;
 }
 ```
 
-## 三、其他值得关注的 CSS 新特性
+## 顺带提几个其他的
 
-### Cascade Layers（@layer）
+### @layer (级联层)
 
-控制样式的优先级层次，解决大型项目中的样式冲突：
+以前写组件库最烦样式被别人的 `!important` 覆盖。现在可以用 `@layer` 给样式排个优先级：
 
 ```css
-/* 定义层的优先级顺序（后面的优先级更高） */
+/* 定义顺序，越靠后优先级越高 */
 @layer reset, base, components, utilities;
 
 @layer reset {
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-}
-
-@layer base {
-  body { font-family: 'Inter', sans-serif; }
-  a { color: #3498db; }
-}
-
-@layer components {
-  .btn { padding: 0.5rem 1rem; border-radius: 6px; }
+  * { margin: 0; padding: 0; }
 }
 
 @layer utilities {
   .mt-4 { margin-top: 1rem; }
-  .hidden { display: none; }
 }
 ```
 
 ### accent-color
 
-一行代码美化原生表单控件的主题色：
+改原生 radio 和 checkbox 的颜色，以前得隐藏掉自己画，现在一行解决：
 
 ```css
 :root {
   accent-color: #3498db;
 }
-
-/* 所有 checkbox、radio、range、progress 都会自动使用这个颜色 */
 ```
 
-### color-mix()
-
-在 CSS 中直接混合颜色：
-
-```css
-.btn-primary {
-  background: #3498db;
-}
-.btn-primary:hover {
-  /* 主色混入 20% 白色 → 变亮 */
-  background: color-mix(in srgb, #3498db, white 20%);
-}
-.btn-primary:active {
-  /* 主色混入 20% 黑色 → 变暗 */
-  background: color-mix(in srgb, #3498db, black 20%);
-}
-```
-
-这些新特性正在被主流浏览器逐步支持，建议在新项目中积极尝试使用。
+总的来说，CSS 现在是越来越能打了，很多以前要写几百行 JS 处理的交互，现在几行样式就对付过去了。兼容性的话，主流浏览器基本都绿了，新项目完全可以放心用。
