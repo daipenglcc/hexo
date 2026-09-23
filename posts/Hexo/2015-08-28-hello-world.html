@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="Hexo 提供了丰富的命令行工具，日常写作与博客管理最常用的核心命令如下：">
+  <meta name="description" content="虽然现在大家都在公众号或者沸点发短文，但我还是习惯把东西丢在自己的 Hexo 博客里。有时候一两个月没发文章，连命令都能忘得一干二净。这里简单整理几个每次发版都要敲的命令，全当给自己留个备忘。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo 最常用的几个命令">
+<meta property="og:title" content="折腾博客：Hexo 常用命令备忘">
 <meta property="og:url" content="https://www.vueweb.cn/posts/Hexo/2015-08-28-hello-world.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="Hexo 提供了丰富的命令行工具，日常写作与博客管理最常用的核心命令如下：">
+<meta property="og:description" content="虽然现在大家都在公众号或者沸点发短文，但我还是习惯把东西丢在自己的 Hexo 博客里。有时候一两个月没发文章，连命令都能忘得一干二净。这里简单整理几个每次发版都要敲的命令，全当给自己留个备忘。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2015-08-28T10:29:33.000Z">
-<meta property="article:modified_time" content="2026-09-23T03:11:48.881Z">
+<meta property="article:modified_time" content="2026-09-23T06:44:33.091Z">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="光阴小栈">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
   };
 </script>
 
-  <title>Hexo 最常用的几个命令 | 光阴小栈</title>
+  <title>折腾博客：Hexo 常用命令备忘 | 光阴小栈</title>
   
 
 
@@ -419,7 +419,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Hexo 最常用的几个命令
+          <h2 class="post-title" itemprop="name headline">折腾博客：Hexo 常用命令备忘
               
             
           </h2>
@@ -461,7 +461,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 11:11:48" itemprop="dateModified" datetime="2026-09-23T11:11:48+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:44:33" itemprop="dateModified" datetime="2026-09-23T14:44:33+08:00">2026-09-23</time>
               
             
           </span>
@@ -530,39 +530,28 @@
       
 
       
-        <p>Hexo 提供了丰富的命令行工具，日常写作与博客管理最常用的核心命令如下：</p>
+        <p>虽然现在大家都在公众号或者沸点发短文，但我还是习惯把东西丢在自己的 Hexo 博客里。有时候一两个月没发文章，连命令都能忘得一干二净。这里简单整理几个每次发版都要敲的命令，全当给自己留个备忘。</p>
 <a id="more"></a>
 
-<h2 id="1-本地启动预览（hexo-server）"><a href="#1-本地启动预览（hexo-server）" class="headerlink" title="1. 本地启动预览（hexo server）"></a>1. 本地启动预览（hexo server）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br><span class="line"><span class="comment"># 或者是完整命令：hexo server</span></span><br><span class="line"><span class="comment"># 可指定端口：hexo s -p 5000</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="1-跑个本地服务看看效果"><a href="#1-跑个本地服务看看效果" class="headerlink" title="1. 跑个本地服务看看效果"></a>1. 跑个本地服务看看效果</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br><span class="line"><span class="comment"># 或者是完整拼写：hexo server</span></span><br></pre></td></tr></table></figure></div>
 
-<ul>
-<li><strong>说明</strong>：启动本地开发服务器，默认访问地址为 <code>http://localhost:4000/</code>。</li>
-<li><strong>特性</strong>：支持热重载，在修改文章内容或大部分主题文件后，保存并刷新浏览器即可实时预览。</li>
-<li><strong>注意</strong>：修改站点根目录的 <code>_config.yml</code> 或主题配置后，通常需要重启本地服务方能生效。</li>
-</ul>
-<h2 id="2-新建文章与页面（hexo-new）"><a href="#2-新建文章与页面（hexo-new）" class="headerlink" title="2. 新建文章与页面（hexo new）"></a>2. 新建文章与页面（hexo new）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建普通文章（标题含空格需加引号）</span></span><br><span class="line">hexo new <span class="string">"我的第一篇博客"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建独立自定义页面（如 about 页面，生成在 source/about/index.md）</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure></div>
+<p>敲完在浏览器里访问 <code>http://localhost:4000/</code> 就行了。<br>大部分时候你在编辑器里改 Markdown 保存，浏览器会自动刷新，这点还挺顺手的。但如果你改了主题或者外层的 <code>_config.yml</code>，就得把终端停了重新跑一次 <code>hexo s</code> 才行。</p>
+<h2 id="2-搞篇新文章"><a href="#2-搞篇新文章" class="headerlink" title="2. 搞篇新文章"></a>2. 搞篇新文章</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 中间有空格的话得加个引号</span></span><br><span class="line">hexo new <span class="string">"这周折腾了啥"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果是想搞个独立的关于我页面，就用这个：</span></span><br><span class="line">hexo new page about</span><br></pre></td></tr></table></figure></div>
 
-<ul>
-<li><strong>说明</strong>：新建文章会根据 <code>scaffolds/post.md</code> 模板在 <code>source/_posts/</code> 下生成 <code>.md</code> 文件。</li>
-<li><strong>技巧</strong>：独立页面生成后，其访问 URL 为 <code>域名/about/</code>，不会出现在首页文章流中。</li>
-</ul>
-<h2 id="3-生成静态文件（hexo-generate）"><a href="#3-生成静态文件（hexo-generate）" class="headerlink" title="3. 生成静态文件（hexo generate）"></a>3. 生成静态文件（hexo generate）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line"><span class="comment"># 完整命令：hexo generate</span></span><br><span class="line"><span class="comment"># 监听文件变动并实时编译：hexo g --watch</span></span><br></pre></td></tr></table></figure></div>
+<p>新建文章后，它会自动在 <code>source/_posts/</code> 给你生成一个 md 文件。如果你加了 <code>page about</code>，它就会在 <code>source/about/index.md</code> 生成，这种页面不会出现在你的文章列表流里。</p>
+<h2 id="3-把-Markdown-变网页"><a href="#3-把-Markdown-变网页" class="headerlink" title="3. 把 Markdown 变网页"></a>3. 把 Markdown 变网页</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line"><span class="comment"># 完整命令：hexo generate</span></span><br></pre></td></tr></table></figure></div>
 
-<ul>
-<li><strong>说明</strong>：解析 Markdown、模板和静态资源，将编译后的所有网页静态文件输出到 <code>public/</code> 目录下。</li>
-</ul>
-<h2 id="4-清理缓存（hexo-clean）"><a href="#4-清理缓存（hexo-clean）" class="headerlink" title="4. 清理缓存（hexo clean）"></a>4. 清理缓存（hexo clean）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure></div>
+<p>这一步就是把咱们写的纯文本编译成 HTML，输出的东西都在 <code>public/</code> 文件夹里。</p>
+<h2 id="4-出了莫名其妙的-bug-就清理缓存"><a href="#4-出了莫名其妙的-bug-就清理缓存" class="headerlink" title="4. 出了莫名其妙的 bug 就清理缓存"></a>4. 出了莫名其妙的 bug 就清理缓存</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure></div>
 
-<ul>
-<li><strong>说明</strong>：清除 Hexo 数据库缓存文件 <code>db.json</code> 和生成的 <code>public/</code> 文件夹。</li>
-<li><strong>场景</strong>：当文章更新后网页未发生变化、标签/分类混乱或页面渲染异常时，先执行 <code>hexo clean</code> 再重新编译通常能解决 90% 的问题。</li>
-</ul>
-<h2 id="5-一键部署（hexo-deploy）"><a href="#5-一键部署（hexo-deploy）" class="headerlink" title="5. 一键部署（hexo deploy）"></a>5. 一键部署（hexo deploy）</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br><span class="line"><span class="comment"># 完整命令：hexo deploy</span></span><br></pre></td></tr></table></figure></div>
+<p>这个真的是万能药。有时候明明改了文章但网页没反应，或者标签、分类突然乱掉了，基本上先跑一下 <code>hexo clean</code> 把生成的缓存删了，再重新编译，能解决 90% 的玄学问题。</p>
+<h2 id="5-推到线上"><a href="#5-推到线上" class="headerlink" title="5. 推到线上"></a>5. 推到线上</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br><span class="line"><span class="comment"># 完整命令：hexo deploy</span></span><br></pre></td></tr></table></figure></div>
 
-<ul>
-<li><strong>说明</strong>：自动将 <code>public</code> 中的静态页面推送到 <code>_config.yml</code> 中配置的远程仓库（如 GitHub Pages、云服务器等）。</li>
-</ul>
-<h2 id="💡-常用组合命令"><a href="#💡-常用组合命令" class="headerlink" title="💡 常用组合命令"></a>💡 常用组合命令</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 日常发布文章黄金流程：清理 -&gt; 生成 -&gt; 部署</span></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure></div>
+<p>只要你把配置里的 Git 地址填好，敲这个命令它就会自动把 <code>public</code> 文件夹扔到 Github Pages 之类的地方。</p>
+<h2 id="6-一把梭"><a href="#6-一把梭" class="headerlink" title="6. 一把梭"></a>6. 一把梭</h2><p>平时写完文章，我基本就直接盲敲这一句，清理、编译、发布一步到位：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure></div>
+
+<p>行了，就这几个，够对付日常写点水文了。</p>
 
       
     </div>
@@ -642,7 +631,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/Hexo/2015-08-28-hello-world.html"
-         data-hitalk-title="Hexo 最常用的几个命令">
+         data-hitalk-title="折腾博客：Hexo 常用命令备忘">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

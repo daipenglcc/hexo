@@ -609,7 +609,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/AI/2026-03-12-mcp-protocol-in-depth.html" itemprop="url">
-                  Model Context Protocol (MCP) 实战：构建你自己的 AI 外部工具与服务
+                  试了一下 MCP 协议：给 AI 写个本地工具
                 </a>
               
             
@@ -652,7 +652,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 12:03:31" itemprop="dateModified" datetime="2026-09-23T12:03:31+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:42:49" itemprop="dateModified" datetime="2026-09-23T14:42:49+08:00">2026-09-23</time>
               
             
           </span>
@@ -714,8 +714,8 @@
 
       
         
-          <p>在 AI 应用爆发的初期，每个开发者想要为大模型接入外部数据或操作（如读取本地 Git 仓库、操作 MySQL 数据库、触发构建流程），都必须在各自的框架里重复实现一遍插件或 Function Calling 胶水代码。直到 2025 年末至 2026 年，<strong>Model Context Protocol（MCP，模型上下文协议）</strong> 迅速成为了业界事实上的统一标准。如果说各类 LLM 是现代计算的主机，那么 MCP 就相当于 AI 世界的 “USB-C” 接口规范。</p>
-<p>本文将深入拆解 MCP 的核心架构，并带领大家用 TypeScript 从零手写一个自定义的 MCP Server，实现本地数据查询与自动化操作。</p>
+          <p>最近大家都在折腾 AI 应用，以前想给大模型接点外部数据（比如读个本地数据库、查个文件），得在各种框架里自己写一堆胶水代码。直到后来 MCP（Model Context Protocol）慢慢成了标准，感觉这套东西有点像给 AI 装了个“USB 接口”。</p>
+<p>这周末抽空研究了一下，顺手用 TypeScript 写了个简单的 MCP Server，能让大模型直接去查本地的 SQLite 数据库。这里简单记录一下整个过程。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/AI/2026-03-12-mcp-protocol-in-depth.html" rel="contents">
@@ -981,7 +981,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/AI/2025-06-12-ai-agent-in-practice.html" itemprop="url">
-                  AI Agent 开发实战：从概念到落地
+                  动手写个 AI Agent：从概念到简单实现
                 </a>
               
             
@@ -1024,7 +1024,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2026-09-23 12:05:39" itemprop="dateModified" datetime="2026-09-23T12:05:39+08:00">2026-09-23</time>
+                <time title="修改时间：2026-09-23 14:44:13" itemprop="dateModified" datetime="2026-09-23T14:44:13+08:00">2026-09-23</time>
               
             
           </span>
@@ -1086,7 +1086,7 @@
 
       
         
-          <p>2025 年，AI 应用的焦点从简单的对话和内容生成，转向了更具自主性的 AI Agent（智能体）。Agent 不仅能”说”，更能通过调用工具、执行代码、访问外部系统来完成复杂任务。本文记录 AI Agent 的核心概念和开发实践。</p>
+          <p>最近老听人聊 AI Agent，说它不止能陪你聊天，还能自己跑去查天气、调接口干活。周末闲着没事，照着文档自己撸了一个，感觉确实有点意思。这里随便记录下折腾的过程。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/AI/2025-06-12-ai-agent-in-practice.html" rel="contents">
