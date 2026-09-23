@@ -4,7 +4,6 @@ date: 2015-08-28 18:29:33
 tags:
   - hexo
   - 光阴小栈
-  - houyi1121
 categories: Hexo
 ---
 Hexo 提供了丰富的命令行工具，日常写作与博客管理最常用的核心命令如下：
