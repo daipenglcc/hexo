@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.vueweb.cn/posts/CSS3/2021-06-22-tailwind-css-experience.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/DevOps/2020-08-18-github-actions-deploy.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
     <loc>https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-05-10-web-components-in-practice.html</loc>
     <lastmod>2026-10-08</lastmod>
   </url>
@@ -22,14 +30,6 @@
   </url>
   <url>
     <loc>https://www.vueweb.cn/posts/AI/2023-06-20-prompt-engineering-tips.html</loc>
-    <lastmod>2026-10-08</lastmod>
-  </url>
-  <url>
-    <loc>https://www.vueweb.cn/posts/DevOps/2022-08-25-github-actions-deploy.html</loc>
-    <lastmod>2026-10-08</lastmod>
-  </url>
-  <url>
-    <loc>https://www.vueweb.cn/posts/CSS3/2022-05-18-tailwind-css-experience.html</loc>
     <lastmod>2026-10-08</lastmod>
   </url>
   <url>
