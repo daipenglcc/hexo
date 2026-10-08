@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="前阵子组里要搞一个内部工具，需要读本地文件、调系统剪贴板，用网页搞不定。正好一直想试试 Electron，借这个机会折腾了一下。写篇记录，主要是理清主进程和渲染进程的关系，这个概念一开始真的会绕。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端搞 Electron 桌面应用：从入门到能跑">
+<meta property="og:url" content="https://www.vueweb.cn/posts/Node/2021-11-20-electron-desktop-app.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="前阵子组里要搞一个内部工具，需要读本地文件、调系统剪贴板，用网页搞不定。正好一直想试试 Electron，借这个机会折腾了一下。写篇记录，主要是理清主进程和渲染进程的关系，这个概念一开始真的会绕。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-20T06:30:55.000Z">
+<meta property="article:modified_time" content="2026-10-08T07:17:23.208Z">
+<meta property="article:tag" content="Electron">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="桌面应用">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/Node/2021-11-20-electron-desktop-app.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>前端搞 Electron 桌面应用：从入门到能跑 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">48</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">84</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Node/2021-11-20-electron-desktop-app.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">前端搞 Electron 桌面应用：从入门到能跑
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-11-20 14:30:55" itemprop="dateCreated datePublished" datetime="2021-11-20T14:30:55+08:00">2021-11-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-10-08 15:17:23" itemprop="dateModified" datetime="2026-10-08T15:17:23+08:00">2026-10-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node/" itemprop="url" rel="index"><span itemprop="name">Node</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/Node/2021-11-20-electron-desktop-app.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Node/2021-11-20-electron-desktop-app.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前阵子组里要搞一个内部工具，需要读本地文件、调系统剪贴板，用网页搞不定。正好一直想试试 Electron，借这个机会折腾了一下。写篇记录，主要是理清主进程和渲染进程的关系，这个概念一开始真的会绕。</p>
+<a id="more"></a>
+
+<h2 id="1-Electron-是个啥"><a href="#1-Electron-是个啥" class="headerlink" title="1. Electron 是个啥"></a>1. Electron 是个啥</h2><p>简单说：<strong>Electron = Chromium（浏览器）+ Node.js</strong>。你用前端写页面，然后用 Node.js 去干一些系统层面的事情（读写文件、调系统通知等等），最后打包成 .exe 或 .dmg 给人装。</p>
+<p>VS Code、Slack、飞书桌面版都是用它做的，所以性能和体验方面问题不大（虽然内存占用确实偏高）。</p>
+<h2 id="2-快速上手"><a href="#2-快速上手" class="headerlink" title="2. 快速上手"></a>2. 快速上手</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir my-electron-app &amp;&amp; <span class="built_in">cd</span> my-electron-app</span><br><span class="line">npm init -y</span><br><span class="line">npm install --save-dev electron</span><br></pre></td></tr></table></figure></div>
+
+<p>创建入口文件：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js（主进程）</span></span><br><span class="line"><span class="keyword">const</span> &#123; app, BrowserWindow &#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createWindow</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> win = <span class="keyword">new</span> BrowserWindow(&#123;</span><br><span class="line">    width: <span class="number">1000</span>,</span><br><span class="line">    height: <span class="number">700</span>,</span><br><span class="line">    webPreferences: &#123;</span><br><span class="line">      preload: path.join(__dirname, <span class="string">'preload.js'</span>),</span><br><span class="line">      <span class="comment">// 注意：不要开 nodeIntegration，安全隐患大</span></span><br><span class="line">      nodeIntegration: <span class="literal">false</span>,</span><br><span class="line">      contextIsolation: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 加载页面</span></span><br><span class="line">  win.loadFile(<span class="string">'index.html'</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 开发的时候打开 DevTools</span></span><br><span class="line">  <span class="comment">// win.webContents.openDevTools()</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.whenReady().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  createWindow()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// macOS 下点 dock 图标要重新创建窗口</span></span><br><span class="line">  app.on(<span class="string">'activate'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (BrowserWindow.getAllWindows().length === <span class="number">0</span>) &#123;</span><br><span class="line">      createWindow()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Windows/Linux 下关闭所有窗口就退出</span></span><br><span class="line">app.on(<span class="string">'window-all-closed'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.platform !== <span class="string">'darwin'</span>) &#123;</span><br><span class="line">    app.quit()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// preload.js（预加载脚本，连接主进程和渲染进程的桥）</span></span><br><span class="line"><span class="keyword">const</span> &#123; contextBridge, ipcRenderer &#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>)</span><br><span class="line"></span><br><span class="line">contextBridge.exposeInMainWorld(<span class="string">'electronAPI'</span>, &#123;</span><br><span class="line">  <span class="comment">// 只暴露你需要的功能给渲染进程</span></span><br><span class="line">  readFile: <span class="function">(<span class="params">filePath</span>) =&gt;</span> ipcRenderer.invoke(<span class="string">'read-file'</span>, filePath),</span><br><span class="line">  saveFile: <span class="function">(<span class="params">filePath, content</span>) =&gt;</span> ipcRenderer.invoke(<span class="string">'save-file'</span>, filePath, content),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>我的工具<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello Electron<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"readBtn"</span>&gt;</span>读取文件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">pre</span> <span class="attr">id</span>=<span class="string">"output"</span>&gt;</span><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'readBtn'</span>).addEventListener(<span class="string">'click'</span>, <span class="keyword">async</span> () =&gt; &#123;</span></span><br><span class="line"><span class="actionscript">      <span class="comment">// 这个 window.electronAPI 就是 preload.js 里暴露出来的</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> content = <span class="keyword">await</span> <span class="built_in">window</span>.electronAPI.readFile(<span class="string">'/some/path/file.txt'</span>)</span></span><br><span class="line"><span class="javascript">      <span class="built_in">document</span>.getElementById(<span class="string">'output'</span>).textContent = content</span></span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>package.json 里加上启动命令：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"main.js"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"electron ."</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><code>npm start</code> 就能看到窗口了。</p>
+<h2 id="3-搞懂主进程和渲染进程"><a href="#3-搞懂主进程和渲染进程" class="headerlink" title="3. 搞懂主进程和渲染进程"></a>3. 搞懂主进程和渲染进程</h2><p>这是 Electron 最核心的概念，也是我一开始最懵的地方。</p>
+<p><strong>主进程（Main Process）：</strong></p>
+<ul>
+<li>就是 <code>main.js</code> 这个文件</li>
+<li>用 Node.js 跑的，能读写文件、调系统 API</li>
+<li>负责创建和管理窗口</li>
+<li>整个应用只有一个主进程</li>
+</ul>
+<p><strong>渲染进程（Renderer Process）：</strong></p>
+<ul>
+<li>每个窗口就是一个渲染进程</li>
+<li>跑的是网页，能用所有前端技术</li>
+<li>默认情况下不能直接用 Node.js 的东西（出于安全考虑）</li>
+</ul>
+<p><strong>Preload 脚本：</strong></p>
+<ul>
+<li>在渲染进程加载页面之前执行</li>
+<li>可以同时访问 Node.js API 和 DOM</li>
+<li>通过 <code>contextBridge</code> 安全地把功能暴露给页面</li>
+</ul>
+<p>它们之间通过 <strong>IPC（进程间通信）</strong> 来互相喊话：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主进程里监听消息</span></span><br><span class="line"><span class="keyword">const</span> &#123; ipcMain &#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"></span><br><span class="line">ipcMain.handle(<span class="string">'read-file'</span>, <span class="keyword">async</span> (event, filePath) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> content = fs.readFileSync(filePath, <span class="string">'utf-8'</span>)</span><br><span class="line">    <span class="keyword">return</span> content</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'读取失败: '</span> + err.message</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">ipcMain.handle(<span class="string">'save-file'</span>, <span class="keyword">async</span> (event, filePath, content) =&gt; &#123;</span><br><span class="line">  fs.writeFileSync(filePath, content, <span class="string">'utf-8'</span>)</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'保存成功'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-结合-Vue-开发"><a href="#4-结合-Vue-开发" class="headerlink" title="4. 结合 Vue 开发"></a>4. 结合 Vue 开发</h2><p>实际项目里总不能手写 HTML 吧，一般会接一个前端框架。我用的 Vue + Vite：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用现成的模板省事</span></span><br><span class="line">npm create @nicepkg/electron-vite-app</span><br></pre></td></tr></table></figure></div>
+
+<p>这样开发体验就跟写普通 Vue 项目差不多了，热更新也有，很顺滑。</p>
+<p>不过这里有个坑：Vite 开发模式下主进程加载的是 <code>http://localhost:xxxx</code>，打包后加载的是本地文件。所以 main.js 里需要判断一下：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'development'</span>) &#123;</span><br><span class="line">  win.loadURL(<span class="string">'http://localhost:5173'</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  win.loadFile(path.join(__dirname, <span class="string">'../dist/index.html'</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-打包发布"><a href="#5-打包发布" class="headerlink" title="5. 打包发布"></a>5. 打包发布</h2><p>打包用 <code>electron-builder</code>，支持 Windows、macOS、Linux 三个平台：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev electron-builder</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"build"</span>: &#123;</span><br><span class="line">    <span class="attr">"appId"</span>: <span class="string">"com.example.mytool"</span>,</span><br><span class="line">    <span class="attr">"productName"</span>: <span class="string">"我的工具"</span>,</span><br><span class="line">    <span class="attr">"mac"</span>: &#123;</span><br><span class="line">      <span class="attr">"target"</span>: <span class="string">"dmg"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"win"</span>: &#123;</span><br><span class="line">      <span class="attr">"target"</span>: <span class="string">"nsis"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build:electron"</span>: <span class="string">"electron-builder"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>不过打包体积是个问题，一个空壳 Electron 应用打出来就 70-80MB 起步。因为它得把整个 Chromium 和 Node.js 都打进去。</p>
+<p>如果你特别在意体积，可以去看看 Tauri，用 Rust 写后端，打出来才几 MB。但 Tauri 的学习成本比 Electron 高不少。</p>
+<h2 id="6-小结"><a href="#6-小结" class="headerlink" title="6. 小结"></a>6. 小结</h2><p>Electron 对前端来说确实是搞桌面应用最省事的方案，Web 技术直接复用，不用学 C++ 或者 Swift。缺点就是内存占用高、打包体积大，做个内部工具或者小型客户端没问题，但如果是面向 C 端的大型应用，可能要慎重考虑。</p>
+<p>我那个内部工具最后做下来还挺顺利的，拿 Vue 写界面，IPC 调 Node 读写文件和操作剪贴板。同事们用着反馈也还行。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Electron/" rel="tag"># Electron</a>
+          
+            <a href="/tags/Node/" rel="tag"># Node</a>
+          
+            <a href="/tags/%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8/" rel="tag"># 桌面应用</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-08-15-qiankun-micro-frontend.html" rel="next" title="qiankun 微前端踩坑实录：把三个老项目塞一起">
+                <i class="fa fa-chevron-left"></i> qiankun 微前端踩坑实录：把三个老项目塞一起
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/Vue/2022-02-28-pinia-complete-guide.html" rel="prev" title="Vuex 终于退役了：Pinia 常用写法备忘">
+                Vuex 终于退役了：Pinia 常用写法备忘 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/Node/2021-11-20-electron-desktop-app.html"
+         data-hitalk-title="前端搞 Electron 桌面应用：从入门到能跑">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

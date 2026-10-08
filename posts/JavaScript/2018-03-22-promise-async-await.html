@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="写 Node 接口的时候，最开始啥也不懂，读个文件套个数据库查询再发个请求，三层回调嵌套下来代码就往右边飞了，缩进多到看不清哪个大括号是哪个的。后来被人安利了 Promise，再后来切到 async&#x2F;await，世界终于清静了。这里记一下我在实际项目里踩过的坑和一些常用写法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="被回调地狱逼疯后：Promise 和 async&#x2F;await 踩坑备忘">
+<meta property="og:url" content="https://www.vueweb.cn/posts/JavaScript/2018-03-22-promise-async-await.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="写 Node 接口的时候，最开始啥也不懂，读个文件套个数据库查询再发个请求，三层回调嵌套下来代码就往右边飞了，缩进多到看不清哪个大括号是哪个的。后来被人安利了 Promise，再后来切到 async&#x2F;await，世界终于清静了。这里记一下我在实际项目里踩过的坑和一些常用写法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-22T12:15:33.000Z">
+<meta property="article:modified_time" content="2026-10-08T07:12:38.472Z">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Promise">
+<meta property="article:tag" content="异步编程">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/JavaScript/2018-03-22-promise-async-await.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>被回调地狱逼疯后：Promise 和 async/await 踩坑备忘 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">48</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">84</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/JavaScript/2018-03-22-promise-async-await.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">被回调地狱逼疯后：Promise 和 async/await 踩坑备忘
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-22 20:15:33" itemprop="dateCreated datePublished" datetime="2018-03-22T20:15:33+08:00">2018-03-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-10-08 15:12:38" itemprop="dateModified" datetime="2026-10-08T15:12:38+08:00">2026-10-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/JavaScript/2018-03-22-promise-async-await.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/JavaScript/2018-03-22-promise-async-await.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>写 Node 接口的时候，最开始啥也不懂，读个文件套个数据库查询再发个请求，三层回调嵌套下来代码就往右边飞了，缩进多到看不清哪个大括号是哪个的。后来被人安利了 Promise，再后来切到 async/await，世界终于清静了。这里记一下我在实际项目里踩过的坑和一些常用写法。</p>
+<a id="more"></a>
+
+<h2 id="1-先说说回调地狱有多恶心"><a href="#1-先说说回调地狱有多恶心" class="headerlink" title="1. 先说说回调地狱有多恶心"></a>1. 先说说回调地狱有多恶心</h2><p>大家应该都经历过这种代码：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先登录，再拿用户信息，再拿订单列表……</span></span><br><span class="line">login(username, password, <span class="function"><span class="keyword">function</span>(<span class="params">err, token</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123; <span class="built_in">console</span>.error(err); <span class="keyword">return</span> &#125;</span><br><span class="line">  getUserInfo(token, <span class="function"><span class="keyword">function</span>(<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123; <span class="built_in">console</span>.error(err); <span class="keyword">return</span> &#125;</span><br><span class="line">    getOrders(user.id, <span class="function"><span class="keyword">function</span>(<span class="params">err, orders</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123; <span class="built_in">console</span>.error(err); <span class="keyword">return</span> &#125;</span><br><span class="line">      <span class="built_in">console</span>.log(orders)</span><br><span class="line">      <span class="comment">// 还没完呢，如果还要查订单详情，继续套……</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<p>每次写完这种东西，自己过两周再看都得愣半天。</p>
+<h2 id="2-Promise-基本用法"><a href="#2-Promise-基本用法" class="headerlink" title="2. Promise 基本用法"></a>2. Promise 基本用法</h2><p>Promise 说白了就是把”以后才能拿到的东西”先用一个对象包起来，想用结果的时候用 <code>.then()</code> 去拿。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 封装一个请求</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchUser</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 模拟网络请求</span></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (id) &#123;</span><br><span class="line">        resolve(&#123; id, <span class="attr">name</span>: <span class="string">'张三'</span> &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'id 不能为空'</span>))</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line">fetchUser(<span class="number">1</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(user.name) <span class="comment">// 张三</span></span><br><span class="line">    <span class="keyword">return</span> fetchOrders(user.id)</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="params">orders</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(orders)</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 链条上任何一步出错都会跑到这里</span></span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'哪里出问题了:'</span>, err.message)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></div>
+
+<p>比回调好看多了，至少代码不会一直往右边缩进。</p>
+<h2 id="3-我踩过的几个坑"><a href="#3-我踩过的几个坑" class="headerlink" title="3. 我踩过的几个坑"></a>3. 我踩过的几个坑</h2><h3 id="坑一：-then-里忘了-return"><a href="#坑一：-then-里忘了-return" class="headerlink" title="坑一：.then() 里忘了 return"></a>坑一：.then() 里忘了 return</h3><p>这个是新手最容易中招的，.then() 里面如果调了另一个异步操作但没 return，后面的 .then() 拿到的就是 undefined。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 错误写法</span></span><br><span class="line">fetchUser(<span class="number">1</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">    fetchOrders(user.id) <span class="comment">// 忘了 return！</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="params">orders</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(orders)  <span class="comment">// undefined，因为上面没 return</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确写法</span></span><br><span class="line">fetchUser(<span class="number">1</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fetchOrders(user.id) <span class="comment">// 记得 return</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="params">orders</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(orders)  <span class="comment">// 正常拿到数据</span></span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="坑二：-catch-的位置"><a href="#坑二：-catch-的位置" class="headerlink" title="坑二：.catch() 的位置"></a>坑二：.catch() 的位置</h3><p>.catch() 只能捕获它前面链条上的错误。如果 .catch() 后面还有 .then()，那个 .then() 还是会执行的。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fetchUser(<span class="number">1</span>)</span><br><span class="line">  .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'手动抛个错'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err.message) <span class="comment">// 捕获到了</span></span><br><span class="line">    <span class="comment">// 注意：这里没 throw 的话，下面的 then 还是会跑</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我还是执行了'</span>) <span class="comment">// 这行会打印！</span></span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="坑三：Promise-all-其中一个挂了全挂"><a href="#坑三：Promise-all-其中一个挂了全挂" class="headerlink" title="坑三：Promise.all 其中一个挂了全挂"></a>坑三：Promise.all 其中一个挂了全挂</h3><p>并发请求的时候常用 <code>Promise.all()</code>，但只要有一个 reject，整个就进 catch 了，其他成功的结果也拿不到。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 三个请求只要挂一个，全部完蛋</span></span><br><span class="line"><span class="built_in">Promise</span>.all([</span><br><span class="line">  fetch(<span class="string">'/api/users'</span>),</span><br><span class="line">  fetch(<span class="string">'/api/orders'</span>),</span><br><span class="line">  fetch(<span class="string">'/api/products'</span>)  <span class="comment">// 假设这个挂了</span></span><br><span class="line">])</span><br><span class="line">.then(<span class="function">(<span class="params">[users, orders, products]</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 这里不会执行</span></span><br><span class="line">&#125;)</span><br><span class="line">.catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 直接到这了，前两个成功的数据也没了</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<p>如果你想”挂了也无所谓，能拿多少拿多少”，用 <code>Promise.allSettled()</code>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.allSettled([</span><br><span class="line">  fetch(<span class="string">'/api/users'</span>),</span><br><span class="line">  fetch(<span class="string">'/api/orders'</span>),</span><br><span class="line">  fetch(<span class="string">'/api/products'</span>)</span><br><span class="line">])</span><br><span class="line">.then(<span class="function"><span class="params">results</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 每个结果都有 status 字段：'fulfilled' 或 'rejected'</span></span><br><span class="line">  results.forEach(<span class="function"><span class="params">r</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (r.status === <span class="string">'fulfilled'</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'成功:'</span>, r.value)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'失败:'</span>, r.reason)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-async-await：写异步终于像写同步了"><a href="#4-async-await：写异步终于像写同步了" class="headerlink" title="4. async/await：写异步终于像写同步了"></a>4. async/await：写异步终于像写同步了</h2><p>说实话我现在已经很少直接写 .then() 了，async/await 简直是解放双手。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">loadDashboard</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> fetchUser(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">const</span> orders = <span class="keyword">await</span> fetchOrders(user.id)</span><br><span class="line">    <span class="keyword">const</span> stats = <span class="keyword">await</span> fetchStats(user.id)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123; user, orders, stats &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'加载失败:'</span>, err.message)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>但要注意别犯一个低级错误——不必要的串行请求：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 这三个请求其实互不依赖，没必要一个等一个</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">loadPage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> users = <span class="keyword">await</span> fetchUsers()      <span class="comment">// 等1秒</span></span><br><span class="line">  <span class="keyword">const</span> posts = <span class="keyword">await</span> fetchPosts()      <span class="comment">// 再等1秒</span></span><br><span class="line">  <span class="keyword">const</span> comments = <span class="keyword">await</span> fetchComments() <span class="comment">// 再等1秒</span></span><br><span class="line">  <span class="comment">// 总共等了3秒</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 没有依赖关系的请求应该并发</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">loadPage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [users, posts, comments] = <span class="keyword">await</span> <span class="built_in">Promise</span>.all([</span><br><span class="line">    fetchUsers(),</span><br><span class="line">    fetchPosts(),</span><br><span class="line">    fetchComments()</span><br><span class="line">  ])</span><br><span class="line">  <span class="comment">// 只等最慢的那一个，大概1秒多</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-循环里用-await-要小心"><a href="#5-循环里用-await-要小心" class="headerlink" title="5. 循环里用 await 要小心"></a>5. 循环里用 await 要小心</h2><p>在 for 循环里用 await 是没问题的，但在 forEach 里用就有坑了：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ forEach 里的 await 不会等</span></span><br><span class="line"><span class="keyword">const</span> ids = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">ids.forEach(<span class="keyword">async</span> (id) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> fetchUser(id)</span><br><span class="line">  <span class="built_in">console</span>.log(user)  <span class="comment">// 这三个几乎同时打印，不是你想要的顺序执行</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'done'</span>)  <span class="comment">// 这行比上面的先打印！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 想顺序执行就用 for...of</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> id <span class="keyword">of</span> ids) &#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> fetchUser(id)</span><br><span class="line">  <span class="built_in">console</span>.log(user)  <span class="comment">// 一个一个来</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 想并发就用 Promise.all + map</span></span><br><span class="line"><span class="keyword">const</span> users = <span class="keyword">await</span> <span class="built_in">Promise</span>.all(</span><br><span class="line">  ids.map(<span class="function"><span class="params">id</span> =&gt;</span> fetchUser(id))</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<p>这个坑我当时在处理批量上传文件的时候踩的，排查了好一会儿才发现是 forEach 的问题。</p>
+<p>总的来说，日常写业务代码，基本就是 async/await + try/catch + Promise.all 这几板斧。够用了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/Promise/" rel="tag"># Promise</a>
+          
+            <a href="/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" rel="tag"># 异步编程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Linux/2017-05-26-liunx-shell.html" rel="next" title="日常运维：Linux 常用命令备忘录">
+                <i class="fa fa-chevron-left"></i> 日常运维：Linux 常用命令备忘录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/Node/2018-05-13-pm2-study.html" rel="prev" title="Node.js 必备：PM2 常用保活命令备忘">
+                Node.js 必备：PM2 常用保活命令备忘 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/JavaScript/2018-03-22-promise-async-await.html"
+         data-hitalk-title="被回调地狱逼疯后：Promise 和 async/await 踩坑备忘">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

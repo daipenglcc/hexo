@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="以前项目部署的流程：本地 npm run build，然后用 scp 或者 FTP 把 dist 文件夹传到服务器上。遇到着急上线的时候一紧张还容易传错目录。后来了解了 GitHub Actions，发现配置其实不难，一次搞好之后 push 代码就自动构建部署了，省了不少麻烦事。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub Actions 搞前端自动化部署，告别手动 scp">
+<meta property="og:url" content="https://www.vueweb.cn/posts/DevOps/2022-08-25-github-actions-deploy.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="以前项目部署的流程：本地 npm run build，然后用 scp 或者 FTP 把 dist 文件夹传到服务器上。遇到着急上线的时候一紧张还容易传错目录。后来了解了 GitHub Actions，发现配置其实不难，一次搞好之后 push 代码就自动构建部署了，省了不少麻烦事。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-25T07:20:40.000Z">
+<meta property="article:modified_time" content="2026-10-08T07:18:35.326Z">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="GitHub Actions">
+<meta property="article:tag" content="自动化部署">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/DevOps/2022-08-25-github-actions-deploy.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>GitHub Actions 搞前端自动化部署，告别手动 scp | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">48</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">84</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/DevOps/2022-08-25-github-actions-deploy.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">GitHub Actions 搞前端自动化部署，告别手动 scp
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-08-25 15:20:40" itemprop="dateCreated datePublished" datetime="2022-08-25T15:20:40+08:00">2022-08-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-10-08 15:18:35" itemprop="dateModified" datetime="2026-10-08T15:18:35+08:00">2026-10-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DevOps/" itemprop="url" rel="index"><span itemprop="name">DevOps</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/DevOps/2022-08-25-github-actions-deploy.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/DevOps/2022-08-25-github-actions-deploy.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以前项目部署的流程：本地 <code>npm run build</code>，然后用 scp 或者 FTP 把 dist 文件夹传到服务器上。遇到着急上线的时候一紧张还容易传错目录。后来了解了 GitHub Actions，发现配置其实不难，一次搞好之后 push 代码就自动构建部署了，省了不少麻烦事。</p>
+<a id="more"></a>
+
+<h2 id="1-GitHub-Actions-是啥"><a href="#1-GitHub-Actions-是啥" class="headerlink" title="1. GitHub Actions 是啥"></a>1. GitHub Actions 是啥</h2><p>就是 GitHub 自带的 CI/CD 服务，在你的仓库里建个 <code>.github/workflows/xxx.yml</code> 文件，每次 push 或 PR 的时候 GitHub 会自动起一台虚拟机帮你跑这个脚本。</p>
+<p>对个人项目和小团队来说免费额度完全够用。</p>
+<h2 id="2-基本概念"><a href="#2-基本概念" class="headerlink" title="2. 基本概念"></a>2. 基本概念</h2><p>几个概念先搞清楚：</p>
+<ul>
+<li><strong>Workflow</strong>：一个自动化流程，对应一个 yml 文件</li>
+<li><strong>Job</strong>：流程里的一组步骤，跑在同一台机器上</li>
+<li><strong>Step</strong>：具体的一步操作（跑命令、用别人写好的 Action 等）</li>
+<li><strong>Trigger</strong>：触发条件（push、PR、定时等）</li>
+</ul>
+<h2 id="3-最简单的：构建并部署到-GitHub-Pages"><a href="#3-最简单的：构建并部署到-GitHub-Pages" class="headerlink" title="3. 最简单的：构建并部署到 GitHub Pages"></a>3. 最简单的：构建并部署到 GitHub Pages</h2><p>这个适合博客、文档站、纯前端项目。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .github/workflows/deploy.yml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">构建并部署</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> <span class="string">[</span> <span class="string">main</span> <span class="string">]</span>  <span class="comment"># main 分支有 push 就触发</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span>  <span class="comment"># 用 Ubuntu 虚拟机</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="comment"># 第一步：拉代码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">拉取代码</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 第二步：装 Node.js</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">安装</span> <span class="string">Node.js</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">'18'</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">'npm'</span>  <span class="comment"># 缓存 node_modules，下次快一点</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 第三步：装依赖 + 构建</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">安装依赖</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">构建</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 第四步：部署到 GitHub Pages</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">部署到</span> <span class="string">Pages</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">peaceiris/actions-gh-pages@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">github_token:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">publish_dir:</span> <span class="string">./dist</span></span><br></pre></td></tr></table></figure></div>
+
+<p>推代码到 main 分支，去仓库的 Actions 标签页就能看到它在跑了。跑完之后 dist 目录会被推到 <code>gh-pages</code> 分支，GitHub Pages 自动更新。</p>
+<h2 id="4-部署到自己的服务器"><a href="#4-部署到自己的服务器" class="headerlink" title="4. 部署到自己的服务器"></a>4. 部署到自己的服务器</h2><p>如果是部署到自己的 VPS，一般用 SSH + rsync：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">部署到服务器</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> <span class="string">[</span> <span class="string">main</span> <span class="string">]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">'18'</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">'npm'</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 通过 SSH 把 dist 同步到服务器</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">部署到服务器</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">easingthemes/ssh-deploy@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">SSH_PRIVATE_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SSH_PRIVATE_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">REMOTE_HOST:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SERVER_HOST</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">REMOTE_USER:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SERVER_USER</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">SOURCE:</span> <span class="string">'dist/'</span></span><br><span class="line">          <span class="attr">TARGET:</span> <span class="string">'/var/www/my-site/'</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这里需要在仓库的 Settings → Secrets 里配置几个变量：</p>
+<ul>
+<li><code>SSH_PRIVATE_KEY</code>：你服务器的 SSH 私钥</li>
+<li><code>SERVER_HOST</code>：服务器 IP</li>
+<li><code>SERVER_USER</code>：登录用户名（一般是 root 或者自定义的）</li>
+</ul>
+<p><strong>注意：千万别把私钥直接写在 yml 文件里。</strong> Secrets 里的变量在日志中会被自动脱敏。</p>
+<h2 id="5-多环境部署"><a href="#5-多环境部署" class="headerlink" title="5. 多环境部署"></a>5. 多环境部署</h2><p>实际项目往往有测试环境和正式环境，可以用不同的分支触发不同的部署：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">多环境部署</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">develop</span>  <span class="comment"># 推到 develop 分支 → 部署测试环境</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span>     <span class="comment"># 推到 main 分支 → 部署正式环境</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">'18'</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">'npm'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 根据分支决定环境</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">构建测试环境</span></span><br><span class="line">        <span class="attr">if:</span> <span class="string">github.ref</span> <span class="string">==</span> <span class="string">'refs/heads/develop'</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build:staging</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">构建正式环境</span></span><br><span class="line">        <span class="attr">if:</span> <span class="string">github.ref</span> <span class="string">==</span> <span class="string">'refs/heads/main'</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build:production</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">部署到测试服务器</span></span><br><span class="line">        <span class="attr">if:</span> <span class="string">github.ref</span> <span class="string">==</span> <span class="string">'refs/heads/develop'</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">easingthemes/ssh-deploy@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">SSH_PRIVATE_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SSH_PRIVATE_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">REMOTE_HOST:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.STAGING_HOST</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">REMOTE_USER:</span> <span class="string">root</span></span><br><span class="line">          <span class="attr">SOURCE:</span> <span class="string">'dist/'</span></span><br><span class="line">          <span class="attr">TARGET:</span> <span class="string">'/var/www/staging/'</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">部署到正式服务器</span></span><br><span class="line">        <span class="attr">if:</span> <span class="string">github.ref</span> <span class="string">==</span> <span class="string">'refs/heads/main'</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">easingthemes/ssh-deploy@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">SSH_PRIVATE_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SSH_PRIVATE_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">REMOTE_HOST:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.PRODUCTION_HOST</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">REMOTE_USER:</span> <span class="string">root</span></span><br><span class="line">          <span class="attr">SOURCE:</span> <span class="string">'dist/'</span></span><br><span class="line">          <span class="attr">TARGET:</span> <span class="string">'/var/www/production/'</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="6-一些小技巧"><a href="#6-一些小技巧" class="headerlink" title="6. 一些小技巧"></a>6. 一些小技巧</h2><h3 id="缓存-node-modules-加速"><a href="#缓存-node-modules-加速" class="headerlink" title="缓存 node_modules 加速"></a>缓存 node_modules 加速</h3><p><code>actions/setup-node@v3</code> 自带 cache 功能，第二次构建会快很多。也可以手动缓存：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">缓存依赖</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">actions/cache@v3</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">node_modules</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-node-$&#123;&#123;</span> <span class="string">hashFiles('package-lock.json')</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="构建失败发通知"><a href="#构建失败发通知" class="headerlink" title="构建失败发通知"></a>构建失败发通知</h3><p>可以在最后加一步，构建失败时发个钉钉或者企微通知：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">通知钉钉</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">failure()</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">fifsky/dingtalk-action@master</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DINGTALK_WEBHOOK</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">markdown</span></span><br><span class="line">    <span class="attr">content:</span> <span class="string">|</span></span><br><span class="line">      <span class="comment">### 🔴 构建失败</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">分支:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.ref</span> <span class="string">&#125;&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">提交:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.event.head_commit.message</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="只在特定文件变更时触发"><a href="#只在特定文件变更时触发" class="headerlink" title="只在特定文件变更时触发"></a>只在特定文件变更时触发</h3><p>如果不想每次改个 README 都触发构建：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> <span class="string">[</span> <span class="string">main</span> <span class="string">]</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'src/**'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'package.json'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'vite.config.js'</span></span><br></pre></td></tr></table></figure></div>
+
+<p>搞完这些之后，写代码 → push → 自动构建部署，整个流程很丝滑。再也不用本地打包然后手动传服务器了，连半夜紧急修 bug 都轻松不少。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/GitHub-Actions/" rel="tag"># GitHub Actions</a>
+          
+            <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" rel="tag"># 自动化部署</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Node/2022-06-18-nodejs-restful-api.html" rel="next" title="用 Node.js 撸一个简单的 RESTful API">
+                <i class="fa fa-chevron-left"></i> 用 Node.js 撸一个简单的 RESTful API
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/CSS3/2022-10-12-css-container-queries-has.html" rel="prev" title="终于能用了：CSS 的容器查询和 :has() 选择器">
+                终于能用了：CSS 的容器查询和 :has() 选择器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/DevOps/2022-08-25-github-actions-deploy.html"
+         data-hitalk-title="GitHub Actions 搞前端自动化部署，告别手动 scp">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

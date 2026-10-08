@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="去年 AI 火了以后，很多工具和教程都是 Python 的。想跑个本地模型要 Python，想调 OpenAI 的接口官方示例也是 Python，想搞个数据分析还是 Python。作为一个写了好几年 JavaScript 的前端，终于还是没忍住学了一下。 这里不打算写一篇完整的 Python 教程，就记一下我作为 JS 开发者学 Python 过程中那些”跟 JS 不一样”的地方，以及一些快速上手">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 时代不会 Python 不行了？前端的速成笔记">
+<meta property="og:url" content="https://www.vueweb.cn/posts/Python/2024-03-18-python-for-frontend-dev.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="去年 AI 火了以后，很多工具和教程都是 Python 的。想跑个本地模型要 Python，想调 OpenAI 的接口官方示例也是 Python，想搞个数据分析还是 Python。作为一个写了好几年 JavaScript 的前端，终于还是没忍住学了一下。 这里不打算写一篇完整的 Python 教程，就记一下我作为 JS 开发者学 Python 过程中那些”跟 JS 不一样”的地方，以及一些快速上手">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-18T06:20:35.000Z">
+<meta property="article:modified_time" content="2026-10-08T07:21:30.492Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/Python/2024-03-18-python-for-frontend-dev.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>AI 时代不会 Python 不行了？前端的速成笔记 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">48</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">84</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Python/2024-03-18-python-for-frontend-dev.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">AI 时代不会 Python 不行了？前端的速成笔记
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-03-18 14:20:35" itemprop="dateCreated datePublished" datetime="2024-03-18T14:20:35+08:00">2024-03-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-10-08 15:21:30" itemprop="dateModified" datetime="2026-10-08T15:21:30+08:00">2026-10-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/Python/2024-03-18-python-for-frontend-dev.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Python/2024-03-18-python-for-frontend-dev.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>去年 AI 火了以后，很多工具和教程都是 Python 的。想跑个本地模型要 Python，想调 OpenAI 的接口官方示例也是 Python，想搞个数据分析还是 Python。作为一个写了好几年 JavaScript 的前端，终于还是没忍住学了一下。</p>
+<p>这里不打算写一篇完整的 Python 教程，就记一下我作为 JS 开发者学 Python 过程中那些”跟 JS 不一样”的地方，以及一些快速上手的笔记。</p>
+<a id="more"></a>
+
+<h2 id="1-环境搭建"><a href="#1-环境搭建" class="headerlink" title="1. 环境搭建"></a>1. 环境搭建</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># macOS 自带 Python，但版本可能很旧</span></span><br><span class="line"><span class="comment"># 推荐用 brew 装</span></span><br><span class="line">brew install python@3.11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">python3 --version</span><br><span class="line">pip3 --version</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>虚拟环境</strong>这个概念在 JS 里没有（node_modules 天然就是项目级的），但 Python 需要手动搞：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建虚拟环境（类似于给项目建个独立的 node_modules）</span></span><br><span class="line">python3 -m venv myenv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 激活</span></span><br><span class="line"><span class="built_in">source</span> myenv/bin/activate   <span class="comment"># macOS/Linux</span></span><br><span class="line"><span class="comment"># myenv\Scripts\activate    # Windows</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出</span></span><br><span class="line">deactivate</span><br></pre></td></tr></table></figure></div>
+
+<p>激活之后装的包只在当前虚拟环境里，不会污染全局。</p>
+<h2 id="2-语法层面：跟-JS-的主要区别"><a href="#2-语法层面：跟-JS-的主要区别" class="headerlink" title="2. 语法层面：跟 JS 的主要区别"></a>2. 语法层面：跟 JS 的主要区别</h2><h3 id="缩进代替大括号"><a href="#缩进代替大括号" class="headerlink" title="缩进代替大括号"></a>缩进代替大括号</h3><p>这个是最不习惯的。Python 用缩进来表示代码块，没有花括号。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python</span></span><br><span class="line"><span class="keyword">if</span> score &gt;= <span class="number">90</span>:</span><br><span class="line">    print(<span class="string">"优秀"</span>)</span><br><span class="line"><span class="keyword">elif</span> score &gt;= <span class="number">60</span>:</span><br><span class="line">    print(<span class="string">"及格"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"不及格"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对比 JS</span></span><br><span class="line"><span class="comment"># if (score &gt;= 90) &#123;</span></span><br><span class="line"><span class="comment">#     console.log("优秀")</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>刚开始经常忘了加冒号，或者缩进弄乱了报 <code>IndentationError</code>。</p>
+<h3 id="变量和类型"><a href="#变量和类型" class="headerlink" title="变量和类型"></a>变量和类型</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不用 let/const/var，直接赋值</span></span><br><span class="line">name = <span class="string">"张三"</span></span><br><span class="line">age = <span class="number">25</span></span><br><span class="line">is_active = <span class="literal">True</span>   <span class="comment"># 注意是大写的 True/False，不是 true/false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 类型标注（可选的，不写也行）</span></span><br><span class="line">name: str = <span class="string">"张三"</span></span><br><span class="line">age: int = <span class="number">25</span></span><br><span class="line">scores: list[int] = [<span class="number">90</span>, <span class="number">85</span>, <span class="number">78</span>]</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># f-string，类似 JS 的模板字符串</span></span><br><span class="line">name = <span class="string">"光阴小栈"</span></span><br><span class="line">print(<span class="string">f"欢迎来到 <span class="subst">&#123;name&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多行字符串用三引号</span></span><br><span class="line">html = <span class="string">"""</span></span><br><span class="line"><span class="string">&lt;div&gt;</span></span><br><span class="line"><span class="string">  &lt;h1&gt;Hello&lt;/h1&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="列表和字典"><a href="#列表和字典" class="headerlink" title="列表和字典"></a>列表和字典</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列表 ≈ JS 的数组</span></span><br><span class="line">fruits = [<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"cherry"</span>]</span><br><span class="line">fruits.append(<span class="string">"orange"</span>)  <span class="comment"># push</span></span><br><span class="line">fruits.pop()              <span class="comment"># pop</span></span><br><span class="line">len(fruits)               <span class="comment"># length</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典 ≈ JS 的对象</span></span><br><span class="line">user = &#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"张三"</span>,</span><br><span class="line">    <span class="string">"age"</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="string">"skills"</span>: [<span class="string">"Python"</span>, <span class="string">"JavaScript"</span>]</span><br><span class="line">&#125;</span><br><span class="line">print(user[<span class="string">"name"</span>])      <span class="comment"># 取值用方括号，不能用点号</span></span><br><span class="line">user[<span class="string">"email"</span>] = <span class="string">"xxx"</span>    <span class="comment"># 添加/修改</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="列表推导式"><a href="#列表推导式" class="headerlink" title="列表推导式"></a>列表推导式</h3><p>Python 的一大特色，JS 里没有直接对应的语法：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 相当于 JS 的 [1,2,3,4,5].map(x =&gt; x * x)</span></span><br><span class="line">squares = [x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>)]</span><br><span class="line"><span class="comment"># [1, 4, 9, 16, 25]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 带过滤，相当于 filter + map</span></span><br><span class="line">even_squares = [x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line"><span class="comment"># [0, 4, 16, 36, 64]</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greet</span><span class="params">(name, greeting=<span class="string">"你好"</span>)</span>:</span></span><br><span class="line">    <span class="string">"""这是文档字符串，用来写函数说明"""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f"<span class="subst">&#123;greeting&#125;</span>, <span class="subst">&#123;name&#125;</span>!"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用</span></span><br><span class="line">print(greet(<span class="string">"张三"</span>))          <span class="comment"># 你好, 张三!</span></span><br><span class="line">print(greet(<span class="string">"张三"</span>, <span class="string">"嗨"</span>))    <span class="comment"># 嗨, 张三!</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># lambda 表达式（相当于 JS 的箭头函数）</span></span><br><span class="line">add = <span class="keyword">lambda</span> a, b: a + b</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-包管理：pip-≈-npm"><a href="#3-包管理：pip-≈-npm" class="headerlink" title="3. 包管理：pip ≈ npm"></a>3. 包管理：pip ≈ npm</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装包</span></span><br><span class="line">pip install requests        <span class="comment"># npm install axios 的感觉</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">pip install requests==2.28.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导出依赖（相当于 package.json）</span></span><br><span class="line">pip freeze &gt; requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从文件安装所有依赖</span></span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><code>requirements.txt</code> 就是 Python 的 <code>package.json</code>，不过简陋得多，就是一行行包名。</p>
+<h2 id="4-前端最可能用到的场景"><a href="#4-前端最可能用到的场景" class="headerlink" title="4. 前端最可能用到的场景"></a>4. 前端最可能用到的场景</h2><h3 id="调-OpenAI-接口"><a href="#调-OpenAI-接口" class="headerlink" title="调 OpenAI 接口"></a>调 OpenAI 接口</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install openai</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line">client = OpenAI(api_key=<span class="string">"你的key"</span>)</span><br><span class="line"></span><br><span class="line">response = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">"gpt-3.5-turbo"</span>,</span><br><span class="line">    messages=[</span><br><span class="line">        &#123;<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"用一句话解释什么是闭包"</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">print(response.choices[<span class="number">0</span>].message.content)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="写个简单的-HTTP-接口"><a href="#写个简单的-HTTP-接口" class="headerlink" title="写个简单的 HTTP 接口"></a>写个简单的 HTTP 接口</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install flask</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, jsonify, request</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">todos = []</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/api/todos', methods=['GET'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_todos</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> jsonify(todos)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/api/todos', methods=['POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_todo</span><span class="params">()</span>:</span></span><br><span class="line">    data = request.get_json()</span><br><span class="line">    todos.append(data)</span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">"message"</span>: <span class="string">"ok"</span>&#125;), <span class="number">201</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>, port=<span class="number">5000</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>写起来确实比 Express 还简洁。</p>
+<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读 CSV</span></span><br><span class="line">df = pd.read_csv(<span class="string">"data.csv"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看前几行</span></span><br><span class="line">print(df.head())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 筛选</span></span><br><span class="line">active_users = df[df[<span class="string">"status"</span>] == <span class="string">"active"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分组统计</span></span><br><span class="line">stats = df.groupby(<span class="string">"department"</span>)[<span class="string">"salary"</span>].mean()</span><br><span class="line">print(stats)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-一些”差点被绊倒”的地方"><a href="#5-一些”差点被绊倒”的地方" class="headerlink" title="5. 一些”差点被绊倒”的地方"></a>5. 一些”差点被绊倒”的地方</h2><ul>
+<li>**没有 <code>===</code>**：Python 判等就用 <code>==</code>，没有严格等于的概念</li>
+<li><strong>None 不是 null</strong>：Python 里空值叫 <code>None</code>，判断用 <code>is None</code> 而不是 <code>== None</code></li>
+<li>**没有 <code>{}</code>**：空字典是 <code>{}</code>，但空集合是 <code>set()</code>，不是 <code>{}</code></li>
+<li>**for 循环没有传统的 <code>for(i=0; i&lt;n; i++)</code>**：用 <code>for i in range(n)</code> 代替</li>
+<li><strong>整数除法</strong>：<code>7 / 2</code> 结果是 <code>3.5</code>，想要整数用 <code>7 // 2</code> 得到 <code>3</code></li>
+</ul>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p>作为一个前端开始学 Python，最大的感受是：<strong>语法比 JS 简洁，但生态和工具链风格完全不同</strong>。JS 的 npm 生态虽然混乱但足够丰富，Python 的包管理更原始一些（虚拟环境那套东西不如 node_modules 直观）。</p>
+<p>不过在 AI 和数据处理这两个领域，Python 的库确实比 JS 成熟太多了。花几天时间学个基本语法，至少以后看到 Python 代码不会发怵，遇到 AI 相关的东西也能自己动手试了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/React/2024-01-22-nextjs14-fullstack.html" rel="next" title="折腾 Next.js 14：全栈开发踩坑与基础配置">
+                <i class="fa fa-chevron-left"></i> 折腾 Next.js 14：全栈开发踩坑与基础配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/AI/2024-05-10-github-copilot-guide.html" rel="prev" title="用了一年 GitHub Copilot，聊聊怎么用最顺手">
+                用了一年 GitHub Copilot，聊聊怎么用最顺手 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/Python/2024-03-18-python-for-frontend-dev.html"
+         data-hitalk-title="AI 时代不会 Python 不行了？前端的速成笔记">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

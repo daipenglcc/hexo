@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="说实话，以前写业务代码从来不写测试。一来觉得浪费时间，二来压根不知道前端有啥好测的，页面长啥样一眼就看到了。直到有一次改了个公共工具函数，结果另一个模块调用的时候炸了，排查了一下午。后来组长说要不试试搞个单元测试，于是就上了 Jest。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端写单元测试？折腾了一下 Jest">
+<meta property="og:url" content="https://www.vueweb.cn/posts/JavaScript/2019-12-08-jest-unit-testing.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="说实话，以前写业务代码从来不写测试。一来觉得浪费时间，二来压根不知道前端有啥好测的，页面长啥样一眼就看到了。直到有一次改了个公共工具函数，结果另一个模块调用的时候炸了，排查了一下午。后来组长说要不试试搞个单元测试，于是就上了 Jest。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-12-08T03:25:40.000Z">
+<meta property="article:modified_time" content="2026-10-08T07:14:26.812Z">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Jest">
+<meta property="article:tag" content="单元测试">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/JavaScript/2019-12-08-jest-unit-testing.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>前端写单元测试？折腾了一下 Jest | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">48</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">84</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/JavaScript/2019-12-08-jest-unit-testing.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">前端写单元测试？折腾了一下 Jest
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-08 11:25:40" itemprop="dateCreated datePublished" datetime="2019-12-08T11:25:40+08:00">2019-12-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-10-08 15:14:26" itemprop="dateModified" datetime="2026-10-08T15:14:26+08:00">2026-10-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/JavaScript/2019-12-08-jest-unit-testing.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/JavaScript/2019-12-08-jest-unit-testing.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>说实话，以前写业务代码从来不写测试。一来觉得浪费时间，二来压根不知道前端有啥好测的，页面长啥样一眼就看到了。直到有一次改了个公共工具函数，结果另一个模块调用的时候炸了，排查了一下午。后来组长说要不试试搞个单元测试，于是就上了 Jest。</p>
+<a id="more"></a>
+
+<h2 id="1-为啥选-Jest"><a href="#1-为啥选-Jest" class="headerlink" title="1. 为啥选 Jest"></a>1. 为啥选 Jest</h2><p>当时也看了看 Mocha + Chai 那一套，但 Jest 的好处是开箱即用，不需要自己组合断言库、mock 库、覆盖率工具。装一个包搞定所有事情，对懒人来说太友好了。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev jest</span><br></pre></td></tr></table></figure></div>
+
+<p>在 <code>package.json</code> 里加一行：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"jest"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-写第一个测试"><a href="#2-写第一个测试" class="headerlink" title="2. 写第一个测试"></a>2. 写第一个测试</h2><p>Jest 默认会找 <code>__tests__/</code> 目录下的文件，或者文件名带 <code>.test.js</code> / <code>.spec.js</code> 后缀的文件。</p>
+<p>假设有个工具函数：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/math.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatPrice</span>(<span class="params">price</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> price !== <span class="string">'number'</span> || <span class="built_in">isNaN</span>(price)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'¥0.00'</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'¥'</span> + price.toFixed(<span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123; add, formatPrice &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>测试代码：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/__tests__/math.test.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; add, formatPrice &#125; = <span class="built_in">require</span>(<span class="string">'../math'</span>)</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'math 工具函数'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="comment">// describe 就是分组，看报告的时候比较清晰</span></span><br><span class="line"></span><br><span class="line">  test(<span class="string">'add: 正常相加'</span>, () =&gt; &#123;</span><br><span class="line">    expect(add(<span class="number">1</span>, <span class="number">2</span>)).toBe(<span class="number">3</span>)</span><br><span class="line">    expect(add(<span class="number">-1</span>, <span class="number">1</span>)).toBe(<span class="number">0</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  test(<span class="string">'formatPrice: 正常格式化'</span>, () =&gt; &#123;</span><br><span class="line">    expect(formatPrice(<span class="number">99</span>)).toBe(<span class="string">'¥99.00'</span>)</span><br><span class="line">    expect(formatPrice(<span class="number">0</span>)).toBe(<span class="string">'¥0.00'</span>)</span><br><span class="line">    expect(formatPrice(<span class="number">19.9</span>)).toBe(<span class="string">'¥19.90'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  test(<span class="string">'formatPrice: 传入非数字'</span>, () =&gt; &#123;</span><br><span class="line">    expect(formatPrice(<span class="string">'abc'</span>)).toBe(<span class="string">'¥0.00'</span>)</span><br><span class="line">    expect(formatPrice(<span class="literal">undefined</span>)).toBe(<span class="string">'¥0.00'</span>)</span><br><span class="line">    expect(formatPrice(<span class="literal">NaN</span>)).toBe(<span class="string">'¥0.00'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<p>跑一下 <code>npm test</code>，终端里就能看到绿色的 PASS，很舒服。</p>
+<h2 id="3-常用的几个断言"><a href="#3-常用的几个断言" class="headerlink" title="3. 常用的几个断言"></a>3. 常用的几个断言</h2><p>Jest 的断言（matcher）挺多的，但平时也就用这么几个：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 严格相等（基本类型用这个）</span></span><br><span class="line">expect(<span class="number">1</span> + <span class="number">1</span>).toBe(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对象/数组用 toEqual（深度比较）</span></span><br><span class="line">expect(&#123; <span class="attr">a</span>: <span class="number">1</span> &#125;).toEqual(&#123; <span class="attr">a</span>: <span class="number">1</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 真假判断</span></span><br><span class="line">expect(<span class="literal">true</span>).toBeTruthy()</span><br><span class="line">expect(<span class="number">0</span>).toBeFalsy()</span><br><span class="line">expect(<span class="literal">null</span>).toBeNull()</span><br><span class="line">expect(<span class="literal">undefined</span>).toBeUndefined()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 包含关系</span></span><br><span class="line">expect([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]).toContain(<span class="number">2</span>)</span><br><span class="line">expect(<span class="string">'hello world'</span>).toMatch(<span class="regexp">/world/</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 大于小于</span></span><br><span class="line">expect(<span class="number">10</span>).toBeGreaterThan(<span class="number">5</span>)</span><br><span class="line">expect(<span class="number">3</span>).toBeLessThanOrEqual(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 抛错</span></span><br><span class="line">expect(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'boom'</span>) &#125;).toThrow(<span class="string">'boom'</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-Mock：假装调了接口"><a href="#4-Mock：假装调了接口" class="headerlink" title="4. Mock：假装调了接口"></a>4. Mock：假装调了接口</h2><p>测试的时候总不能真去调后端接口吧，这时候就要用 mock。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// api/user.js</span></span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">'axios'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getUser</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> axios.get(<span class="string">`/api/users/<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">  <span class="keyword">return</span> res.data</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123; getUser &#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// api/__tests__/user.test.js</span></span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">'axios'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; getUser &#125; = <span class="built_in">require</span>(<span class="string">'../user'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 让 jest 把 axios 整个模块都给 mock 掉</span></span><br><span class="line">jest.mock(<span class="string">'axios'</span>)</span><br><span class="line"></span><br><span class="line">test(<span class="string">'getUser 能正常返回数据'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 告诉 mock：当调 get 的时候，返回这个假数据</span></span><br><span class="line">  axios.get.mockResolvedValue(&#123;</span><br><span class="line">    data: &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">'张三'</span> &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> getUser(<span class="number">1</span>)</span><br><span class="line">  expect(user.name).toBe(<span class="string">'张三'</span>)</span><br><span class="line">  <span class="comment">// 还能验证它有没有用对的参数去调</span></span><br><span class="line">  expect(axios.get).toHaveBeenCalledWith(<span class="string">'/api/users/1'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<p>刚开始用 mock 的时候觉得绕，后来理解了：mock 就是”用假的替换真的”，让测试不依赖外部环境。</p>
+<h2 id="5-覆盖率报告"><a href="#5-覆盖率报告" class="headerlink" title="5. 覆盖率报告"></a>5. 覆盖率报告</h2><p>想看看自己到底测了多少代码，加个 <code>--coverage</code> 参数就行：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx jest --coverage</span><br></pre></td></tr></table></figure></div>
+
+<p>跑完后会在终端输出一个表格，还会在项目下生成一个 <code>coverage/</code> 目录，里面有 HTML 格式的详细报告，打开就能看到哪些代码行被测到了，哪些没覆盖到。</p>
+<p>不过说实话，追求 100% 覆盖率不太现实，也没必要。重点测那些核心的业务逻辑和经常被复用的工具函数就行了。UI 组件那种动不动就改的，测了也白测。</p>
+<h2 id="6-我的一些使用心得"><a href="#6-我的一些使用心得" class="headerlink" title="6. 我的一些使用心得"></a>6. 我的一些使用心得</h2><p><strong>适合测的：</strong></p>
+<ul>
+<li>工具函数（格式化、校验、计算之类的）</li>
+<li>数据转换逻辑（后端接口数据 → 页面要用的格式）</li>
+<li>状态管理里的关键 mutation/action</li>
+</ul>
+<p><strong>没必要测的：</strong></p>
+<ul>
+<li>纯 UI 展示组件（样式变来变去，测不胜测）</li>
+<li>简单的增删改查页面（直接看效果比写测试快）</li>
+</ul>
+<p>写了几个月测试下来，最大的体会是：<strong>写测试不是为了”测试”，而是逼你把代码写得更好</strong>。当你发现一个函数很难测的时候，往往是因为它做了太多事情，或者依赖太多外部状态。为了好测而去拆解代码，反而让代码质量上去了。</p>
+<p>这个算是意外收获吧。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/Jest/" rel="tag"># Jest</a>
+          
+            <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag"># 单元测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html" rel="next" title="微信小程序开发避坑录：从零搞个能跑的项目">
+                <i class="fa fa-chevron-left"></i> 微信小程序开发避坑录：从零搞个能跑的项目
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/TypeScript/2020-02-18-typescript-in-practice.html" rel="prev" title="被 TypeScript 毒打后的常用类型套路备忘">
+                被 TypeScript 毒打后的常用类型套路备忘 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/JavaScript/2019-12-08-jest-unit-testing.html"
+         data-hitalk-title="前端写单元测试？折腾了一下 Jest">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

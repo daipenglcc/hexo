@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="公司有三个后台管理系统，分别是 Vue 2、Vue 3 和一个 React 的。产品说要搞一个”统一工作台”，把这三个系统整合到一个入口下面，菜单统一管理。 最开始想的方案是 iframe 嵌入，简单粗暴，但体验实在太差：地址栏不同步、弹窗被 iframe 框住、跨域通信麻烦……后来选了蚂蚁的 qiankun 搞微前端，踩了不少坑，记录一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qiankun 微前端踩坑实录：把三个老项目塞一起">
+<meta property="og:url" content="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-08-15-qiankun-micro-frontend.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="公司有三个后台管理系统，分别是 Vue 2、Vue 3 和一个 React 的。产品说要搞一个”统一工作台”，把这三个系统整合到一个入口下面，菜单统一管理。 最开始想的方案是 iframe 嵌入，简单粗暴，但体验实在太差：地址栏不同步、弹窗被 iframe 框住、跨域通信麻烦……后来选了蚂蚁的 qiankun 搞微前端，踩了不少坑，记录一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-15T02:45:33.000Z">
+<meta property="article:modified_time" content="2026-10-08T07:16:47.047Z">
+<meta property="article:tag" content="前端架构">
+<meta property="article:tag" content="微前端">
+<meta property="article:tag" content="qiankun">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/前端工程化/2021-08-15-qiankun-micro-frontend.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>qiankun 微前端踩坑实录：把三个老项目塞一起 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">48</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">84</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-08-15-qiankun-micro-frontend.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">qiankun 微前端踩坑实录：把三个老项目塞一起
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-08-15 10:45:33" itemprop="dateCreated datePublished" datetime="2021-08-15T10:45:33+08:00">2021-08-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-10-08 15:16:47" itemprop="dateModified" datetime="2026-10-08T15:16:47+08:00">2026-10-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">前端工程化</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-08-15-qiankun-micro-frontend.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-08-15-qiankun-micro-frontend.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>公司有三个后台管理系统，分别是 Vue 2、Vue 3 和一个 React 的。产品说要搞一个”统一工作台”，把这三个系统整合到一个入口下面，菜单统一管理。</p>
+<p>最开始想的方案是 iframe 嵌入，简单粗暴，但体验实在太差：地址栏不同步、弹窗被 iframe 框住、跨域通信麻烦……后来选了蚂蚁的 qiankun 搞微前端，踩了不少坑，记录一下。</p>
+<a id="more"></a>
+
+<h2 id="1-微前端到底要干嘛"><a href="#1-微前端到底要干嘛" class="headerlink" title="1. 微前端到底要干嘛"></a>1. 微前端到底要干嘛</h2><p>简单说就是：<strong>一个主应用（基座）负责壳子和路由，子应用各自独立开发、独立部署，运行时动态加载到主应用里。</strong></p>
+<p>好处很直接：</p>
+<ul>
+<li>老项目不用重写，能直接接入</li>
+<li>各子应用技术栈独立，Vue、React 混着来</li>
+<li>子应用可以单独发版，不用整体打包</li>
+</ul>
+<h2 id="2-主应用怎么搭"><a href="#2-主应用怎么搭" class="headerlink" title="2. 主应用怎么搭"></a>2. 主应用怎么搭</h2><p>主应用其实就是个壳子，核心代码没多少。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install qiankun</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; registerMicroApps, start &#125; <span class="keyword">from</span> <span class="string">'qiankun'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册子应用</span></span><br><span class="line">registerMicroApps([</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'vue2-admin'</span>,</span><br><span class="line">    entry: <span class="string">'//localhost:8081'</span>,  <span class="comment">// 子应用的地址</span></span><br><span class="line">    container: <span class="string">'#subapp-container'</span>,  <span class="comment">// 子应用挂载的 DOM 节点</span></span><br><span class="line">    activeRule: <span class="string">'/vue2-admin'</span>,  <span class="comment">// URL 匹配到这个前缀就加载这个子应用</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'vue3-admin'</span>,</span><br><span class="line">    entry: <span class="string">'//localhost:8082'</span>,</span><br><span class="line">    container: <span class="string">'#subapp-container'</span>,</span><br><span class="line">    activeRule: <span class="string">'/vue3-admin'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'react-admin'</span>,</span><br><span class="line">    entry: <span class="string">'//localhost:8083'</span>,</span><br><span class="line">    container: <span class="string">'#subapp-container'</span>,</span><br><span class="line">    activeRule: <span class="string">'/react-admin'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启动</span></span><br><span class="line">start()</span><br></pre></td></tr></table></figure></div>
+
+<p>主应用的模板：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">header</span>&gt;</span>统一工作台导航<span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">aside</span>&gt;</span>侧边菜单<span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 子应用就渲染在这里 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">main</span> <span class="attr">id</span>=<span class="string">"subapp-container"</span>&gt;</span><span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-子应用要改什么"><a href="#3-子应用要改什么" class="headerlink" title="3. 子应用要改什么"></a>3. 子应用要改什么</h2><p>子应用需要暴露三个生命周期函数给 qiankun 调用。以 Vue 2 项目为例：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main.js</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> instance = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">props = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; container &#125; = props</span><br><span class="line">  instance = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    router,</span><br><span class="line">    render: <span class="function"><span class="params">h</span> =&gt;</span> h(App),</span><br><span class="line">  &#125;).$mount(container ? container.querySelector(<span class="string">'#app'</span>) : <span class="string">'#app'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果不是被 qiankun 加载的，就正常启动（独立运行时）</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">window</span>.__POWERED_BY_QIANKUN__) &#123;</span><br><span class="line">  render()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这三个生命周期 qiankun 会去调</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">bootstrap</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'vue2-admin bootstraped'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">mount</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  render(props)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">unmount</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  instance.$destroy()</span><br><span class="line">  instance.$el.innerHTML = <span class="string">''</span></span><br><span class="line">  instance = <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>还要改一下打包配置，让子应用的入口以 UMD 格式导出：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue.config.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; name &#125; = <span class="built_in">require</span>(<span class="string">'./package.json'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    port: <span class="number">8081</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">      <span class="string">'Access-Control-Allow-Origin'</span>: <span class="string">'*'</span>,  <span class="comment">// 跨域，必须加</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  configureWebpack: &#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">      library: <span class="string">`<span class="subst">$&#123;name&#125;</span>`</span>,</span><br><span class="line">      libraryTarget: <span class="string">'umd'</span>,</span><br><span class="line">      jsonpFunction: <span class="string">`webpackJsonp_<span class="subst">$&#123;name&#125;</span>`</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-踩坑记录"><a href="#4-踩坑记录" class="headerlink" title="4. 踩坑记录"></a>4. 踩坑记录</h2><h3 id="坑一：子应用静态资源-404"><a href="#坑一：子应用静态资源-404" class="headerlink" title="坑一：子应用静态资源 404"></a>坑一：子应用静态资源 404</h3><p>子应用的图片、字体等资源路径是相对路径的话，被主应用加载后就 404 了。因为路径变成了相对于主应用的域名。</p>
+<p><strong>解决：</strong> 在子应用入口动态设置 <code>publicPath</code>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/public-path.js（在 main.js 最顶部引入）</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">window</span>.__POWERED_BY_QIANKUN__) &#123;</span><br><span class="line">  __webpack_public_path__ = <span class="built_in">window</span>.__INJECTED_PUBLIC_PATH_BY_QIANKUN__</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这一步必须在最开头做，忘了的话各种资源加载报错。</p>
+<h3 id="坑二：样式互相污染"><a href="#坑二：样式互相污染" class="headerlink" title="坑二：样式互相污染"></a>坑二：样式互相污染</h3><p>这个最头疼。主应用用的 ElementUI，子应用也有 ElementUI，版本不同样式就打架了。最典型的是 <code>.el-dialog</code> 之类的全局样式互相覆盖。</p>
+<p>我最后的方案是给子应用的样式加个前缀：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主应用启动的时候</span></span><br><span class="line">start(&#123;</span><br><span class="line">  sandbox: &#123;</span><br><span class="line">    experimentalStyleIsolation: <span class="literal">true</span>  <span class="comment">// 自动给子应用样式加个前缀</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<p>但说实话这个方案不完美，有些通过 JS 动态插入 body 的弹窗（比如 Select 的下拉框）会跑到沙箱外面去，样式还是会丢。这种只能靠手动覆盖 CSS 来解决，比较恶心。</p>
+<h3 id="坑三：子应用路由基础路径"><a href="#坑三：子应用路由基础路径" class="headerlink" title="坑三：子应用路由基础路径"></a>坑三：子应用路由基础路径</h3><p>子应用独立运行的时候路由 base 是 <code>/</code>，但在 qiankun 下需要改成 <code>activeRule</code> 对应的前缀，不然路由跳转会乱。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/index.js</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  mode: <span class="string">'history'</span>,</span><br><span class="line">  base: <span class="built_in">window</span>.__POWERED_BY_QIANKUN__ ? <span class="string">'/vue2-admin/'</span> : <span class="string">'/'</span>,</span><br><span class="line">  routes</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="坑四：主子应用之间怎么通信"><a href="#坑四：主子应用之间怎么通信" class="headerlink" title="坑四：主子应用之间怎么通信"></a>坑四：主子应用之间怎么通信</h3><p>qiankun 自带的 <code>initGlobalState</code> 够用了，但别滥用，只传关键信息（比如用户信息、token）就行。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主应用</span></span><br><span class="line"><span class="keyword">import</span> &#123; initGlobalState &#125; <span class="keyword">from</span> <span class="string">'qiankun'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> actions = initGlobalState(&#123;</span><br><span class="line">  user: &#123; <span class="attr">name</span>: <span class="string">'张三'</span>, <span class="attr">token</span>: <span class="string">'xxx'</span> &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子应用在 mount 时拿到 props</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">mount</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  props.onGlobalStateChange(<span class="function">(<span class="params">state</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'全局状态变了:'</span>, state)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 也可以修改</span></span><br><span class="line">  props.setGlobalState(&#123; <span class="attr">user</span>: &#123; <span class="attr">name</span>: <span class="string">'李四'</span> &#125; &#125;)</span><br><span class="line">  render(props)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="5-一些实际建议"><a href="#5-一些实际建议" class="headerlink" title="5. 一些实际建议"></a>5. 一些实际建议</h2><ul>
+<li><strong>主应用尽量做薄</strong>，只管登录态、菜单、路由分发，业务逻辑全放子应用里</li>
+<li><strong>样式隔离没有完美方案</strong>，能用 CSS Modules 或 BEM 命名的尽量用，比依赖沙箱靠谱</li>
+<li><strong>子应用要保持独立可运行</strong>，开发调试的时候还是独立跑的多</li>
+<li><strong>公共依赖不一定要抽出来</strong>，看起来省了点体积，但版本管理会变成噩梦</li>
+</ul>
+<p>微前端这东西说到底是解决”组织问题”而不是”技术问题”。如果项目不大、团队不多，真没必要上。我们是因为三个系统实在合不到一起才不得已用的。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84/" rel="tag"># 前端架构</a>
+          
+            <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag"># 微前端</a>
+          
+            <a href="/tags/qiankun/" rel="tag"># qiankun</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/%E8%BF%90%E7%BB%B4/2021-05-20-nginx-frontend-deploy.html" rel="next" title="前端部署绕不开的 Nginx 配置备忘录">
+                <i class="fa fa-chevron-left"></i> 前端部署绕不开的 Nginx 配置备忘录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/Node/2021-11-20-electron-desktop-app.html" rel="prev" title="前端搞 Electron 桌面应用：从入门到能跑">
+                前端搞 Electron 桌面应用：从入门到能跑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-08-15-qiankun-micro-frontend.html"
+         data-hitalk-title="qiankun 微前端踩坑实录：把三个老项目塞一起">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

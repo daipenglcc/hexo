@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="最近要给一个小项目搭后台管理系统，对比了一圈方案——Ant Design Pro 太重了，用 ElementUI 又想换个口味。刷推看到好多人在安利 shadcn&#x2F;ui，说它不是传统的组件库，而是直接把源码复制到你项目里，想怎么改就怎么改。正好最近在写 Next.js，就试着搭了一个。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shadcn&#x2F;ui + Next.js 搭了个后台管理系统">
+<meta property="og:url" content="https://www.vueweb.cn/posts/React/2024-08-06-shadcn-ui-nextjs-admin.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="最近要给一个小项目搭后台管理系统，对比了一圈方案——Ant Design Pro 太重了，用 ElementUI 又想换个口味。刷推看到好多人在安利 shadcn&#x2F;ui，说它不是传统的组件库，而是直接把源码复制到你项目里，想怎么改就怎么改。正好最近在写 Next.js，就试着搭了一个。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-06T01:45:30.000Z">
+<meta property="article:modified_time" content="2026-10-08T07:22:11.170Z">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Next.js">
+<meta property="article:tag" content="全栈">
+<meta property="article:tag" content="shadcn&#x2F;ui">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/React/2024-08-06-shadcn-ui-nextjs-admin.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>shadcn/ui + Next.js 搭了个后台管理系统 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">48</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">84</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/React/2024-08-06-shadcn-ui-nextjs-admin.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">shadcn/ui + Next.js 搭了个后台管理系统
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-08-06 09:45:30" itemprop="dateCreated datePublished" datetime="2024-08-06T09:45:30+08:00">2024-08-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2026-10-08 15:22:11" itemprop="dateModified" datetime="2026-10-08T15:22:11+08:00">2026-10-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/React/2024-08-06-shadcn-ui-nextjs-admin.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/React/2024-08-06-shadcn-ui-nextjs-admin.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近要给一个小项目搭后台管理系统，对比了一圈方案——Ant Design Pro 太重了，用 ElementUI 又想换个口味。刷推看到好多人在安利 shadcn/ui，说它不是传统的组件库，而是直接把源码复制到你项目里，想怎么改就怎么改。正好最近在写 Next.js，就试着搭了一个。</p>
+<a id="more"></a>
+
+<h2 id="1-shadcn-ui-到底是什么"><a href="#1-shadcn-ui-到底是什么" class="headerlink" title="1. shadcn/ui 到底是什么"></a>1. shadcn/ui 到底是什么</h2><p>先说它跟 Ant Design、ElementUI 这类组件库最大的区别：<strong>它不是一个 npm 包</strong>。</p>
+<p>你不会在 <code>package.json</code> 里看到 <code>&quot;shadcn-ui&quot;: &quot;x.x.x&quot;</code> 这种依赖。它的工作方式是通过 CLI 把你选的组件源代码直接拷贝到你项目的 <code>components/ui/</code> 目录下。</p>
+<p>好处是：</p>
+<ul>
+<li>完全可以自定义，改源码不会被升级覆盖</li>
+<li>按需添加，不加的组件不存在于项目里</li>
+<li>底层基于 Radix UI（无障碍做得很好）+ Tailwind CSS</li>
+</ul>
+<p>坏处是：</p>
+<ul>
+<li>跟传统组件库比，没有”升级版本自动修bug”这回事</li>
+<li>需要你自己维护这些组件代码</li>
+</ul>
+<h2 id="2-搭建过程"><a href="#2-搭建过程" class="headerlink" title="2. 搭建过程"></a>2. 搭建过程</h2><h3 id="初始化-Next-js-项目"><a href="#初始化-Next-js-项目" class="headerlink" title="初始化 Next.js 项目"></a>初始化 Next.js 项目</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-next-app@latest admin-dashboard --typescript --tailwind --eslint --app --src-dir</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="初始化-shadcn-ui"><a href="#初始化-shadcn-ui" class="headerlink" title="初始化 shadcn/ui"></a>初始化 shadcn/ui</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx shadcn-ui@latest init</span><br></pre></td></tr></table></figure></div>
+
+<p>它会问你几个问题，比如用什么样式、颜色主题、CSS 变量等等。我一般选默认就行。</p>
+<p>初始化完成后会生成：</p>
+<ul>
+<li><code>components.json</code> — 配置文件</li>
+<li><code>lib/utils.ts</code> — 一个 <code>cn()</code> 工具函数（合并 Tailwind 类名用的）</li>
+</ul>
+<h3 id="添加需要的组件"><a href="#添加需要的组件" class="headerlink" title="添加需要的组件"></a>添加需要的组件</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按需加，不是一次全装</span></span><br><span class="line">npx shadcn-ui@latest add button</span><br><span class="line">npx shadcn-ui@latest add table</span><br><span class="line">npx shadcn-ui@latest add dialog</span><br><span class="line">npx shadcn-ui@latest add form</span><br><span class="line">npx shadcn-ui@latest add input</span><br><span class="line">npx shadcn-ui@latest add select</span><br><span class="line">npx shadcn-ui@latest add card</span><br><span class="line">npx shadcn-ui@latest add dropdown-menu</span><br><span class="line">npx shadcn-ui@latest add sidebar</span><br></pre></td></tr></table></figure></div>
+
+<p>每执行一个，它就往 <code>components/ui/</code> 下面放一个组件文件。打开看就是普通的 React 组件代码，想改随便改。</p>
+<h2 id="3-搭后台布局"><a href="#3-搭后台布局" class="headerlink" title="3. 搭后台布局"></a>3. 搭后台布局</h2><h3 id="侧边栏-顶栏-内容区"><a href="#侧边栏-顶栏-内容区" class="headerlink" title="侧边栏 + 顶栏 + 内容区"></a>侧边栏 + 顶栏 + 内容区</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;layout.tsx</span><br><span class="line">import &#123; SidebarProvider, Sidebar, SidebarContent, SidebarMenu, SidebarMenuItem &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;sidebar&quot;</span><br><span class="line"></span><br><span class="line">export default function AdminLayout(&#123; children &#125;: &#123; children: React.ReactNode &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;SidebarProvider&gt;</span><br><span class="line">      &lt;div className&#x3D;&quot;flex h-screen w-full&quot;&gt;</span><br><span class="line">        &lt;Sidebar&gt;</span><br><span class="line">          &lt;SidebarContent&gt;</span><br><span class="line">            &lt;SidebarMenu&gt;</span><br><span class="line">              &lt;SidebarMenuItem&gt;</span><br><span class="line">                &lt;a href&#x3D;&quot;&#x2F;dashboard&quot;&gt;仪表盘&lt;&#x2F;a&gt;</span><br><span class="line">              &lt;&#x2F;SidebarMenuItem&gt;</span><br><span class="line">              &lt;SidebarMenuItem&gt;</span><br><span class="line">                &lt;a href&#x3D;&quot;&#x2F;users&quot;&gt;用户管理&lt;&#x2F;a&gt;</span><br><span class="line">              &lt;&#x2F;SidebarMenuItem&gt;</span><br><span class="line">              &lt;SidebarMenuItem&gt;</span><br><span class="line">                &lt;a href&#x3D;&quot;&#x2F;orders&quot;&gt;订单管理&lt;&#x2F;a&gt;</span><br><span class="line">              &lt;&#x2F;SidebarMenuItem&gt;</span><br><span class="line">            &lt;&#x2F;SidebarMenu&gt;</span><br><span class="line">          &lt;&#x2F;SidebarContent&gt;</span><br><span class="line">        &lt;&#x2F;Sidebar&gt;</span><br><span class="line"></span><br><span class="line">        &lt;main className&#x3D;&quot;flex-1 overflow-auto p-6&quot;&gt;</span><br><span class="line">          &#123;children&#125;</span><br><span class="line">        &lt;&#x2F;main&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;SidebarProvider&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="数据表格页"><a href="#数据表格页" class="headerlink" title="数据表格页"></a>数据表格页</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;users&#x2F;page.tsx</span><br><span class="line">import &#123; Table, TableBody, TableCell, TableHead, TableHeader, TableRow &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;table&quot;</span><br><span class="line">import &#123; Button &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;button&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 实际项目从接口拿，这里先写死</span><br><span class="line">const users &#x3D; [</span><br><span class="line">  &#123; id: 1, name: &quot;张三&quot;, email: &quot;zhangsan@example.com&quot;, role: &quot;管理员&quot; &#125;,</span><br><span class="line">  &#123; id: 2, name: &quot;李四&quot;, email: &quot;lisi@example.com&quot;, role: &quot;编辑&quot; &#125;,</span><br><span class="line">  &#123; id: 3, name: &quot;王五&quot;, email: &quot;wangwu@example.com&quot;, role: &quot;普通用户&quot; &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">export default function UsersPage() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;div className&#x3D;&quot;flex items-center justify-between mb-6&quot;&gt;</span><br><span class="line">        &lt;h1 className&#x3D;&quot;text-2xl font-bold&quot;&gt;用户管理&lt;&#x2F;h1&gt;</span><br><span class="line">        &lt;Button&gt;新增用户&lt;&#x2F;Button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">      &lt;div className&#x3D;&quot;rounded-md border&quot;&gt;</span><br><span class="line">        &lt;Table&gt;</span><br><span class="line">          &lt;TableHeader&gt;</span><br><span class="line">            &lt;TableRow&gt;</span><br><span class="line">              &lt;TableHead&gt;ID&lt;&#x2F;TableHead&gt;</span><br><span class="line">              &lt;TableHead&gt;姓名&lt;&#x2F;TableHead&gt;</span><br><span class="line">              &lt;TableHead&gt;邮箱&lt;&#x2F;TableHead&gt;</span><br><span class="line">              &lt;TableHead&gt;角色&lt;&#x2F;TableHead&gt;</span><br><span class="line">              &lt;TableHead&gt;操作&lt;&#x2F;TableHead&gt;</span><br><span class="line">            &lt;&#x2F;TableRow&gt;</span><br><span class="line">          &lt;&#x2F;TableHeader&gt;</span><br><span class="line">          &lt;TableBody&gt;</span><br><span class="line">            &#123;users.map((user) &#x3D;&gt; (</span><br><span class="line">              &lt;TableRow key&#x3D;&#123;user.id&#125;&gt;</span><br><span class="line">                &lt;TableCell&gt;&#123;user.id&#125;&lt;&#x2F;TableCell&gt;</span><br><span class="line">                &lt;TableCell&gt;&#123;user.name&#125;&lt;&#x2F;TableCell&gt;</span><br><span class="line">                &lt;TableCell&gt;&#123;user.email&#125;&lt;&#x2F;TableCell&gt;</span><br><span class="line">                &lt;TableCell&gt;&#123;user.role&#125;&lt;&#x2F;TableCell&gt;</span><br><span class="line">                &lt;TableCell&gt;</span><br><span class="line">                  &lt;Button variant&#x3D;&quot;ghost&quot; size&#x3D;&quot;sm&quot;&gt;编辑&lt;&#x2F;Button&gt;</span><br><span class="line">                  &lt;Button variant&#x3D;&quot;ghost&quot; size&#x3D;&quot;sm&quot; className&#x3D;&quot;text-red-500&quot;&gt;删除&lt;&#x2F;Button&gt;</span><br><span class="line">                &lt;&#x2F;TableCell&gt;</span><br><span class="line">              &lt;&#x2F;TableRow&gt;</span><br><span class="line">            ))&#125;</span><br><span class="line">          &lt;&#x2F;TableBody&gt;</span><br><span class="line">        &lt;&#x2F;Table&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="弹窗表单"><a href="#弹窗表单" class="headerlink" title="弹窗表单"></a>弹窗表单</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;dialog&quot;</span><br><span class="line">import &#123; Input &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;input&quot;</span><br><span class="line">import &#123; Button &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;button&quot;</span><br><span class="line">import &#123; Label &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;label&quot;</span><br><span class="line"></span><br><span class="line">function AddUserDialog() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;Dialog&gt;</span><br><span class="line">      &lt;DialogTrigger asChild&gt;</span><br><span class="line">        &lt;Button&gt;新增用户&lt;&#x2F;Button&gt;</span><br><span class="line">      &lt;&#x2F;DialogTrigger&gt;</span><br><span class="line">      &lt;DialogContent&gt;</span><br><span class="line">        &lt;DialogHeader&gt;</span><br><span class="line">          &lt;DialogTitle&gt;新增用户&lt;&#x2F;DialogTitle&gt;</span><br><span class="line">        &lt;&#x2F;DialogHeader&gt;</span><br><span class="line">        &lt;div className&#x3D;&quot;space-y-4 mt-4&quot;&gt;</span><br><span class="line">          &lt;div&gt;</span><br><span class="line">            &lt;Label htmlFor&#x3D;&quot;name&quot;&gt;姓名&lt;&#x2F;Label&gt;</span><br><span class="line">            &lt;Input id&#x3D;&quot;name&quot; placeholder&#x3D;&quot;请输入姓名&quot; &#x2F;&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">          &lt;div&gt;</span><br><span class="line">            &lt;Label htmlFor&#x3D;&quot;email&quot;&gt;邮箱&lt;&#x2F;Label&gt;</span><br><span class="line">            &lt;Input id&#x3D;&quot;email&quot; type&#x3D;&quot;email&quot; placeholder&#x3D;&quot;请输入邮箱&quot; &#x2F;&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">          &lt;Button className&#x3D;&quot;w-full&quot;&gt;提交&lt;&#x2F;Button&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;&#x2F;DialogContent&gt;</span><br><span class="line">    &lt;&#x2F;Dialog&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-深色模式"><a href="#4-深色模式" class="headerlink" title="4. 深色模式"></a>4. 深色模式</h2><p>shadcn/ui 天然支持深色模式，加个 theme provider 就行：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install next-themes</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; components&#x2F;theme-provider.tsx</span><br><span class="line">&quot;use client&quot;</span><br><span class="line">import &#123; ThemeProvider as NextThemesProvider &#125; from &quot;next-themes&quot;</span><br><span class="line"></span><br><span class="line">export function ThemeProvider(&#123; children &#125;: &#123; children: React.ReactNode &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;NextThemesProvider attribute&#x3D;&quot;class&quot; defaultTheme&#x3D;&quot;system&quot;&gt;</span><br><span class="line">      &#123;children&#125;</span><br><span class="line">    &lt;&#x2F;NextThemesProvider&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>切换按钮：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&quot;use client&quot;</span><br><span class="line">import &#123; useTheme &#125; from &quot;next-themes&quot;</span><br><span class="line">import &#123; Button &#125; from &quot;@&#x2F;components&#x2F;ui&#x2F;button&quot;</span><br><span class="line"></span><br><span class="line">export function ThemeToggle() &#123;</span><br><span class="line">  const &#123; theme, setTheme &#125; &#x3D; useTheme()</span><br><span class="line">  return (</span><br><span class="line">    &lt;Button variant&#x3D;&quot;ghost&quot; onClick&#x3D;&#123;() &#x3D;&gt; setTheme(theme &#x3D;&#x3D;&#x3D; &quot;dark&quot; ? &quot;light&quot; : &quot;dark&quot;)&#125;&gt;</span><br><span class="line">      &#123;theme &#x3D;&#x3D;&#x3D; &quot;dark&quot; ? &quot;🌞&quot; : &quot;🌙&quot;&#125;</span><br><span class="line">    &lt;&#x2F;Button&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>深色模式下的样式效果直接就出来了，因为 Tailwind 的 <code>dark:</code> 前缀在 shadcn/ui 组件里都写好了。</p>
+<h2 id="5-使用感受"><a href="#5-使用感受" class="headerlink" title="5. 使用感受"></a>5. 使用感受</h2><p><strong>优点：</strong></p>
+<ul>
+<li>代码在自己手里，改什么都行</li>
+<li>样式统一好看，深色模式几乎零成本</li>
+<li>跟 Next.js + Tailwind 配合堪称完美</li>
+<li>组件质量高，Radix UI 底层的无障碍支持很好</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>功能不如 Ant Design 丰富（比如没有高级表格组件：排序、筛选、分页要自己搞或者用 TanStack Table）</li>
+<li>没有统一升级机制，组件有 bug 得自己去 GitHub 看改了没</li>
+<li>深度绑定 Tailwind CSS，如果项目不用 Tailwind 就没法用</li>
+</ul>
+<p>总的来说，如果你的技术栈是 Next.js + Tailwind + TypeScript，shadcn/ui 基本是目前最舒服的选择。做中小型的后台系统完全够用了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/Next-js/" rel="tag"># Next.js</a>
+          
+            <a href="/tags/%E5%85%A8%E6%A0%88/" rel="tag"># 全栈</a>
+          
+            <a href="/tags/shadcn-ui/" rel="tag"># shadcn/ui</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/AI/2024-05-10-github-copilot-guide.html" rel="next" title="用了一年 GitHub Copilot，聊聊怎么用最顺手">
+                <i class="fa fa-chevron-left"></i> 用了一年 GitHub Copilot，聊聊怎么用最顺手
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/AI/2024-09-15-rag-knowledge-base.html" rel="prev" title="折腾 RAG：给大模型接个本地知识库">
+                折腾 RAG：给大模型接个本地知识库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/React/2024-08-06-shadcn-ui-nextjs-admin.html"
+         data-hitalk-title="shadcn/ui + Next.js 搭了个后台管理系统">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

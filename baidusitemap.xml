@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-05-10-web-components-in-practice.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/AI/2025-04-22-vercel-ai-sdk-guide.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/React/2024-08-06-shadcn-ui-nextjs-admin.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/Python/2024-03-18-python-for-frontend-dev.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/React/2023-11-12-zustand-state-management.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/AI/2023-06-20-prompt-engineering-tips.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/DevOps/2022-08-25-github-actions-deploy.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/CSS3/2022-05-18-tailwind-css-experience.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/Node/2021-11-20-electron-desktop-app.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-08-15-qiankun-micro-frontend.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2020-03-25-frontend-performance-optimization.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/JavaScript/2019-12-08-jest-unit-testing.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/Vue/2019-05-18-vue-cli3-setup.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/CSS3/2018-09-10-flex-layout-cheatsheet.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.vueweb.cn/posts/JavaScript/2018-03-22-promise-async-await.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
     <loc>https://www.vueweb.cn/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2019-10-25-wechat-miniprogram-guide.html</loc>
     <lastmod>2026-09-23</lastmod>
   </url>
