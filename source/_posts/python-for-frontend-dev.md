@@ -8,7 +8,7 @@ tags:
 categories: Python
 ---
 
-去年 AI 火了以后，很多工具和教程都是 Python 的。想跑个本地模型要 Python，想调 OpenAI 的接口官方示例也是 Python，想搞个数据分析还是 Python。作为一个写了好几年 JavaScript 的前端，终于还是没忍住学了一下。
+去年 AI 火了以后，很多工具和教程都是 Python 的。想跑个本地模型要 Python，想调 OpenAI 的接口官方示例也是 Python，想建立一个数据分析还是 Python。作为一个写了好几年 JavaScript 的前端，终于还是没忍住学了一下。
 
 这里不打算写一篇完整的 Python 教程，就记一下我作为 JS 开发者学 Python 过程中那些"跟 JS 不一样"的地方，以及一些快速上手的笔记。
 

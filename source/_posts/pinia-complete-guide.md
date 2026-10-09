@@ -8,7 +8,7 @@ tags:
 categories: Vue
 ---
 
-刚转到 Vue 3 那会儿，我还挣扎着继续用 Vuex 4，但写起 TS 类型来简直痛不欲生。后来尤大亲自推荐了 Pinia，试了一下发现，没了 Vuex 里那恶心的 `mutations`，代码写起来真是清爽太多了。
+刚转到 Vue 3 那会儿，我还挣扎着继续用 Vuex 4，但写起 TS 类型来简直痛不欲生。后来尤大亲自推荐了 Pinia，试了一下发现，没了 Vuex 里那恶心的 `mutations`，代码写起来真是清高效太多了。
 
 时间久了有些用法容易忘，这里把平时项目里最顺手的几种写法整理下来。
 
@@ -16,10 +16,10 @@ categories: Vue
 
 ## 1. 为啥不用 Vuex 了？
 
-简单来说，Pinia 最大的爽点有这几个：
+简单来说，Pinia 最大的高效点有这几个：
 - **没有 Mutations 了**：以前改个数据，得先写个 action，再去触发 mutation，现在直接写个函数改 state 就行。
 - **TS 支持极好**：不用自己绞尽脑汁去定义什么大全局类型，它自动能推导出来。
-- **没啥花里胡哨的模块嵌套**：以前那套带 namespace 的 module 让人头晕，现在就是一个文件一个 store，想互相用直接引。
+- **没有太多花里胡哨的模块嵌套**：以前那套带 namespace 的 module 让人头晕，现在就是一个文件一个 store，想互相用直接引。
 
 ## 2. 安装和挂载
 
@@ -65,7 +65,7 @@ export const useCounterStore = defineStore('counter', {
   // 动作（同步异步都行）放这
   actions: {
     increment() {
-      // 直接 this 拿到 state 改掉，爽！
+      // 直接 this 拿到 state 改掉，高效！
       this.count++
     }
   }
@@ -101,7 +101,7 @@ export const useUserStore = defineStore('user', () => {
 
 ## 5. 组件里怎么用？
 
-这也是个容易踩坑的地方，如果你直接把属性解构出来，它就失去响应式了（跟 `props` 一样）。
+这也是个容易实践中的问题的地方，如果你直接把属性解构出来，它就失去响应式了（跟 `props` 一样）。
 
 ```vue
 <script setup>

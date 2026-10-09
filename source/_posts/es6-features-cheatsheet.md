@@ -1,175 +1,130 @@
 ---
-title: 平时写代码常用的 ES6+ 语法小结
+title: 写了三年 ES6+，盘点那些容易被忽视的性能陷阱与优雅写法
 date: 2018-11-20 09:45:33
 tags:
-  - ES6
   - JavaScript
-categories: JavaScript
+  - ES6
+  - 性能优化
+categories: 前端
 ---
 
-虽然 ES6 出来已经很多年了，但平时写业务代码，翻来覆去用的其实也就那么几个特性。整理这篇算是给自己当个速查备忘录，全是日常搬砖比较实用的东西。
+ES6 (ECMAScript 2015) 发布到现在差不多三年多了，箭头函数、解构赋值、Promise 大家都已经用得飞起。
+
+但在 Code Review 的时候，我经常发现很多同学只是在用新语法写老逻辑，甚至有时候滥用新语法，写出了性能堪忧、内存泄漏的代码。今天不背语法书，纯粹从实战角度，盘点一下咱们平时写 ES6+ 容易踩进去的那些“坑”，以及到底怎么写才算优雅。
 
 <!-- more -->
 
-## 1. let 和 const
+## 1. 箭头函数不是万能的：别丢了你的 `this`
 
-自从有了这俩，基本就不怎么写 `var` 了，块级作用域确实省了挺多麻烦。
+箭头函数解决了令人头疼的 `this` 指向问题，因为它不绑定 `this`，而是直接捕获词法作用域。但滥用箭头函数同样会引发灾难。
 
+**典型的反面教材：Vue/React 组件中的方法定义**
+
+在早期的 Vue 中，如果你把生命周期或者 methods 写成箭头函数：
 ```javascript
-// 声明基本不动的常量，或者引用地址不变的对象
-const API_BASE = 'https://api.example.com'
-const config = { timeout: 3000 }
-config.timeout = 5000  // 对象里的属性还是可以改的
-
-// let 一般用在循环或者需要重新赋值的地方
-for (let i = 0; i < 5; i++) {
-  setTimeout(() => console.log(i), 100)
-}
-// 打印出来是 0 到 4，不再是一堆 5
-```
-
-## 2. 箭头函数
-
-写法简短，最主要是不用再写 `const self = this` 这种恶心的代码了。
-
-```javascript
-// 简单写法
-const add = (a, b) => a + b
-const getUser = () => ({ name: 'Tom', age: 25 })  // 直接返回对象记得加括号
-
-// 处理 this 的情况最常用
-const timer = {
-  count: 0,
-  start() {
-    // 这里箭头函数的 this 直接继承了外面的
-    setInterval(() => {
-      this.count++
-      console.log(this.count)
-    }, 1000)
+export default {
+  data() {
+    return { count: 0 }
+  },
+  mounted: () => {
+    // 💥 这里的 this 是 undefined (或者 window)！直接报错
+    this.count++; 
   }
 }
 ```
 
-## 3. 模板字符串
-
-以前拿加号拼字符串拼得头晕，现在用反引号舒服多了。
+**另一个坑：给 DOM 绑定事件**
 
 ```javascript
-const name = '光阴小栈'
-const year = 2018
-
-// 塞变量
-const greeting = `欢迎来到 ${name}，现在是 ${year} 年`
-
-// 多行 HTML 也能直接写
-const html = `
-  <div class="card">
-    <h2>${name}</h2>
-    <p>创建于 ${year} 年</p>
-  </div>
-`
+const button = document.getElementById('myButton');
+button.addEventListener('click', () => {
+  // 💥 这里的 this 不再是 button 元素，拿不到 this.id
+  console.log(this.id); 
+});
 ```
+**建议**：只有在真正需要保留外层 `this` 上下文时（比如 `setTimeout` 的回调、数组的 `map`/`filter` 回调），才去使用箭头函数。对于对象方法，规范地写普通的函数。
 
-## 4. 解构赋值
+## 2. 闭包与 `let/const`：不要再在循环里造垃圾了
 
-从后台拿到一大坨接口数据的时候，用这个提取字段最方便。
+`let` 和 `const` 带来了块级作用域（Block Scope），大家都知道要用来替换 `var`。但在循环里，处理不当会造成严重的内存问题。
 
+看看下面这段代码：
 ```javascript
-const user = { name: 'Tom', age: 25, role: 'admin' }
-const { name, age, role = 'user' } = user  // 还能顺手给个默认值
-
-// 嵌套解构，比如拿接口返回的数据
-const response = {
-  data: {
-    list: [1, 2, 3],
-    pagination: { total: 100 }
-  }
+for (let i = 0; i < 10000; i++) {
+  const processItem = () => {
+    console.log(i);
+  };
+  processItem();
 }
-const { data: { list, pagination: { total } } } = response
-
-// 数组解构偶尔也会用，比如换变量值
-let a = 1, b = 2;
-[a, b] = [b, a]
 ```
+因为 `let i` 是块级作用域，引擎会在每次循环时，都为这一个迭代创建一个全新的环境（Environment Record）。如果在循环体内部还生成了函数（闭包），会导致每次循环的对象都无法被垃圾回收，极大消耗内存。
 
-## 5. 展开运算符 (...)
+**优雅写法**：如果循环内不需要强行保留作用域快照，尽量把函数定义提到循环外部，通过传参解决。
 
-平时合并对象、合并数组、透传 props 基本离不开它。
+## 3. 解构赋值陷阱：小心深层解构导致的崩溃
+
+解构赋值是个好东西，能大幅减少代码量。但如果服务端返回的数据结构不稳定，深层解构就是定时炸弹。
 
 ```javascript
-// 拼数组
-const arr1 = [1, 2, 3]
-const arr2 = [4, 5, 6]
-const merged = [...arr1, ...arr2]
+const response = { code: 200, data: null };
 
-// 拼配置项（后面同名的会覆盖前面的）
-const defaults = { theme: 'light', lang: 'zh-CN' }
-const userSettings = { theme: 'dark', fontSize: 14 }
-const config = { ...defaults, ...userSettings }
+// 💥 如果 data 是 null 或者 undefined，这里直接抛出 TypeError 阻断程序
+const { data: { user: { name } } } = response; 
 ```
 
-## 6. async / await
-
-处理请求再也不用写一堆 `.then()` 链式调用了，代码看起来像同步的一样。
+**优雅方案**：结合 ES2020 的可选链（Optional Chaining `?.`）和默认值，不要过度使用多层解构。
 
 ```javascript
-async function getUserOrders(userId) {
-  try {
-    const user = await fetchUser(userId)
-    const orders = await fetchOrders(user.id)
-    return orders
-  } catch (error) {
-    // 包个 try-catch 处理报错
-    console.error('获取数据失败:', error)
-    return []
-  }
-}
-
-// 并行发请求也常用
-async function loadDashboard() {
-  const [users, posts] = await Promise.all([
-    fetch('/api/users').then(r => r.json()),
-    fetch('/api/posts').then(r => r.json())
-  ])
-  return { users, posts }
+// 更安全的写法
+const name = response.data?.user?.name || '匿名用户';
+```
+如果非要在函数参数里做默认解构，记得给外层也赋默认值：
+```javascript
+function renderUser({ name = 'Unknown', age = 0 } = {}) {
+  // ...
 }
 ```
 
-## 7. 数组的一些常用方法
+## 4. `Spread Operator` (...扩展运算符) 的性能危机
 
-循环遍历基本告别 `for` 循环，用几个内置方法写得更少。
-
+扩展运算符是一种非常高效的语法，合并数组、克隆对象非常便捷：
 ```javascript
-const users = [
-  { id: 1, name: 'Tom', age: 25, active: true },
-  { id: 2, name: 'Jerry', age: 30, active: false }
-]
-
-// 找特定那一个
-const tom = users.find(u => u.name === 'Tom')
-
-// 过滤一下
-const activeUsers = users.filter(u => u.active)
-
-// 转换格式
-const names = users.map(u => u.name)
-
-// 看下有没有满足条件的
-const hasInactive = users.some(u => !u.active)
+const newObj = { ...oldObj, newProp: 1 };
 ```
 
-## 8. 可选链 (?.) 和 空值合并 (??)
+但请记住，**这只是浅拷贝**。而且在处理巨大数组时，扩展运算符是有严重性能瓶颈的。
 
-虽然是后来版本的东西，但确实极大地减少了 `Cannot read property of undefined` 这种低级报错。
-
+比如要把一个大数组推入另一个数组：
 ```javascript
-const user = { profile: {} }
+// 假设 bigArray 有 10 万条数据
+const arr = [1, 2, 3];
+arr.push(...bigArray); 
+```
+这个操作会把 `bigArray` 完全解构成参数列表，极容易触发引擎的 `Maximum call stack size exceeded`（调用栈溢出）。
 
-// 以前得一层层判断，现在一个问号搞定
-const city = user?.profile?.address?.city  // 取不到就是 undefined，不会报错挂掉
-
-// 给默认值，?? 只认 null 和 undefined，跟 || 把 0 当成 false 相比更安全
-const port = config.port ?? 3000
+**性能更好的写法**：规范地用原生的方式。
+```javascript
+// 没有栈溢出风险
+bigArray.forEach(item => arr.push(item));
+// 或者
+Array.prototype.push.apply(arr, bigArray); // 注意，apply 也有参数个数限制风险
 ```
 
-基本上，掌握这些东西，看绝大多数的前端代码都没什么障碍了。不够的时候再回头去翻文档就行。
+## 5. `Array.from()` 和 `Set` 的奇妙化学反应
+
+数组去重以前大家喜欢写两层 `for` 循环，现在有了 `Set`，一句话搞定：
+```javascript
+const uniqueArr = [...new Set([1, 1, 2, 3, 3])];
+```
+但你知道吗，对于某些特定的类数组对象（比如巨大的 NodeList），使用 `Array.from()` 会比 `[...iterable]` 稍微快那么一点，因为引擎对 `Array.from` 的内置优化做得更好，并且它可以直接接收一个 `map` 函数。
+
+```javascript
+// 直接在一个方法里完成去重和映射，性能更好，少生成一次中间数组
+const mappedUnique = Array.from(new Set(arr), x => x * 2);
+```
+
+## 总结
+
+ES6+ 带来了极强的表现力，让 JS 变得像一门“现代语言”。但在使用任何语法糖之前，多问自己一句：这行代码在 V8 引擎眼里，到底被转换成了什么？
+
+只有深刻理解了闭包、作用域链、引用传递，你才能把新语法写得真正“优雅”，而不是给后人留下一堆跑不动的历史包袱。

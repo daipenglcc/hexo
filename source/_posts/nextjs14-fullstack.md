@@ -1,5 +1,5 @@
 ---
-title: 折腾 Next.js 14：全栈开发踩坑与基础配置
+title: 配置与实践 Next.js 14：全栈开发实践中的问题与基础配置
 date: 2024-01-22 09:15:40
 tags:
   - Next.js
@@ -8,7 +8,7 @@ tags:
 categories: React
 ---
 
-最近写点个人小项目，发现 Next.js 14 的 App Router 终于算是彻底稳了。以前搞前后端分离还得单独弄个 Node.js 服务端，现在直接把读写数据库的逻辑全塞进 Server Actions 里，一把梭的感觉确实爽。这篇就把基础的建站流程整理一下，当个脚手架备忘。
+最近写点个人小项目，发现 Next.js 14 的 App Router 终于算是彻底稳了。以前搞前后端分离还得单独弄个 Node.js 服务端，现在直接把读写数据库的逻辑全塞进 Server Actions 里，一把梭的感觉确实高效。这篇就把基础的建站流程整理一下，当个脚手架备忘。
 
 <!-- more -->
 
@@ -108,7 +108,7 @@ export function LikeButton() {
 
 ## 4. 彻底抛弃 API 路由的 Server Actions
 
-以前写个表单提交，还得专门去 `/api/` 下面建个路由，前端再去 fetch。现在用 Server Actions，简直不要太爽：
+以前写个表单提交，还得专门去 `/api/` 下面建个路由，前端再去 fetch。现在用 Server Actions，简直不要太高效：
 
 ```tsx
 // app/blog/new/page.tsx
@@ -141,7 +141,7 @@ export default function NewArticlePage() {
 
 ## 5. 偶尔还是得写 API 的情况
 
-如果是给小程序或者别人提供接口，还是得老老实实写 API 路由：
+如果是给小程序或者别人提供接口，还是得规范地写 API 路由：
 
 ```typescript
 // app/api/hello/route.ts
@@ -157,4 +157,4 @@ export async function POST(request: Request) {
 }
 ```
 
-其实玩熟了之后发现，Next.js 的思路就是尽量把活丢给服务器干，浏览器只负责展示和少量交互。虽然一开始有点折腾，但配合 Vercel 一键部署，一个人搞定全栈小项目确实非常快。
+其实玩熟了之后发现，Next.js 的思路就是尽量把活丢给服务器干，浏览器只负责展示和少量交互。虽然一开始有点配置与实践，但配合 Vercel 一键部署，一个人搞定全栈小项目确实非常快。

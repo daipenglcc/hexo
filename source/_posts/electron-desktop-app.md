@@ -8,7 +8,7 @@ tags:
 categories: Node
 ---
 
-前阵子组里要搞一个内部工具，需要读本地文件、调系统剪贴板，用网页搞不定。正好一直想试试 Electron，借这个机会折腾了一下。写篇记录，主要是理清主进程和渲染进程的关系，这个概念一开始真的会绕。
+前阵子组里要搞一个内部工具，需要读本地文件、调系统剪贴板，用网页搞不定。正好一直想试试 Electron，借这个机会花费时间一下。写篇记录，主要是理清主进程和渲染进程的关系，这个概念一开始真的会绕。
 
 <!-- more -->
 
@@ -169,7 +169,7 @@ npm create @nicepkg/electron-vite-app
 
 这样开发体验就跟写普通 Vue 项目差不多了，热更新也有，很顺滑。
 
-不过这里有个坑：Vite 开发模式下主进程加载的是 `http://localhost:xxxx`，打包后加载的是本地文件。所以 main.js 里需要判断一下：
+不过这里有个常见问题：Vite 开发模式下主进程加载的是 `http://localhost:xxxx`，打包后加载的是本地文件。所以 main.js 里需要判断一下：
 
 ```javascript
 if (process.env.NODE_ENV === 'development') {

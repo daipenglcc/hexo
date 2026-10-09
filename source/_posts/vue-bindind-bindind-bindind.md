@@ -49,7 +49,7 @@ this.$emit('needMoreMoney', 500)
 
 ## 2. 父亲直接对儿子发号施令：$refs
 
-如果你懒得搞各种事件绑定，想直接粗暴地调用子组件里的方法，用 `$refs` 最爽。
+如果你懒得搞各种事件绑定，想直接粗暴地调用子组件里的方法，用 `$refs` 最高效。
 
 ```html
 <template>
@@ -64,7 +64,7 @@ export default {
     doSomething() {
       // 简单粗暴，直接调子组件身上的方法
       this.$refs.myChild.resetForm()
-      // 甚至能直接改它的数据（虽然不推荐，但很爽）
+      // 甚至能直接改它的数据（虽然不推荐，但很高效）
       this.$refs.myChild.name = '铁柱'
     }
   }
@@ -76,7 +76,7 @@ export default {
 
 这招适合小型项目里，两个完全不搭噶的兄弟组件想要通信。建一个专门管收发信件的“邮局”。
 
-先搞个空的 Vue 实例当邮局：
+先建立一个空的 Vue 实例当邮局：
 ```javascript
 // event-bus.js
 import Vue from 'vue'
@@ -98,7 +98,7 @@ export default {
       console.log('收到：', msg)
     })
   },
-  // ⚠️ 惊天大坑预警：页面销毁时一定要注销监听，不然内存直接原地爆炸
+  // ⚠️ 惊天陷阱预警：页面销毁时一定要注销监听，不然内存直接原地爆炸
   beforeDestroy() {
     EventBus.$off('hello')
   }

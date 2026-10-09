@@ -1,5 +1,5 @@
 ---
-title: Vue CLI 3 搭项目的一些配置踩坑
+title: Vue CLI 3 搭项目的一些配置实践中的问题
 date: 2019-05-18 15:40:18
 tags:
   - Vue
@@ -8,7 +8,7 @@ tags:
 categories: Vue
 ---
 
-最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 `build/` 目录一大堆文件变成了一个 `vue.config.js`，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中折腾过的配置记一下。
+最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 `build/` 目录大量的文件变成了一个 `vue.config.js`，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中配置与实践过的配置记一下。
 
 <!-- more -->
 
@@ -24,7 +24,7 @@ vue create my-project
 
 创建的时候它会让你选预设，可以选默认的（babel + eslint），也可以手动选功能。我一般手动选，把 Router、Vuex、CSS 预处理器、Linter 都勾上。
 
-有一个要注意的：它会问你 "Use history mode for router?"，如果你项目部署在子路径下（比如 `example.com/app/`），选 Yes 的话后续 Nginx 配置会折腾一阵子。不清楚的先选 No 用 hash 模式比较省心。
+有一个要注意的：它会问你 "Use history mode for router?"，如果你项目部署在子路径下（比如 `example.com/app/`），选 Yes 的话后续 Nginx 配置会配置与实践一阵子。不清楚的先选 No 用 hash 模式比较省心。
 
 ## 2. vue.config.js 常用配置
 
@@ -191,4 +191,4 @@ src/
 
 其实没什么标准答案，项目规模不大的时候怎么舒服怎么来，等大了再慢慢拆。
 
-CLI 3 总体来说比 2 好用不少，至少不用面对 `build/` 下面那一堆 webpack 配置文件了。虽然灵活性上有些限制，但提供的 `configureWebpack` 和 `chainWebpack` 也够日常折腾了。
+CLI 3 总体来说比 2 好用不少，至少不用面对 `build/` 下面那一堆 webpack 配置文件了。虽然灵活性上有些限制，但提供的 `configureWebpack` 和 `chainWebpack` 也够日常花费时间。

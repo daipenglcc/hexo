@@ -27,7 +27,7 @@ function Counter() {
   return (
     <div>
       <p>点赞数：{count}</p>
-      {/* 直接调方法，爽 */}
+      {/* 直接调方法，高效 */}
       <button onClick={() => setCount(count + 1)}>+1</button>
       
       {/* 如果依赖上一次的值，最好用回调函数写法，防坑 */}
@@ -155,7 +155,7 @@ const handleClick = useCallback((id) => {
 
 ## 6. 自定义 Hook：最强装逼利器
 
-把一堆逻辑抽出去写成一个 `useXxx` 的函数，代码立马变得清爽无比。比如我想自己封装个一键拿本地缓存的钩子：
+把一堆逻辑抽出去写成一个 `useXxx` 的函数，代码立马变得清高效无比。比如我想自己封装个一键拿本地缓存的钩子：
 
 ```jsx
 // hooks/useLocalStorage.js
@@ -180,4 +180,4 @@ function Settings() {
 }
 ```
 
-现在基本就靠着 `useState` 和 `useEffect` 这两把刷子走天下了。偶尔搞点自定义 Hook 骗骗代码行数，比以前 Class 组件清爽太多了。
+现在基本就靠着 `useState` 和 `useEffect` 这两把刷子走天下了。偶尔搞点自定义 Hook 骗骗代码行数，比以前 Class 组件清高效太多了。

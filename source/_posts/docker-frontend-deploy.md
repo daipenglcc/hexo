@@ -1,5 +1,5 @@
 ---
-title: 前端折腾 Docker 部署的一些踩坑记录
+title: 前端配置与实践 Docker 部署的一些实践记录
 date: 2020-06-15 16:45:30
 tags:
   - Docker
@@ -103,7 +103,7 @@ server {
 
 ## 4. 前后端一起跑：Docker Compose
 
-如果还有个 Node.js 后端，外加一个 MongoDB 数据库，总不能一个个敲命令跑。搞个 `docker-compose.yml` 比较实在。
+如果还有个 Node.js 后端，外加一个 MongoDB 数据库，总不能一个个敲命令跑。建立一个 `docker-compose.yml` 比较实在。
 
 ```yaml
 version: '3.8'
@@ -140,4 +140,4 @@ services:
 2. **尽量用 `alpine` 结尾的镜像**：正常的 node 镜像动不动就快一个 G，换成 alpine 版本可能就一两百兆。
 3. **留意层级缓存**：写 Dockerfile 的时候，把不常变的命令放前面（比如拷贝 `package.json`），常变的（比如拷贝源码）放后面，下次打包能快不少。
 
-偶尔折腾一下，会发现用 Docker 统一部署环境后，"在我电脑上好好的怎么到服务器就挂了"这种事确实少了不少。
+偶尔尝试一下，会发现用 Docker 统一部署环境后，"在我电脑上好好的怎么到服务器就挂了"这种事确实少了不少。

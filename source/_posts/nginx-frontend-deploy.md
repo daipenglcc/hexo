@@ -133,7 +133,7 @@ server {
 ```nginx
 http {
     gzip on;
-    gzip_min_length 1000;          # 小于 1KB 就别折腾了，压缩了可能更大
+    gzip_min_length 1000;          # 小于 1KB 就别花费时间，压缩了可能更大
     gzip_comp_level 6;             # 压缩级别（1-9），6 是性价比最高的
     gzip_types text/plain text/css application/javascript application/json; # 只压文本类
 }

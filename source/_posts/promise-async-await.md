@@ -1,5 +1,5 @@
 ---
-title: 被回调地狱逼疯后：Promise 和 async/await 踩坑备忘
+title: 被回调地狱困扰后：Promise 和 async/await 实践中的问题备忘
 date: 2018-03-22 20:15:33
 tags:
   - JavaScript

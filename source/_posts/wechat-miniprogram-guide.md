@@ -1,5 +1,5 @@
 ---
-title: 微信小程序开发避坑录：从零搞个能跑的项目
+title: 微信小程序开发实践指南：从零建立一个能跑的项目
 date: 2019-10-25 11:20:35
 tags:
   - 小程序
@@ -67,7 +67,7 @@ categories: 小程序
 - `<span>` 变成了 `<text>`
 - `<img>` 变成了 `<image>`
 
-写数据绑定的时候倒是很亲切，也是双花括号，但有些细节极其容易踩坑：
+写数据绑定的时候倒是很亲切，也是双花括号，但有些细节极其容易实践中的问题：
 
 ```html
 <!-- 插变量一样是两片大括号 -->
@@ -86,7 +86,7 @@ categories: 小程序
 
 ## 4. 第三关：数据怎么变？（让人头疼的 setData）
 
-这是从 Vue 转过来最难受的地方。Vue 里 `this.name = '铁柱'` 页面就更新了，在小程序里，你这样改页面理都不理你，必须老老实实用原生的 `setData`：
+这是从 Vue 转过来最难受的地方。Vue 里 `this.name = '铁柱'` 页面就更新了，在小程序里，你这样改页面理都不理你，必须规范地用原生的 `setData`：
 
 ```javascript
 Page({
@@ -118,7 +118,7 @@ const BASE_URL = 'https://api.mywebsite.com'
 
 export function request(url, method = 'GET', data = {}) {
   return new Promise((resolve, reject) => {
-    // 顺手搞个加载中动画
+    // 顺手建立一个加载中动画
     wx.showLoading({ title: '拼命加载中...' })
 
     wx.request({
@@ -150,7 +150,7 @@ import { request } from '../../utils/request'
 
 Page({
   async onLoad() {
-    // 现在支持 async/await 了，写起来爽得多
+    // 现在支持 async/await 了，写起来高效得多
     const res = await request('/articles', 'GET')
     this.setData({ list: res.data })
   }

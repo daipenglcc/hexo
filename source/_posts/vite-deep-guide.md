@@ -1,5 +1,5 @@
 ---
-title: 彻底扔掉 Webpack：Vite 踩坑与进阶指北
+title: 彻底扔掉 Webpack：Vite 实践中的问题与进阶指北
 date: 2021-01-10 10:30:22
 tags:
   - Vite
@@ -51,7 +51,7 @@ export default defineConfig({
     vue(),
     // 自动导包神仙插件：以后写 ref, reactive 都不用在上面写 import 啦！
     AutoImport({ imports: ['vue', 'vue-router', 'pinia'] }),
-    // UI 组件库也能自动按需导入（省去了一大堆 import 代码）
+    // UI 组件库也能自动按需导入（省去了大量的 import 代码）
     Components({ /* 配置具体的 UI 库解析器 */ })
   ],
 
@@ -104,7 +104,7 @@ export default defineConfig({
 .env.production    # 上线时候用的（连正式库）
 ```
 
-**⚠️ 极其关键的坑**：写在这些文件里的变量名，必须用 `VITE_` 开头，不然代码里死活读不到！
+**⚠️ 极其关键的坑**：写在这些文件里的变量名，必须用 `VITE_` 开头，不然代码里很难读不到！
 
 ```text
 # 这样写是对的
@@ -130,7 +130,7 @@ if (import.meta.env.DEV) {
 如果你想把手里祖传的 Webpack 项目迁到 Vite，要有掉几根头发的心理准备。最核心要改的地方有几个：
 
 1. **`index.html` 搬家**：从 `public` 挪到最外面，并且手动塞个 `<script type="module" src="/src/main.js"></script>` 进去。
-2. **消灭所有 `require()`**：Vite 不认 CommonJS 这一套，遇到拿 `require` 导包、插图片的，全给我老老实实改成 `import`。
+2. **消灭所有 `require()`**：Vite 不认 CommonJS 这一套，遇到拿 `require` 导包、插图片的，全给我规范地改成 `import`。
 3. **环境变量替换**：全局搜索 `process.env`，全换成 `import.meta.env`。
 
 总之，只要你不是那种历史包袱巨重、依赖了十几个 Webpack 专属插件的史前巨兽项目，我都强烈建议你早点转 Vite，那种丝滑的开发体验，真的是对自己生命的救赎。
