@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="最近在做性能优化，把缓存这块系统研究了一遍。发现很多人对”浏览器缓存”的理解停留在”设置 Expires 头”这个层面，实际上浏览器缓存有完整的分层体系，搞清楚了才能做对决策。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器缓存机制详解：强缓存、协商缓存和 Service Worker">
+<meta property="og:url" content="https://www.vueweb.cn/posts/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/2017-05-20-browser-cache-deep-dive.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="最近在做性能优化，把缓存这块系统研究了一遍。发现很多人对”浏览器缓存”的理解停留在”设置 Expires 头”这个层面，实际上浏览器缓存有完整的分层体系，搞清楚了才能做对决策。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-05-20T07:30:10.000Z">
+<meta property="article:modified_time" content="2026-10-09T02:43:36.910Z">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="缓存">
+<meta property="article:tag" content="性能优化">
+<meta property="article:tag" content="Service Worker">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/性能优化/2017-05-20-browser-cache-deep-dive.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>浏览器缓存机制详解：强缓存、协商缓存和 Service Worker | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">62</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">112</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/2017-05-20-browser-cache-deep-dive.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">浏览器缓存机制详解：强缓存、协商缓存和 Service Worker
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-20 15:30:10" itemprop="dateCreated datePublished" datetime="2017-05-20T15:30:10+08:00">2017-05-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">性能优化</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/2017-05-20-browser-cache-deep-dive.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/2017-05-20-browser-cache-deep-dive.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在做性能优化，把缓存这块系统研究了一遍。发现很多人对”浏览器缓存”的理解停留在”设置 Expires 头”这个层面，实际上浏览器缓存有完整的分层体系，搞清楚了才能做对决策。</p>
+<a id="more"></a>
+
+<h2 id="缓存的层级"><a href="#缓存的层级" class="headerlink" title="缓存的层级"></a>缓存的层级</h2><p>从请求触发到拿到数据，浏览器会依次检查：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">内存缓存 (Memory Cache)</span><br><span class="line">  → Service Worker Cache</span><br><span class="line">    → 磁盘缓存 (Disk Cache &#x2F; HTTP Cache)</span><br><span class="line">      → 推送缓存 (Push Cache，HTTP&#x2F;2)</span><br><span class="line">        → 网络请求</span><br></pre></td></tr></table></figure></div>
+
+<p>大部分人熟悉的是”磁盘缓存”这层，也就是 HTTP 缓存，由响应头控制。</p>
+<h2 id="强缓存（不请求服务器）"><a href="#强缓存（不请求服务器）" class="headerlink" title="强缓存（不请求服务器）"></a>强缓存（不请求服务器）</h2><p>命中强缓存时，浏览器直接从本地取数据，不发任何请求给服务器，状态码显示 <code>200 (from disk cache)</code> 或 <code>200 (from memory cache)</code>。</p>
+<p>控制强缓存的两个响应头：</p>
+<p><strong>Cache-Control</strong>（优先级更高）</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age&#x3D;31536000, public</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><code>max-age=N</code>：资源在 N 秒内有效，从响应时间算起</li>
+<li><code>public</code>：响应可被 CDN、代理等中间节点缓存</li>
+<li><code>private</code>：只能被用户浏览器缓存，不能被共享缓存</li>
+<li><code>no-cache</code>：**不是”不缓存”**，而是”每次使用缓存前先和服务器验证”（走协商缓存）</li>
+<li><code>no-store</code>：真正的”不缓存”，每次都下载新的</li>
+<li><code>immutable</code>：资源内容永远不变，浏览器连协商缓存请求都不发（Chrome 支持）</li>
+</ul>
+<p><strong>Expires</strong>（老写法，已不推荐）</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expires: Wed, 20 May 2018 06:00:00 GMT</span><br></pre></td></tr></table></figure></div>
+
+<p>是绝对时间，依赖客户端时钟，时区或时间不对就乱了。<code>Cache-Control</code> 存在时，<code>Expires</code> 被忽略。</p>
+<h2 id="协商缓存（服务器决定用不用缓存）"><a href="#协商缓存（服务器决定用不用缓存）" class="headerlink" title="协商缓存（服务器决定用不用缓存）"></a>协商缓存（服务器决定用不用缓存）</h2><p>强缓存过期后，浏览器会发请求问服务器”资源有没有变”。服务器说没变就返回 <code>304 Not Modified</code>，浏览器用本地缓存；服务器说变了就返回 <code>200</code> 加新内容。</p>
+<p>两套机制：</p>
+<p><strong>Last-Modified / If-Modified-Since</strong></p>
+<p>服务器首次响应带：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Last-Modified: Mon, 20 May 2017 12:00:00 GMT</span><br></pre></td></tr></table></figure></div>
+
+<p>浏览器再次请求时带：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If-Modified-Since: Mon, 20 May 2017 12:00:00 GMT</span><br></pre></td></tr></table></figure></div>
+
+<p>服务器比较文件修改时间，没变就 304。</p>
+<p><strong>问题</strong>：精度是秒级。同一秒内修改文件，<code>Last-Modified</code> 不变，服务器认为没变，但实际变了。</p>
+<p><strong>ETag / If-None-Match</strong>（优先级更高）</p>
+<p>服务器首次响应带文件的”指纹”：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ETag: &quot;abc123def456&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>浏览器再次请求：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If-None-Match: &quot;abc123def456&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>ETag 一般是文件内容的哈希值，内容变了 ETag 必然变，比 <code>Last-Modified</code> 更准确。</p>
+<p><strong>两者都存在时，<code>ETag / If-None-Match</code> 优先</strong>。</p>
+<h2 id="实际的缓存策略"><a href="#实际的缓存策略" class="headerlink" title="实际的缓存策略"></a>实际的缓存策略</h2><p>不是所有资源都用同一套策略，要分类：</p>
+<p><strong>HTML 文件</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-cache</span><br></pre></td></tr></table></figure></div>
+<p>每次请求都到服务器验证一下，保证用户拿到的入口 HTML 是最新的。</p>
+<p><strong>JS/CSS/图片（带 hash 文件名）</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age&#x3D;31536000, immutable</span><br></pre></td></tr></table></figure></div>
+<p>文件名里带内容 hash（如 <code>app.3f2a9b.js</code>），内容变了文件名也变，老文件不会被访问到，所以可以设一年的强缓存 + <code>immutable</code>，命中率最高。</p>
+<p>这就是 Webpack、Vite 生产构建默认对 chunk 加 contenthash 的原因。</p>
+<h2 id="Service-Worker-Cache：可编程的缓存层"><a href="#Service-Worker-Cache：可编程的缓存层" class="headerlink" title="Service Worker Cache：可编程的缓存层"></a>Service Worker Cache：可编程的缓存层</h2><p>Service Worker 是跑在独立线程里的 JS 文件，可以拦截所有网络请求，实现完全自定义的缓存策略。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sw.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> CACHE_NAME = <span class="string">'v1'</span></span><br><span class="line"><span class="keyword">const</span> STATIC_ASSETS = [</span><br><span class="line">  <span class="string">'/'</span>,</span><br><span class="line">  <span class="string">'/index.html'</span>,</span><br><span class="line">  <span class="string">'/app.css'</span>,</span><br><span class="line">  <span class="string">'/app.js'</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 安装阶段：预缓存静态资源</span></span><br><span class="line">self.addEventListener(<span class="string">'install'</span>, event =&gt; &#123;</span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.open(CACHE_NAME)</span><br><span class="line">      .then(<span class="function"><span class="params">cache</span> =&gt;</span> cache.addAll(STATIC_ASSETS))</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 激活阶段：清理旧版本缓存</span></span><br><span class="line">self.addEventListener(<span class="string">'activate'</span>, event =&gt; &#123;</span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.keys().then(<span class="function"><span class="params">keys</span> =&gt;</span></span><br><span class="line">      <span class="built_in">Promise</span>.all(</span><br><span class="line">        keys.filter(<span class="function"><span class="params">key</span> =&gt;</span> key !== CACHE_NAME)</span><br><span class="line">            .map(<span class="function"><span class="params">key</span> =&gt;</span> caches.delete(key))</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 拦截请求：Cache First 策略</span></span><br><span class="line">self.addEventListener(<span class="string">'fetch'</span>, event =&gt; &#123;</span><br><span class="line">  event.respondWith(</span><br><span class="line">    caches.match(event.request).then(<span class="function"><span class="params">cached</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (cached) <span class="keyword">return</span> cached  <span class="comment">// 有缓存直接用</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 没缓存就请求，请求回来存一份</span></span><br><span class="line">      <span class="keyword">return</span> fetch(event.request).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> responseClone = response.clone()</span><br><span class="line">        caches.open(CACHE_NAME)</span><br><span class="line">          .then(<span class="function"><span class="params">cache</span> =&gt;</span> cache.put(event.request, responseClone))</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<p>Service Worker 几种常见缓存策略：</p>
+<ul>
+<li><strong>Cache First</strong>：先查缓存，有就用缓存，没有再请求。适合不常变的静态资源</li>
+<li><strong>Network First</strong>：先请求，成功就更新缓存，失败了用缓存兜底。适合接口数据</li>
+<li><strong>Stale While Revalidate</strong>：先返回缓存的旧数据，同时后台发请求更新缓存。适合允许短暂旧数据的场景</li>
+</ul>
+<p>Service Worker 的核心价值在于：可以做离线可用（PWA）。即使网断了，用户也能看到上次缓存的页面，不是白屏。</p>
+<h2 id="一个容易踩的坑：no-cache-不等于-no-store"><a href="#一个容易踩的坑：no-cache-不等于-no-store" class="headerlink" title="一个容易踩的坑：no-cache 不等于 no-store"></a>一个容易踩的坑：no-cache 不等于 no-store</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-cache   → 每次用缓存前先验证，304 了就用缓存</span><br><span class="line">Cache-Control: no-store   → 完全不缓存，每次都下载</span><br></pre></td></tr></table></figure></div>
+
+<p>想禁用缓存用 <code>no-store</code>，想强制每次验证用 <code>no-cache</code>。名字起得很容易混淆。</p>
+<p>还有 <code>Cache-Control: max-age=0</code> 和 <code>no-cache</code> 效果类似（强缓存立即失效，后续走协商缓存），但不完全等价——部分老浏览器/代理行为有差异。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>做缓存策略的思路：入口 HTML 不强缓存 + 静态资源文件名带 hash 长期强缓存，这两条基本就能覆盖大多数场景。Service Worker 是锦上添花，做 PWA 或者对离线体验有要求的时候再引入。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+            <a href="/tags/%E7%BC%93%E5%AD%98/" rel="tag"># 缓存</a>
+          
+            <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag"># 性能优化</a>
+          
+            <a href="/tags/Service-Worker/" rel="tag"># Service Worker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Node/2017-05-10-npm.html" rel="next" title="NPM 高频命令速查：除了 install 还有啥">
+                <i class="fa fa-chevron-left"></i> NPM 高频命令速查：除了 install 还有啥
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/Linux/2017-05-26-liunx-shell.html" rel="prev" title="日常运维：Linux 常用命令备忘录">
+                日常运维：Linux 常用命令备忘录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/2017-05-20-browser-cache-deep-dive.html"
+         data-hitalk-title="浏览器缓存机制详解：强缓存、协商缓存和 Service Worker">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

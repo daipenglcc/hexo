@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="小程序刚发布没多久（2017年1月），最近把开发文档和一些内部分享资料翻了一遍，发现它的渲染架构设计挺有意思的，跟普通套个 WebView 的混合应用完全不同。这里整理一下我的理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序的渲染架构：为什么跟普通 WebView 不一样">
+<meta property="og:url" content="https://www.vueweb.cn/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2017-04-15-miniprogram-dual-thread-arch.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="小程序刚发布没多久（2017年1月），最近把开发文档和一些内部分享资料翻了一遍，发现它的渲染架构设计挺有意思的，跟普通套个 WebView 的混合应用完全不同。这里整理一下我的理解。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-04-15T06:20:00.000Z">
+<meta property="article:modified_time" content="2026-10-09T02:44:18.611Z">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="微信小程序">
+<meta property="article:tag" content="渲染架构">
+<meta property="article:tag" content="双线程">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/小程序/2017-04-15-miniprogram-dual-thread-arch.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>微信小程序的渲染架构：为什么跟普通 WebView 不一样 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">62</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">112</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2017-04-15-miniprogram-dual-thread-arch.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">微信小程序的渲染架构：为什么跟普通 WebView 不一样
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-04-15 14:20:00" itemprop="dateCreated datePublished" datetime="2017-04-15T14:20:00+08:00">2017-04-15</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2017-04-15-miniprogram-dual-thread-arch.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2017-04-15-miniprogram-dual-thread-arch.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>小程序刚发布没多久（2017年1月），最近把开发文档和一些内部分享资料翻了一遍，发现它的渲染架构设计挺有意思的，跟普通套个 WebView 的混合应用完全不同。这里整理一下我的理解。</p>
+<a id="more"></a>
+
+<h2 id="为什么不直接用-WebView"><a href="#为什么不直接用-WebView" class="headerlink" title="为什么不直接用 WebView"></a>为什么不直接用 WebView</h2><p>微信早有 JS-SDK，网页套个 WebView 就能运行，为什么还要搞小程序这一套？</p>
+<p>官方给过两个理由：</p>
+<ol>
+<li><strong>性能</strong>：WebView 里网页初次加载慢，白屏时间长</li>
+<li><strong>管控</strong>：微信无法审核网页内容，容易被用来做钓鱼、诱导分享等违规操作</li>
+</ol>
+<p>这两个需求催生了小程序的双线程架构。</p>
+<h2 id="双线程模型"><a href="#双线程模型" class="headerlink" title="双线程模型"></a>双线程模型</h2><p>普通网页：JS 和 DOM 渲染在同一个线程里，JS 执行时 UI 会卡（这也是为什么 JS 长时间计算会让页面卡住）。</p>
+<p>小程序把它拆成两个线程：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────┐</span><br><span class="line">│          渲染层 (WebView)       │</span><br><span class="line">│   WXML + WXSS → Virtual DOM   │</span><br><span class="line">│      每个页面一个 WebView       │</span><br><span class="line">└──────────────┬─────────────────┘</span><br><span class="line">               │ JSBridge（微信客户端中转）</span><br><span class="line">┌──────────────┴─────────────────┐</span><br><span class="line">│          逻辑层 (JavaScriptCore)│</span><br><span class="line">│      Page() &#x2F; Component()      │</span><br><span class="line">│      setData &#x2F; 事件回调         │</span><br><span class="line">└────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>渲染层</strong>：每个页面一个独立 WebView，负责渲染 WXML 和 WXSS，不直接运行开发者 JS。</p>
+<p><strong>逻辑层</strong>：跑在一个独立的 JavaScript 引擎里（iOS 上是 JavaScriptCore，Android 上是 V8），运行所有的 <code>Page()</code>、<code>Component()</code> 代码。</p>
+<p>两个线程之间不共享任何内存，通信完全通过微信客户端的 JSBridge 进行，数据要序列化成 JSON 字符串传过去。</p>
+<h2 id="setData-为什么有性能限制"><a href="#setData-为什么有性能限制" class="headerlink" title="setData 为什么有性能限制"></a>setData 为什么有性能限制</h2><p>理解了双线程，<code>setData</code> 的性能问题就说得通了：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 每次 setData，数据流向是：</span></span><br><span class="line"><span class="comment">// 逻辑层 → JSON序列化 → Native层（客户端）→ 反序列化 → 渲染层 → Diff → 更新DOM</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这条路每走一次都有序列化/反序列化开销，加上跨线程通信本身的延迟。如果：</p>
+<ul>
+<li><code>setData</code> 的数据量很大（传整个长列表）</li>
+<li><code>setData</code> 调用频率很高（比如 <code>onScroll</code> 里每帧都调）</li>
+</ul>
+<p>就会导致明显卡顿。所以小程序文档里特别强调”精简 setData 数据”和”避免频繁 setData”。</p>
+<p>实际上官方给了一个”路径更新”的方式专门解决精细更新：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 整个对象更新 vs 精确路径更新</span></span><br><span class="line"><span class="keyword">this</span>.setData(&#123; <span class="string">'list[3].checked'</span>: <span class="literal">true</span> &#125;)  <span class="comment">// 只传这一个字段，序列化数据量极小</span></span><br><span class="line"><span class="comment">// 比这个好很多：</span></span><br><span class="line"><span class="keyword">this</span>.setData(&#123; <span class="attr">list</span>: <span class="keyword">this</span>.data.list &#125;)     <span class="comment">// 把整个 list 序列化传过去</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="渲染层为什么用多个-WebView"><a href="#渲染层为什么用多个-WebView" class="headerlink" title="渲染层为什么用多个 WebView"></a>渲染层为什么用多个 WebView</h2><p>每个页面用独立的 WebView，好处是页面切换时可以做原生级别的转场动画——实际上是两个 WebView 在做 translate 动画，新页面从右边滑进来，旧页面往左推出去。这个动画由客户端原生层控制，跟 JS 执行无关，所以非常流畅，这是纯 WebView H5 页面很难做到的效果。</p>
+<p>代价是内存占用高，页面栈最多 10 层也有这方面的考虑。</p>
+<h2 id="逻辑层不能操作-DOM"><a href="#逻辑层不能操作-DOM" class="headerlink" title="逻辑层不能操作 DOM"></a>逻辑层不能操作 DOM</h2><p>因为逻辑层是纯 JS 引擎，不存在 DOM API，所以 <code>document</code>、<code>window</code>、<code>navigator</code> 全都没有。这直接挡掉了大量依赖 DOM 的 npm 包。</p>
+<p>反过来，这也是微信的”管控”意图体现：小程序不能动态注入 HTML，不能通过 eval 改变页面结构，内容在发布时就被审核锁定了。</p>
+<h2 id="WXML-不是-HTML"><a href="#WXML-不是-HTML" class="headerlink" title="WXML 不是 HTML"></a>WXML 不是 HTML</h2><p>WXML 是微信自己定义的模板语言，虽然长得像 HTML，但本质上是描述式的数据绑定模板：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:for</span>=<span class="string">"&#123;&#123; list &#125;&#125;"</span> <span class="attr">wx:key</span>=<span class="string">"id"</span> <span class="attr">wx:for-item</span>=<span class="string">"item"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span>&gt;</span>&#123;&#123; item.name &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">"&#123;&#123; item.avatar &#125;&#125;"</span> <span class="attr">mode</span>=<span class="string">"aspectFill"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>渲染层拿到 WXML + 数据之后，会构建一棵 Virtual DOM 树（类似 React 的那套），数据更新时做 Diff 再 patch 到真实 DOM，而不是全量重建。</p>
+<p>所以小程序的 Diff 算法、Virtual DOM 一直在那，只是封装在客户端里看不到源码。</p>
+<h2 id="性能体验为什么比-H5-好"><a href="#性能体验为什么比-H5-好" class="headerlink" title="性能体验为什么比 H5 好"></a>性能体验为什么比 H5 好</h2><p>综合来看，小程序在以下几个点上比内嵌 WebView 的 H5 明显更好：</p>
+<ol>
+<li><strong>首屏速度</strong>：小程序的 WXML 预先编译，WebView 启动时直接渲染，不像 H5 还要等 JS 下载执行</li>
+<li><strong>页面切换</strong>：客户端原生层控制多 WebView 切换动画</li>
+<li><strong>与原生融合</strong>：摄像头、蓝牙、地理位置等直接调 Native API，不用走 H5 的受限接口</li>
+</ol>
+<p>代价是：开发者自由度大幅降低，任何 npm 包能不能用都要看有没有依赖浏览器 API，踩坑机会很多。</p>
+<hr>
+<p>这套架构设计挺有意思的，用受限的技术换来了更好的性能和更强的平台管控。从工程角度看是个合理的权衡，只是对开发者不那么友好。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># 微信小程序</a>
+          
+            <a href="/tags/%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" rel="tag"># 渲染架构</a>
+          
+            <a href="/tags/%E5%8F%8C%E7%BA%BF%E7%A8%8B/" rel="tag"># 双线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/MongoDB/2017-03-27-mongodb-ues.html" rel="next" title="MongoDB 常用的增删改查语法备忘">
+                <i class="fa fa-chevron-left"></i> MongoDB 常用的增删改查语法备忘
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/Git/2017-04-23-git.html" rel="prev" title="Git 常用命令备忘录">
+                Git 常用命令备忘录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F/2017-04-15-miniprogram-dual-thread-arch.html"
+         data-hitalk-title="微信小程序的渲染架构：为什么跟普通 WebView 不一样">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
