@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">62</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">112</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
   </li>
         
         
@@ -423,7 +423,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/posts/Git/2017-04-23-git.html" itemprop="url">
-                  Git 常用命令备忘录
+                  Git 线上事故实录：如何优雅处理错乱的分支合并与代码回滚
                 </a>
               
             
@@ -512,7 +512,8 @@
 
       
         
-          <p>工作也挺长时间了，Git 天天敲，但遇到点偏门的撤销或者合并，偶尔还是得去网上搜半天。干脆把我自己平时高频用到的几个命令整理出来，当个个人的速查备忘录，省得老去翻文档。</p>
+          <p>这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 <code>git push -f</code> 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。</p>
+<p>最后靠着 <code>git reflog</code> 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 <code>add/commit/push</code> 机器了。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/Git/2017-04-23-git.html" rel="contents">
@@ -741,7 +742,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/MongoDB/2017-03-27-mongodb-ues.html">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Vue/2016-10-08-vuex-design-philosophy.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -760,8 +761,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/MongoDB/2017-03-27-mongodb-ues.html" itemprop="url">
-                  MongoDB 常用的增删改查语法备忘
+                <a class="post-title-link" href="/posts/Vue/2016-10-08-vuex-design-philosophy.html" itemprop="url">
+                  Vuex 的设计哲学：单向数据流和时间旅行调试是怎么来的
                 </a>
               
             
@@ -787,7 +788,7 @@
                 
               
 
-              <time title="创建时间：2017-03-27 15:07:03" itemprop="dateCreated datePublished" datetime="2017-03-27T15:07:03+08:00">2017-03-27</time>
+              <time title="创建时间：2016-10-08 22:40:30" itemprop="dateCreated datePublished" datetime="2016-10-08T22:40:30+08:00">2016-10-08</time>
             
 
             
@@ -805,7 +806,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a></span>
 
                 
                 
@@ -820,8 +821,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/MongoDB/2017-03-27-mongodb-ues.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/MongoDB/2017-03-27-mongodb-ues.html" itemprop="commentCount">—</span>
+                <a href="/posts/Vue/2016-10-08-vuex-design-philosophy.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Vue/2016-10-08-vuex-design-philosophy.html" itemprop="commentCount">—</span>
                 </a>
               </span>
             
@@ -850,11 +851,10 @@
 
       
         
-          <p>平时写点简单的 Node.js 后端，或者接个小活，一般我都习惯顺手拿 MongoDB 当数据库。毕竟直接存 JSON 格式太符合前端的直觉了，不用像 MySQL 那样提前建好表结构。</p>
-<p>但每次写查询语句，那些带 <code>$</code> 符号的操作符过一段时间不写就容易搞混。干脆整理个速查表，下次直接过来抄代码。</p>
+          <p>Vuex 0.x / 1.x 刚出来那会儿（2015 年底），整个中文社区几乎没有什么资料，只能啃官方文档和 Flux 相关的文章。用了一段时间，觉得 Vuex 的设计有很多值得深想的地方，不只是”把共享状态放一起”那么简单。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/posts/MongoDB/2017-03-27-mongodb-ues.html" rel="contents">
+            <a class="btn" href="/posts/Vue/2016-10-08-vuex-design-philosophy.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -911,7 +911,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/MongoDB/2017-03-23-mongodb.html">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/Vue/2016-04-10-vue-reactive-internals.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -930,8 +930,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/MongoDB/2017-03-23-mongodb.html" itemprop="url">
-                  各个平台上怎么最快装个 MongoDB
+                <a class="post-title-link" href="/posts/Vue/2016-04-10-vue-reactive-internals.html" itemprop="url">
+                  Vue 响应式原理：Object.defineProperty 到底做了什么
                 </a>
               
             
@@ -957,7 +957,7 @@
                 
               
 
-              <time title="创建时间：2017-03-23 16:25:11" itemprop="dateCreated datePublished" datetime="2017-03-23T16:25:11+08:00">2017-03-23</time>
+              <time title="创建时间：2016-04-10 20:05:44" itemprop="dateCreated datePublished" datetime="2016-04-10T20:05:44+08:00">2016-04-10</time>
             
 
             
@@ -975,7 +975,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a></span>
 
                 
                 
@@ -990,8 +990,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/MongoDB/2017-03-23-mongodb.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/MongoDB/2017-03-23-mongodb.html" itemprop="commentCount">—</span>
+                <a href="/posts/Vue/2016-04-10-vue-reactive-internals.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/Vue/2016-04-10-vue-reactive-internals.html" itemprop="commentCount">—</span>
                 </a>
               </span>
             
@@ -1020,10 +1020,11 @@
 
       
         
-          <p>平时写全栈小项目，MongoDB 算是个万金油选择，BSON 格式直接跟 Node.js 对接非常顺手。不过每次换个新电脑或者搞个新云服务器，总得去重新查怎么装这玩意。官方文档写的有点太长了，所以在这里把我觉得最省事儿的几种安装方式记下来当个备忘。</p>
+          <p>用 Vue 一段时间了，一直有个问题没搞清楚：为什么改 <code>this.someObj.newProp = &#39;xxx&#39;</code> 不触发视图更新，但改 <code>this.someArr.push()</code> 就会更新？为什么要用 <code>this.$set</code>？</p>
+<p>带着这些问题去翻了 Vue 2 的源码，弄懂了响应式系统的基本原理，写篇记录。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/posts/MongoDB/2017-03-23-mongodb.html" rel="contents">
+            <a class="btn" href="/posts/Vue/2016-04-10-vue-reactive-internals.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1080,7 +1081,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/shadowsocks/2017-03-16-shadowsocks-install.html">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1099,8 +1100,8 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/shadowsocks/2017-03-16-shadowsocks-install.html" itemprop="url">
-                  自己动手搭梯子：Shadowsocks 服务端安装与调优
+                <a class="post-title-link" href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html" itemprop="url">
+                  把 Grunt 换成 Gulp，构建时间从 40 秒降到 8 秒
                 </a>
               
             
@@ -1126,7 +1127,7 @@
                 
               
 
-              <time title="创建时间：2017-03-16 18:38:46" itemprop="dateCreated datePublished" datetime="2017-03-16T18:38:46+08:00">2017-03-16</time>
+              <time title="创建时间：2014-11-22 10:18:50" itemprop="dateCreated datePublished" datetime="2014-11-22T10:18:50+08:00">2014-11-22</time>
             
 
             
@@ -1144,7 +1145,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/shadowsocks/" itemprop="url" rel="index"><span itemprop="name">shadowsocks</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">前端工程化</span></a></span>
 
                 
                 
@@ -1159,8 +1160,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/shadowsocks/2017-03-16-shadowsocks-install.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/shadowsocks/2017-03-16-shadowsocks-install.html" itemprop="commentCount">—</span>
+                <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html" itemprop="commentCount">—</span>
                 </a>
               </span>
             
@@ -1189,11 +1190,11 @@
 
       
         
-          <p>买了个海外的 VPS，闲着也是闲着，干脆自己搭个 Shadowsocks（简称 ss）用来查查资料。虽然现在市面上一键安装脚本满天飞，但为了安全起见，也为了搞清楚它到底怎么跑的，我还是习惯自己手动走一遍流程。</p>
-<p>顺便把 Linux 的网络内核参数调优也记下来了，不然遇到晚高峰，网速慢得能让人抓狂。</p>
+          <p>最近把项目的构建工具从 Grunt 换成了 Gulp，顺手记一下过程和原理层面的差异，不是教怎么用 API，而是搞清楚为什么 Gulp 快。</p>
+<p>项目背景：中型后台系统，30+ 个 Less 文件，20+ 个 JS 模块，构建时 Grunt 要跑 40 多秒，换完 Gulp 大概 8 秒出头。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/posts/shadowsocks/2017-03-16-shadowsocks-install.html" rel="contents">
+            <a class="btn" href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1239,7 +1240,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 

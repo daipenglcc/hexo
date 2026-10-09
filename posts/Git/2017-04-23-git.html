@@ -175,16 +175,18 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="工作也挺长时间了，Git 天天敲，但遇到点偏门的撤销或者合并，偶尔还是得去网上搜半天。干脆把我自己平时高频用到的几个命令整理出来，当个个人的速查备忘录，省得老去翻文档。">
+  <meta name="description" content="这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 git push -f 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。 最后靠着 git reflog 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 常用命令备忘录">
+<meta property="og:title" content="Git 线上事故实录：如何优雅处理错乱的分支合并与代码回滚">
 <meta property="og:url" content="https://www.vueweb.cn/posts/Git/2017-04-23-git.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="工作也挺长时间了，Git 天天敲，但遇到点偏门的撤销或者合并，偶尔还是得去网上搜半天。干脆把我自己平时高频用到的几个命令整理出来，当个个人的速查备忘录，省得老去翻文档。">
+<meta property="og:description" content="这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 git push -f 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。 最后靠着 git reflog 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 a">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-04-23T02:23:21.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:44:31.042Z">
+<meta property="article:modified_time" content="2026-10-09T05:51:17.895Z">
 <meta property="article:tag" content="Git">
+<meta property="article:tag" content="架构设计">
+<meta property="article:tag" content="工程化">
 <meta name="twitter:card" content="summary">
 
 
@@ -204,7 +206,7 @@
   };
 </script>
 
-  <title>Git 常用命令备忘录 | 光阴小栈</title>
+  <title>Git 线上事故实录：如何优雅处理错乱的分支合并与代码回滚 | 光阴小栈</title>
   
 
 
@@ -331,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">62</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
   </li>
         
         
@@ -339,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">112</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
   </li>
         
         
@@ -418,7 +420,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Git 常用命令备忘录
+          <h2 class="post-title" itemprop="name headline">Git 线上事故实录：如何优雅处理错乱的分支合并与代码回滚
               
             
           </h2>
@@ -513,40 +515,44 @@
       
 
       
-        <p>工作也挺长时间了，Git 天天敲，但遇到点偏门的撤销或者合并，偶尔还是得去网上搜半天。干脆把我自己平时高频用到的几个命令整理出来，当个个人的速查备忘录，省得老去翻文档。</p>
+        <p>这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 <code>git push -f</code> 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。</p>
+<p>最后靠着 <code>git reflog</code> 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 <code>add/commit/push</code> 机器了。</p>
 <a id="more"></a>
 
-<h2 id="1-刚装好要干嘛"><a href="#1-刚装好要干嘛" class="headerlink" title="1. 刚装好要干嘛"></a>1. 刚装好要干嘛</h2><p>新电脑拿到手第一件事，配名字、邮箱和别名：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"your_name"</span>               <span class="comment"># 你的名字</span></span><br><span class="line">git config --global user.email <span class="string">"your_email@example.com"</span> <span class="comment"># 你的邮箱</span></span><br><span class="line">git config --global color.ui <span class="literal">true</span>                       <span class="comment"># 开启彩色输出</span></span><br><span class="line">git config --global core.quotepath <span class="literal">false</span>                <span class="comment"># 解决中文文件名显示成数字的问题</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="1-灾难现场：远程分支被-push-f-覆盖了怎么办？"><a href="#1-灾难现场：远程分支被-push-f-覆盖了怎么办？" class="headerlink" title="1. 灾难现场：远程分支被 push -f 覆盖了怎么办？"></a>1. 灾难现场：远程分支被 <code>push -f</code> 覆盖了怎么办？</h2><p>这是最吓人的场景。很多人以为 <code>push -f</code> 之后代码就彻底没了。其实 Git 的设计哲学是：<strong>只要是被 commit 过的内容，几乎不可能真正丢失。</strong></p>
+<p>如果只是你本地的分支被搞乱了，救命稻草是 <code>git reflog</code>。<br><code>git log</code> 只能看当前分支的提交历史，而 <code>git reflog</code> 记录的是你在这个仓库里所有的 HEAD 变更轨迹，包括你删掉的 commit、切分支、甚至是那些被你 reset 掉的提交。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看所有操作记录</span></span><br><span class="line">git reflog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到被覆盖前的那个 commit hash，比如是 abc1234</span></span><br><span class="line"><span class="comment"># 直接强行把当前分支指针拨回那个时刻</span></span><br><span class="line">git reset --hard abc1234</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后再小心翼翼地强推上去（如果团队允许的话）</span></span><br><span class="line">git push -f origin main</span><br></pre></td></tr></table></figure></div>
 
-<p>顺手给常用命令弄点缩写，少敲两个字母：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.co checkout</span><br><span class="line">git config --global alias.ci commit</span><br><span class="line">git config --global alias.st status</span><br><span class="line">git config --global alias.br branch</span><br></pre></td></tr></table></figure></div>
+<p><strong>但是如果别人 <code>push -f</code> 覆盖了远程，而你本地没有最新的代码怎么办？</strong><br>这时候要去 GitLab/GitHub 上看。哪怕分支被覆盖了，之前的 Commit 对象在服务端并不会立刻被垃圾回收（GC）。只要你能通过 CI/CD 的日志、或者别人的本地缓存找到那个 Commit Hash，直接在本地 <code>git fetch origin &lt;commit-hash&gt;</code>，就能把它拉下来重新建分支。</p>
+<h2 id="2-优雅的代码回滚：revert-vs-reset"><a href="#2-优雅的代码回滚：revert-vs-reset" class="headerlink" title="2. 优雅的代码回滚：revert vs reset"></a>2. 优雅的代码回滚：<code>revert</code> vs <code>reset</code></h2><p>很多人回滚代码喜欢用 <code>git reset --hard</code>，但这在多人协作的分支上是个灾难。<code>reset</code> 是把历史直接“抹掉”，如果别人基于被你抹掉的历史继续开发，下次 push 就会产生严重的冲突。</p>
+<p>正确的线上回滚姿势是使用 <code>revert</code>。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 撤销最近一次提交，并生成一个新的“反向提交”</span></span><br><span class="line">git revert HEAD</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果要撤销中间的某一个提交（比如两个星期前引入的 bug）</span></span><br><span class="line">git revert &lt;commit-hash&gt;</span><br></pre></td></tr></table></figure></div>
 
-<p>如果要去拉代码，还得弄个 SSH 秘钥：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"你的邮箱"</span></span><br><span class="line"><span class="comment"># 一直回车就行，最后去 ~/.ssh/ 里面把 id_rsa.pub 的内容复制到 GitHub 上</span></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="2-最普通的日常操作"><a href="#2-最普通的日常操作" class="headerlink" title="2. 最普通的日常操作"></a>2. 最普通的日常操作</h2><p>这些几乎每天都要敲几十遍：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git status                     <span class="comment"># 看看改了啥</span></span><br><span class="line">git add .                      <span class="comment"># 全部扔进暂存区</span></span><br><span class="line">git commit -m <span class="string">"改了某个bug"</span>    <span class="comment"># 提交</span></span><br><span class="line">git push                       <span class="comment"># 推上天</span></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="3-看历史和看改动"><a href="#3-看历史和看改动" class="headerlink" title="3. 看历史和看改动"></a>3. 看历史和看改动</h2><p>想看看之前自己或者别人写了什么鬼代码：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline              <span class="comment"># 单行简短看历史，比较清爽</span></span><br><span class="line">git <span class="built_in">log</span> -p &lt;file&gt;              <span class="comment"># 看看某个文件具体的历史改动</span></span><br><span class="line">git diff                       <span class="comment"># 看看刚刚敲了啥代码还没 add</span></span><br><span class="line">git show                       <span class="comment"># 看看最近一次 commit 到底改了啥</span></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="4-后悔药（撤销与回滚）"><a href="#4-后悔药（撤销与回滚）" class="headerlink" title="4. 后悔药（撤销与回滚）"></a>4. 后悔药（撤销与回滚）</h2><p>常在河边走哪有不湿鞋，写错代码想反悔的时候查这些：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 代码还在本地，没 commit：</span></span><br><span class="line">git restore &lt;file&gt;             <span class="comment"># 把文件恢复到修改前的样子（新版 Git 用法）</span></span><br><span class="line">git checkout -- &lt;file&gt;         <span class="comment"># 老版本用法，效果一样</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 已经 git add 了，想退回没 add 的状态：</span></span><br><span class="line">git restore --staged &lt;file&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 已经 commit 了，但还在本地想彻底不要了：</span></span><br><span class="line">git reset --hard HEAD~1        <span class="comment"># 彻底回退到上一个版本，慎用！改动全没</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 已经推到线上了，想体面地撤销：</span></span><br><span class="line">git revert HEAD                <span class="comment"># 生成一个新的 commit，内容是把上一次的改动反向操作一下</span></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="5-玩转分支"><a href="#5-玩转分支" class="headerlink" title="5. 玩转分支"></a>5. 玩转分支</h2><p>接新需求、切分支修 bug 时用：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git branch                     <span class="comment"># 看看现在有哪些分支</span></span><br><span class="line">git switch &lt;branch&gt;            <span class="comment"># 切换过去（比 checkout 语义更清楚）</span></span><br><span class="line">git switch -c &lt;new_branch&gt;     <span class="comment"># 创个新分支顺带切过去</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删分支</span></span><br><span class="line">git branch -d &lt;branch&gt;         <span class="comment"># 删掉已经合过的分支</span></span><br><span class="line">git branch -D &lt;branch&gt;         <span class="comment"># 强制删掉，不管合没合</span></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="6-合并代码"><a href="#6-合并代码" class="headerlink" title="6. 合并代码"></a>6. 合并代码</h2><p>一般在测试通过后要合代码了：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git merge &lt;branch&gt;             <span class="comment"># 把别人的分支合到我这里</span></span><br><span class="line">git rebase master              <span class="comment"># 变基，把我的提交拼接到 master 最上面（记录看起来是一条直线）</span></span><br></pre></td></tr></table></figure></div>
+<p>如果是合并（Merge）提交导致的线上问题，单纯的 <code>revert</code> 还会报错，因为 Git 不知道你要撤销合并的哪一条线。这时候需要加 <code>-m</code> 参数：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通常 -m 1 代表主干分支那条线，撤销掉合并进来的特性分支代码</span></span><br><span class="line">git revert -m 1 &lt;merge-commit-hash&gt;</span><br></pre></td></tr></table></figure></div>
 
 <blockquote>
-<p><strong>小坑提醒</strong>：<br>如果遇到冲突，老老实实打开文件把冲突符号 <code>&lt; &lt;&lt;&lt;&lt;&lt;</code> 之类的清掉，然后再 <code>git add .</code>。如果是 rebase 遇到冲突，add 完后记得跑 <code>git rebase --continue</code>，千万别再去 commit。</p>
+<p><strong>踩坑预警</strong>：一旦你 <code>revert</code> 了一个 Merge Commit，这部分代码在 Git 眼里就是“被明确拒绝”的。如果后续这个特性分支修好了 bug 再次合并，Git 会直接忽略那些之前被 revert 过的文件修改！解决方案是要么再次 revert 那个 revert，要么改用 rebase 重新生成新的 commit。</p>
 </blockquote>
-<h2 id="7-临时藏代码（Stash）"><a href="#7-临时藏代码（Stash）" class="headerlink" title="7. 临时藏代码（Stash）"></a>7. 临时藏代码（Stash）</h2><p>正写着需求呢，突然让去修个紧急 bug，这个时候 <code>stash</code> 最救命：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git stash                      <span class="comment"># 赶紧把现在的改动藏起来</span></span><br><span class="line">git stash list                 <span class="comment"># 看看藏了哪些东西</span></span><br><span class="line">git stash pop                  <span class="comment"># 紧急 bug 修完回来，把之前藏的代码拿出来继续写</span></span><br><span class="line">git stash clear                <span class="comment"># 不要了，全清掉</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="3-把代码揉得更好看：git-rebase-i"><a href="#3-把代码揉得更好看：git-rebase-i" class="headerlink" title="3. 把代码揉得更好看：git rebase -i"></a>3. 把代码揉得更好看：<code>git rebase -i</code></h2><p>在自己的特性分支上开发时，往往会产生一堆类似 “fix typo”, “update”, “wip” 这种垃圾 commit。如果直接合进主干，Code Review 的时候同事会顺着网线来打你。</p>
+<p>这时候 <code>git rebase -i</code> (interactive) 就派上用场了。它可以让你在合并前，像捏橡皮泥一样重塑你的提交历史。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 交互式处理最近的 5 个 commit</span></span><br><span class="line">git rebase -i HEAD~5</span><br></pre></td></tr></table></figure></div>
 
-<p>基本就这些了。真遇到这些解决不了的疑难杂症，大概率是代码合废了，到时候再 Google 吧。</p>
+<p>弹出的编辑器里会有几个常用指令：</p>
+<ul>
+<li><code>pick</code>：保留这个 commit</li>
+<li><code>squash</code> (或 <code>s</code>)：把这个 commit 揉进上一个 commit 里</li>
+<li><code>edit</code> (或 <code>e</code>)：在这个 commit 停下来，让你修改文件</li>
+<li><code>drop</code> (或 <code>d</code>)：直接丢弃这个 commit</li>
+</ul>
+<p>通过把中间的修修补补 <code>squash</code> 掉，最后提交的 PR 就能保持极其清爽的逻辑线。</p>
+<h2 id="4-挑拣特定的代码：git-cherry-pick"><a href="#4-挑拣特定的代码：git-cherry-pick" class="headerlink" title="4. 挑拣特定的代码：git cherry-pick"></a>4. 挑拣特定的代码：<code>git cherry-pick</code></h2><p>有个极其常见的场景：你在 <code>feat-A</code> 分支上开发，顺手修了一个基础组件的 Bug。现在主干急需这个 Bug 修复，但你 <code>feat-A</code> 的其他代码还没开发完，不能一起合进去。</p>
+<p>不要傻傻地去主干手动把代码再改一遍，直接用 <code>cherry-pick</code>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先切到主干</span></span><br><span class="line">git checkout main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把那个修 bug 的特定 commit 摘取过来</span></span><br><span class="line">git cherry-pick &lt;commit-hash&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>如果遇到冲突，解决完冲突后执行 <code>git cherry-pick --continue</code> 即可。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Git 的学习曲线确实有点陡峭，它的心智模型跟 SVN 完全不同。理解 Git 的核心在于理解它的数据结构：<strong>它不是记录文件差异，而是记录文件系统在特定时刻的完整快照（Snapshot）。</strong></p>
+<p>理解了这一点，你就会明白为什么切分支那么快，为什么 <code>reflog</code> 这么强大，以及为什么我们在进行任何危险操作前，都应该先切个临时分支做个快照。多造几次“事故”，多翻几次车，Git 就能用溜了。</p>
 
       
     </div>
@@ -575,6 +581,10 @@
         <div class="post-tags">
           
             <a href="/tags/Git/" rel="tag"># Git</a>
+          
+            <a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" rel="tag"># 架构设计</a>
+          
+            <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag"># 工程化</a>
           
         </div>
       
@@ -628,7 +638,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/Git/2017-04-23-git.html"
-         data-hitalk-title="Git 常用命令备忘录">
+         data-hitalk-title="Git 线上事故实录：如何优雅处理错乱的分支合并与代码回滚">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

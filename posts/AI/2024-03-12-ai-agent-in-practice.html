@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="最近老听人聊 AI Agent，说它不止能陪你聊天，还能自己跑去查天气、调接口干活。周末闲着没事，照着文档自己撸了一个，感觉确实有点意思。这里随便记录下折腾的过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动手写个 AI Agent：从概念到简单实现">
+<meta property="og:url" content="https://www.vueweb.cn/posts/AI/2024-03-12-ai-agent-in-practice.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="最近老听人聊 AI Agent，说它不止能陪你聊天，还能自己跑去查天气、调接口干活。周末闲着没事，照着文档自己撸了一个，感觉确实有点意思。这里随便记录下折腾的过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-12T06:50:30.000Z">
+<meta property="article:modified_time" content="2026-10-09T05:50:26.307Z">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/AI/2024-03-12-ai-agent-in-practice.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>动手写个 AI Agent：从概念到简单实现 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/AI/2024-03-12-ai-agent-in-practice.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">动手写个 AI Agent：从概念到简单实现
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2024-03-12 14:50:30" itemprop="dateCreated datePublished" datetime="2024-03-12T14:50:30+08:00">2024-03-12</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/AI/2024-03-12-ai-agent-in-practice.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/AI/2024-03-12-ai-agent-in-practice.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近老听人聊 AI Agent，说它不止能陪你聊天，还能自己跑去查天气、调接口干活。周末闲着没事，照着文档自己撸了一个，感觉确实有点意思。这里随便记录下折腾的过程。</p>
+<a id="more"></a>
+
+<h2 id="1-Agent-到底和以前的机器人有什么不同"><a href="#1-Agent-到底和以前的机器人有什么不同" class="headerlink" title="1. Agent 到底和以前的机器人有什么不同"></a>1. Agent 到底和以前的机器人有什么不同</h2><p>以前用 ChatGPT 这种 ChatBot：<br>我问一个问题 -&gt; 它瞎编或者靠脑子里的知识回我 -&gt; 聊天结束。</p>
+<p>现在的 Agent 逻辑变了：<br>我下达一个目标 -&gt; 它自己想第一步干嘛 -&gt; 调用我给它的工具（比如查数据库） -&gt; 看看结果 -&gt; 决定第二步干嘛 -&gt; 最后告诉我搞定了。</p>
+<p>其实就是给大模型装了手和脚。模型当大脑（Brain），外部的 API 当工具（Tools），然后再给它点记忆（Memory）。</p>
+<h2 id="2-它是怎么思考的"><a href="#2-它是怎么思考的" class="headerlink" title="2. 它是怎么思考的"></a>2. 它是怎么思考的</h2><p>我看大多数框架用的都是一种叫 ReAct（Reasoning + Acting）的模式，说白了就是一边想一边干：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">遇到问题：</span><br><span class="line">  1. 思考（Thought）：分析现在是啥情况</span><br><span class="line">  2. 行动（Action）：选个工具去调</span><br><span class="line">  3. 观察（Observation）：看看工具返回了啥</span><br><span class="line">  4. 循环：没做完就继续想，做完了就输出结果</span><br></pre></td></tr></table></figure></div>
+
+<p>打个比方，我说：“帮我查下北京今天天气，如果过 30 度了给我发封邮件。”<br>它就会自己在那边碎碎念：先调查天气工具… 哦 33 度，超过了… 那我再调发邮件工具… 好了搞定了，回复用户。</p>
+<h2 id="3-拿-LangChain-跑一个试试"><a href="#3-拿-LangChain-跑一个试试" class="headerlink" title="3. 拿 LangChain 跑一个试试"></a>3. 拿 LangChain 跑一个试试</h2><p>想最快跑起来，用 Python 配合 LangChain 是最简单的：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PYTHON"><figure class="iseeu highlight /python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.agents <span class="keyword">import</span> AgentExecutor, create_openai_tools_agent</span><br><span class="line"><span class="keyword">from</span> langchain.chat_models <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.tools <span class="keyword">import</span> tool</span><br><span class="line"><span class="keyword">from</span> langchain.prompts <span class="keyword">import</span> ChatPromptTemplate, MessagesPlaceholder</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自己写几个工具给它用</span></span><br><span class="line"><span class="meta">@tool</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search_articles</span><span class="params">(keyword: str)</span> -&gt; str:</span></span><br><span class="line">    <span class="string">"""根据关键词搜索博客文章"""</span></span><br><span class="line">    response = requests.get(<span class="string">f"https://api.example.com/articles?q=<span class="subst">&#123;keyword&#125;</span>"</span>)</span><br><span class="line">    articles = response.json()[<span class="string">"data"</span>]</span><br><span class="line">    <span class="keyword">return</span> json.dumps([&#123;<span class="string">"title"</span>: a[<span class="string">"title"</span>]&#125; <span class="keyword">for</span> a <span class="keyword">in</span> articles[:<span class="number">5</span>]], ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@tool</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_weather</span><span class="params">(city: str)</span> -&gt; str:</span></span><br><span class="line">    <span class="string">"""获取城市实时天气"""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f"<span class="subst">&#123;city&#125;</span>: 33°C, 晴"</span>  <span class="comment"># 偷懒 mock 一下</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@tool</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculate</span><span class="params">(expression: str)</span> -&gt; str:</span></span><br><span class="line">    <span class="string">"""算算术"""</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> str(eval(expression))</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f"算错了: <span class="subst">&#123;e&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化模型</span></span><br><span class="line">llm = ChatOpenAI(model=<span class="string">"gpt-4"</span>, temperature=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">prompt = ChatPromptTemplate.from_messages([</span><br><span class="line">    (<span class="string">"system"</span>, <span class="string">"你是一个得力助手。先思考再用工具。"</span>),</span><br><span class="line">    MessagesPlaceholder(variable_name=<span class="string">"chat_history"</span>, optional=<span class="literal">True</span>),</span><br><span class="line">    (<span class="string">"human"</span>, <span class="string">"&#123;input&#125;"</span>),</span><br><span class="line">    MessagesPlaceholder(variable_name=<span class="string">"agent_scratchpad"</span>),</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">tools = [search_articles, get_weather, calculate]</span><br><span class="line">agent = create_openai_tools_agent(llm, tools, prompt)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 跑起来</span></span><br><span class="line">agent_executor = AgentExecutor(</span><br><span class="line">    agent=agent,</span><br><span class="line">    tools=tools,</span><br><span class="line">    verbose=<span class="literal">True</span>,  <span class="comment"># 开启后能看到它在那碎碎念的过程</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">result = agent_executor.invoke(&#123;</span><br><span class="line">    <span class="string">"input"</span>: <span class="string">"搜索关于 Vue3 的文章，帮我算算每天读2篇需要多久"</span></span><br><span class="line">&#125;)</span><br><span class="line">print(result[<span class="string">"output"</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="4-前端怎么搞？用-Node-js-也行"><a href="#4-前端怎么搞？用-Node-js-也行" class="headerlink" title="4. 前端怎么搞？用 Node.js 也行"></a>4. 前端怎么搞？用 Node.js 也行</h2><p>作为一个写前端的，我也试着用 Node.js 直接调 OpenAI 的接口写了一遍。没用那些花里胡哨的框架，纯手写循环：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> OpenAI <span class="keyword">from</span> <span class="string">'openai'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> openai = <span class="keyword">new</span> OpenAI()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 定义好工具的说明</span></span><br><span class="line"><span class="keyword">const</span> tools: OpenAI.ChatCompletionTool[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">type</span>: <span class="string">'function'</span>,</span><br><span class="line">    <span class="function"><span class="keyword">function</span>: </span>&#123;</span><br><span class="line">      name: <span class="string">'search_database'</span>,</span><br><span class="line">      description: <span class="string">'在数据库中搜索文章'</span>,</span><br><span class="line">      parameters: &#123;</span><br><span class="line">        <span class="keyword">type</span>: <span class="string">'object'</span>,</span><br><span class="line">        properties: &#123;</span><br><span class="line">          keyword: &#123; <span class="keyword">type</span>: <span class="string">'string'</span> &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        required: [<span class="string">'keyword'</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 真正干活的函数</span></span><br><span class="line"><span class="keyword">const</span> toolHandlers: Record&lt;<span class="built_in">string</span>, <span class="function">(<span class="params">args: <span class="built_in">any</span></span>) =&gt;</span> <span class="built_in">Promise</span>&lt;<span class="built_in">string</span>&gt;&gt; = &#123;</span><br><span class="line">  <span class="keyword">async</span> search_database(&#123; keyword &#125;) &#123;</span><br><span class="line">    <span class="comment">// 假装去请求了</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.stringify([&#123; title: <span class="string">`关于 <span class="subst">$&#123;keyword&#125;</span> 的文章`</span> &#125;])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 让它死循环跑，直到它说干完了</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">runAgent</span>(<span class="params">userMessage: <span class="built_in">string</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> messages: OpenAI.ChatCompletionMessageParam[] = [</span><br><span class="line">    &#123; role: <span class="string">'system'</span>, content: <span class="string">'你是助手'</span> &#125;,</span><br><span class="line">    &#123; role: <span class="string">'user'</span>, content: userMessage &#125;</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123; <span class="comment">// 加个限制，别让它无限跑破产了</span></span><br><span class="line">    <span class="keyword">const</span> response = <span class="keyword">await</span> openai.chat.completions.create(&#123;</span><br><span class="line">      model: <span class="string">'gpt-4'</span>,</span><br><span class="line">      messages,</span><br><span class="line">      tools,</span><br><span class="line">      tool_choice: <span class="string">'auto'</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> assistantMessage = response.choices[<span class="number">0</span>].message</span><br><span class="line">    messages.push(assistantMessage)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 它没调工具，说明聊完了</span></span><br><span class="line">    <span class="keyword">if</span> (!assistantMessage.tool_calls?.length) &#123;</span><br><span class="line">      <span class="keyword">return</span> assistantMessage.content</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 它要调工具，我们就帮它跑，然后把结果塞回去</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> toolCall of assistantMessage.tool_calls) &#123;</span><br><span class="line">      <span class="keyword">const</span> handler = toolHandlers[toolCall<span class="function">.<span class="keyword">function</span>.<span class="title">name</span>]</span></span><br><span class="line"><span class="function">      <span class="title">const</span> <span class="title">args</span> = <span class="title">JSON</span>.<span class="title">parse</span>(<span class="params">toolCall.<span class="keyword">function</span>.<span class="built_in">arguments</span></span>)</span></span><br><span class="line"><span class="function">      </span></span><br><span class="line"><span class="function">      <span class="title">console</span>.<span class="title">log</span>(<span class="params">`正在调工具: $&#123;toolCall.<span class="keyword">function</span>.name&#125;...`</span>)</span></span><br><span class="line"><span class="function">      <span class="title">const</span> <span class="title">result</span> = <span class="title">await</span> <span class="title">handler</span>(<span class="params">args</span>)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">      <span class="title">messages</span>.<span class="title">push</span>(<span class="params">&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">        role: 'tool',</span></span></span><br><span class="line"><span class="function"><span class="params">        tool_call_id: toolCall.id,</span></span></span><br><span class="line"><span class="function"><span class="params">        content: result</span></span></span><br><span class="line"><span class="function"><span class="params">      &#125;</span>)</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">  &#125;</span></span><br><span class="line"><span class="function">  <span class="title">return</span> '跑太久了，强制停了'</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">const</span> <span class="title">answer</span> = <span class="title">await</span> <span class="title">runAgent</span>(<span class="params">'搜一下最新的文章'</span>)</span></span><br><span class="line"><span class="function"><span class="title">console</span>.<span class="title">log</span>(<span class="params">answer</span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实搞了一圈下来，感觉 Agent 最大的坑不在模型智商，而是在“工具的设计”和“异常处理”上。如果接口老是报错，或者参数定义得含糊不清，它就会陷入死循环一直重试，账单看着都心疼。</p>
+<p>后面如果要做复杂的业务，还得加一层二次确认，不能完全放权让它自己跑，不然线上库被它删了就搞笑了。感兴趣的可以自己搞个小 Demo 玩玩。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag"># AI</a>
+          
+            <a href="/tags/Agent/" rel="tag"># Agent</a>
+          
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/React/2024-01-22-nextjs14-fullstack.html" rel="next" title="折腾 Next.js 14：全栈开发踩坑与基础配置">
+                <i class="fa fa-chevron-left"></i> 折腾 Next.js 14：全栈开发踩坑与基础配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/Python/2024-03-18-python-for-frontend-dev.html" rel="prev" title="AI 时代不会 Python 不行了？前端的速成笔记">
+                AI 时代不会 Python 不行了？前端的速成笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/AI/2024-03-12-ai-agent-in-practice.html"
+         data-hitalk-title="动手写个 AI Agent：从概念到简单实现">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

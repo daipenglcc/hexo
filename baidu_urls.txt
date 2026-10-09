@@ -1,5 +1,5 @@
-https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-07-16-generative-ui-and-ai-native.html
 https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-05-10-web-components-in-practice.html
-https://www.vueweb.cn/posts/AI/2026-03-12-mcp-protocol-in-depth.html
-https://www.vueweb.cn/posts/AI/2025-10-20-cursor-vibe-coding.html
-https://www.vueweb.cn/posts/AI/2025-06-12-ai-agent-in-practice.html
+https://www.vueweb.cn/posts/AI/2025-04-22-vercel-ai-sdk-guide.html
+https://www.vueweb.cn/posts/AI/2025-02-18-ollama-deepseek-local-llm.html
+https://www.vueweb.cn/posts/AI/2024-12-12-mcp-protocol-in-depth.html
+https://www.vueweb.cn/posts/AI/2024-09-20-cursor-vibe-coding.html
