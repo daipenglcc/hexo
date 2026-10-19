@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="之前折腾 RAG、跑本地模型啥的都是自己玩，最近想在正经项目里加一个 AI 对话功能。自己从零写流式响应、处理 SSE 什么的还是挺麻烦的，后来发现 Vercel 出了个 AI SDK，把跟大模型交互的脏活累活都封装好了，前后端都有对应的工具函数。试了一下，确实省了不少事。">
+  <meta name="description" content="之前配置与实践 RAG、跑本地模型啥的都是自己玩，最近想在正经项目里加一个 AI 对话功能。自己从零写流式响应、处理 SSE 什么的还是挺麻烦的，后来发现 Vercel 出了个 AI SDK，把跟大模型交互的繁琐工作都封装好了，前后端都有对应的工具函数。试了一下，确实省了不少事。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用 Vercel AI SDK 给网站接上大模型对话">
 <meta property="og:url" content="https://www.vueweb.cn/posts/AI/2025-04-22-vercel-ai-sdk-guide.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="之前折腾 RAG、跑本地模型啥的都是自己玩，最近想在正经项目里加一个 AI 对话功能。自己从零写流式响应、处理 SSE 什么的还是挺麻烦的，后来发现 Vercel 出了个 AI SDK，把跟大模型交互的脏活累活都封装好了，前后端都有对应的工具函数。试了一下，确实省了不少事。">
+<meta property="og:description" content="之前配置与实践 RAG、跑本地模型啥的都是自己玩，最近想在正经项目里加一个 AI 对话功能。自己从零写流式响应、处理 SSE 什么的还是挺麻烦的，后来发现 Vercel 出了个 AI SDK，把跟大模型交互的繁琐工作都封装好了，前后端都有对应的工具函数。试了一下，确实省了不少事。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-22T03:30:18.000Z">
-<meta property="article:modified_time" content="2026-10-08T07:22:41.163Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.363Z">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="LLM">
 <meta property="article:tag" content="Next.js">
@@ -334,7 +334,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -342,7 +342,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -516,7 +516,7 @@
       
 
       
-        <p>之前折腾 RAG、跑本地模型啥的都是自己玩，最近想在正经项目里加一个 AI 对话功能。自己从零写流式响应、处理 SSE 什么的还是挺麻烦的，后来发现 Vercel 出了个 AI SDK，把跟大模型交互的脏活累活都封装好了，前后端都有对应的工具函数。试了一下，确实省了不少事。</p>
+        <p>之前配置与实践 RAG、跑本地模型啥的都是自己玩，最近想在正经项目里加一个 AI 对话功能。自己从零写流式响应、处理 SSE 什么的还是挺麻烦的，后来发现 Vercel 出了个 AI SDK，把跟大模型交互的繁琐工作都封装好了，前后端都有对应的工具函数。试了一下，确实省了不少事。</p>
 <a id="more"></a>
 
 <h2 id="1-Vercel-AI-SDK-是什么"><a href="#1-Vercel-AI-SDK-是什么" class="headerlink" title="1. Vercel AI SDK 是什么"></a>1. Vercel AI SDK 是什么</h2><p>简单说就是一个 TypeScript 库，帮你处理：</p>
@@ -539,7 +539,7 @@
 <h3 id="前端：对话组件"><a href="#前端：对话组件" class="headerlink" title="前端：对话组件"></a>前端：对话组件</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app&#x2F;chat&#x2F;page.tsx</span><br><span class="line">&#39;use client&#39;</span><br><span class="line"></span><br><span class="line">import &#123; useChat &#125; from &#39;ai&#x2F;react&#39;</span><br><span class="line"></span><br><span class="line">export default function ChatPage() &#123;</span><br><span class="line">  const &#123; messages, input, handleInputChange, handleSubmit, isLoading &#125; &#x3D; useChat()</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className&#x3D;&quot;max-w-2xl mx-auto p-6&quot;&gt;</span><br><span class="line">      &lt;h1 className&#x3D;&quot;text-2xl font-bold mb-6&quot;&gt;AI 助手&lt;&#x2F;h1&gt;</span><br><span class="line">      </span><br><span class="line">      &#123;&#x2F;* 消息列表 *&#x2F;&#125;</span><br><span class="line">      &lt;div className&#x3D;&quot;space-y-4 mb-6&quot;&gt;</span><br><span class="line">        &#123;messages.map((msg) &#x3D;&gt; (</span><br><span class="line">          &lt;div</span><br><span class="line">            key&#x3D;&#123;msg.id&#125;</span><br><span class="line">            className&#x3D;&#123;&#96;p-4 rounded-lg $&#123;</span><br><span class="line">              msg.role &#x3D;&#x3D;&#x3D; &#39;user&#39;</span><br><span class="line">                ? &#39;bg-blue-100 ml-12&#39;</span><br><span class="line">                : &#39;bg-gray-100 mr-12&#39;</span><br><span class="line">            &#125;&#96;&#125;</span><br><span class="line">          &gt;</span><br><span class="line">            &lt;p className&#x3D;&quot;text-sm text-gray-500 mb-1&quot;&gt;</span><br><span class="line">              &#123;msg.role &#x3D;&#x3D;&#x3D; &#39;user&#39; ? &#39;我&#39; : &#39;AI&#39;&#125;</span><br><span class="line">            &lt;&#x2F;p&gt;</span><br><span class="line">            &lt;p className&#x3D;&quot;whitespace-pre-wrap&quot;&gt;&#123;msg.content&#125;&lt;&#x2F;p&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">        ))&#125;</span><br><span class="line">        </span><br><span class="line">        &#123;isLoading &amp;&amp; (</span><br><span class="line">          &lt;div className&#x3D;&quot;bg-gray-100 p-4 rounded-lg mr-12&quot;&gt;</span><br><span class="line">            &lt;p className&#x3D;&quot;text-gray-400&quot;&gt;思考中...&lt;&#x2F;p&gt;</span><br><span class="line">          &lt;&#x2F;div&gt;</span><br><span class="line">        )&#125;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">      &#123;&#x2F;* 输入框 *&#x2F;&#125;</span><br><span class="line">      &lt;form onSubmit&#x3D;&#123;handleSubmit&#125; className&#x3D;&quot;flex gap-2&quot;&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          value&#x3D;&#123;input&#125;</span><br><span class="line">          onChange&#x3D;&#123;handleInputChange&#125;</span><br><span class="line">          placeholder&#x3D;&quot;问点什么...&quot;</span><br><span class="line">          className&#x3D;&quot;flex-1 border rounded-lg px-4 py-2&quot;</span><br><span class="line">        &#x2F;&gt;</span><br><span class="line">        &lt;button</span><br><span class="line">          type&#x3D;&quot;submit&quot;</span><br><span class="line">          disabled&#x3D;&#123;isLoading&#125;</span><br><span class="line">          className&#x3D;&quot;bg-blue-500 text-white px-6 py-2 rounded-lg disabled:opacity-50&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          发送</span><br><span class="line">        &lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;form&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p><code>useChat</code> 这个 Hook 帮你管了消息列表、输入状态、loading 状态、流式接收等所有琐碎的事情。</p>
-<h2 id="3-流式响应的体验"><a href="#3-流式响应的体验" class="headerlink" title="3. 流式响应的体验"></a>3. 流式响应的体验</h2><p>用 AI SDK 最爽的一点就是流式响应基本不用管。后端用 <code>streamText</code> 返回流，前端用 <code>useChat</code> 自动接收，回答一个字一个字地蹦出来，跟 ChatGPT 网页版的体验一样。</p>
+<h2 id="3-流式响应的体验"><a href="#3-流式响应的体验" class="headerlink" title="3. 流式响应的体验"></a>3. 流式响应的体验</h2><p>用 AI SDK 最高效的一点就是流式响应基本不用管。后端用 <code>streamText</code> 返回流，前端用 <code>useChat</code> 自动接收，回答一个字一个字地蹦出来，跟 ChatGPT 网页版的体验一样。</p>
 <p>如果自己实现的话，要处理 SSE 连接、解析 chunk、拼接内容、处理中断和错误……光想想就头大。</p>
 <h2 id="4-换模型"><a href="#4-换模型" class="headerlink" title="4. 换模型"></a>4. 换模型</h2><p>AI SDK 的一个好处是换模型特别简单，基本上改一行代码：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用 OpenAI</span></span><br><span class="line"><span class="keyword">import</span> &#123; openai &#125; <span class="keyword">from</span> <span class="string">'@ai-sdk/openai'</span></span><br><span class="line"><span class="keyword">const</span> model = openai(<span class="string">'gpt-4o-mini'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 Anthropic Claude</span></span><br><span class="line"><span class="keyword">import</span> &#123; anthropic &#125; <span class="keyword">from</span> <span class="string">'@ai-sdk/anthropic'</span></span><br><span class="line"><span class="keyword">const</span> model = anthropic(<span class="string">'claude-3-5-sonnet-20241022'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 Google Gemini</span></span><br><span class="line"><span class="keyword">import</span> &#123; google &#125; <span class="keyword">from</span> <span class="string">'@ai-sdk/google'</span></span><br><span class="line"><span class="keyword">const</span> model = google(<span class="string">'gemini-1.5-flash'</span>)</span><br></pre></td></tr></table></figure></div>
@@ -606,8 +606,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/AI/2025-02-18-ollama-deepseek-local-llm.html" rel="next" title="用 Ollama + DeepSeek 搞个本地免费大模型助手">
-                <i class="fa fa-chevron-left"></i> 用 Ollama + DeepSeek 搞个本地免费大模型助手
+              <a href="/posts/AI/2025-02-18-ollama-deepseek-local-llm.html" rel="next" title="用 Ollama + DeepSeek 建立一个本地免费大模型助手">
+                <i class="fa fa-chevron-left"></i> 用 Ollama + DeepSeek 建立一个本地免费大模型助手
               </a>
             
           </div>
@@ -616,8 +616,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-05-10-web-components-in-practice.html" rel="prev" title="Web Components 折腾记：原生组件化到底能不能用了">
-                Web Components 折腾记：原生组件化到底能不能用了 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/AI/2026-04-16-rea-ai-reverse-engineering.html" rel="prev" title="用 AI Agent 做逆向工程：rea 工具链初探">
+                用 AI Agent 做逆向工程：rea 工具链初探 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

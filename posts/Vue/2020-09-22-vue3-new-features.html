@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="刚开始接触 Vue3 的时候，心里其实是在骂娘的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要搞个 Composition API 折腾人，代码全挤在一起像面条一样。 直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然悟了，原来 V">
+  <meta name="description" content="刚开始接触 Vue3 的时候，心里其实是在很不适应的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要建立一个 Composition API 配置与实践人，代码全挤在一起像面条一样。 直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue3 到底香在哪？大白话聊聊那些牛逼的新特性">
+<meta property="og:title" content="Vue3 到底香在哪？大白话聊聊那些强大的新特性">
 <meta property="og:url" content="https://www.vueweb.cn/posts/Vue/2020-09-22-vue3-new-features.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="刚开始接触 Vue3 的时候，心里其实是在骂娘的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要搞个 Composition API 折腾人，代码全挤在一起像面条一样。 直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然悟了，原来 V">
+<meta property="og:description" content="刚开始接触 Vue3 的时候，心里其实是在很不适应的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要建立一个 Composition API 配置与实践人，代码全挤在一起像面条一样。 直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-22T06:20:45.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:54:30.423Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.350Z">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="Vue3">
 <meta property="article:tag" content="Composition API">
@@ -206,7 +206,7 @@
   };
 </script>
 
-  <title>Vue3 到底香在哪？大白话聊聊那些牛逼的新特性 | 光阴小栈</title>
+  <title>Vue3 到底香在哪？大白话聊聊那些强大的新特性 | 光阴小栈</title>
   
 
 
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -420,7 +420,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Vue3 到底香在哪？大白话聊聊那些牛逼的新特性
+          <h2 class="post-title" itemprop="name headline">Vue3 到底香在哪？大白话聊聊那些强大的新特性
               
             
           </h2>
@@ -515,8 +515,8 @@
       
 
       
-        <p>刚开始接触 Vue3 的时候，心里其实是在骂娘的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要搞个 Composition API 折腾人，代码全挤在一起像面条一样。</p>
-<p>直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然悟了，原来 Vue3 的按逻辑组织代码这么爽。这篇就用大白话，聊聊 Vue3 那些让我用过就回不去的新特性。</p>
+        <p>刚开始接触 Vue3 的时候，心里其实是在很不适应的：明明 Options API（就那种把 data、methods 分开写的方式）写得挺舒服的，非要建立一个 Composition API 配置与实践人，代码全挤在一起像面条一样。</p>
+<p>直到我后来接手了一个两千多行的祖传巨型组件，改个逻辑要在 data 里找变量、在 methods 里找方法、在 computed 里找计算，滚轮都搓冒烟了。我才突然悟了，原来 Vue3 的按逻辑组织代码这么高效。这篇就用大白话，聊聊 Vue3 那些让我用过就回不去的新特性。</p>
 <a id="more"></a>
 
 <h2 id="1-绝对的杀手锏：Composition-API-组合式API"><a href="#1-绝对的杀手锏：Composition-API-组合式API" class="headerlink" title="1. 绝对的杀手锏：Composition API (组合式API)"></a>1. 绝对的杀手锏：Composition API (组合式API)</h2><p>如果用一句话概括就是：<strong>把以前散落在各处的同一个功能的代码，全捏在了一起</strong>。</p>
@@ -530,15 +530,15 @@
 </ul>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ref 的坑：在 JS 里改值一定要加上 .value！但在模板里不用加</span></span><br><span class="line"><span class="keyword">const</span> age = ref(<span class="number">18</span>)</span><br><span class="line">age.value = <span class="number">19</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">// reactive 的好处：改起来就跟普通对象一样</span></span><br><span class="line"><span class="keyword">const</span> form = reactive(&#123; <span class="attr">name</span>: <span class="string">'铁柱'</span>, <span class="attr">sex</span>: <span class="string">'男'</span> &#125;)</span><br><span class="line">form.name = <span class="string">'二妞'</span></span><br></pre></td></tr></table></figure></div>
 
-<h2 id="3-告别-Vue2-的惊天大坑：响应式系统升级"><a href="#3-告别-Vue2-的惊天大坑：响应式系统升级" class="headerlink" title="3. 告别 Vue2 的惊天大坑：响应式系统升级"></a>3. 告别 Vue2 的惊天大坑：响应式系统升级</h2><p>在 Vue2 时代，有个被吐槽了无数次的问题：你直接往对象里塞一个新属性，或者通过索引改数组里的东西，页面死活不更新！还得去求助神仙方法 <code>this.$set()</code>。</p>
+<h2 id="3-告别-Vue2-的惊天陷阱：响应式系统升级"><a href="#3-告别-Vue2-的惊天陷阱：响应式系统升级" class="headerlink" title="3. 告别 Vue2 的惊天陷阱：响应式系统升级"></a>3. 告别 Vue2 的惊天陷阱：响应式系统升级</h2><p>在 Vue2 时代，有个被吐槽了无数次的问题：你直接往对象里塞一个新属性，或者通过索引改数组里的东西，页面很难不更新！还得去求助神仙方法 <code>this.$set()</code>。</p>
 <p>因为 Vue2 底层用的是 <code>Object.defineProperty</code>，它太笨了。Vue3 换成了 ES6 的 <code>Proxy</code>（代理机制），这个可太聪明了，你干啥它都能看到。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = reactive(&#123; <span class="attr">name</span>: <span class="string">'Tom'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Vue3 里随便搞，下面这三种骚操作，页面全能精准更新！</span></span><br><span class="line">user.age = <span class="number">20</span>           <span class="comment">// 动态塞新属性</span></span><br><span class="line"><span class="keyword">delete</span> user.name        <span class="comment">// 删属性</span></span><br><span class="line">list[<span class="number">0</span>] = <span class="string">'新东西'</span>      <span class="comment">// 直接改数组索引</span></span><br></pre></td></tr></table></figure></div>
 
-<h2 id="4-Teleport-传送门：写弹窗的神器"><a href="#4-Teleport-传送门：写弹窗的神器" class="headerlink" title="4. Teleport 传送门：写弹窗的神器"></a>4. Teleport 传送门：写弹窗的神器</h2><p>以前写弹窗最恶心的是，如果你的组件被好几层绝对定位（<code>position: relative</code>）或者隐藏（<code>overflow: hidden</code>）的父元素包着，弹窗的样式百分百要炸，死活出不来。</p>
+<h2 id="4-Teleport-传送门：写弹窗的神器"><a href="#4-Teleport-传送门：写弹窗的神器" class="headerlink" title="4. Teleport 传送门：写弹窗的神器"></a>4. Teleport 传送门：写弹窗的神器</h2><p>以前写弹窗最恶心的是，如果你的组件被好几层绝对定位（<code>position: relative</code>）或者隐藏（<code>overflow: hidden</code>）的父元素包着，弹窗的样式百分百要炸，很难出不来。</p>
 <p>有了 <code>&lt;Teleport&gt;</code>（传送门），你可以把弹窗的 HTML 代码强行“送”到页面的最外层（比如 <code>body</code> 下），不管你组件嵌套得多深。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button @click&#x3D;&quot;show &#x3D; true&quot;&gt;打开弹窗&lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 魔法指令：把里面的 DOM 原封不动搬到 body 标签最下面去 --&gt;</span><br><span class="line">  &lt;Teleport to&#x3D;&quot;body&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;modal&quot; v-if&#x3D;&quot;show&quot;&gt;</span><br><span class="line">      这是一个绝不被遮挡的无敌弹窗</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;Teleport&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="5-组件支持多个根节点（Fragments）"><a href="#5-组件支持多个根节点（Fragments）" class="headerlink" title="5. 组件支持多个根节点（Fragments）"></a>5. 组件支持多个根节点（Fragments）</h2><p>这点真的是治好了我的强迫症。在 Vue2 里，<code>&lt;template&gt;</code> 下面死活只能有一个标签，经常为了过编译，在最外面套一个毫无意义的 <code>&lt;div&gt;</code>，导致 HTML 结构像洋葱一样。</p>
+<h2 id="5-组件支持多个根节点（Fragments）"><a href="#5-组件支持多个根节点（Fragments）" class="headerlink" title="5. 组件支持多个根节点（Fragments）"></a>5. 组件支持多个根节点（Fragments）</h2><p>这点真的是治好了我的强迫症。在 Vue2 里，<code>&lt;template&gt;</code> 下面很难只能有一个标签，经常为了过编译，在最外面套一个毫无意义的 <code>&lt;div&gt;</code>，导致 HTML 结构像洋葱一样。</p>
 <p>Vue3 终于放开了这个限制，你想写几个并列的标签就写几个：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Vue3 里这样写完全没毛病 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;header&gt;网页头&lt;&#x2F;header&gt;</span><br><span class="line">  &lt;main&gt;正文&lt;&#x2F;main&gt;</span><br><span class="line">  &lt;footer&gt;网页脚&lt;&#x2F;footer&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure></div>
 
@@ -547,7 +547,7 @@
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// composables/useMouse.js (我把获取鼠标位置的逻辑抽出来了)</span></span><br><span class="line"><span class="keyword">import</span> &#123; ref, onMounted &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">useMouse</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> x = ref(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> y = ref(<span class="number">0</span>)</span><br><span class="line">  </span><br><span class="line">  onMounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'mousemove'</span>, e =&gt; &#123;</span><br><span class="line">      x.value = e.pageX</span><br><span class="line">      y.value = e.pageY</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 谁用就把这俩变量扔给谁</span></span><br><span class="line">  <span class="keyword">return</span> &#123; x, y &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>别的组件想用，直接叫过来：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; useMouse &#125; from &#39;.&#x2F;useMouse&#39;</span><br><span class="line">&#x2F;&#x2F; 清清爽爽，数据来源一目了然</span><br><span class="line">const &#123; x, y &#125; &#x3D; useMouse()</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; useMouse &#125; from &#39;.&#x2F;useMouse&#39;</span><br><span class="line">&#x2F;&#x2F; 清清高效高效，数据来源一目了然</span><br><span class="line">const &#123; x, y &#125; &#x3D; useMouse()</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure></div>
 
 <p>除此之外，Vue3 的打包体积更小（用不到的方法根本不打进去），速度更是快了一大截。所以，如果老板没有强迫你维护那些石器时代的 Vue2 老项目，赶紧上船 Vue3 吧，真香！</p>
 
@@ -604,8 +604,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-01-10-vite-deep-guide.html" rel="prev" title="彻底扔掉 Webpack：Vite 踩坑与进阶指北">
-                彻底扔掉 Webpack：Vite 踩坑与进阶指北 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-01-10-vite-deep-guide.html" rel="prev" title="彻底扔掉 Webpack：Vite 实践中的问题与进阶指北">
+                彻底扔掉 Webpack：Vite 实践中的问题与进阶指北 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -635,7 +635,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/Vue/2020-09-22-vue3-new-features.html"
-         data-hitalk-title="Vue3 到底香在哪？大白话聊聊那些牛逼的新特性">
+         data-hitalk-title="Vue3 到底香在哪？大白话聊聊那些强大的新特性">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

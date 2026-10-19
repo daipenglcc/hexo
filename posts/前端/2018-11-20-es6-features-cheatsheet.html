@@ -183,7 +183,7 @@
 <meta property="og:description" content="ES6 (ECMAScript 2015) 发布到现在差不多三年多了，箭头函数、解构赋值、Promise 大家都已经用得飞起。 但在 Code Review 的时候，我经常发现很多同学只是在用新语法写老逻辑，甚至有时候滥用新语法，写出了性能堪忧、内存泄漏的代码。今天不背语法书，纯粹从实战角度，盘点一下咱们平时写 ES6+ 容易踩进去的那些“坑”，以及到底怎么写才算优雅。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-11-20T01:45:33.000Z">
-<meta property="article:modified_time" content="2026-10-09T05:51:22.064Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:07.609Z">
 <meta property="article:tag" content="性能优化">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="ES6">
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -526,7 +526,7 @@
 
 <p><strong>另一个坑：给 DOM 绑定事件</strong></p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> button = <span class="built_in">document</span>.getElementById(<span class="string">'myButton'</span>);</span><br><span class="line">button.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 💥 这里的 this 不再是 button 元素，拿不到 this.id</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.id); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div>
-<p><strong>建议</strong>：只有在真正需要保留外层 <code>this</code> 上下文时（比如 <code>setTimeout</code> 的回调、数组的 <code>map</code>/<code>filter</code> 回调），才去使用箭头函数。对于对象方法，老老实实写普通的函数。</p>
+<p><strong>建议</strong>：只有在真正需要保留外层 <code>this</code> 上下文时（比如 <code>setTimeout</code> 的回调、数组的 <code>map</code>/<code>filter</code> 回调），才去使用箭头函数。对于对象方法，规范地写普通的函数。</p>
 <h2 id="2-闭包与-let-const：不要再在循环里造垃圾了"><a href="#2-闭包与-let-const：不要再在循环里造垃圾了" class="headerlink" title="2. 闭包与 let/const：不要再在循环里造垃圾了"></a>2. 闭包与 <code>let/const</code>：不要再在循环里造垃圾了</h2><p><code>let</code> 和 <code>const</code> 带来了块级作用域（Block Scope），大家都知道要用来替换 <code>var</code>。但在循环里，处理不当会造成严重的内存问题。</p>
 <p>看看下面这段代码：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">const</span> processItem = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;;</span><br><span class="line">  processItem();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
@@ -540,14 +540,14 @@
 <p>如果非要在函数参数里做默认解构，记得给外层也赋默认值：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderUser</span>(<span class="params">&#123; name = <span class="string">'Unknown'</span>, age = <span class="number">0</span> &#125; = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="4-Spread-Operator-…扩展运算符-的性能危机"><a href="#4-Spread-Operator-…扩展运算符-的性能危机" class="headerlink" title="4. Spread Operator (…扩展运算符) 的性能危机"></a>4. <code>Spread Operator</code> (…扩展运算符) 的性能危机</h2><p>扩展运算符简直是神仙语法，合并数组、克隆对象极其爽快：</p>
+<h2 id="4-Spread-Operator-…扩展运算符-的性能危机"><a href="#4-Spread-Operator-…扩展运算符-的性能危机" class="headerlink" title="4. Spread Operator (…扩展运算符) 的性能危机"></a>4. <code>Spread Operator</code> (…扩展运算符) 的性能危机</h2><p>扩展运算符是一种非常高效的语法，合并数组、克隆对象非常便捷：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newObj = &#123; ...oldObj, <span class="attr">newProp</span>: <span class="number">1</span> &#125;;</span><br></pre></td></tr></table></figure></div>
 
 <p>但请记住，<strong>这只是浅拷贝</strong>。而且在处理巨大数组时，扩展运算符是有严重性能瓶颈的。</p>
 <p>比如要把一个大数组推入另一个数组：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设 bigArray 有 10 万条数据</span></span><br><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">arr.push(...bigArray);</span><br></pre></td></tr></table></figure></div>
 <p>这个操作会把 <code>bigArray</code> 完全解构成参数列表，极容易触发引擎的 <code>Maximum call stack size exceeded</code>（调用栈溢出）。</p>
-<p><strong>性能更好的写法</strong>：老老实实用原生的方式。</p>
+<p><strong>性能更好的写法</strong>：规范地用原生的方式。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 没有栈溢出风险</span></span><br><span class="line">bigArray.forEach(<span class="function"><span class="params">item</span> =&gt;</span> arr.push(item));</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.push.apply(arr, bigArray); <span class="comment">// 注意，apply 也有参数个数限制风险</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="5-Array-from-和-Set-的奇妙化学反应"><a href="#5-Array-from-和-Set-的奇妙化学反应" class="headerlink" title="5. Array.from() 和 Set 的奇妙化学反应"></a>5. <code>Array.from()</code> 和 <code>Set</code> 的奇妙化学反应</h2><p>数组去重以前大家喜欢写两层 <code>for</code> 循环，现在有了 <code>Set</code>，一句话搞定：</p>
@@ -556,7 +556,7 @@
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接在一个方法里完成去重和映射，性能更好，少生成一次中间数组</span></span><br><span class="line"><span class="keyword">const</span> mappedUnique = <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr), x =&gt; x * <span class="number">2</span>);</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>ES6+ 带来了极强的表现力，让 JS 变得像一门“现代语言”。但在使用任何语法糖之前，多问自己一句：这行代码在 V8 引擎眼里，到底被转换成了什么？</p>
-<p>只有深刻理解了闭包、作用域链、引用传递，你才能把新语法写得真正“优雅”，而不是给后人留下一堆跑不动的烂摊子。</p>
+<p>只有深刻理解了闭包、作用域链、引用传递，你才能把新语法写得真正“优雅”，而不是给后人留下一堆跑不动的历史包袱。</p>
 
       
     </div>

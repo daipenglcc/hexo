@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="最开始接触 TypeScript 的时候，觉得这玩意儿完全就是给自己找罪受。明明写个 JS 五分钟搞定，非要我花半小时去写类型，报错了还满屏幕飙红，最后实在受不了，满篇都是 any。 后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被毒打久了才发现，强类型一时爽，一直重构一直爽。这里总结了一些平时写业务最常用的类型定义套路，当">
+  <meta name="description" content="最开始接触 TypeScript 的时候，觉得这玩意儿完全就是给自己找罪受。明明写个 JS 五分钟搞定，非要我花半小时去写类型，报错了还满屏幕飙红，最后实在受不了，满篇都是 any。 后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被困扰久了才发现，强类型一时高效，一直重构一直高效。这里总结了一些平时写业务最常用的类型定义套路">
 <meta property="og:type" content="article">
-<meta property="og:title" content="被 TypeScript 毒打后的常用类型套路备忘">
+<meta property="og:title" content="被 TypeScript 困扰后的常用类型套路备忘">
 <meta property="og:url" content="https://www.vueweb.cn/posts/TypeScript/2020-02-18-typescript-in-practice.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="最开始接触 TypeScript 的时候，觉得这玩意儿完全就是给自己找罪受。明明写个 JS 五分钟搞定，非要我花半小时去写类型，报错了还满屏幕飙红，最后实在受不了，满篇都是 any。 后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被毒打久了才发现，强类型一时爽，一直重构一直爽。这里总结了一些平时写业务最常用的类型定义套路，当">
+<meta property="og:description" content="最开始接触 TypeScript 的时候，觉得这玩意儿完全就是给自己找罪受。明明写个 JS 五分钟搞定，非要我花半小时去写类型，报错了还满屏幕飙红，最后实在受不了，满篇都是 any。 后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被困扰久了才发现，强类型一时高效，一直重构一直高效。这里总结了一些平时写业务最常用的类型定义套路">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-18T01:30:15.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:52:51.880Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:07.607Z">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="TypeScript">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
   };
 </script>
 
-  <title>被 TypeScript 毒打后的常用类型套路备忘 | 光阴小栈</title>
+  <title>被 TypeScript 困扰后的常用类型套路备忘 | 光阴小栈</title>
   
 
 
@@ -332,7 +332,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -340,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -419,7 +419,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">被 TypeScript 毒打后的常用类型套路备忘
+          <h2 class="post-title" itemprop="name headline">被 TypeScript 困扰后的常用类型套路备忘
               
             
           </h2>
@@ -515,18 +515,18 @@
 
       
         <p>最开始接触 TypeScript 的时候，觉得这玩意儿完全就是给自己找罪受。明明写个 JS 五分钟搞定，非要我花半小时去写类型，报错了还满屏幕飙红，最后实在受不了，满篇都是 <code>any</code>。</p>
-<p>后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被毒打久了才发现，<strong>强类型一时爽，一直重构一直爽</strong>。这里总结了一些平时写业务最常用的类型定义套路，当个个人的速查字典。</p>
+<p>后来项目越做越大，隔了两个月再回来看自己写的代码，要不是有 TS 的智能提示，我连那个对象里到底有哪些字段都想不起来了。被困扰久了才发现，<strong>强类型一时高效，一直重构一直高效</strong>。这里总结了一些平时写业务最常用的类型定义套路，当个个人的速查字典。</p>
 <a id="more"></a>
 
 <h2 id="1-别啥都写-any-了，来点基础的"><a href="#1-别啥都写-any-了，来点基础的" class="headerlink" title="1. 别啥都写 any 了，来点基础的"></a>1. 别啥都写 any 了，来点基础的</h2><p>老把 <code>any</code> 当救命稻草，那还不如写回 JS 呢。其实基础的类型就那么几个：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isDone: <span class="built_in">boolean</span> = <span class="literal">false</span></span><br><span class="line"><span class="keyword">let</span> count: <span class="built_in">number</span> = <span class="number">42</span></span><br><span class="line"><span class="keyword">let</span> username: <span class="built_in">string</span> = <span class="string">'Tom'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数组的两种写法（看自己喜好，我偏好第一种少敲字）</span></span><br><span class="line"><span class="keyword">let</span> list: <span class="built_in">number</span>[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> names: <span class="built_in">Array</span>&lt;<span class="built_in">string</span>&gt; = [<span class="string">'Tom'</span>, <span class="string">'Jerry'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这俩兄弟平时不多见，比如有个方法连返回值都没有，那就是 void</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">message: <span class="built_in">string</span></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(message)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实在不知道啥类型，用 unknown 别用 any</span></span><br><span class="line"><span class="keyword">let</span> safe: unknown = <span class="string">'我是卧底'</span> </span><br><span class="line"><span class="comment">// any 会让编译器闭眼，unknown 会强制你用之前先用 typeof 查一下户口</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="2-对象该怎么约束（Interface-vs-Type）"><a href="#2-对象该怎么约束（Interface-vs-Type）" class="headerlink" title="2. 对象该怎么约束（Interface vs Type）"></a>2. 对象该怎么约束（Interface vs Type）</h2><p>我们写前端，最多的就是接后端传过来的 JSON 对象，定义它们的结构通常有两种写法：<code>interface</code> 和 <code>type</code>。</p>
-<h3 id="个人习惯用-Interface-定义后台数据格式"><a href="#个人习惯用-Interface-定义后台数据格式" class="headerlink" title="个人习惯用 Interface 定义后台数据格式"></a>个人习惯用 Interface 定义后台数据格式</h3><p>因为 <code>interface</code> 可以像类一样继承，写起来比较清爽：</p>
+<h3 id="个人习惯用-Interface-定义后台数据格式"><a href="#个人习惯用-Interface-定义后台数据格式" class="headerlink" title="个人习惯用 Interface 定义后台数据格式"></a>个人习惯用 Interface 定义后台数据格式</h3><p>因为 <code>interface</code> 可以像类一样继承，写起来比较清高效：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定规矩</span></span><br><span class="line"><span class="keyword">interface</span> User &#123;</span><br><span class="line">  id: <span class="built_in">number</span></span><br><span class="line">  name: <span class="built_in">string</span></span><br><span class="line">  avatar?: <span class="built_in">string</span>         <span class="comment">// 加上 ? 表示这玩意不一定有（可选）</span></span><br><span class="line">  readonly createdAt: <span class="built_in">string</span>  <span class="comment">// 只读，改了就报错</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 比如后台加了个管理员身份，直接继承再补充就行</span></span><br><span class="line"><span class="keyword">interface</span> Admin <span class="keyword">extends</span> User &#123;</span><br><span class="line">  permissions: <span class="built_in">string</span>[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> boss: Admin = &#123;</span><br><span class="line">  id: <span class="number">1</span>,</span><br><span class="line">  name: <span class="string">'老板'</span>,</span><br><span class="line">  createdAt: <span class="string">'2020-01-01'</span>,</span><br><span class="line">  permissions: [<span class="string">'踢人'</span>, <span class="string">'删库'</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="用-Type-玩花活（联合类型）"><a href="#用-Type-玩花活（联合类型）" class="headerlink" title="用 Type 玩花活（联合类型）"></a>用 Type 玩花活（联合类型）</h3><p>碰到那些不确定的类型，比如一个 ID 可能是字符串也可能是数字，就得用 <code>type</code> 的联合类型了：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ID = <span class="built_in">string</span> | <span class="built_in">number</span></span><br><span class="line"><span class="keyword">type</span> Status = <span class="string">'loading'</span> | <span class="string">'success'</span> | <span class="string">'error'</span> <span class="comment">// 这个写 UI 组件状态特别爽，输入直接有提示</span></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ID = <span class="built_in">string</span> | <span class="built_in">number</span></span><br><span class="line"><span class="keyword">type</span> Status = <span class="string">'loading'</span> | <span class="string">'success'</span> | <span class="string">'error'</span> <span class="comment">// 这个写 UI 组件状态特别高效，输入直接有提示</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="3-让人头秃的泛型（Generics）"><a href="#3-让人头秃的泛型（Generics）" class="headerlink" title="3. 让人头秃的泛型（Generics）"></a>3. 让人头秃的泛型（Generics）</h2><p>泛型就是类型里的“变量”。当你写个通用方法，不知道别人会传什么进来，但你又想原封不动地返回相同的类型，就用泛型 <code>&lt;T&gt;</code>。</p>
 <p>最经典的就是我们封 Axios 接口返回格式的时候：</p>
@@ -548,7 +548,7 @@
 <h2 id="5-项目根目录的-tsconfig-json-怎么配"><a href="#5-项目根目录的-tsconfig-json-怎么配" class="headerlink" title="5. 项目根目录的 tsconfig.json 怎么配"></a>5. 项目根目录的 tsconfig.json 怎么配</h2><p>自己搭脚手架经常不知道那个配置文件填啥，我平时基本上就抄这一套：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"ES2018"</span>,               <span class="comment">// 编译成的 JS 版本</span></span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"ESNext"</span>,</span><br><span class="line">    <span class="attr">"strict"</span>: <span class="literal">true</span>,                   <span class="comment">// 这个必须开，不开 TS 等于白写</span></span><br><span class="line">    <span class="attr">"esModuleInterop"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"skipLibCheck"</span>: <span class="literal">true</span>,             <span class="comment">// 不去检查 node_modules 里的类型报错，不然烦死</span></span><br><span class="line">    <span class="attr">"resolveJsonModule"</span>: <span class="literal">true</span>,        <span class="comment">// 允许 import 一个 json 文件</span></span><br><span class="line">    <span class="attr">"paths"</span>: &#123;</span><br><span class="line">      <span class="attr">"@/*"</span>: [<span class="string">"src/*"</span>]                <span class="comment">// 配一下别名，搭配 webpack/vite 的别名用</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"include"</span>: [<span class="string">"src/**/*.ts"</span>, <span class="string">"src/**/*.vue"</span>],</span><br><span class="line">  <span class="attr">"exclude"</span>: [<span class="string">"node_modules"</span>, <span class="string">"dist"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<p>其实用久了你就会发现，写 TS 就是在一门心思给程序写文档，只不过这个文档不仅给人看，机器还能帮你检查语法。前期痛苦几天，后期爽得飞起。</p>
+<p>其实用久了你就会发现，写 TS 就是在一门心思给程序写文档，只不过这个文档不仅给人看，机器还能帮你检查语法。前期痛苦几天，后期高效得飞起。</p>
 
       
     </div>
@@ -591,8 +591,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/JavaScript/2019-12-08-jest-unit-testing.html" rel="next" title="前端写单元测试？折腾了一下 Jest">
-                <i class="fa fa-chevron-left"></i> 前端写单元测试？折腾了一下 Jest
+              <a href="/posts/JavaScript/2019-12-08-jest-unit-testing.html" rel="next" title="前端写单元测试？花费时间一下 Jest">
+                <i class="fa fa-chevron-left"></i> 前端写单元测试？花费时间一下 Jest
               </a>
             
           </div>
@@ -632,7 +632,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/TypeScript/2020-02-18-typescript-in-practice.html"
-         data-hitalk-title="被 TypeScript 毒打后的常用类型套路备忘">
+         data-hitalk-title="被 TypeScript 困扰后的常用类型套路备忘">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

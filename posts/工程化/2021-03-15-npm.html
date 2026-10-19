@@ -175,18 +175,18 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="前端发展到现在，工程化越来越复杂。回想早几年，大家还在对着 npm install 慢得砸键盘，现在项目稍微大点，各种依赖冲突、版本锁定、甚至“幽灵依赖”问题层出不穷。 最近把公司的一个巨石项目（Monorepo）底层的包管理工具从 npm&#x2F;Yarn 迁移到了 pnpm。这个过程中算是把前端依赖解析的底层逻辑重新扒了一遍。今天不聊那些基础命令，咱们聊聊那些平时看不见、却能导致生产环境直接白屏的“底">
+  <meta name="description" content="前端发展到现在，工程化越来越复杂。回想早几年，大家还在对着 npm install 非常缓慢，现在项目稍微大点，各种依赖冲突、版本锁定、甚至“幽灵依赖”问题层出不穷。 最近把公司的一个巨石项目（Monorepo）底层的包管理工具从 npm&#x2F;Yarn 迁移到了 pnpm。这个过程中算是把前端依赖解析的底层逻辑重新扒了一遍。今天不聊那些基础命令，咱们聊聊那些平时看不见、却能导致生产环境直接白屏的“底层">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从 npm 到 pnpm：前端包管理工具的依赖解析机制与幽灵依赖陷阱">
 <meta property="og:url" content="https://www.vueweb.cn/posts/%E5%B7%A5%E7%A8%8B%E5%8C%96/2021-03-15-npm.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="前端发展到现在，工程化越来越复杂。回想早几年，大家还在对着 npm install 慢得砸键盘，现在项目稍微大点，各种依赖冲突、版本锁定、甚至“幽灵依赖”问题层出不穷。 最近把公司的一个巨石项目（Monorepo）底层的包管理工具从 npm&#x2F;Yarn 迁移到了 pnpm。这个过程中算是把前端依赖解析的底层逻辑重新扒了一遍。今天不聊那些基础命令，咱们聊聊那些平时看不见、却能导致生产环境直接白屏的“底">
+<meta property="og:description" content="前端发展到现在，工程化越来越复杂。回想早几年，大家还在对着 npm install 非常缓慢，现在项目稍微大点，各种依赖冲突、版本锁定、甚至“幽灵依赖”问题层出不穷。 最近把公司的一个巨石项目（Monorepo）底层的包管理工具从 npm&#x2F;Yarn 迁移到了 pnpm。这个过程中算是把前端依赖解析的底层逻辑重新扒了一遍。今天不聊那些基础命令，咱们聊聊那些平时看不见、却能导致生产环境直接白屏的“底层">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-15T02:20:00.000Z">
-<meta property="article:modified_time" content="2026-10-09T05:51:20.006Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:07.639Z">
 <meta property="article:tag" content="前端工程化">
-<meta property="article:tag" content="npm">
 <meta property="article:tag" content="pnpm">
+<meta property="article:tag" content="npm">
 <meta name="twitter:card" content="summary">
 
 
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -515,11 +515,11 @@
       
 
       
-        <p>前端发展到现在，工程化越来越复杂。回想早几年，大家还在对着 <code>npm install</code> 慢得砸键盘，现在项目稍微大点，各种依赖冲突、版本锁定、甚至“幽灵依赖”问题层出不穷。</p>
+        <p>前端发展到现在，工程化越来越复杂。回想早几年，大家还在对着 <code>npm install</code> 非常缓慢，现在项目稍微大点，各种依赖冲突、版本锁定、甚至“幽灵依赖”问题层出不穷。</p>
 <p>最近把公司的一个巨石项目（Monorepo）底层的包管理工具从 npm/Yarn 迁移到了 pnpm。这个过程中算是把前端依赖解析的底层逻辑重新扒了一遍。今天不聊那些基础命令，咱们聊聊那些平时看不见、却能导致生产环境直接白屏的“底层机制”。</p>
 <a id="more"></a>
 
-<h2 id="npm-v2：嵌套地狱与最长路径限制"><a href="#npm-v2：嵌套地狱与最长路径限制" class="headerlink" title="npm v2：嵌套地狱与最长路径限制"></a>npm v2：嵌套地狱与最长路径限制</h2><p>如果要懂现在的包管理工具为什么这么设计，就得先看看它们曾经有多蠢。</p>
+<h2 id="npm-v2：嵌套地狱与最长路径限制"><a href="#npm-v2：嵌套地狱与最长路径限制" class="headerlink" title="npm v2：嵌套地狱与最长路径限制"></a>npm v2：嵌套地狱与最长路径限制</h2><p>如果要懂现在的包管理工具为什么这么设计，就得先看看它们早期的局限性。</p>
 <p>在 npm v2 时代，依赖是<strong>完全嵌套</strong>的。<br>假设你的项目依赖了 <code>A</code> 和 <code>B</code>，而 <code>A</code> 和 <code>B</code> 在它们内部又各自依赖了 <code>lodash</code>：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">node_modules&#x2F;</span><br><span class="line">  A&#x2F;</span><br><span class="line">    node_modules&#x2F;</span><br><span class="line">      lodash&#x2F;</span><br><span class="line">  B&#x2F;</span><br><span class="line">    node_modules&#x2F;</span><br><span class="line">      lodash&#x2F;</span><br></pre></td></tr></table></figure></div>
 <p>这种设计逻辑最简单，完全不会有版本冲突。但致命缺点有两个：</p>
@@ -530,11 +530,11 @@
 <h2 id="npm-v3-与-Yarn：拍平（Hoisting）与幽灵依赖"><a href="#npm-v3-与-Yarn：拍平（Hoisting）与幽灵依赖" class="headerlink" title="npm v3+ 与 Yarn：拍平（Hoisting）与幽灵依赖"></a>npm v3+ 与 Yarn：拍平（Hoisting）与幽灵依赖</h2><p>为了解决 v2 的问题，npm v3 引入了 <strong>Hoisting（依赖提升）</strong> 机制，Yarn 一出来也是这个设计。</p>
 <p>简单来说就是把所有底层的依赖，全部提拉（拍平）到最外层的 <code>node_modules</code> 下面。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">node_modules&#x2F;</span><br><span class="line">  A&#x2F;</span><br><span class="line">  B&#x2F;</span><br><span class="line">  lodash&#x2F; (被提升了)</span><br></pre></td></tr></table></figure></div>
-<p>这就解决了一份代码多份拷贝的问题。<strong>但是，潘多拉的魔盒也因此打开了。</strong></p>
-<h3 id="致命陷阱：幽灵依赖-Phantom-Dependencies"><a href="#致命陷阱：幽灵依赖-Phantom-Dependencies" class="headerlink" title="致命陷阱：幽灵依赖 (Phantom Dependencies)"></a>致命陷阱：幽灵依赖 (Phantom Dependencies)</h3><p>既然 <code>lodash</code> 被提升到了项目根目录的 <code>node_modules</code> 下面，根据 Node.js 的模块解析算法，<strong>你自己在业务代码里哪怕没有在 <code>package.json</code> 中声明 <code>lodash</code>，你也能直接 <code>require(&#39;lodash&#39;)</code> 并且跑通！</strong></p>
+<p>这就解决了一份代码多份拷贝的问题。<strong>但是，这也引入了新的问题。</strong></p>
+<h3 id="严重缺陷：幽灵依赖-Phantom-Dependencies"><a href="#严重缺陷：幽灵依赖-Phantom-Dependencies" class="headerlink" title="严重缺陷：幽灵依赖 (Phantom Dependencies)"></a>严重缺陷：幽灵依赖 (Phantom Dependencies)</h3><p>既然 <code>lodash</code> 被提升到了项目根目录的 <code>node_modules</code> 下面，根据 Node.js 的模块解析算法，<strong>你自己在业务代码里哪怕没有在 <code>package.json</code> 中声明 <code>lodash</code>，你也能直接 <code>require(&#39;lodash&#39;)</code> 并且跑通！</strong></p>
 <p>这就叫“幽灵依赖”。</p>
 <p>为什么说这很致命？<br>假设某天依赖 <code>A</code> 升级了，它决定不再依赖 <code>lodash</code>，那么根目录下的 <code>lodash</code> 就会在重新 <code>npm install</code> 时消失。此时，你的业务代码里所有引用 <code>lodash</code> 的地方会瞬间全部报错，线上直接崩溃。你甚至都不知道为什么，因为你根本没改业务代码。</p>
-<h3 id="另一个坑：分身（Doppelgangers）"><a href="#另一个坑：分身（Doppelgangers）" class="headerlink" title="另一个坑：分身（Doppelgangers）"></a>另一个坑：分身（Doppelgangers）</h3><p>如果 <code>A</code> 依赖了 <code>lodash@3</code>，而 <code>B</code> 依赖了 <code>lodash@4</code>。npm 只能把其中一个版本提升到最外层（通常是先解析到的那个），另一个版本只能委屈巴巴地继续嵌套在依赖项内部。这就导致了同一个包依然会出现多个版本共存的问题，且依赖树极其不稳定（经常会因为依赖安装顺序改变导致锁文件变化）。</p>
+<h3 id="另一个坑：分身（Doppelgangers）"><a href="#另一个坑：分身（Doppelgangers）" class="headerlink" title="另一个坑：分身（Doppelgangers）"></a>另一个坑：分身（Doppelgangers）</h3><p>如果 <code>A</code> 依赖了 <code>lodash@3</code>，而 <code>B</code> 依赖了 <code>lodash@4</code>。npm 只能把其中一个版本提升到最外层（通常是先解析到的那个），另一个版本只能继续嵌套在依赖项内部。这就导致了同一个包依然会出现多个版本共存的问题，且依赖树极其不稳定（经常会因为依赖安装顺序改变导致锁文件变化）。</p>
 <h2 id="pnpm：用硬链接与符号链接魔法打破僵局"><a href="#pnpm：用硬链接与符号链接魔法打破僵局" class="headerlink" title="pnpm：用硬链接与符号链接魔法打破僵局"></a>pnpm：用硬链接与符号链接魔法打破僵局</h2><p>pnpm 的出现就是为了从底层物理级别解决上面的痛点。</p>
 <p>它没有采用暴力的拍平机制，而是用了一种非常巧妙的 <code>symlink</code> (符号链接) 和 <code>hard link</code> (硬链接) 结合的架构。</p>
 <ol>
@@ -546,7 +546,7 @@
 
 <p>而 <code>A</code> 所依赖的 <code>lodash</code>，被深藏在 <code>.pnpm</code> 的虚拟存储层里，并且只有 <code>A</code> 的环境能访问到。<br>这样，如果你在业务代码里试图偷偷引用没有声明的 <code>lodash</code>，Node.js 会直接报 <code>Module not found</code>，从开发阶段就把“幽灵依赖”扼杀在了摇篮里。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>迁移 pnpm 最大的阻力，往往不是 pnpm 本身，而是要为您和团队过去几年写下的“不规范代码（幽灵依赖）”还债。</p>
-<p>一旦切换，你会发现项目里冒出一堆编译报错，提示找不到各种包。老老实实把这些缺失的包加回 <code>package.json</code> 的 <code>dependencies</code> 里，才是让项目长期健康活下去的正道。</p>
+<p>一旦切换，你会发现项目里冒出一堆编译报错，提示找不到各种包。规范地把这些缺失的包加回 <code>package.json</code> 的 <code>dependencies</code> 里，才是让项目长期健康活下去的正道。</p>
 <p>技术选型永远是在做权衡。npm 选择了兼容与简单，Yarn 带来了速度与锁文件，而 pnpm 则在底层架构上走出了一条更优雅的路。</p>
 
       
@@ -577,9 +577,9 @@
           
             <a href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag"># 前端工程化</a>
           
-            <a href="/tags/npm/" rel="tag"># npm</a>
-          
             <a href="/tags/pnpm/" rel="tag"># pnpm</a>
+          
+            <a href="/tags/npm/" rel="tag"># npm</a>
           
         </div>
       

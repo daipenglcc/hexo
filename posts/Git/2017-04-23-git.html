@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 git push -f 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。 最后靠着 git reflog 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 a">
+  <meta name="description" content="这两天团队里出了个线上问题：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在操作不当时用 git push -f 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。 最后靠着 git reflog 和一些底层的操作成功恢复了代码。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个机械的 add&#x2F;com">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git 线上事故实录：如何优雅处理错乱的分支合并与代码回滚">
 <meta property="og:url" content="https://www.vueweb.cn/posts/Git/2017-04-23-git.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 git push -f 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。 最后靠着 git reflog 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 a">
+<meta property="og:description" content="这两天团队里出了个线上问题：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在操作不当时用 git push -f 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。 最后靠着 git reflog 和一些底层的操作成功恢复了代码。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个机械的 add&#x2F;com">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-04-23T02:23:21.000Z">
-<meta property="article:modified_time" content="2026-10-09T05:51:17.895Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.365Z">
 <meta property="article:tag" content="Git">
 <meta property="article:tag" content="架构设计">
 <meta property="article:tag" content="工程化">
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -515,11 +515,11 @@
       
 
       
-        <p>这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 <code>git push -f</code> 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。</p>
-<p>最后靠着 <code>git reflog</code> 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 <code>add/commit/push</code> 机器了。</p>
+        <p>这两天团队里出了个线上问题：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在操作不当时用 <code>git push -f</code> 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。</p>
+<p>最后靠着 <code>git reflog</code> 和一些底层的操作成功恢复了代码。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个机械的 <code>add/commit/push</code> 机器了。</p>
 <a id="more"></a>
 
-<h2 id="1-灾难现场：远程分支被-push-f-覆盖了怎么办？"><a href="#1-灾难现场：远程分支被-push-f-覆盖了怎么办？" class="headerlink" title="1. 灾难现场：远程分支被 push -f 覆盖了怎么办？"></a>1. 灾难现场：远程分支被 <code>push -f</code> 覆盖了怎么办？</h2><p>这是最吓人的场景。很多人以为 <code>push -f</code> 之后代码就彻底没了。其实 Git 的设计哲学是：<strong>只要是被 commit 过的内容，几乎不可能真正丢失。</strong></p>
+<h2 id="1-灾难现场：远程分支被-push-f-覆盖了怎么办？"><a href="#1-灾难现场：远程分支被-push-f-覆盖了怎么办？" class="headerlink" title="1. 灾难现场：远程分支被 push -f 覆盖了怎么办？"></a>1. 灾难现场：远程分支被 <code>push -f</code> 覆盖了怎么办？</h2><p>这是最棘手的场景。很多人以为 <code>push -f</code> 之后代码就彻底没了。其实 Git 的设计哲学是：<strong>只要是被 commit 过的内容，几乎不可能真正丢失。</strong></p>
 <p>如果只是你本地的分支被搞乱了，救命稻草是 <code>git reflog</code>。<br><code>git log</code> 只能看当前分支的提交历史，而 <code>git reflog</code> 记录的是你在这个仓库里所有的 HEAD 变更轨迹，包括你删掉的 commit、切分支、甚至是那些被你 reset 掉的提交。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看所有操作记录</span></span><br><span class="line">git reflog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到被覆盖前的那个 commit hash，比如是 abc1234</span></span><br><span class="line"><span class="comment"># 直接强行把当前分支指针拨回那个时刻</span></span><br><span class="line">git reset --hard abc1234</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后再小心翼翼地强推上去（如果团队允许的话）</span></span><br><span class="line">git push -f origin main</span><br></pre></td></tr></table></figure></div>
 
@@ -532,10 +532,10 @@
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通常 -m 1 代表主干分支那条线，撤销掉合并进来的特性分支代码</span></span><br><span class="line">git revert -m 1 &lt;merge-commit-hash&gt;</span><br></pre></td></tr></table></figure></div>
 
 <blockquote>
-<p><strong>踩坑预警</strong>：一旦你 <code>revert</code> 了一个 Merge Commit，这部分代码在 Git 眼里就是“被明确拒绝”的。如果后续这个特性分支修好了 bug 再次合并，Git 会直接忽略那些之前被 revert 过的文件修改！解决方案是要么再次 revert 那个 revert，要么改用 rebase 重新生成新的 commit。</p>
+<p><strong>注意事项</strong>：一旦你 <code>revert</code> 了一个 Merge Commit，这部分代码在 Git 眼里就是“被明确拒绝”的。如果后续这个特性分支修好了 bug 再次合并，Git 会直接忽略那些之前被 revert 过的文件修改！解决方案是要么再次 revert 那个 revert，要么改用 rebase 重新生成新的 commit。</p>
 </blockquote>
-<h2 id="3-把代码揉得更好看：git-rebase-i"><a href="#3-把代码揉得更好看：git-rebase-i" class="headerlink" title="3. 把代码揉得更好看：git rebase -i"></a>3. 把代码揉得更好看：<code>git rebase -i</code></h2><p>在自己的特性分支上开发时，往往会产生一堆类似 “fix typo”, “update”, “wip” 这种垃圾 commit。如果直接合进主干，Code Review 的时候同事会顺着网线来打你。</p>
-<p>这时候 <code>git rebase -i</code> (interactive) 就派上用场了。它可以让你在合并前，像捏橡皮泥一样重塑你的提交历史。</p>
+<h2 id="3-把代码揉得更好看：git-rebase-i"><a href="#3-把代码揉得更好看：git-rebase-i" class="headerlink" title="3. 把代码揉得更好看：git rebase -i"></a>3. 把代码揉得更好看：<code>git rebase -i</code></h2><p>在自己的特性分支上开发时，往往会产生一堆类似 “fix typo”, “update”, “wip” 这种垃圾 commit。如果直接合进主干，Code Review 的时候同事会难以通过代码审查。</p>
+<p>这时候 <code>git rebase -i</code> (interactive) 就派上用场了。它可以让你在合并前，灵活地重塑你的提交历史。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 交互式处理最近的 5 个 commit</span></span><br><span class="line">git rebase -i HEAD~5</span><br></pre></td></tr></table></figure></div>
 
 <p>弹出的编辑器里会有几个常用指令：</p>
@@ -545,9 +545,9 @@
 <li><code>edit</code> (或 <code>e</code>)：在这个 commit 停下来，让你修改文件</li>
 <li><code>drop</code> (或 <code>d</code>)：直接丢弃这个 commit</li>
 </ul>
-<p>通过把中间的修修补补 <code>squash</code> 掉，最后提交的 PR 就能保持极其清爽的逻辑线。</p>
+<p>通过把中间的琐碎的提交 <code>squash</code> 掉，最后提交的 PR 就能保持极其清高效的逻辑线。</p>
 <h2 id="4-挑拣特定的代码：git-cherry-pick"><a href="#4-挑拣特定的代码：git-cherry-pick" class="headerlink" title="4. 挑拣特定的代码：git cherry-pick"></a>4. 挑拣特定的代码：<code>git cherry-pick</code></h2><p>有个极其常见的场景：你在 <code>feat-A</code> 分支上开发，顺手修了一个基础组件的 Bug。现在主干急需这个 Bug 修复，但你 <code>feat-A</code> 的其他代码还没开发完，不能一起合进去。</p>
-<p>不要傻傻地去主干手动把代码再改一遍，直接用 <code>cherry-pick</code>：</p>
+<p>不要手动去主干手动把代码再改一遍，直接用 <code>cherry-pick</code>：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先切到主干</span></span><br><span class="line">git checkout main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把那个修 bug 的特定 commit 摘取过来</span></span><br><span class="line">git cherry-pick &lt;commit-hash&gt;</span><br></pre></td></tr></table></figure></div>
 
 <p>如果遇到冲突，解决完冲突后执行 <code>git cherry-pick --continue</code> 即可。</p>

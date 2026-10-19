@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="前阵子 DeepSeek 开源把圈子炸翻了，连不懂技术的朋友都在问怎么搞。我自己的破电脑虽然没有顶级显卡，但也想凑个热闹。折腾了一圈发现，用 Ollama 在本地跑个小参数量的版本体验最好，基本没啥心智负担，断网了也能用，还不用担心自己的代码被传到网上当训练料。 这里简单记录一下怎么用 Ollama 把模型跑起来，顺带搞个前端小 Demo 调一下。">
+  <meta name="description" content="前阵子 DeepSeek 开源把圈子引起了广泛关注，连不懂技术的朋友都在问怎么搞。我自己的普通电脑虽然没有顶级显卡，但也想凑个热闹。花费时间一圈发现，用 Ollama 在本地跑个小参数量的版本体验最好，基本没有太多心智负担，断网了也能用，还不用担心自己的代码被传到网上当训练料。 这里简单记录一下怎么用 Ollama 把模型跑起来，顺带建立一个前端小 Demo 调一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用 Ollama + DeepSeek 搞个本地免费大模型助手">
+<meta property="og:title" content="用 Ollama + DeepSeek 建立一个本地免费大模型助手">
 <meta property="og:url" content="https://www.vueweb.cn/posts/AI/2025-02-18-ollama-deepseek-local-llm.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="前阵子 DeepSeek 开源把圈子炸翻了，连不懂技术的朋友都在问怎么搞。我自己的破电脑虽然没有顶级显卡，但也想凑个热闹。折腾了一圈发现，用 Ollama 在本地跑个小参数量的版本体验最好，基本没啥心智负担，断网了也能用，还不用担心自己的代码被传到网上当训练料。 这里简单记录一下怎么用 Ollama 把模型跑起来，顺带搞个前端小 Demo 调一下。">
+<meta property="og:description" content="前阵子 DeepSeek 开源把圈子引起了广泛关注，连不懂技术的朋友都在问怎么搞。我自己的普通电脑虽然没有顶级显卡，但也想凑个热闹。花费时间一圈发现，用 Ollama 在本地跑个小参数量的版本体验最好，基本没有太多心智负担，断网了也能用，还不用担心自己的代码被传到网上当训练料。 这里简单记录一下怎么用 Ollama 把模型跑起来，顺带建立一个前端小 Demo 调一下。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-02-18T06:20:00.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:50:02.181Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.356Z">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="DeepSeek">
 <meta property="article:tag" content="Ollama">
@@ -208,7 +208,7 @@
   };
 </script>
 
-  <title>用 Ollama + DeepSeek 搞个本地免费大模型助手 | 光阴小栈</title>
+  <title>用 Ollama + DeepSeek 建立一个本地免费大模型助手 | 光阴小栈</title>
   
 
 
@@ -335,7 +335,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -343,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -422,7 +422,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">用 Ollama + DeepSeek 搞个本地免费大模型助手
+          <h2 class="post-title" itemprop="name headline">用 Ollama + DeepSeek 建立一个本地免费大模型助手
               
             
           </h2>
@@ -517,8 +517,8 @@
       
 
       
-        <p>前阵子 DeepSeek 开源把圈子炸翻了，连不懂技术的朋友都在问怎么搞。我自己的破电脑虽然没有顶级显卡，但也想凑个热闹。折腾了一圈发现，用 Ollama 在本地跑个小参数量的版本体验最好，基本没啥心智负担，断网了也能用，还不用担心自己的代码被传到网上当训练料。</p>
-<p>这里简单记录一下怎么用 Ollama 把模型跑起来，顺带搞个前端小 Demo 调一下。</p>
+        <p>前阵子 DeepSeek 开源把圈子引起了广泛关注，连不懂技术的朋友都在问怎么搞。我自己的普通电脑虽然没有顶级显卡，但也想凑个热闹。花费时间一圈发现，用 Ollama 在本地跑个小参数量的版本体验最好，基本没有太多心智负担，断网了也能用，还不用担心自己的代码被传到网上当训练料。</p>
+<p>这里简单记录一下怎么用 Ollama 把模型跑起来，顺带建立一个前端小 Demo 调一下。</p>
 <a id="more"></a>
 
 <h2 id="1-无脑装-Ollama"><a href="#1-无脑装-Ollama" class="headerlink" title="1. 无脑装 Ollama"></a>1. 无脑装 Ollama</h2><p>Ollama 就像是大模型界的 Docker，把它装好，跑模型只要一行命令。</p>
@@ -542,11 +542,11 @@
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ollama list                  <span class="comment"># 看看本地下了哪些大块头</span></span><br><span class="line">ollama stop deepseek-r1:7b   <span class="comment"># 电脑风扇狂转受不了了，赶紧停掉释放内存</span></span><br><span class="line">ollama rm deepseek-r1:1.5b   <span class="comment"># 空间不够了，删掉没用的</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="3-前端怎么去连它？"><a href="#3-前端怎么去连它？" class="headerlink" title="3. 前端怎么去连它？"></a>3. 前端怎么去连它？</h2><p>Ollama 启动后，会在本地悄悄开一个 <code>11434</code> 端口，接口格式甚至跟 OpenAI 是兼容的。这就意味着我们能自己写代码去连它。</p>
-<p>比如用 JavaScript 的 <code>fetch</code> 搞个流式输出（就是那种像打字机一样一个字一个字蹦出来的效果）：</p>
+<p>比如用 JavaScript 的 <code>fetch</code> 建立一个流式输出（就是那种像打字机一样一个字一个字蹦出来的效果）：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写个方法调本地接口</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">askLocalAI</span>(<span class="params">question</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(<span class="string">'http://localhost:11434/api/generate'</span>, &#123;</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    headers: &#123; <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span> &#125;,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      model: <span class="string">'deepseek-r1:7b'</span>,</span><br><span class="line">      prompt: question,</span><br><span class="line">      stream: <span class="literal">true</span>, <span class="comment">// 开启流式输出</span></span><br><span class="line">    &#125;),</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> reader = response.body.getReader();</span><br><span class="line">  <span class="keyword">const</span> decoder = <span class="keyword">new</span> TextDecoder(<span class="string">'utf-8'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 一点点读流过来的数据</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; done, value &#125; = <span class="keyword">await</span> reader.read();</span><br><span class="line">    <span class="keyword">if</span> (done) <span class="keyword">break</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 解析出来拼起来就能展示在页面上了</span></span><br><span class="line">    <span class="keyword">const</span> chunk = decoder.decode(value);</span><br><span class="line">    <span class="built_in">console</span>.log(chunk); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">askLocalAI(<span class="string">"用 JS 写个深拷贝"</span>);</span><br></pre></td></tr></table></figure></div>
 
 <blockquote>
-<p><strong>踩坑预警</strong>：如果你用前端直接发请求报跨域错误（CORS），得去改一下 Ollama 的环境变量，允许所有源访问（<code>OLLAMA_ORIGINS=&quot;*&quot;</code>），重启服务就好了。</p>
+<p><strong>注意事项</strong>：如果你用前端直接发请求报跨域错误（CORS），得去改一下 Ollama 的环境变量，允许所有源访问（<code>OLLAMA_ORIGINS=&quot;*&quot;</code>），重启服务就好了。</p>
 </blockquote>
 <h2 id="4-搞点进阶的：定制自己的“人设”"><a href="#4-搞点进阶的：定制自己的“人设”" class="headerlink" title="4. 搞点进阶的：定制自己的“人设”"></a>4. 搞点进阶的：定制自己的“人设”</h2><p>如果觉得官方的模型废话太多，我们可以像写 Dockerfile 一样写个 <code>Modelfile</code>，把它调教成一个高冷的代码机器。</p>
 <p>建个文本文件叫 <code>Modelfile</code>：</p>
@@ -555,7 +555,7 @@
 <p>然后在终端里把它打成一个新的包：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama create my-coder-ai -f ./Modelfile</span><br></pre></td></tr></table></figure></div>
 <p>以后你只要跑 <code>ollama run my-coder-ai</code>，它就会变成一个毫无感情的吐码机器了。</p>
-<p>总结一下，用本地大模型最大的爽点就是“不用心疼接口钱”，写个脚本疯狂向它发请求测试也不心疼。对于平时想尝试大模型开发又不想买 API Key 的人来说，Ollama + 开源模型绝对是最好玩的玩具了。</p>
+<p>总结一下，用本地大模型最大的高效点就是“不用心疼接口钱”，写个脚本疯狂向它发请求测试也不心疼。对于平时想尝试大模型开发又不想买 API Key 的人来说，Ollama + 开源模型绝对是最好玩的玩具了。</p>
 
       
     </div>
@@ -645,7 +645,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/AI/2025-02-18-ollama-deepseek-local-llm.html"
-         data-hitalk-title="用 Ollama + DeepSeek 搞个本地免费大模型助手">
+         data-hitalk-title="用 Ollama + DeepSeek 建立一个本地免费大模型助手">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="以前刚搞 Node.js 的时候，写完接口直接在服务器敲个 node app.js 就算上线了。结果 ssh 终端一关，或者代码抛个异常没接住，服务当场就挂了。后来老老实实切到了 PM2，它能帮你一直在后台盯着进程，挂了自动重启，算是彻底告别了半夜起来修接口的噩梦。 这里整理点我平时用的操作和配置文件写法。">
+  <meta name="description" content="以前刚搞 Node.js 的时候，写完接口直接在服务器敲个 node app.js 就算上线了。结果 ssh 终端一关，或者代码抛个异常没接住，服务当场就挂了。后来规范地切到了 PM2，它能帮你一直在后台盯着进程，挂了自动重启，算是彻底告别了半夜起来修接口的噩梦。 这里整理点我平时用的操作和配置文件写法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Node.js 必备：PM2 常用保活命令备忘">
 <meta property="og:url" content="https://www.vueweb.cn/posts/Node/2018-05-13-pm2-study.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="以前刚搞 Node.js 的时候，写完接口直接在服务器敲个 node app.js 就算上线了。结果 ssh 终端一关，或者代码抛个异常没接住，服务当场就挂了。后来老老实实切到了 PM2，它能帮你一直在后台盯着进程，挂了自动重启，算是彻底告别了半夜起来修接口的噩梦。 这里整理点我平时用的操作和配置文件写法。">
+<meta property="og:description" content="以前刚搞 Node.js 的时候，写完接口直接在服务器敲个 node app.js 就算上线了。结果 ssh 终端一关，或者代码抛个异常没接住，服务当场就挂了。后来规范地切到了 PM2，它能帮你一直在后台盯着进程，挂了自动重启，算是彻底告别了半夜起来修接口的噩梦。 这里整理点我平时用的操作和配置文件写法。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-05-13T08:45:46.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:52:14.164Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.368Z">
 <meta property="article:tag" content="pm2">
 <meta name="twitter:card" content="summary">
 
@@ -331,7 +331,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -339,7 +339,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -513,7 +513,7 @@
       
 
       
-        <p>以前刚搞 Node.js 的时候，写完接口直接在服务器敲个 <code>node app.js</code> 就算上线了。结果 ssh 终端一关，或者代码抛个异常没接住，服务当场就挂了。后来老老实实切到了 PM2，它能帮你一直在后台盯着进程，挂了自动重启，算是彻底告别了半夜起来修接口的噩梦。</p>
+        <p>以前刚搞 Node.js 的时候，写完接口直接在服务器敲个 <code>node app.js</code> 就算上线了。结果 ssh 终端一关，或者代码抛个异常没接住，服务当场就挂了。后来规范地切到了 PM2，它能帮你一直在后台盯着进程，挂了自动重启，算是彻底告别了半夜起来修接口的噩梦。</p>
 <p>这里整理点我平时用的操作和配置文件写法。</p>
 <a id="more"></a>
 
@@ -521,12 +521,12 @@
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="2-最常用的几个命令"><a href="#2-最常用的几个命令" class="headerlink" title="2. 最常用的几个命令"></a>2. 最常用的几个命令</h2><p>平时基本上就在敲这几个：</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最无脑的启动方式</span></span><br><span class="line">pm2 start app.js               <span class="comment"># 启动应用</span></span><br><span class="line">pm2 start app.js --name api    <span class="comment"># 顺便给进程起个名字，以后好找</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 看看现在有哪些服务在跑</span></span><br><span class="line">pm2 list                       <span class="comment"># 这个敲得最多，看大表哥</span></span><br><span class="line">pm2 monit                      <span class="comment"># 终端里看个比较骚的监控面板，看 CPU 内存</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查日志（比自己去翻 log 文件爽多了）</span></span><br><span class="line">pm2 logs                       <span class="comment"># 看所有应用的日志</span></span><br><span class="line">pm2 logs api                   <span class="comment"># 只看那个叫 api 的应用的日志</span></span><br><span class="line">pm2 flush                      <span class="comment"># 日志太多了看不清，全清空掉</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 起停重启</span></span><br><span class="line">pm2 restart api                <span class="comment"># 重启</span></span><br><span class="line">pm2 reload api                 <span class="comment"># 【强烈推荐】这个叫平滑重启，不会让正在访问的用户断掉</span></span><br><span class="line">pm2 stop api                   <span class="comment"># 停掉</span></span><br><span class="line">pm2 delete api                 <span class="comment"># 彻底删掉，不想管了</span></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最无脑的启动方式</span></span><br><span class="line">pm2 start app.js               <span class="comment"># 启动应用</span></span><br><span class="line">pm2 start app.js --name api    <span class="comment"># 顺便给进程起个名字，以后好找</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 看看现在有哪些服务在跑</span></span><br><span class="line">pm2 list                       <span class="comment"># 这个敲得最多，看大表哥</span></span><br><span class="line">pm2 monit                      <span class="comment"># 终端里看个比较骚的监控面板，看 CPU 内存</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查日志（比自己去翻 log 文件高效多了）</span></span><br><span class="line">pm2 logs                       <span class="comment"># 看所有应用的日志</span></span><br><span class="line">pm2 logs api                   <span class="comment"># 只看那个叫 api 的应用的日志</span></span><br><span class="line">pm2 flush                      <span class="comment"># 日志太多了看不清，全清空掉</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 起停重启</span></span><br><span class="line">pm2 restart api                <span class="comment"># 重启</span></span><br><span class="line">pm2 reload api                 <span class="comment"># 【强烈推荐】这个叫平滑重启，不会让正在访问的用户断掉</span></span><br><span class="line">pm2 stop api                   <span class="comment"># 停掉</span></span><br><span class="line">pm2 delete api                 <span class="comment"># 彻底删掉，不想管了</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="3-服务器重启了怎么办？"><a href="#3-服务器重启了怎么办？" class="headerlink" title="3. 服务器重启了怎么办？"></a>3. 服务器重启了怎么办？</h2><p>这是个痛点，服务器万一断电重启了，PM2 进程也会没。所以一般装完后会配个开机自启：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一步：它会生成一行命令给你，你复制粘贴回车运行一下</span></span><br><span class="line">pm2 startup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二步：把你现在的进程保存下来</span></span><br><span class="line">pm2 save</span><br></pre></td></tr></table></figure></div>
 <p>以后服务器怎么重启，之前的进程都会自动恢复。</p>
-<h2 id="4-进阶玩法：配置文件"><a href="#4-进阶玩法：配置文件" class="headerlink" title="4. 进阶玩法：配置文件"></a>4. 进阶玩法：配置文件</h2><p>如果你的项目比较正规，需要传很多环境变量（比如告诉代码现在是线上环境还是测试环境），用命令行敲太长了。官方推荐搞个 <code>ecosystem.config.js</code> 文件。</p>
+<h2 id="4-进阶玩法：配置文件"><a href="#4-进阶玩法：配置文件" class="headerlink" title="4. 进阶玩法：配置文件"></a>4. 进阶玩法：配置文件</h2><p>如果你的项目比较正规，需要传很多环境变量（比如告诉代码现在是线上环境还是测试环境），用命令行敲太长了。官方推荐建立一个 <code>ecosystem.config.js</code> 文件。</p>
 <p>直接敲 <code>pm2 init simple</code> 就能生成个模板，我一般会改造成下面这样：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  apps: [</span><br><span class="line">    &#123;</span><br><span class="line">      name: <span class="string">'my-node-app'</span>,</span><br><span class="line">      script: <span class="string">'./app.js'</span>,</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 让它自己看服务器有几个 CPU 核心，能开几个开几个，榨干性能</span></span><br><span class="line">      instances: <span class="string">'max'</span>,            </span><br><span class="line">      exec_mode: <span class="string">'cluster'</span>,        </span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 挂了自动重启</span></span><br><span class="line">      autorestart: <span class="literal">true</span>,           </span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 防止代码有内存泄漏，超过 500M 强制让它重启一下</span></span><br><span class="line">      max_memory_restart: <span class="string">'500M'</span>,  </span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 日志输出的位置</span></span><br><span class="line">      error_file: <span class="string">'./logs/err.log'</span>,</span><br><span class="line">      out_file: <span class="string">'./logs/out.log'</span>,</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 测试环境的环境变量</span></span><br><span class="line">      env: &#123;</span><br><span class="line">        NODE_ENV: <span class="string">'development'</span>,</span><br><span class="line">        PORT: <span class="number">3000</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 线上环境的环境变量</span></span><br><span class="line">      env_production: &#123;</span><br><span class="line">        NODE_ENV: <span class="string">'production'</span>,</span><br><span class="line">        PORT: <span class="number">8080</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
 
@@ -574,8 +574,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/JavaScript/2018-03-22-promise-async-await.html" rel="next" title="被回调地狱逼疯后：Promise 和 async/await 踩坑备忘">
-                <i class="fa fa-chevron-left"></i> 被回调地狱逼疯后：Promise 和 async/await 踩坑备忘
+              <a href="/posts/JavaScript/2018-03-22-promise-async-await.html" rel="next" title="被回调地狱困扰后：Promise 和 async/await 实践中的问题备忘">
+                <i class="fa fa-chevron-left"></i> 被回调地狱困扰后：Promise 和 async/await 实践中的问题备忘
               </a>
             
           </div>

@@ -177,13 +177,13 @@
 
   <meta name="description" content="大模型平时拿来聊聊天确实好用，但一问到公司内部情况或者没公开的数据，它就开始胡编乱造了。RAG（检索增强生成）算是个比较稳妥的解决办法。最近简单摸索了一下这套东西，整理点基础的概念，算是个入门备忘。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="折腾 RAG：给大模型接个本地知识库">
+<meta property="og:title" content="配置与实践 RAG：给大模型接个本地知识库">
 <meta property="og:url" content="https://www.vueweb.cn/posts/AI/2024-09-15-rag-knowledge-base.html">
 <meta property="og:site_name" content="光阴小栈">
 <meta property="og:description" content="大模型平时拿来聊聊天确实好用，但一问到公司内部情况或者没公开的数据，它就开始胡编乱造了。RAG（检索增强生成）算是个比较稳妥的解决办法。最近简单摸索了一下这套东西，整理点基础的概念，算是个入门备忘。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-15T03:20:45.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:43:04.389Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.348Z">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="LLM">
 <meta property="article:tag" content="RAG">
@@ -207,7 +207,7 @@
   };
 </script>
 
-  <title>折腾 RAG：给大模型接个本地知识库 | 光阴小栈</title>
+  <title>配置与实践 RAG：给大模型接个本地知识库 | 光阴小栈</title>
   
 
 
@@ -334,7 +334,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -342,7 +342,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -421,7 +421,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">折腾 RAG：给大模型接个本地知识库
+          <h2 class="post-title" itemprop="name headline">配置与实践 RAG：给大模型接个本地知识库
               
             
           </h2>
@@ -519,7 +519,7 @@
         <p>大模型平时拿来聊聊天确实好用，但一问到公司内部情况或者没公开的数据，它就开始胡编乱造了。RAG（检索增强生成）算是个比较稳妥的解决办法。最近简单摸索了一下这套东西，整理点基础的概念，算是个入门备忘。</p>
 <a id="more"></a>
 
-<h2 id="RAG-到底在干嘛"><a href="#RAG-到底在干嘛" class="headerlink" title="RAG 到底在干嘛"></a>RAG 到底在干嘛</h2><p>说白了，RAG 就是在让大模型回答之前，先帮它翻一下“资料库”。</p>
+<h2 id="RAG-到底在做什么"><a href="#RAG-到底在做什么" class="headerlink" title="RAG 到底在做什么"></a>RAG 到底在做什么</h2><p>说白了，RAG 就是在让大模型回答之前，先帮它翻一下“资料库”。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以前直接问大模型：</span><br><span class="line">用户提问 → 大模型瞎编一个回答</span><br><span class="line"></span><br><span class="line">现在用了 RAG：</span><br><span class="line">用户提问 → 先从本地文档库里搜出几段相关的资料 → 把“资料+问题”一起喂给大模型 → 大模型看着资料给出准确回答</span><br></pre></td></tr></table></figure></div>
 
 <p>不用 RAG 的话，想让大模型懂你的数据就得去“微调”，那个成本太高了。RAG 就省事很多，把资料存进向量数据库就行。</p>
@@ -543,7 +543,7 @@
 <ol>
 <li><strong>切段大小很玄学</strong>：一篇文章如果一刀切到底，搜出来的信息太乱；如果切得太细，一句话截断了，上下文连不起来。一般 500-1000 字符一块，留一点重叠比较稳。</li>
 <li><strong>纯向量搜索不够看</strong>：光靠向量算相似度有时候会有点偏，现在比较流行加上传统的关键词搜索（比如 BM25）混合起来用，能准不少。</li>
-<li><strong>格式太乱影响解析</strong>：如果文档里面全是奇奇怪怪的表格和图片，切出来喂给大模型的效果就很惨，所以文档的清洗整理其实是最费劲的。</li>
+<li><strong>格式太乱影响解析</strong>：如果文档里面全是少见的表格和图片，切出来喂给大模型的效果就很惨，所以文档的清洗整理其实是最费劲的。</li>
 </ol>
 <p>总之，这套方案感觉挺实用，打算后面慢慢打磨一下，接个微信机器人给自己查资料用。</p>
 
@@ -633,7 +633,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/AI/2024-09-15-rag-knowledge-base.html"
-         data-hitalk-title="折腾 RAG：给大模型接个本地知识库">
+         data-hitalk-title="配置与实践 RAG：给大模型接个本地知识库">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

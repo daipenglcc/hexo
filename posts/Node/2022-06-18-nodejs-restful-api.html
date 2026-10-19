@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="平时写前端，有时候总得自己折腾点后端接口。用 Node.js 搭配 Express 算是比较顺手的方案，轻量又好上手。这几天正好又帮朋友写了个博客的增删改查接口，顺便把整个流程记录一下，以后要用的时候可以直接拿来抄。">
+  <meta name="description" content="平时写前端，有时候总得自己配置与实践点后端接口。用 Node.js 搭配 Express 算是比较顺手的方案，轻量又好上手。这几天正好又帮朋友写了个博客的增删改查接口，顺便把整个流程记录一下，以后要用的时候可以直接拿来抄。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用 Node.js 撸一个简单的 RESTful API">
 <meta property="og:url" content="https://www.vueweb.cn/posts/Node/2022-06-18-nodejs-restful-api.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="平时写前端，有时候总得自己折腾点后端接口。用 Node.js 搭配 Express 算是比较顺手的方案，轻量又好上手。这几天正好又帮朋友写了个博客的增删改查接口，顺便把整个流程记录一下，以后要用的时候可以直接拿来抄。">
+<meta property="og:description" content="平时写前端，有时候总得自己配置与实践点后端接口。用 Node.js 搭配 Express 算是比较顺手的方案，轻量又好上手。这几天正好又帮朋友写了个博客的增删改查接口，顺便把整个流程记录一下，以后要用的时候可以直接拿来抄。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-18T06:30:55.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:43:00.291Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.358Z">
 <meta property="article:tag" content="Node">
 <meta property="article:tag" content="Express">
 <meta property="article:tag" content="RESTful">
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -515,7 +515,7 @@
       
 
       
-        <p>平时写前端，有时候总得自己折腾点后端接口。用 Node.js 搭配 Express 算是比较顺手的方案，轻量又好上手。这几天正好又帮朋友写了个博客的增删改查接口，顺便把整个流程记录一下，以后要用的时候可以直接拿来抄。</p>
+        <p>平时写前端，有时候总得自己配置与实践点后端接口。用 Node.js 搭配 Express 算是比较顺手的方案，轻量又好上手。这几天正好又帮朋友写了个博客的增删改查接口，顺便把整个流程记录一下，以后要用的时候可以直接拿来抄。</p>
 <a id="more"></a>
 
 <h2 id="1-建目录和装依赖"><a href="#1-建目录和装依赖" class="headerlink" title="1. 建目录和装依赖"></a>1. 建目录和装依赖</h2><p>先随便建个文件夹，把该装的包都装上：</p>
@@ -530,7 +530,7 @@
 <h2 id="2-搞定入口文件"><a href="#2-搞定入口文件" class="headerlink" title="2. 搞定入口文件"></a>2. 搞定入口文件</h2><p><code>app.js</code> 主要是把各种中间件挂载上去，顺便配个路由。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/app.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">'cors'</span>)</span><br><span class="line"><span class="keyword">const</span> helmet = <span class="built_in">require</span>(<span class="string">'helmet'</span>)</span><br><span class="line"><span class="keyword">const</span> morgan = <span class="built_in">require</span>(<span class="string">'morgan'</span>)</span><br><span class="line"><span class="keyword">const</span> connectDB = <span class="built_in">require</span>(<span class="string">'./config/db'</span>)</span><br><span class="line"><span class="keyword">const</span> articleRoutes = <span class="built_in">require</span>(<span class="string">'./routes/articles'</span>)</span><br><span class="line"><span class="keyword">const</span> errorHandler = <span class="built_in">require</span>(<span class="string">'./middleware/errorHandler'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'dotenv'</span>).config()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="keyword">const</span> PORT = process.env.PORT || <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 连一下数据库</span></span><br><span class="line">connectDB()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一堆常规中间件</span></span><br><span class="line">app.use(helmet())           <span class="comment">// 加点安全头</span></span><br><span class="line">app.use(cors())             <span class="comment">// 允许跨域</span></span><br><span class="line">app.use(morgan(<span class="string">'dev'</span>))      <span class="comment">// 打印请求日志</span></span><br><span class="line">app.use(express.json())     <span class="comment">// 接收 JSON 数据</span></span><br><span class="line">app.use(express.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 挂载路由</span></span><br><span class="line">app.use(<span class="string">'/api/articles'</span>, articleRoutes)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写个探针，方便以后部署检测存活</span></span><br><span class="line">app.get(<span class="string">'/api/health'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  res.json(&#123; <span class="attr">status</span>: <span class="string">'ok'</span>, <span class="attr">timestamp</span>: <span class="keyword">new</span> <span class="built_in">Date</span>().toISOString() &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理乱请求的 404</span></span><br><span class="line">app.use(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.status(<span class="number">404</span>).json(&#123; <span class="attr">error</span>: <span class="string">'接口不存在'</span> &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 兜底的错误处理</span></span><br><span class="line">app.use(errorHandler)</span><br><span class="line"></span><br><span class="line">app.listen(PORT, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`服务器跑起来了：http://localhost:<span class="subst">$&#123;PORT&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="3-连数据库"><a href="#3-连数据库" class="headerlink" title="3. 连数据库"></a>3. 连数据库</h2><p>我习惯用 MongoDB，这里搞个简单的连接文件。</p>
+<h2 id="3-连数据库"><a href="#3-连数据库" class="headerlink" title="3. 连数据库"></a>3. 连数据库</h2><p>我习惯用 MongoDB，这里建立一个简单的连接文件。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/config/db.js</span></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> connectDB = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> conn = <span class="keyword">await</span> mongoose.connect(process.env.MONGO_URI, &#123;</span><br><span class="line">      useNewUrlParser: <span class="literal">true</span>,</span><br><span class="line">      useUnifiedTopology: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`MongoDB 连上了: <span class="subst">$&#123;conn.connection.host&#125;</span>`</span>)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`数据库连不上，是不是服务没起: <span class="subst">$&#123;error.message&#125;</span>`</span>)</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = connectDB</span><br></pre></td></tr></table></figure></div>
 
 <p>别忘了在根目录建个 <code>.env</code> 文件放配置：</p>

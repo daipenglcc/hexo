@@ -177,13 +177,13 @@
 
   <meta name="description" content="以前总觉得 Docker 是后端和运维搞的东西，前端也就是扔个静态资源包（dist）上服务器完事。但后来做的项目越来越杂，老是遇到测试环境和线上环境不一致导致跑不起来的问题，索性学着用 Docker 把前端也打包了。 这里简单整理一点前端常用的 Docker 操作，全当个备忘录。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端折腾 Docker 部署的一些踩坑记录">
+<meta property="og:title" content="前端配置与实践 Docker 部署的一些实践记录">
 <meta property="og:url" content="https://www.vueweb.cn/posts/DevOps/2020-06-15-docker-frontend-deploy.html">
 <meta property="og:site_name" content="光阴小栈">
 <meta property="og:description" content="以前总觉得 Docker 是后端和运维搞的东西，前端也就是扔个静态资源包（dist）上服务器完事。但后来做的项目越来越杂，老是遇到测试环境和线上环境不一致导致跑不起来的问题，索性学着用 Docker 把前端也打包了。 这里简单整理一点前端常用的 Docker 操作，全当个备忘录。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-15T08:45:30.000Z">
-<meta property="article:modified_time" content="2026-09-23T06:44:28.985Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.343Z">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="部署">
 <meta property="article:tag" content="DevOps">
@@ -206,7 +206,7 @@
   };
 </script>
 
-  <title>前端折腾 Docker 部署的一些踩坑记录 | 光阴小栈</title>
+  <title>前端配置与实践 Docker 部署的一些实践记录 | 光阴小栈</title>
   
 
 
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -420,7 +420,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">前端折腾 Docker 部署的一些踩坑记录
+          <h2 class="post-title" itemprop="name headline">前端配置与实践 Docker 部署的一些实践记录
               
             
           </h2>
@@ -534,7 +534,7 @@
 <p>对应的 <code>nginx.conf</code> 顺手记一下，做单页路由刷新不 404 全靠它：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="NGINX"><figure class="iseeu highlight /nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> localhost;</span><br><span class="line">    <span class="attribute">root</span> /usr/share/nginx/html;</span><br><span class="line">    <span class="attribute">index</span> index.html;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 核心：刷新时找不到文件就重定向到 index.html</span></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="4-前后端一起跑：Docker-Compose"><a href="#4-前后端一起跑：Docker-Compose" class="headerlink" title="4. 前后端一起跑：Docker Compose"></a>4. 前后端一起跑：Docker Compose</h2><p>如果还有个 Node.js 后端，外加一个 MongoDB 数据库，总不能一个个敲命令跑。搞个 <code>docker-compose.yml</code> 比较实在。</p>
+<h2 id="4-前后端一起跑：Docker-Compose"><a href="#4-前后端一起跑：Docker-Compose" class="headerlink" title="4. 前后端一起跑：Docker Compose"></a>4. 前后端一起跑：Docker Compose</h2><p>如果还有个 Node.js 后端，外加一个 MongoDB 数据库，总不能一个个敲命令跑。建立一个 <code>docker-compose.yml</code> 比较实在。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YAML"><figure class="iseeu highlight /yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="comment"># 前端</span></span><br><span class="line">  <span class="attr">frontend:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./frontend</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"80:80"</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 后端</span></span><br><span class="line">  <span class="attr">backend:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./backend</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"3000:3000"</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DB_URL=mongodb://mongo:27017/db</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mongo</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 数据库直接拿现成的跑</span></span><br><span class="line">  <span class="attr">mongo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mongo:4.4</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"27017:27017"</span></span><br></pre></td></tr></table></figure></div>
 
 <p>写好后，在目录下敲一句 <code>docker-compose up -d</code>，全都跑起来了。想关掉就 <code>docker-compose down</code>，挺无脑的。</p>
@@ -543,7 +543,7 @@
 <li><strong>尽量用 <code>alpine</code> 结尾的镜像</strong>：正常的 node 镜像动不动就快一个 G，换成 alpine 版本可能就一两百兆。</li>
 <li><strong>留意层级缓存</strong>：写 Dockerfile 的时候，把不常变的命令放前面（比如拷贝 <code>package.json</code>），常变的（比如拷贝源码）放后面，下次打包能快不少。</li>
 </ol>
-<p>偶尔折腾一下，会发现用 Docker 统一部署环境后，”在我电脑上好好的怎么到服务器就挂了”这种事确实少了不少。</p>
+<p>偶尔尝试一下，会发现用 Docker 统一部署环境后，”在我电脑上好好的怎么到服务器就挂了”这种事确实少了不少。</p>
 
       
     </div>
@@ -588,8 +588,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2020-03-25-frontend-performance-optimization.html" rel="next" title="首屏加载慢得要死？我做的一些优化记录">
-                <i class="fa fa-chevron-left"></i> 首屏加载慢得要死？我做的一些优化记录
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2020-03-25-frontend-performance-optimization.html" rel="next" title="首屏加载加载过慢？我做的一些优化记录">
+                <i class="fa fa-chevron-left"></i> 首屏加载加载过慢？我做的一些优化记录
               </a>
             
           </div>
@@ -629,7 +629,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/DevOps/2020-06-15-docker-frontend-deploy.html"
-         data-hitalk-title="前端折腾 Docker 部署的一些踩坑记录">
+         data-hitalk-title="前端配置与实践 Docker 部署的一些实践记录">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

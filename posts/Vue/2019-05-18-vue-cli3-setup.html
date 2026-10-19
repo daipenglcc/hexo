@@ -175,15 +175,15 @@
 <script defer async src="/js/src/set.js"></script>
 
 
-  <meta name="description" content="最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 build&#x2F; 目录一大堆文件变成了一个 vue.config.js，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中折腾过的配置记一下。">
+  <meta name="description" content="最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 build&#x2F; 目录大量的文件变成了一个 vue.config.js，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中配置与实践过的配置记一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue CLI 3 搭项目的一些配置踩坑">
+<meta property="og:title" content="Vue CLI 3 搭项目的一些配置实践中的问题">
 <meta property="og:url" content="https://www.vueweb.cn/posts/Vue/2019-05-18-vue-cli3-setup.html">
 <meta property="og:site_name" content="光阴小栈">
-<meta property="og:description" content="最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 build&#x2F; 目录一大堆文件变成了一个 vue.config.js，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中折腾过的配置记一下。">
+<meta property="og:description" content="最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 build&#x2F; 目录大量的文件变成了一个 vue.config.js，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中配置与实践过的配置记一下。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-18T07:40:18.000Z">
-<meta property="article:modified_time" content="2026-10-08T07:13:50.358Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.362Z">
 <meta property="article:tag" content="前端工程化">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="Vue CLI">
@@ -206,7 +206,7 @@
   };
 </script>
 
-  <title>Vue CLI 3 搭项目的一些配置踩坑 | 光阴小栈</title>
+  <title>Vue CLI 3 搭项目的一些配置实践中的问题 | 光阴小栈</title>
   
 
 
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -420,7 +420,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Vue CLI 3 搭项目的一些配置踩坑
+          <h2 class="post-title" itemprop="name headline">Vue CLI 3 搭项目的一些配置实践中的问题
               
             
           </h2>
@@ -515,13 +515,13 @@
       
 
       
-        <p>最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 <code>build/</code> 目录一大堆文件变成了一个 <code>vue.config.js</code>，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中折腾过的配置记一下。</p>
+        <p>最近公司新项目用 Vue CLI 3 搭建（之前一直停留在 CLI 2 的 webpack template），升级过来后发现变化还挺大。配置文件从 <code>build/</code> 目录大量的文件变成了一个 <code>vue.config.js</code>，看着简洁了但第一次上手还是得翻文档。这里把我搭项目过程中配置与实践过的配置记一下。</p>
 <a id="more"></a>
 
 <h2 id="1-安装和创建项目"><a href="#1-安装和创建项目" class="headerlink" title="1. 安装和创建项目"></a>1. 安装和创建项目</h2><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先全局装好 CLI</span></span><br><span class="line">npm install -g @vue/cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目</span></span><br><span class="line">vue create my-project</span><br></pre></td></tr></table></figure></div>
 
 <p>创建的时候它会让你选预设，可以选默认的（babel + eslint），也可以手动选功能。我一般手动选，把 Router、Vuex、CSS 预处理器、Linter 都勾上。</p>
-<p>有一个要注意的：它会问你 “Use history mode for router?”，如果你项目部署在子路径下（比如 <code>example.com/app/</code>），选 Yes 的话后续 Nginx 配置会折腾一阵子。不清楚的先选 No 用 hash 模式比较省心。</p>
+<p>有一个要注意的：它会问你 “Use history mode for router?”，如果你项目部署在子路径下（比如 <code>example.com/app/</code>），选 Yes 的话后续 Nginx 配置会配置与实践一阵子。不清楚的先选 No 用 hash 模式比较省心。</p>
 <h2 id="2-vue-config-js-常用配置"><a href="#2-vue-config-js-常用配置" class="headerlink" title="2. vue.config.js 常用配置"></a>2. vue.config.js 常用配置</h2><p>CLI 3 把 webpack 配置封装了，想改的话需要在根目录建 <code>vue.config.js</code>。这个文件默认是不存在的，得自己创建。</p>
 <p>我项目里大概是这样：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVASCRIPT"><figure class="iseeu highlight /javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// 部署在子目录的话改这里，比如 '/app/'</span></span><br><span class="line">  publicPath: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'/app/'</span> : <span class="string">'/'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 打包输出目录</span></span><br><span class="line">  outputDir: <span class="string">'dist'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 放 static 资源的目录</span></span><br><span class="line">  assetsDir: <span class="string">'static'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 生产环境不需要 source map，关掉能加快打包速度</span></span><br><span class="line">  productionSourceMap: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 开发服务器配置</span></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    port: <span class="number">8888</span>,</span><br><span class="line">    open: <span class="literal">true</span>,  <span class="comment">// 启动自动打开浏览器</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 代理后端接口，解决本地跨域</span></span><br><span class="line">    proxy: &#123;</span><br><span class="line">      <span class="string">'/api'</span>: &#123;</span><br><span class="line">        target: <span class="string">'http://localhost:3000'</span>,</span><br><span class="line">        changeOrigin: <span class="literal">true</span>,</span><br><span class="line">        pathRewrite: &#123;</span><br><span class="line">          <span class="string">'^/api'</span>: <span class="string">''</span>  <span class="comment">// 把请求里的 /api 前缀去掉</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 要改 webpack 配置的话在这里</span></span><br><span class="line">  configureWebpack: &#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">      alias: &#123;</span><br><span class="line">        <span class="string">'@'</span>: path.resolve(__dirname, <span class="string">'src'</span>),</span><br><span class="line">        <span class="string">'@components'</span>: path.resolve(__dirname, <span class="string">'src/components'</span>),</span><br><span class="line">        <span class="string">'@views'</span>: path.resolve(__dirname, <span class="string">'src/views'</span>),</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
@@ -556,7 +556,7 @@
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">src&#x2F;</span><br><span class="line">├── api&#x2F;          # 按模块拆分的接口请求</span><br><span class="line">├── assets&#x2F;       # 图片、字体之类的静态资源</span><br><span class="line">├── components&#x2F;   # 公共组件</span><br><span class="line">├── router&#x2F;       # 路由配置</span><br><span class="line">├── store&#x2F;        # Vuex 状态管理</span><br><span class="line">├── styles&#x2F;       # 全局样式、变量、mixin</span><br><span class="line">├── utils&#x2F;        # 工具函数（request.js, auth.js 之类）</span><br><span class="line">├── views&#x2F;        # 页面级组件</span><br><span class="line">├── App.vue</span><br><span class="line">└── main.js</span><br></pre></td></tr></table></figure></div>
 
 <p>其实没什么标准答案，项目规模不大的时候怎么舒服怎么来，等大了再慢慢拆。</p>
-<p>CLI 3 总体来说比 2 好用不少，至少不用面对 <code>build/</code> 下面那一堆 webpack 配置文件了。虽然灵活性上有些限制，但提供的 <code>configureWebpack</code> 和 <code>chainWebpack</code> 也够日常折腾了。</p>
+<p>CLI 3 总体来说比 2 好用不少，至少不用面对 <code>build/</code> 下面那一堆 webpack 配置文件了。虽然灵活性上有些限制，但提供的 <code>configureWebpack</code> 和 <code>chainWebpack</code> 也够日常花费时间。</p>
 
       
     </div>
@@ -642,7 +642,7 @@
   
     <div class="comments" id="comments"
          data-hitalk-path="/posts/Vue/2019-05-18-vue-cli3-setup.html"
-         data-hitalk-title="Vue CLI 3 搭项目的一些配置踩坑">
+         data-hitalk-title="Vue CLI 3 搭项目的一些配置实践中的问题">
       <p role="status">评论加载中…</p>
       <noscript>请启用 JavaScript 查看和发表留言。</noscript>
     </div>

@@ -183,7 +183,7 @@
 <meta property="og:description" content="最近经常听到 “Vibe Coding”（氛围编程）这个词，大概意思就是不用一行行敲代码，直接用自然语言描述需求，让 AI 去生成和修改代码。带着点好奇，我下载了最近讨论挺多的 Cursor 编辑器试了试。 简单体验下来，感觉确实和之前的 AI 补全插件不太一样，它更像是一个知道你整个项目结构的助手。这里随便聊聊我最近用它的一些体会。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-20T02:30:25.000Z">
-<meta property="article:modified_time" content="2026-10-09T05:50:24.238Z">
+<meta property="article:modified_time" content="2026-10-09T06:22:29.370Z">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="效率工具">
 <meta property="article:tag" content="Cursor">
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -527,7 +527,7 @@
 
 <h3 id="2-行内修改-Cmd-K"><a href="#2-行内修改-Cmd-K" class="headerlink" title="2. 行内修改 (Cmd + K)"></a>2. 行内修改 (Cmd + K)</h3><p>遇到以前写的一坨回调地狱，或者想快速改个写法，直接选中按 <code>Cmd + K</code>，输入你的要求：</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 选中之前的回调代码，输入："改成 async/await 加上 try-catch"</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readConfig</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> rawContent = <span class="keyword">await</span> fs.readFile(<span class="string">'/path/to/config.json'</span>, <span class="string">'utf8'</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(rawContent);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>它会直接在原地给你替换掉，看着还挺爽的。</p>
+<p>它会直接在原地给你替换掉，看着还挺高效的。</p>
 <h3 id="3-多文件生成-Composer"><a href="#3-多文件生成-Composer" class="headerlink" title="3. 多文件生成 (Composer)"></a>3. 多文件生成 (Composer)</h3><p>这是我觉得它稍微有点东西的地方。按 <code>Cmd + I</code> 唤出 Composer，可以直接给它布置“大作业”。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">比如我会这样写需求：</span><br><span class="line">&quot;给项目加个评论模块。</span><br><span class="line">需要在 prisma 里加 Comment 表；</span><br><span class="line">在 api&#x2F;comments 写个带基础过滤的后端路由；</span><br><span class="line">在前端加个简单的列表展示。样式照着现有的 Tailwind 风格写。&quot;</span><br></pre></td></tr></table></figure></div>
 <p>它能同时生成和修改好几个文件，你可以在旁边一个一个审核同意。</p>
@@ -535,8 +535,8 @@
 <h2 id="一些局限和坑"><a href="#一些局限和坑" class="headerlink" title="一些局限和坑"></a>一些局限和坑</h2><p>虽然看着很美好，但在真实项目里用，还是有不少局限的：</p>
 <ol>
 <li><strong>不能一次步子迈太大</strong>：要是你一上来就让它“写个电商系统”，它肯定给你搞得乱七八糟。还是得拆成很细的需求，比如“先建个用户表”，“再写个查询接口”。小步走才比较稳。</li>
-<li><strong>单测不能省</strong>：它生成的代码有时候边界条件处理得很粗糙，看着跑通了，其实一遇到异常数据就崩。还是得老老实实写点测试用例护航，或者干脆让它自己先写单测再写业务代码。</li>
-<li><strong>你得知道整个架构长啥样</strong>：它擅长干苦力活，但数据库怎么设计、模块间怎么通信，这些大方向还是得自己心里有数。你不管，它就随便瞎写。</li>
+<li><strong>单测不能省</strong>：它生成的代码有时候边界条件处理得很粗糙，看着跑通了，其实一遇到异常数据就崩。还是得规范地写点测试用例护航，或者干脆让它自己先写单测再写业务代码。</li>
+<li><strong>你得知道整个架构长啥样</strong>：它擅长干苦力活，但数据库怎么设计、模块间怎么通信，这些大方向还是得自己心里有数。你不管，它就随便尝试编写。</li>
 </ol>
 <h2 id="随便总结一下"><a href="#随便总结一下" class="headerlink" title="随便总结一下"></a>随便总结一下</h2><p>Cursor 这类工具确实省了不少敲键盘的力气，那种不用频繁查 API 文档的感觉还挺顺的。不过写代码的核心终究不是敲字，而是理清业务逻辑和系统设计。</p>
 <p>整体来说体验还行，能少干点重复性的体力活。感兴趣的朋友可以去官网下个试试，反正基础功能也能白嫖。</p>
@@ -584,8 +584,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/AI/2024-09-15-rag-knowledge-base.html" rel="next" title="折腾 RAG：给大模型接个本地知识库">
-                <i class="fa fa-chevron-left"></i> 折腾 RAG：给大模型接个本地知识库
+              <a href="/posts/AI/2024-09-15-rag-knowledge-base.html" rel="next" title="配置与实践 RAG：给大模型接个本地知识库">
+                <i class="fa fa-chevron-left"></i> 配置与实践 RAG：给大模型接个本地知识库
               </a>
             
           </div>

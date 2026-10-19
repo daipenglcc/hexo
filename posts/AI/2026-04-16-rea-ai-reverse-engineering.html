@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+<!--
+                           _ooOoo_
+                          o8888888o
+                          88" . "88
+                          (| -_- |)
+                          O\  =  /O
+                       ____/`---'\____
+                     .'  \\|     |//  `.
+                    /  \\|||  :  |||//  \
+                   /  _||||| -:- |||||-  \
+                   |   | \\\  -  /// |   |
+                   | \_|  ''\---/''  |   |
+                   \  .-\__  `-`  ___/-. /
+                 ___`. .'  /--.--\  `. . __
+              ."" '<  `.___\_<|>_/___.'  >'"".
+             | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+             \  \ `-.   \_ __\ /__ _/   .-` /  /
+        ======`-.____`-.___\_____/___.-`____.-'======
+                           `=---='
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 佛祖保佑       永无BUG
+-->
+<html class="theme-next muse" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#8a00f9">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="eRUMkOLjm5pMqXIKrBhzB4YD_gNj9CN4iUMT_1i1Plg" />
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="HR5eYsvhwq2" />
+
+
+
+
+
+
+
+  
+  
+  <link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Hannotate SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link href="/lib/hitalk/3.0.0/hitalk.aab370555dfe.css" rel="stylesheet" />
+  <link href="/lib/hitalk/3.0.0/secret-cat.9107f720cc5f.css" rel="stylesheet" />
+  <link href="/css/hitalk-host.css?v=3.0.0" rel="stylesheet" />
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon_192.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon_32.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/icons/icon_512.png?v=6.2.0" color="#8a00f9">
+
+
+  <link rel="manifest" href="/manifest.json">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"remove","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+  <meta name="keywords" content="光阴小栈,有花不见叶的博客,vueweb.cn,vues" />
+
+
+<link rel="dns-prefetch" href="https://app-router.leancloud.cn/">
+
+<script defer async src="/js/src/set.js"></script>
+
+
+  <meta name="description" content="上周在 GitHub 上刷到了一个仓库 morluto&#x2F;rea，定位是「用 Agent 逆向分析任何东西，从 App 行为一路打到原生二进制」。标题看着挺唬人，但 stars 数已经快速爬到很多，还有 Ghidra、MCP、Claude Code 等关键词——感觉不像纯噱头，花了一下午研究了一下，顺便整理成这篇。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 AI Agent 做逆向工程：rea 工具链初探">
+<meta property="og:url" content="https://www.vueweb.cn/posts/AI/2026-04-16-rea-ai-reverse-engineering.html">
+<meta property="og:site_name" content="光阴小栈">
+<meta property="og:description" content="上周在 GitHub 上刷到了一个仓库 morluto&#x2F;rea，定位是「用 Agent 逆向分析任何东西，从 App 行为一路打到原生二进制」。标题看着挺唬人，但 stars 数已经快速爬到很多，还有 Ghidra、MCP、Claude Code 等关键词——感觉不像纯噱头，花了一下午研究了一下，顺便整理成这篇。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-16T03:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T08:07:34.226Z">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="逆向工程">
+<meta property="article:tag" content="AI Agent">
+<meta property="article:tag" content="静态分析">
+<meta property="article:tag" content="Ghidra">
+<meta name="twitter:card" content="summary">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="光阴小栈" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://www.vueweb.cn/posts/AI/2026-04-16-rea-ai-reverse-engineering.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>用 AI Agent 做逆向工程：rea 工具链初探 | 光阴小栈</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-87991666-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-87991666-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?199400a900d7a62bfff2335224e096d8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+  </style>
+</noscript>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">光阴小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">万妙之心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+    <a href="/links/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友情链接</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />留言</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/index.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />站点地图</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+<div id="hitokoto" style="
+    text-align: center;
+    padding-top: 25px;
+"></div>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/AI/2026-04-16-rea-ai-reverse-engineering.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">用 AI Agent 做逆向工程：rea 工具链初探
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2026-04-16 11:30:00" itemprop="dateCreated datePublished" datetime="2026-04-16T11:30:00+08:00">2026-04-16</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/AI/2026-04-16-rea-ai-reverse-engineering.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/AI/2026-04-16-rea-ai-reverse-engineering.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上周在 GitHub 上刷到了一个仓库 <a href="https://github.com/morluto/rea" target="_blank" rel="noopener">morluto/rea</a>，定位是「用 Agent 逆向分析任何东西，从 App 行为一路打到原生二进制」。标题看着挺唬人，但 stars 数已经快速爬到很多，还有 Ghidra、MCP、Claude Code 等关键词——感觉不像纯噱头，花了一下午研究了一下，顺便整理成这篇。</p>
+<a id="more"></a>
+
+<h2 id="它在解决什么问题"><a href="#它在解决什么问题" class="headerlink" title="它在解决什么问题"></a>它在解决什么问题</h2><p>逆向工程这件事，传统流程大概是这样的：</p>
+<ol>
+<li>用 Ghidra / IDA Pro 反汇编或反编译二进制</li>
+<li>手动阅读伪代码，靠经验猜函数语义</li>
+<li>写 Frida 脚本动态 hook，观察运行时行为</li>
+<li>在各个工具之间来回切换，手动整理笔记</li>
+</ol>
+<p>这个流程耗时的核心不是工具不够强，而是<strong>人脑需要在几十个上下文之间来回切换，而且每一步的输出都是非结构化的文本</strong>。rea 想解决的就是这个：把这整条链路用 AI Agent 串起来，让 LLM 驱动整个分析过程，人只需要提目标和问题。</p>
+<h2 id="架构大概长这样"><a href="#架构大概长这样" class="headerlink" title="架构大概长这样"></a>架构大概长这样</h2><p>rea 用了 <a href="https://github.com/cordis-lib/cordis" target="_blank" rel="noopener">Cordis</a> 做插件架构，把每个分析能力封装成独立的 <code>dsh-plugin</code>。核心流程是：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户输入 → Agent（Claude &#x2F; Codex） → MCP 工具调用 → 各类分析插件 → 结果聚合 → 输出</span><br></pre></td></tr></table></figure></div>
+
+<p>它暴露了一批 MCP（Model Context Protocol）工具，Agent 可以按需调用：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TYPESCRIPT"><figure class="iseeu highlight /typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 大概是这种感觉（根据 topics 和文档推测）</span></span><br><span class="line"><span class="keyword">const</span> tools = [</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"decompile_function"</span>,</span><br><span class="line">    description: <span class="string">"用 Ghidra 反编译指定地址的函数，返回伪代码"</span>,</span><br><span class="line">    inputSchema: &#123;</span><br><span class="line">      binary_path: <span class="string">"string"</span>,</span><br><span class="line">      address: <span class="string">"string"</span>  <span class="comment">// 十六进制地址，如 0x401000</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"find_xrefs"</span>,</span><br><span class="line">    description: <span class="string">"查找对某个函数或地址的所有引用"</span>,</span><br><span class="line">    inputSchema: &#123;</span><br><span class="line">      binary_path: <span class="string">"string"</span>,</span><br><span class="line">      target: <span class="string">"string"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"run_frida_script"</span>,</span><br><span class="line">    description: <span class="string">"附加到进程并运行 Frida 脚本，返回运行时输出"</span>,</span><br><span class="line">    inputSchema: &#123;</span><br><span class="line">      pid_or_name: <span class="string">"string"</span>,</span><br><span class="line">      script: <span class="string">"string"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"analyze_network_traffic"</span>,</span><br><span class="line">    description: <span class="string">"抓包并分析应用网络请求的特征"</span>,</span><br><span class="line">    inputSchema: &#123;</span><br><span class="line">      target: <span class="string">"string"</span>,</span><br><span class="line">      duration_seconds: <span class="string">"number"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></div>
+
+<p>MCP 协议本身前段时间写过一篇（<a href="./mcp-protocol-in-depth.md">MCP 协议深度解析</a>），这里就不展开了。简单说就是 LLM 和外部工具通信的标准接口，现在 Claude 原生支持，Claude Code 里用起来很顺手。</p>
+<h2 id="实际跑起来是什么感觉"><a href="#实际跑起来是什么感觉" class="headerlink" title="实际跑起来是什么感觉"></a>实际跑起来是什么感觉</h2><p>根据 README 和 issue 里的演示，一个典型的使用场景大概是这样：</p>
+<p><strong>目标</strong>：分析一个不知道来源的 macOS 程序，搞清楚它到底在往哪发数据。</p>
+<p>你输入的 prompt 可能就是一句话：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">分析 &#x2F;Applications&#x2F;SuspiciousApp.app，找出它所有的网络请求目标，</span><br><span class="line">重点看有没有把本地文件发出去的行为。</span><br></pre></td></tr></table></figure></div>
+
+<p>然后 Agent 自己决定：</p>
+<ol>
+<li>先静态分析 binary，找 <code>URLSession</code> / <code>libcurl</code> 相关调用</li>
+<li>用 Ghidra 插件反编译可疑函数，理解数据构造逻辑</li>
+<li>动态 hook 网络相关 API，记录实际发包内容</li>
+<li>汇总整理，给出结论和可疑代码片段的位置</li>
+</ol>
+<p>这种把「分析链路」变成「对话」的思路，跟 Cursor 把「写代码」变成「对话」是同一个路数。</p>
+<h2 id="一些值得注意的地方"><a href="#一些值得注意的地方" class="headerlink" title="一些值得注意的地方"></a>一些值得注意的地方</h2><p><strong>Ghidra 集成</strong></p>
+<p>rea 调 Ghidra 不是直接起 GUI，而是用 Ghidra 的 headless 模式跑分析脚本，把结果序列化后返回给 Agent。这样的好处是可以无人值守批量分析，坏处是 Ghidra headless 本身就有一堆坑，第一次配环境比较花时间。</p>
+<p>需要有 Java 环境，Ghidra 路径要配对：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rea 大概需要这样配</span></span><br><span class="line"><span class="built_in">export</span> GHIDRA_HOME=/path/to/ghidra_11.x</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/path/to/jdk-21</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>关于准确性</strong></p>
+<p>LLM 分析二进制的准确性肯定不能跟经验丰富的安全研究员比。它的价值更多在于：</p>
+<ul>
+<li>快速给出「这段代码可能在做什么」的初步判断</li>
+<li>自动化处理重复性工作（找字符串、追引用链）</li>
+<li>把分析过程变成可以追溯的对话记录</li>
+</ul>
+<p>高价值漏洞挖掘还是得靠人，但 rea 能把前期探索时间压缩不少。</p>
+<p><strong>TypeScript 写的 CLI</strong></p>
+<p>整个工具链是 TypeScript 写的，对前端来说门槛低一些，改起来也方便。插件体系用了 Cordis 的依赖注入，想自己扩展分析能力（比如接一个自己的反编译器）理论上改动量不大。</p>
+<h2 id="还能做什么"><a href="#还能做什么" class="headerlink" title="还能做什么"></a>还能做什么</h2><p>除了二进制分析，rea 的 topics 里有 <code>touhou</code>，issue 里也有人拿它做游戏逆向（拆封包格式、分析游戏资源加密）。本质上只要能写插件接进去的分析工具，理论上都可以。</p>
+<p>还有人在 issue 里讨论接 Hopper（macOS 下的反汇编器），以及支持 Android APK 分析（smali + jadx），目前看起来在规划里但还没合入。</p>
+<hr>
+<p>总体感觉，rea 思路是对的——逆向工程里真正慢的不是工具，是「理解」这个步骤，而这恰好是 LLM 目前比较擅长的。工程成熟度上还有些粗糙，但作为一个框架级的工具来用，值得关注。感兴趣的话可以搜一下，项目还挺活跃的。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+          <div style="text-align:center;color: #009688;font-size:14px;padding: 10px 0;">
+------ 有问题请 <a href="https://www.vueweb.cn/guestbook/index.html" style="text-align:center;color: #ff0000;">留言给我哦！</a> 也欢迎入群讨论！ <a href="//shang.qq.com/wpa/qunwpa?idkey=09d9bbe548ce209b4fa8be33e58691e01f294fd80afec92a5cf886bc402d9b5b" target="_blank" rel="nofollow noopener" style="text-align:center;color: #00c4ff;">点我呀！</a> ------</div>
+
+      </div>
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MCP/" rel="tag"># MCP</a>
+          
+            <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" rel="tag"># 逆向工程</a>
+          
+            <a href="/tags/AI-Agent/" rel="tag"># AI Agent</a>
+          
+            <a href="/tags/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/" rel="tag"># 静态分析</a>
+          
+            <a href="/tags/Ghidra/" rel="tag"># Ghidra</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/AI/2025-04-22-vercel-ai-sdk-guide.html" rel="next" title="用 Vercel AI SDK 给网站接上大模型对话">
+                <i class="fa fa-chevron-left"></i> 用 Vercel AI SDK 给网站接上大模型对话
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2026-05-10-web-components-in-practice.html" rel="prev" title="Web Components 实践记录：原生组件化到底能不能用了">
+                Web Components 实践记录：原生组件化到底能不能用了 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments"
+         data-hitalk-path="/posts/AI/2026-04-16-rea-ai-reverse-engineering.html"
+         data-hitalk-title="用 AI Agent 做逆向工程：rea 工具链初探">
+      <p role="status">评论加载中…</p>
+      <noscript>请启用 JavaScript 查看和发表留言。</noscript>
+    </div>
+  
+
+
+
+        </div>
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 - <span itemprop="copyrightYear">2026</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">光阴小栈</span>
+  
+    <span class="hitalk-secret" data-hitalk-secret><button type="button" aria-label="叫小猫出来" title="叫小猫出来"></button></span>
+  
+
+  
+
+  
+</div>
+
+
+  <div class="footer-custom"><span>博客已萌萌哒运行<span id="time-to-now"></span> ●'◡'●)ﾉ♥</span></div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"> 你是第</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>枚看到我的
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script defer src="/lib/hitalk/3.0.0/secret-cat.a2815fc1af05.js"></script>
+  <script defer src="/lib/hitalk/3.0.0/hitalk.68b2aa7c6d13.js"></script>
+  <script defer src="/js/src/hitalk.js?v=3.0.0"
+          data-hitalk-server="https://hitalk-server.youhuabujianye.workers.dev/api"
+          data-hitalk-placeholder="ヾﾉ≧∀≦)o来啊，快活啊!"
+          data-hitalk-avatar="monsterid"
+          data-hitalk-page-size="10"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

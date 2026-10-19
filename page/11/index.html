@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">57</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">58</span></a>
   </li>
         
         
@@ -341,7 +341,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/index.html" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">105</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">109</span></a>
   </li>
         
         
@@ -387,6 +387,176 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="光阴小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html" itemprop="url">
+                  CSS 里的李鬼与李逵：伪类和伪元素到底啥区别
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-04-28 16:35:10" itemprop="dateCreated datePublished" datetime="2017-04-28T16:35:10+08:00">2017-04-28</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CSS3/" itemprop="url" rel="index"><span itemprop="name">CSS3</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html" itemprop="commentCount">—</span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>写了这么多年 CSS，经常看到有人把 <code>:hover</code> 和 <code>::before</code> 混在一块叫“伪类”。虽然浏览器很宽容，不管你写一个冒号还是俩冒号它都能认出来并且渲染，但强迫症发作的时候，还是想把它们理清楚。</p>
+<p>这里顺便记一下这俩玩意儿在实际开发中能搞出的常用操作。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/CSS3/2017-04-28-pseudo-elements-and-pseudo-classes.html" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"><hr></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -512,8 +682,8 @@
 
       
         
-          <p>这两天团队里出了个不大不小的事故：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在慌乱中用 <code>git push -f</code> 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。</p>
-<p>最后靠着 <code>git reflog</code> 和一些底层的操作硬是把代码抢救回来了。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个没有感情的 <code>add/commit/push</code> 机器了。</p>
+          <p>这两天团队里出了个线上问题：有个新来的同学在处理一个紧急 Bug 时，不仅把测试分支的代码合到了主干，还在操作不当时用 <code>git push -f</code> 覆盖了远程分支。等我们发现的时候，线上已经带着几个没测完的功能跑了半个小时了。</p>
+<p>最后靠着 <code>git reflog</code> 和一些底层的操作成功恢复了代码。趁着周末有空，我把日常开发中真正会救命的几个 Git 骚操作复盘一下。别再把 Git 当个机械的 <code>add/commit/push</code> 机器了。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/Git/2017-04-23-git.html" rel="contents">
@@ -1025,176 +1195,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/Vue/2016-04-10-vue-reactive-internals.html" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"><hr></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.vueweb.cn/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://hexo-cdn.oss-cn-beijing.aliyuncs.com/oss/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="光阴小栈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html" itemprop="url">
-                  把 Grunt 换成 Gulp，构建时间从 40 秒降到 8 秒
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2014-11-22 10:18:50" itemprop="dateCreated datePublished" datetime="2014-11-22T10:18:50+08:00">2014-11-22</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">前端工程化</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count hitalk-comment-count" data-xid="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html" itemprop="commentCount">—</span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近把项目的构建工具从 Grunt 换成了 Gulp，顺手记一下过程和原理层面的差异，不是教怎么用 API，而是搞清楚为什么 Gulp 快。</p>
-<p>项目背景：中型后台系统，30+ 个 Less 文件，20+ 个 JS 模块，构建时 Grunt 要跑 40 多秒，换完 Gulp 大概 8 秒出头。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/2014-11-22-gulp-vs-grunt-internals.html" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
